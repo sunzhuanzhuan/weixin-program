@@ -1,21 +1,116 @@
-/**index.wxss**/
-.userinfo {
+@import "/components/share/share.wxss";
+@import "/components/like/like.wxss";
+@import "/components/list/list.wxss";
+.readBox{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.smallBox{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
+.avatar{
   border-radius: 50%;
+  width:140rpx ;
+  height:140rpx;
 }
-
-.userinfo-nickname {
-  color: #aaa;
+.chineseLetter{
+  font-size:32rpx ;
+  height: 44rpx;
+  padding-right: 35rpx;
+  margin-left:40rpx ;
+  display: inline-block;
+  position: relative;
 }
+.titleBox{
+  width: 100%;
+  height: 84rpx;
+  display: flex;
+  white-space: nowrap;
+  position: fixed;
+}
+.plTop36{
+  margin-top: 72rpx;
+}
+.plBottm32{
+  margin-bottom: 64rpx;
+}
+.plBottm28{
+  margin-bottom: 56rpx;
+}
+.line{
+  height: 20rpx;
+  background-color: #f6f6f6 ;
+  margin-bottom: 40rpx;
+}
+.shareBox{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 70rpx;
+}
+.icon{
+  height: 26rpx;
+  width:26rpx;
+  margin-right: 10rpx;
+}
+.selected{
+  color:#333333;
+  font-size: 28rpx;
+  padding-bottom:26rpx ;
+  border-bottom: 4rpx solid #333333;
+}
+.none{
+  color: #ADADAD;
+  font-size: 28rpx;
+}
+.ellipsisLike{
+  width: 180rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  display: inline-block;
+  vertical-align: top;
+}
+.letter{
+  position: absolute;
+  bottom: 0;
+  font-size: 24rpx;
+  color: #898989;
+}
+.titleFontSize{
+  color: #333333;
+  font-weight: bolder;
+}
+.noTitleFontSize{
+  color:#ADADAD;
 
-.usermotto {
-  margin-top: 200px;
+}
+.dot::after{
+  content:"•";
+  position:absolute;
+  left:50%;
+  top:40rpx;
+}
+.nickName{
+  color: #898989;
+  font-size: 28rpx;
+  font-weight: lighter;
+  margin-top: 20rpx;
+}
+.readBoxName{
+  color: #898989;
+  font-size: 28rpx;
+  margin-top:14rpx ;
+}
+.contentList{
+  overflow-x: hidden;
+  width: 100%;
+}
+.contentListBox{
+  position: absolute;
+  top:84rpx;
+  height:1000rpx;
 }

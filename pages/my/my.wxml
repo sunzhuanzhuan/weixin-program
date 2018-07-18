@@ -1,0 +1,9 @@
+<view>
+    <view class="section__title">horizontal scroll</view>
+    <scroll-view scroll-x style="width: 100%;height: 130rpx;">
+        <view id="green"style="height: 130rpx;width:250rpx;background: green;display: inline-block"></view>
+        <view id="red" style="height: 130rpx;width:250rpx;background: red;display: inline-block" ></view>
+        <view id="yellow" style="height: 130rpx;width:250rpx;background: yellow;display: inline-block"></view>
+        <view id="blue" style="height: 130rpx;width:250rpx;background: blue;display: inline-block"></view>
+    </scroll-view>
+</view>

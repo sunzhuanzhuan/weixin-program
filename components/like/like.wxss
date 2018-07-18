@@ -1,0 +1,15 @@
+
+.readResource{
+    font-size: 24rpx;
+}
+.flright{
+    float: right;
+}
+.content{
+    position: relative;
+    font-size: 32rpx;
+}
+.readResource{
+    margin-top: 40rpx;
+    color: #898989;
+}

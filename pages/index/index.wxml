@@ -1,13 +1,81 @@
 <!--index.wxml-->
+<import src="/components/share/share.wxml" />
+<import src="/components/like/like.wxml" />
+<import src="/components/list/list.wxml" />
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+    <scroll-view scroll-x="true" class="titleBox" >
+        <view>
+            <view wx:for="{{data}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab"data-tab="{{index}}">
+                <text>{{item}}</text>
+                <text class="{{colorTitle==index? 'dot':''}}"></text>
+            </view>
+            <view bindtap="handleTitleTab" class="chineseLetter {{colorTitle==data.length? 'titleFontSize':'noTitleFontSize'}}"
+                  data-tab="{{data.length}}">
+                <text>我的</text>
+                <text class="{{colorTitle==data.length? 'dot':''}}"></text>
+            </view>
+        </view>
+    </scroll-view>
+    <scroll-view scroll-y="true" class="contentListBox" bindscrolltolower="handleTouchBottom">
+        <view class="contentList"
+              bind:touchstart="handleTouchStart"
+              bind:touchmove="handleTouchMove"
+              bind:touchend="handleTouchEnd">
+            <view hidden="{{templateFlag?false:true}}">
+                <template is="list" data="{{shareList:shareList,heightFlag:heightFlag}}"/>
+            </view>
+            <view hidden="{{templateFlag?true:false}}">
+                <view class="plBottm28">
+                    <view class="smallBox plTop36 plBottm32">
+                        <image  class="avatar" src="{{userInfo?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
+                        <view class="nickName">{{userInfo?userInfo.nickName:''}}</view>
+                    </view>
+                    <view class="readBox">
+                        <view class="smallBox">
+                            <text>1</text>
+                            <text class="readBoxName">阅读</text>
+                        </view>
+                        <view class="smallBox">
+                            <text>2</text>
+                            <text class="readBoxName">分享</text>
+                        </view>
+                        <view class="smallBox">
+                            <text>3</text>
+                            <text class="readBoxName">喜欢</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="line"></view>
+                <view class="shareBox">
+                    <view bindtap="handleTab" data-name="share">
+                        <image class="icon" src="{{flag?shareAfter:shareBefore}}"></image>
+                        <text class="{{flag ?'selected':'none'}}">我的分享</text>
+                    </view>
+                    <view bindtap="handleTab" data-name="like">
+                        <image class="icon" src="{{flag== 'true'?likeBefore:likeAfter}}"></image>
+                        <text class="{{flag?'none':'selected'}}">我的喜欢</text>
+                    </view>
+                </view>
+                <view>
+                    <view  hidden="{{flag ? false : true}}">
+                        <template is="share" data="{{shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                    </view>
+                    <view  hidden="{{flag ? true : false}}">
+                        <template is="like"  data="{{shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view hidden="{{isMore}}" wx:if="hsaMore？true:false">
+            加载中。。。
+        </view>
+        <view hidden="{{isMore}}" wx:else="hsaMore?false:true">
+            没有了
+        </view>
+    </scroll-view>
+
+
 </view>
+
+
+

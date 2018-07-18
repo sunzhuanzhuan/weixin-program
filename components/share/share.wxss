@@ -1,0 +1,69 @@
+.box{
+    width: 686rpx;
+    box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;
+    margin:36rpx;
+}
+.img{
+    width: 260rpx;
+    height:180rpx;
+    margin-top: 32rpx;
+    /*background-image: url("../../images/noLoading01.png");*/
+}
+.imgBox{
+    display: flex;
+    position: relative;
+    height:220rpx;
+}
+
+.avatarRead{
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    margin: 0 10rpx;
+}
+.letterBox{
+    margin-top: 32rpx;
+    margin-left:32rpx;
+    font-size: 32rpx;
+    width:426rpx;
+    height: 180rpx;
+    position: relative;
+}
+.bottomLine{
+    border-bottom: 2rpx solid #E7E7E7;
+    margin: 24rpx 0 26rpx 0;
+
+}
+.readNum{
+    font-size: 24rpx;
+}
+.bigBox{
+    margin-top: 32rpx;
+    margin-left:32rpx;
+    margin-right: 32rpx;
+    margin-bottom:50rpx ;
+}
+.avatarBox{
+    height: 70rpx;
+    overflow-y: hidden;
+}
+.noHeightAvatarBox{}
+.arrow{
+    width: 32rpx;
+    height: 32rpx;
+    vertical-align: middle;
+    margin-right: 10rpx;
+}
+.shrinkContent{
+    text-align: center;
+    font-size: 24rpx;
+    margin-top: 22rpx;
+    padding-bottom: 22rpx;
+}
+.nowrap{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
