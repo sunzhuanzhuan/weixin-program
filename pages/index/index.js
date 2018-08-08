@@ -31,6 +31,11 @@ Page({
         isMore:true
     },
     onShow: function () {
+        wx.getExtConfig({
+            success:function (res) {
+                console.log(res.extConfig);
+            }
+        })
         let that =this;
         wx.getStorage({
             key: 'userInfo',
@@ -39,25 +44,25 @@ Page({
             }
         })
         wx.request({
-            url: "http://127.0.0.1:64467/appservice/index.json",
+            url: "http://127.0.0.1:49928/appservice/index.json",
             success: function (res) {
                 that.setData({data: res.data.tab})
             }
         });
         wx.request({
-            url: "http://127.0.0.1:64467/appservice/share.json",
+            url: "http://127.0.0.1:49928/appservice/share.json",
             success: function (res) {
                 that.setData({shareList:res.data.data})
             }
         });
         wx.request({
-            url: "http://127.0.0.1:64467/appservice/like.json",
+            url: "http://127.0.0.1:49928/appservice/like.json",
             success:  function (res) {
                 that.setData({likeList:res.data.data})
             }
         });
         wx.request({
-            url: "http://127.0.0.1:64467/appservice/list.json",
+            url: "http://127.0.0.1:49928/appservice/list.json",
             success:function (res) {
                 that.setData({list:res.data.data})
             }

@@ -2,11 +2,11 @@
 App({
     onLaunch: function () {
 
-        wx.getExtConfig({
-            success: function (res) {
-                console.log(res)
-            }
-        })
+        // wx.getExtConfig({
+        //     success: function (res) {
+        //         console.log(res)
+        //     }
+        // })
 
     },
     globalData: {
