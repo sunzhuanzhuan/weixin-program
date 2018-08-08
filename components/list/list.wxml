@@ -1,5 +1,5 @@
 <template name="list">
-    <view wx:for="{{shareList}}" class="container">
+    <view wx:for="{{list}}" class="container">
         <view wx:if="{{item.type == 'small'}}" bindtap="handleDetail">
             <view class="bigBox">
                 <view class="imgBox">

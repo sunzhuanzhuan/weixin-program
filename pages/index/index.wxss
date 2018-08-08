@@ -10,11 +10,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 .avatar{
   border-radius: 50%;
   width:140rpx ;
   height:140rpx;
+  background:#f6f6f6 ;
+  text-align: center;
+
 }
 .chineseLetter{
   font-size:32rpx ;
@@ -77,6 +81,7 @@
 .letter{
   position: absolute;
   bottom: 0;
+  right: 0;
   font-size: 24rpx;
   color: #898989;
 }
@@ -93,13 +98,21 @@
   position:absolute;
   left:50%;
   top:40rpx;
+  top:40rpx;
 }
 .nickName{
   color: #898989;
   font-size: 28rpx;
   font-weight: lighter;
   margin-top: 20rpx;
+  background:#ffffff;
+  border-color: green;
 }
+ /*button{*/
+   /*position: absolute;*/
+   /*top:100%;*/
+   /*left:40%;*/
+ /*}*/
 .readBoxName{
   color: #898989;
   font-size: 28rpx;
@@ -112,5 +125,5 @@
 .contentListBox{
   position: absolute;
   top:84rpx;
-  height:1000rpx;
+  /*height:1000rpx;*/
 }

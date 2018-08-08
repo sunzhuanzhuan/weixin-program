@@ -1,6 +1,6 @@
 <template name="share">
     <view wx:for="{{shareList}}" class="container">
-        <view wx:if="{{item.img != ''}}"  class="box" >
+        <view  class="box" >
             <view class="bigBox">
                 <view class="imgBox">
                     <image class="img" src="{{item.img}}" lazy-load></image>
@@ -23,21 +23,6 @@
                 </view>
             </view>
 
-        </view>
-        <view wx:else class="box" >
-            <view class="bigBox">
-                <view>
-                    <view class="content">
-                        <view class="nowrap">{{item.title}}</view>
-                        <text class="letter">查看阅读文章>>></text>
-                    </view>
-                </view>
-                <view class="bottomLine"></view>
-                <view bindtap="handleShrink" class="shrinkContent" data-id="{{index}}">
-                    <image class="arrow" src="{{shinIndex ==index?heightFlag ?('../../images/arrowUp.png'):('../../images/arrowDown.png'):('../../images/arrowUp.png')}}"></image>
-                    <text>{{shinIndex ==index?heightFlag ?'展开':'收起':'展开'}}</text>
-                </view>
-            </view>
         </view>
     </view>
 </template>

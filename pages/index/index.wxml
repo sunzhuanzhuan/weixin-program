@@ -22,13 +22,14 @@
               bind:touchmove="handleTouchMove"
               bind:touchend="handleTouchEnd">
             <view hidden="{{templateFlag?false:true}}">
-                <template is="list" data="{{shareList:shareList,heightFlag:heightFlag}}"/>
+                <template is="list" data="{{list:list,heightFlag:heightFlag}}"/>
             </view>
             <view hidden="{{templateFlag?true:false}}">
                 <view class="plBottm28">
                     <view class="smallBox plTop36 plBottm32">
-                        <image  class="avatar" src="{{userInfo?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
-                        <view class="nickName">{{userInfo?userInfo.nickName:''}}</view>
+                        <view  class="avatar"><image style="width: 100rpx;height: 100rpx;border-radius: 50%;margin-top: 20rpx;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image></view>
+                        <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">{{userInfo.nickName?userInfo.nickName:'我要登录'}}</button>
+
                     </view>
                     <view class="readBox">
                         <view class="smallBox">
@@ -61,7 +62,7 @@
                         <template is="share" data="{{shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
                     </view>
                     <view  hidden="{{flag ? true : false}}">
-                        <template is="like"  data="{{shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                        <template is="like"  data="{{likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
                     </view>
                 </view>
             </view>

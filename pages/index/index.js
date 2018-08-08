@@ -1,18 +1,20 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
 
 Page({
     data: {
         data: [],
         shareList:[],
+        likeList:[],
+        list:[],
         heightFlag:true,
         item1: {
             index: 1,
             msg: 'this is a template',
             time: '2016-09-15'
         },
-        userInfo: {},
+        userInfo:{},
         shareAfter: '../../images/shareAfter.png',
         shareBefore: "../../images/shareBefore.png",
         likeAfter: "../../images/likeAfter.png",
@@ -28,45 +30,56 @@ Page({
         startsWidth:'',
         isMore:true
     },
-    onLoad: function () {
+    onShow: function () {
+        let that =this;
+        wx.getStorage({
+            key: 'userInfo',
+            success: function(res) {
+                that.setData({userInfo:res.data})
+            }
+        })
         wx.request({
-            url: "http://127.0.0.1:55079/appservice/index.json",
-            success: this.handleSuccess.bind(this)
+            url: "http://127.0.0.1:64467/appservice/index.json",
+            success: function (res) {
+                that.setData({data: res.data.tab})
+            }
         });
         wx.request({
-            url: "http://127.0.0.1:55079/appservice/share.json",
-            success: this.handleSuccessShare.bind(this)
+            url: "http://127.0.0.1:64467/appservice/share.json",
+            success: function (res) {
+                that.setData({shareList:res.data.data})
+            }
         });
         wx.request({
-            url: "http://127.0.0.1:55079/appservice/list.json",
-            success: this.handleSuccessShare.bind(this)
+            url: "http://127.0.0.1:64467/appservice/like.json",
+            success:  function (res) {
+                that.setData({likeList:res.data.data})
+            }
         });
-        wx.getUserInfo({
-            success: this.handleGetUserInfo.bind(this)
+        wx.request({
+            url: "http://127.0.0.1:64467/appservice/list.json",
+            success:function (res) {
+                that.setData({list:res.data.data})
+            }
         });
         //获取屏幕的宽度
-        let that =this;
         wx.getSystemInfo({
             success: function(res) {
                 that.setData({screenWidth:res.screenWidth,screenHeight:res.screenHeight})
             }
         });
     },
-    handleSuccessShare(res){
-        this.setData({shareList:res.data.data})
-    },
-    handleSuccess(res) {
-        this.setData({data: res.data.tab})
-    },
-    handleGetUserInfo(res) {
-        this.setData({userInfo: res.userInfo})
-        console.log(1111111111111111)
-        console.log(res.userInfo)
+    bindGetUserInfo: function(e) {
+        wx.setStorage({
+            key:"userInfo",
+            data:e.detail.userInfo
+        })
+        this.setData({userInfo:e.detail.userInfo})
     },
     handleTab(e){
        // console.log(e.currentTarget.dataset.name)
         if(e.currentTarget.dataset.name == 'share'){
-            console.log(e.currentTarget.dataset.name)
+            //console.log(e.currentTarget.dataset.name)
             this.setData({flag:true})
         }else{
             this.setData({flag:false})
@@ -101,7 +114,7 @@ Page({
                 }
             }
         }else{
-            console.log(this.data.startsWidth-this.data.endWidth)
+            //console.log(this.data.startsWidth-this.data.endWidth)
             if(this.data.endWidth-this.data.startsWidth >= this.data.screenWidth/2){
                 this.setData({templateFlag:true,colorTitle:--this.data.colorTitle });
                 if(this.data.colorTitle>this.data.data.length){
@@ -114,7 +127,7 @@ Page({
 
     },
     handleTouchStart(e){
-        console.log(e.changedTouches[0].clientX)
+        //console.log(e.changedTouches[0].clientX)
 
         this.setData({startsWidth:e.changedTouches[0].clientX})
     },
