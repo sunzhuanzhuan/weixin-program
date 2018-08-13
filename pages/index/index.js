@@ -146,6 +146,7 @@ Page({
         })
     },
     handleTab(e) {
+        let that = this;
         if (e.currentTarget.dataset.name == 'share') {
             this.setData({flag: true},()=>{
                 wx.request({
@@ -282,16 +283,22 @@ Page({
                 },
                 success: function (res) {
                     setTimeout(function () {
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                            that.data.list.push(item)
-                            return item
-                        })
-                        that.setData({list: that.data.list.concat(arr) },()=>{
-                            wx.hideLoading();
-                        })
+                        if(res.data.data.length ==0){
+                            that.setData({hsaMore: false})
+
+                        }else{
+                            let arr =res.data.data.map((item)=>{
+                                item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                                that.data.list.push(item)
+                                return item
+                            })
+                            that.setData({list: that.data.list.concat(arr) },()=>{
+                                wx.hideLoading();
+                            })
+                        }
                     },1000)
+                    that.setData({hsaMore: true})
 
                 }
             });
@@ -318,7 +325,6 @@ Page({
         });
     },
     handleScroll:function(e){
-        console.log(e.detail.scrollTop)
         if(e.detail.scrollTop>50){
             this.setData({topLine:true})
         }else {

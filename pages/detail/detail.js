@@ -35,6 +35,15 @@ Page({
 
     onLoad(options) {
         let that = this;
+        wx.getSystemInfo({
+          success: function (res) {
+               if (res.windowHeight/res.screenHeight>0.9) {
+                     this.setData({
+                            isIphoneX: true
+                      })
+               }
+    
+          }})  
         wx.showLoading()
         //读取local
         wx.getStorage({

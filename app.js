@@ -12,6 +12,8 @@ App({
         })
         let that = this;
         let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync(): {};
+        this.globalData.appToken = extConfig.appToken;
+        this.globalData.distroId = extConfig.distroId;
         const tokenPromise = new Promise((resolve, reject) => {
             wx.login({
                 success: function(res) {
@@ -38,8 +40,8 @@ App({
     },
     globalData: {
         baseUrl:"https://yijoin-d.weiboyi.com/v1/distribution/",
-        distroId: "5b63fb56b106d81d9b74972a",
-        appToken: "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
+        distroId: "",
+        appToken: "",
         sessionToken:''
     }
 
