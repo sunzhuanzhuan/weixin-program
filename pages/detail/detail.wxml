@@ -1,9 +1,9 @@
-<!--logs.wxml-->
+<!--detail.wxml-->
 <view>
   <rich-text nodes="{{nodes}}" bindtouchstart="touchstart" bindtouchend="touchend"></rich-text>
   <!--悬浮部分-->
   <view class="fixed" hidden="{{isShow}}">
-
+    <view class="floatShadow"></view>
     <view hidden="{{isEyes}}" style="float:left;width: 60%;height: 94rpx">
       <button class="leftBtn" bindgetuserinfo="handleAuthor" open-type="getUserInfo">
         <image class="eyeBtn" src="../../images/eye.png"></image>
@@ -12,6 +12,7 @@
     </view>
 
       <image class='likeBtn' catchtap="handleLike" src="{{isLike?('../../images/shareLike.png'):('../../images/likeAfter.png')}}"></image>
+
       <image src="{{shareButton}}" class="imgBtn"></image>
       <button bindtap="handleShare" open-type="share" class="shareButton"></button>
 

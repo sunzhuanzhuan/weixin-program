@@ -1,15 +1,15 @@
 <template name="like">
-    <view wx:for="{{likeList}}"  class="container">
+    <view wx:for="{{likeList}}"  class="container"  wx:key="{{index}}">
         <view>
             <view class="bigBox">
                 <view class="imgBox">
-                    <image class="img" src="{{item.img}}" lazy-load></image>
+                    <image class="img" src="{{item.article.coverUrl}}" lazy-load></image>
                     <view class="letterBox">
-                        <view class="nowrap">{{item.title}}</view>
+                        <view class="nowrap">{{item.article.title}}</view>
                         <view class="letter">
-                            <text class="ellipsisLike">清华大学的文案。</text>
+                            <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
                             <text class="">21小时之前</text>
-                            <text>1.8k阅读</text>
+                            <text class="time flright">{{item.readTimes}}阅读</text>
                         </view>
                     </view>
                 </view>

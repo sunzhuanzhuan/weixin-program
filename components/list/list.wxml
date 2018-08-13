@@ -1,33 +1,33 @@
 <template name="list">
-    <view wx:for="{{list}}" class="container">
-        <view wx:if="{{item.type == 'small'}}" bindtap="handleDetail">
+    <view wx:for="{{list}}" class="container"  wx:key="{{index}}">
+        <view wx:if="{{index %4 != 0}}" bindtap="handleDetail" data-id="{{item.id}}">
             <view class="bigBox">
                 <view class="imgBox">
-                    <image class="img" src="{{item.img}}"  mode="aspectFit" lazy-load></image>
+                    <image class="img" src="{{item.coverUrl}}"  mode="center " lazy-load></image>
                     <view class="letterBox ">
                         <view class="nowrap">{{item.title}}</view>
                         <view class="letter">
-                            <text class="ellipsisLike">清华大学的文案。</text>
-                            <text class="time">22小时之前</text>
-                            <text class="time flright">1.8k阅读</text>
+                            <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
+                            <text class="time">{{item.time}}</text>
+                            <text class="time flright">{{item.readTimes}}阅读</text>
                         </view>
                     </view>
                 </view>
             </view>
 
         </view>
-        <view wx:else if="{{item.type == 'big'}}" bindtap="handleDetail" >
+        <view wx:else if="{{index % 4 == 0}}" bindtap="handleDetail"  data-id="{{item.id}}">
             <view class="bigBox">
                 <view>
                     <view class="content">
-                        <image class="bigImg" src="{{item.img}}"  mode="scaleToFill" lazy-load></image>
-                        <view class="nowrap">{{item.title}}</view>
+                        <image class="bigImg" src="{{item.coverUrl}}"  mode="aspectFill" lazy-load></image>
+                        <view class="nowrapBig">{{item.title}}</view>
                     </view>
                     <view>
                         <view class="readResource">
-                            <text class="ellipsisLike">清华大学的文案。</text>
-                            <text class="time">21小时之前</text>
-                            <text class="time flright">1.8k阅读</text>
+                            <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
+                            <text class="time">{{item.time}}</text>
+                            <text class="time flright">{{item.readTimes}}阅读</text>
                         </view>
                     </view>
                 </view>

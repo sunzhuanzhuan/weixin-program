@@ -2,6 +2,7 @@
     width:686rpx ;
     height:340rpx ;
     margin-bottom: 20rpx;
+    border-radius: 4rpx;
 }
 .time{
 }

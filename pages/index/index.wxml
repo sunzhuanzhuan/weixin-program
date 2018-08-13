@@ -2,24 +2,40 @@
 <import src="/components/share/share.wxml" />
 <import src="/components/like/like.wxml" />
 <import src="/components/list/list.wxml" />
-<view class="container">
+<view class="containerBig">
     <scroll-view scroll-x="true" class="titleBox" >
         <view>
-            <view wx:for="{{data}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab"data-tab="{{index}}">
-                <text>{{item}}</text>
-                <text class="{{colorTitle==index? 'dot':''}}"></text>
+            <view wx:for="{{dataTab}}" wx:key="{{index}}" data-tabId="{{item.id}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab" data-tab="{{index}}">
+                <text class="{{colorTitle==index? 'dot':''}}">{{item.title}}</text>
             </view>
-            <view bindtap="handleTitleTab" class="chineseLetter {{colorTitle==data.length? 'titleFontSize':'noTitleFontSize'}}"
-                  data-tab="{{data.length}}">
-                <text>我的</text>
-                <text class="{{colorTitle==data.length? 'dot':''}}"></text>
+            <view bindtap="handleTitleTab" class="chineseLetter {{colorTitle==dataTab.length? 'titleFontSize':'noTitleFontSize'}}"
+                  data-tab="{{dataTab.length}}">
+                <text class="{{colorTitle==dataTab.length? 'dot':''}}">我的</text>
             </view>
         </view>
+
     </scroll-view>
-    <scroll-view scroll-y="true" class="contentListBox" bindscrolltolower="handleTouchBottom">
+
+    <block>
+        <view wx:if="{{topLine}}" class="lineTop"></view>
+        <view wx:else> </view>
+    </block>
+
+    <!--<view class="contentListBox">-->
+    <scroll-view scroll-y="true" class="contentListBox"
+                 bindscroll="handleScroll"
+                 scroll-with-animation="true"
+                 upper-threshold="100"
+                 lower-threshold="100"
+                 bindscrolltoupper="handleTouchTop"
+                 bindscrolltolower="handleTouchBottom">
+        <block>
+            <view wx:if="{{loadMore}}" style="text-align: center;font-size: 30rpx;color: #666666"> 加载中 </view>
+            <view wx:else> </view>
+        </block>
+
         <view class="contentList"
               bind:touchstart="handleTouchStart"
-              bind:touchmove="handleTouchMove"
               bind:touchend="handleTouchEnd">
             <view hidden="{{templateFlag?false:true}}">
                 <template is="list" data="{{list:list,heightFlag:heightFlag}}"/>
@@ -33,15 +49,15 @@
                     </view>
                     <view class="readBox">
                         <view class="smallBox">
-                            <text>1</text>
+                            <text>{{num.read}}</text>
                             <text class="readBoxName">阅读</text>
                         </view>
                         <view class="smallBox">
-                            <text>2</text>
+                            <text>{{num.shared}}</text>
                             <text class="readBoxName">分享</text>
                         </view>
                         <view class="smallBox">
-                            <text>3</text>
+                            <text>{{num.liked}}</text>
                             <text class="readBoxName">喜欢</text>
                         </view>
                     </view>
@@ -74,6 +90,7 @@
             没有了
         </view>
     </scroll-view>
+    <!--</view>-->
 
 
 </view>

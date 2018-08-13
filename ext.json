@@ -1,9 +1,7 @@
 {
   "extEnable": true,
-  "extAppid": "wxd7ce20a5bce4830d",
   "directCommit": false,
   "ext": {
-    "distroId": "distroId",
-    "appToken":"appToken"
+
   }
 }

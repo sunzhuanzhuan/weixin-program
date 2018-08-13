@@ -1,7 +1,4 @@
 
-.readResource{
-    font-size: 24rpx;
-}
 .flright{
     float: right;
 }
@@ -10,6 +7,7 @@
     font-size: 32rpx;
 }
 .readResource{
-    margin-top: 40rpx;
+    margin-top: 16rpx;
     color: #898989;
+    font-size: 24rpx;
 }

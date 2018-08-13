@@ -7,7 +7,9 @@
     width: 260rpx;
     height:180rpx;
     margin-top: 32rpx;
-    /*background-image: url("../../images/noLoading01.png");*/
+    border-radius: 4rpx;
+    display: inline-block;
+    border:2rpx solid #0000;
 }
 .imgBox{
     display: flex;
@@ -41,7 +43,7 @@
     margin-top: 32rpx;
     margin-left:32rpx;
     margin-right: 32rpx;
-    margin-bottom:50rpx ;
+    margin-bottom:30rpx ;
 }
 .avatarBox{
     height: 70rpx;
@@ -66,4 +68,16 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+.nowrapBig{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+.letterArtical{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 24rpx;
+    color: #898989;
 }

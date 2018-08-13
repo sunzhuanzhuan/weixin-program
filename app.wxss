@@ -1,8 +1,6 @@
-/**app.wxss**/
-@import "/utils/wxParse/wxParse.wxss";
-.container {
+
+.containerBig {
   font-family: "PingFang SC";
-  height:100%
 }
 page {
   height:100%
