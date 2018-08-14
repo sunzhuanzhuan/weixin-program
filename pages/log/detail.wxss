@@ -1,0 +1,52 @@
+.modal{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left:0;
+    background:#242424 ;
+}
+
+.modal .letter{
+    font-size: 32rpx;
+    color: #ffffff;
+    margin-top: 100rpx;
+}
+
+.imgBox{
+    position: absolute;
+    width: 640rpx;
+    height: 800rpx;
+    margin-top: 150rpx;
+    background: #ffffff;
+    z-index: 51;
+}
+.imgBox .img{
+    height: 500rpx;
+    width: 100%;
+}
+.imgBox .btn {
+    position: absolute;
+    bottom: 24 rpx;
+    width: 96%;
+    margin-left: 2%;
+    background: #333333;
+    color: #ffffff;
+}
+
+.name{
+    position: absolute;
+    bottom: 140rpx;
+    width: 100%;
+    text-align: center;
+    font-size: 32rpx;
+    font-family: "PingFang SC";
+}
+
+.nameTitle{
+    position: absolute;
+    bottom: 200rpx;
+    width: 100%;
+    text-align: center;
+    font-size: 32rpx;
+    font-family: "PingFang SC";
+}

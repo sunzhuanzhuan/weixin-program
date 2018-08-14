@@ -4,10 +4,10 @@
     background:#f6f6f6 ;
 }
 .marB{
-    margin-bottom: 94rpx;
+    margin-bottom: 144rpx;
 }
 .wxResource{
-    width: 200rpx;
+    width: 300rpx;
     margin-left:40rpx;
     float: left;
     margin-bottom: 22rpx;
@@ -25,7 +25,6 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    height:134rpx ;
     line-height: 94rpx;
     background: #ffffff;
     border-top:2rpx solid #efefef;
@@ -91,53 +90,7 @@
 button{
     position: initial;
 }
-.modal{
-    position: fixed;
-    top:0;
-    right: 0;
-    bottom: 0;
-    left:0;
-    z-index: 50;
-    background:#242424 ;
-}
-.modal .letter{
-    font-size: 32rpx;
-    color: #ffffff;
-    margin-top: 100rpx;
-}
-.imgBox{
-    position: absolute;
-    width: 640rpx;
-    height: 800rpx;
-    margin-top: 150rpx;
-    background: #ffffff;
-    z-index: 51;
-}
-.imgBox .img{
-    height: 500rpx;
-    width: 100%;
-}
-.imgBox .btn{
-    position: absolute;
-    bottom: 24rpx;
-    width: 96%;
-    margin-left: 2%;
-    background: #333333;
-    color: #ffffff;
-}
-.name{
-    position: absolute;
-    bottom: 140rpx;
-    width: 100%;
-    text-align: center;
-    font-size: 32rpx;
-    font-family: "PingFang SC";
-}
-.nameTitle{
-    position: absolute;
-    bottom: 200rpx;
-    width: 100%;
-    text-align: center;
-    font-size: 32rpx;
-    font-family: "PingFang SC";
+
+.bol{
+    height:68rpx!important;
 }

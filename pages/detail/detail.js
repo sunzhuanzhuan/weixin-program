@@ -9,9 +9,11 @@ Page({
         isLike: false,
         isEyes: true,
         bgImg: '',
-        isModal: true,
         articleId:'',
-        shareId:''
+        shareId:'',
+        isIphoneX:false,
+        article:{},
+        iPhoneX:false
     },
     onShareAppMessage: function () {
         let that = this;
@@ -34,24 +36,40 @@ Page({
     },
 
     onLoad(options) {
+        console.log(options)
         let that = this;
         wx.getSystemInfo({
-          success: function (res) {
-               if (res.windowHeight/res.screenHeight>0.9) {
-                     this.setData({
-                            isIphoneX: true
-                      })
-               }
-    
-          }})  
-        wx.showLoading()
+        success: function (res) {
+        if(res.model === 'iPhone X'){
+            that.setData({iPhoneX: true})
+        }else {
+            that.setData({iPhoneX: false })
+        }
+        console.log(res.windowHeight/res.screenHeight)
+        if (res.windowHeight/res.screenHeight>0.9) {
+            that.setData({isIphoneX: true})
+        }else {that.setData({isIphoneX: false })}
+        }})
+        wx.showLoading({title:'加载中'})
+
         //读取local
         wx.getStorage({
             key: 'scene',
             success: function (res) {
                 //console.log(res.data== 1007)
                 if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
-                    that.setData({isEyes: false})
+                    wx.getStorage({
+                    key: 'userInfo',
+                    success: function (res) {
+                        that.setData({
+                            isEyes: true
+                        });
+                    },
+                    fail:function (res) {
+                        that.setData({isEyes: false})
+                    }
+                })
+
                     wx.request({
                         url: app.baseUrl + app.distroId + '/article/' + options.art + '/richText?mapSrc=data&ref='+options.ref,
                         method: 'GET',
@@ -65,14 +83,16 @@ Page({
                     });
                 } else {
                     that.setData({isEyes: true,articleId:options.id })
+                    // options.id
                     wx.request({
-                        url: app.baseUrl + app.distroId + '/article/' + options.id + '/richText?mapSrc=data',
+                        url: app.baseUrl + app.distroId + '/article/'+options.id+'/richText?mapSrc=data',
                         method: 'GET',
                         header: {
                             'X-Session-Token': app.sessionToken
                         },
                         success: function (res) {
-                            that.setData({nodes: [res.data.data],shareId:res.data.data.refId});
+                            that.setData({nodes: [res.data.data],shareId:res.data.data.refId,article:res.data.data.article});
+                            console.log(res.data.data.refId)
                             wx.hideLoading()
                         }
                     });
@@ -91,15 +111,14 @@ Page({
                     wx.getUserInfo({
                         withCredentials: true,
                         success: function (res) {
-                            console.log(res)
                             wx.setStorage({
                                 key: "userInfo",
                                 data: res.userInfo
                             })
-                            that_.setData({
-                                isModal: false,
-                                isEyes: true,
-                                bgImg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532954980716&di=4d7bce6e13ac54e14ef36783d45d008a&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F31%2F66%2F20J58PICuSh_1024.jpg'
+                            that_.setData({isEyes: true},()=>{
+                                wx.navigateTo({
+                                    url:'/pages/log/detail'
+                                })
                             });
                         }
                     })
@@ -153,8 +172,11 @@ Page({
         });
 
     },
-    //关闭
-    handleClose() {
-        this.setData({isModal: true})
+
+    //回到首页
+    handleCallBack:function () {
+            wx.navigateTo({
+                url: '/pages/index/index'
+            })
     }
 })

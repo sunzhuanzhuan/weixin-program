@@ -6,6 +6,13 @@ App({
                 // session_key 已经失效，需要重新执行登录流程
             }
         })
+        wx.getSystemInfo({
+            success: function(res) {
+                // console.log(res.statusBarHeight)
+                console.log(res.model)
+                console.log(res.windowHeight)
+            }
+        })
         wx.setStorage({
             key:'scene',
             data:options.scene

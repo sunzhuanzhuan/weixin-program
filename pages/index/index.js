@@ -70,7 +70,7 @@ Page({
                 });
                 //我的分享
                 wx.request({
-                    url: app.baseUrl + app.distroId + '/my/shares',
+                    url: app.baseUrl + app.distroId + '/my/shares?page='+that.data.page+'&pageSize='+that.data.pageSize,
                     method: 'GET',
                     header: {
                         'X-Session-Token': sessionToken
@@ -87,7 +87,7 @@ Page({
                 });
                 //我的喜欢
                 wx.request({
-                    url: app.baseUrl + app.distroId + '/my/likes',
+                    url: app.baseUrl + app.distroId + '/my/likes?page='+that.data.page+'&pageSize='+that.data.pageSize,
                     method: 'GET',
                     header: {
                         'X-Session-Token': sessionToken
@@ -110,7 +110,12 @@ Page({
                         'X-Session-Token': sessionToken
                     },
                     success:function (res) {
-                        that.setData({num:res.data.data})
+                        if(Object.keys(res.data.data).length>0){
+                            that.setData({num:res.data.data})
+                        }else {
+
+                        }
+
                     }
                 });
                 //获取屏幕的宽度
@@ -150,7 +155,7 @@ Page({
         if (e.currentTarget.dataset.name == 'share') {
             this.setData({flag: true},()=>{
                 wx.request({
-                    url: app.baseUrl + app.distroId + '/my/shares',
+                    url: app.baseUrl + app.distroId + '/my/shares?page='+that.data.page+'&pageSize='+that.data.pageSize,
                     method: 'GET',
                     header: {
                         'X-Session-Token': app.sessionToken
@@ -169,7 +174,7 @@ Page({
         } else {
             this.setData({flag: false},()=>{
                 wx.request({
-                    url: app.baseUrl + app.distroId + '/my/likes',
+                    url: app.baseUrl + app.distroId + '/my/likes?page='+that.data.page+'&pageSize='+that.data.pageSize,
                     method: 'GET',
                     header: {
                         'X-Session-Token': app.sessionToken
@@ -196,7 +201,7 @@ Page({
 
             this.setData({templateFlag: false, colorTitle: e.currentTarget.dataset.tab})
         } else {
-            wx.showLoading({})
+            wx.showLoading({title:'加载中'})
             wx.request({
                 url: app.baseUrl + app.distroId +'/list/'+ e.currentTarget.dataset.tabid+'/articles',
                 method: 'GET',
@@ -272,9 +277,9 @@ Page({
     },
 
     handleTouchBottom(e) {
+        let that = this;
         if(this.data.colorTitle != this.data.dataTab.length){
-            let that = this;
-            wx.showLoading({})
+            wx.showLoading({title:'加载中'})
             wx.request({
                 url: app.baseUrl + app.distroId + '/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+(++this.data.page)+'&pageSize='+this.data.pageSize,
                 method: 'GET',
@@ -302,30 +307,74 @@ Page({
 
                 }
             });
+        }else{
+            if(this.data.flag){
+                wx.showLoading({title:'加载中'})
+                wx.request({
+                    url: app.baseUrl + app.distroId + '/my/shares?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,
+                    method: 'GET',
+                    header: {
+                        'X-Session-Token': app.sessionToken
+                    },
+                    success:function (res) {
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({shareList: that.data.shareList.concat(arr) },()=>{
+                            wx.hideLoading();
+                        })
+                    }
+                });
+            }else{
+                wx.showLoading({title:'加载中'})
+                wx.request({
+                    url: app.baseUrl + app.distroId + '/my/likes?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,
+                    method: 'GET',
+                    header: {
+                        'X-Session-Token': app.sessionToken
+                    },
+                    success:function (res) {
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({likeList: that.data.likeList.concat(arr)},()=>{
+                            wx.hideLoading();
+                        })
+                    }
+                });
+            }
         }
 
     },
     handleTouchTop:function () {
-        this.setData({loadMore:true})
-        var that = this;
-        wx.request({
-            url: app.baseUrl + app.distroId + '/list/' +this.data.dataTab[0].id+ '/articles?page=1&pageSize='+that.data.pageSize,
-            method: 'GET',
-            header: {
-                'X-Session-Token': app.sessionToken
-            },
-            success: function (res) {
-                setTimeout(function () {
-                    that.setData({loadMore:false})
-                },1000)
+        if (this.data.colorTitle != this.data.dataTab.length) {
+            var that = this;
+            wx.request({
+                url: app.baseUrl + app.distroId + '/list/' +this.data.dataTab[0].id+ '/articles?page=1&pageSize='+that.data.pageSize,
+                method: 'GET',
+                header: {
+                    'X-Session-Token': app.sessionToken
+                },
+                success: function (res) {
+                    setTimeout(function () {
+                        that.setData({loadMore:false})
+                    },1000)
 
 
-                that.setData({list: res.data.data })
-            }
-        });
+                    that.setData({list: res.data.data })
+                }
+            });
+        }
+
     },
     handleScroll:function(e){
-        if(e.detail.scrollTop>50){
+        if(e.detail.scrollTop>50 && this.data.colorTitle != this.data.dataTab.length){
             this.setData({topLine:true})
         }else {
             this.setData({topLine:false})

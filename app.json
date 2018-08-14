@@ -1,13 +1,16 @@
 {
   "pages":[
-
     "pages/index/index",
+    "pages/log/detail",
+
     "pages/detail/detail"
+
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "微播易",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+    "navigationStyle":"custom"
   }
 }
