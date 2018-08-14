@@ -1,4 +1,6 @@
 let app = getApp().globalData;
+let currentTitle = '';
+
 Page({
     data: {
         nodes: [],
@@ -30,7 +32,7 @@ Page({
             }
         });
         return  {
-            title: '自定义转发标题',
+            title: currentTitle || '默认转发标题',
             path: 'pages/detail/detail?ref='+this.data.shareId+'&art='+this.data.articleId
         }
     },
@@ -69,7 +71,7 @@ Page({
                         that.setData({isEyes: false})
                     }
                 })
-
+                    wx.showNavigationBarLoading();
                     wx.request({
                         url: app.baseUrl + app.distroId + '/article/' + options.art + '/richText?mapSrc=data&ref='+options.ref,
                         method: 'GET',
@@ -77,13 +79,24 @@ Page({
                             'X-Session-Token': app.sessionToken
                         },
                         success: function (res) {
-                            that.setData({nodes: [res.data.data]});
+                            const r = res.data.data;
+                            that.setData({nodes: [r]});
+                            if (r.article) {
+                              currentTitle = r.article.title;
+                              wx.setNavigationBarTitle({
+                                title: currentTitle,
+                              });
+                            }
                             wx.hideLoading()
+                        },
+                        complete: function () {
+                          wx.hideNavigationBarLoading();
                         }
                     });
                 } else {
                     that.setData({isEyes: true,articleId:options.id })
                     // options.id
+                    wx.showNavigationBarLoading();
                     wx.request({
                         url: app.baseUrl + app.distroId + '/article/'+options.id+'/richText?mapSrc=data',
                         method: 'GET',
@@ -91,10 +104,21 @@ Page({
                             'X-Session-Token': app.sessionToken
                         },
                         success: function (res) {
-                            that.setData({nodes: [res.data.data],shareId:res.data.data.refId,article:res.data.data.article});
+                            
                             console.log(res.data.data.refId)
+                            const r = res.data.data;
+                            if (r.article) {
+                              currentTitle = res.data.data.article.title;
+                              wx.setNavigationBarTitle({
+                                title: currentTitle,
+                              });
+                            }
+                            that.setData({nodes: [r],shareId:r.refId,article:r.article});
                             wx.hideLoading()
-                        }
+                      },
+                      complete: function () {
+                        wx.hideNavigationBarLoading();
+                      }
                     });
                 }
 
