@@ -73,7 +73,7 @@ Page({
                 })
                     wx.showNavigationBarLoading();
                     wx.request({
-                        url: app.baseUrl + app.distroId + '/article/' + options.art + '/richText?mapSrc=data&ref='+options.ref,
+                      url: app.baseUrl + app.distroId + '/article/' + options.art + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref='+options.ref,
                         method: 'GET',
                         header: {
                             'X-Session-Token': app.sessionToken
@@ -98,7 +98,7 @@ Page({
                     // options.id
                     wx.showNavigationBarLoading();
                     wx.request({
-                        url: app.baseUrl + app.distroId + '/article/'+options.id+'/richText?mapSrc=data',
+                      url: app.baseUrl + app.distroId + '/article/' + options.id +'/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true',
                         method: 'GET',
                         header: {
                             'X-Session-Token': app.sessionToken
