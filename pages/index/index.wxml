@@ -27,6 +27,7 @@
 
     <!--<view class="contentListBox">-->
     <scroll-view scroll-y="true" class="contentListBox"
+                 scroll-top="{{scroll}}"
                  bindscroll="handleScroll"
                  scroll-with-animation="true"
                  upper-threshold="100"

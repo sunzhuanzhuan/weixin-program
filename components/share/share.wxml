@@ -1,8 +1,8 @@
 <template name="share">
     <view wx:for="{{shareList}}" class="container"  wx:key="{{index}}">
-        <view  class="box"  data-id="{{item.id}}" bindtap="handleDetail" >
+        <view  class="box"  data-id="{{item.id}}" >
             <view class="bigBox">
-                <view class="imgBox">
+                <view class="imgBox" bindtap="handleDetail" >
                     <image class="img" src="{{item.article.coverUrl}}" lazy-load></image>
                     <view class="letterBox">
                         <view class="nowrap">{{item.article.title}}</view>
@@ -14,14 +14,14 @@
                     <view>
                         <view class="readNum">已有<text>{{item.referencers.length}}</text>位好友阅读</view>
                         <view class="{{shinIndex ==index?heightFlag?'avatarBox':'noHeightAvatarBox':'avatarBox'}}">
-                            <block wx:for="{{item.referencers}}" >
-                                <view wx:if="{{item.avatarUrl}}" wx:key="{{index}}">
+                            <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block" >
+                                <view wx:if="{{item.avatarUrl}}">
                                     <image class="avatarRead" src="{{item.avatarUrl}}"></image>
                                 </view>
                                 <view wx:else>
                                     <text class="avatarRead" wx:key="{{item.id}}">神秘人</text>
                                 </view>
-                            </block>
+                            </view>
                         </view>
 
                     </view>

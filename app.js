@@ -19,8 +19,8 @@ App({
         })
         let that = this;
         let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync(): {};
-        this.globalData.appToken = extConfig.appToken;
-        this.globalData.distroId = extConfig.distroId;
+        this.globalData.appToken = extConfig.appToken||'JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo';
+        this.globalData.distroId = extConfig.distroId||'5b63fb56b106d81d9b74972a';
         const tokenPromise = new Promise((resolve, reject) => {
             wx.login({
                 success: function(res) {

@@ -104,7 +104,6 @@ Page({
                             'X-Session-Token': app.sessionToken
                         },
                         success: function (res) {
-                            
                             console.log(res.data.data.refId)
                             const r = res.data.data;
                             if (r.article) {
@@ -199,8 +198,10 @@ Page({
 
     //回到首页
     handleCallBack:function () {
-            wx.navigateTo({
-                url: '/pages/index/index'
-            })
+        wx.navigateBack({
+            url: '/pages/index/index',
+            delta: 12
+        })
+
     }
 })
