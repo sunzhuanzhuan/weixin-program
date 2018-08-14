@@ -80,7 +80,7 @@ Page({
                         },
                         success: function (res) {
                             const r = res.data.data;
-                            that.setData({nodes: [r]});
+                          that.setData({ nodes: [r], isLike: r.liked});
                             if (r.article) {
                               currentTitle = r.article.title;
                               wx.setNavigationBarTitle({
@@ -113,7 +113,7 @@ Page({
                                 title: currentTitle,
                               });
                             }
-                            that.setData({nodes: [r],shareId:r.refId,article:r.article});
+                            that.setData({nodes: [r],shareId:r.refId,article:r.article, isLike: r.liked});
                             wx.hideLoading()
                       },
                       complete: function () {
