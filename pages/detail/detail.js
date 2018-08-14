@@ -73,14 +73,14 @@ Page({
                 })
                     wx.showNavigationBarLoading();
                     wx.request({
-                        url: app.baseUrl + app.distroId + '/article/' + options.art + '/richText?mapSrc=data&ref='+options.ref,
+                      url: app.baseUrl + app.distroId + '/article/' + options.art + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref='+options.ref,
                         method: 'GET',
                         header: {
                             'X-Session-Token': app.sessionToken
                         },
                         success: function (res) {
                             const r = res.data.data;
-                            that.setData({nodes: [r]});
+                          that.setData({ nodes: [r], isLike: r.liked});
                             if (r.article) {
                               currentTitle = r.article.title;
                               wx.setNavigationBarTitle({
@@ -98,7 +98,7 @@ Page({
                     // options.id
                     wx.showNavigationBarLoading();
                     wx.request({
-                        url: app.baseUrl + app.distroId + '/article/'+options.id+'/richText?mapSrc=data',
+                      url: app.baseUrl + app.distroId + '/article/' + options.id +'/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true',
                         method: 'GET',
                         header: {
                             'X-Session-Token': app.sessionToken
@@ -112,7 +112,7 @@ Page({
                                 title: currentTitle,
                               });
                             }
-                            that.setData({nodes: [r],shareId:r.refId,article:r.article});
+                            that.setData({nodes: [r],shareId:r.refId,article:r.article, isLike: r.liked});
                             wx.hideLoading()
                       },
                       complete: function () {
