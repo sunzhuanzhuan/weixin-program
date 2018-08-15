@@ -33,8 +33,10 @@ App({
                         },
                         success: function(res) {
                             that.globalData.sessionToken=res.header['X-Set-Session-Token'] || res.header['X-Set-Session-Token'.toLowerCase()];
-
                             resolve(that.globalData.sessionToken);
+                           
+
+                            
                         },
                         fail: function(err) {
                             reject(err);
@@ -49,7 +51,8 @@ App({
         baseUrl:"https://yijoin-d.weiboyi.com/v1/distribution/",
         distroId: "",
         appToken: "",
-        sessionToken:''
-    }
+        sessionToken:'',
+    },
+    
 
 })

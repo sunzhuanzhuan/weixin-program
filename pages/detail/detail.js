@@ -1,5 +1,6 @@
 let app = getApp().globalData;
 let currentTitle = '';
+let golbal = getApp()
 
 Page({
     data: {
@@ -15,7 +16,8 @@ Page({
         shareId:'',
         isIphoneX:false,
         article:{},
-        iPhoneX:false
+        iPhoneX:false,
+        art:''
     },
     onShareAppMessage: function () {
         let that = this;
@@ -36,7 +38,18 @@ Page({
             path: 'pages/detail/detail?ref='+this.data.shareId+'&art='+this.data.articleId
         }
     },
-
+    getData:function(url,method,data){
+        return new Promise(function(resolve,reject){
+            wx.request({
+                url: app.baseUrl + app.distroId +url,
+                method:method,
+                data: data,
+                header:{'X-Session-Token':app.sessionToken},
+                fail:reject,
+                success: resolve
+            })
+        })
+    },
     onLoad(options) {
         console.log(options)
         let that = this;
@@ -47,19 +60,20 @@ Page({
         }else {
             that.setData({iPhoneX: false })
         }
-        console.log(res.windowHeight/res.screenHeight)
-        if (res.windowHeight/res.screenHeight>0.9) {
+        if (res.model === 'iPhone X') {
             that.setData({isIphoneX: true})
         }else {that.setData({isIphoneX: false })}
         }})
         wx.showLoading({title:'加载中'})
-
-        //读取local
+        this.setData({
+            
+        },()=>{
+            //读取local
         wx.getStorage({
             key: 'scene',
             success: function (res) {
-                //console.log(res.data== 1007)
-                if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
+                if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049 )&& options.art !=undefined) {
+                    that.setData({art:options.art})
                     wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
@@ -72,14 +86,8 @@ Page({
                     }
                 })
                     wx.showNavigationBarLoading();
-                    wx.request({
-                      url: app.baseUrl + app.distroId + '/article/' + options.art + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref='+options.ref,
-                        method: 'GET',
-                        header: {
-                            'X-Session-Token': app.sessionToken
-                        },
-                        success: function (res) {
-                            const r = res.data.data;
+                        that.getData('/article/' + options.art + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref='+options.ref,'GET').then((res)=>{
+                        const r = res.data.data;
                           that.setData({ nodes: [r], isLike: r.liked});
                             if (r.article) {
                               currentTitle = r.article.title;
@@ -88,24 +96,15 @@ Page({
                               });
                             }
                             wx.hideLoading()
-                        },
-                        complete: function () {
-                          wx.hideNavigationBarLoading();
-                        }
-                    });
+                            wx.hideNavigationBarLoading();
+                         })
+                    
                 } else {
                     that.setData({isEyes: true,articleId:options.id })
                     // options.id
                     wx.showNavigationBarLoading();
-                    wx.request({
-                      url: app.baseUrl + app.distroId + '/article/' + options.id +'/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true',
-                        method: 'GET',
-                        header: {
-                            'X-Session-Token': app.sessionToken
-                        },
-                        success: function (res) {
-                            console.log(res.data.data.refId)
-                            const r = res.data.data;
+                    that.getData('/article/' + options.id +'/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true','GET').then((res)=>{
+                        const r = res.data.data;
                             if (r.article) {
                               currentTitle = res.data.data.article.title;
                               wx.setNavigationBarTitle({
@@ -114,15 +113,14 @@ Page({
                             }
                             that.setData({nodes: [r],shareId:r.refId,article:r.article, isLike: r.liked});
                             wx.hideLoading()
-                      },
-                      complete: function () {
-                        wx.hideNavigationBarLoading();
-                      }
-                    });
+                    })
                 }
 
             }
         })
+        })
+
+        
     },
     //授权
     handleAuthor() {
@@ -198,10 +196,16 @@ Page({
 
     //回到首页
     handleCallBack:function () {
-        wx.navigateBack({
-            url: '/pages/index/index',
-            delta: 12
-        })
+        if(this.data.art != ''){
+            wx.navigateTo({
+                url: '/pages/index/index'
+            })
+        }else{
+            wx.navigateBack({
+                url: '/pages/index/index'
+            })
+        }
+        
 
     }
 })

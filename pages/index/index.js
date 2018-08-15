@@ -1,5 +1,6 @@
 let app = getApp().globalData;
 const util = require('../../utils/util');
+
 Page({
     data: {
         dataTab: [],
@@ -40,94 +41,57 @@ Page({
                         that.setData({userInfo: res.data})
                     }
                 })
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/lists',
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': sessionToken
-                    },
-                    success: function (res) {
-                        if(res.data.code == 200){
-                            that.setData({dataTab: res.data.data},()=>{
-                                wx.request({
-                                    url: app.baseUrl + app.distroId + '/list/' +res.data.data[0].id+ '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,
-                                    method: 'GET',
-                                    header: {
-                                        'X-Session-Token': sessionToken
-                                    },
-                                    success: function (res) {
-                                        if(res.data.code == 200){
-                                            let arr =res.data.data.map((item)=>{
-                                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                                return item
-                                            })
-                                            that.setData({list: arr })
-                                        }
-
-                                    }
-                                });
+                that.getData('/lists','GET',).then((res)=>{
+                    if(res.data.code == 200){
+                        that.setData({dataTab: res.data.data},()=>{
+                            let urlS = '/list/' +res.data.data[0].id+ '/articles?page=1&pageSize='+that.data.pageSize
+                            that.getData(urlS,'GET').then((res)=>{
+                                if(res.data.code == 200){
+                                    let arr =res.data.data.map((item)=>{
+                                        item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                        item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                                        return item
+                                    })
+                                    that.setData({list: arr })
+                                }
                             })
-                        }
-
+                        })
                     }
-                });
+                })
                 //我的分享
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/shares?page='+that.data.page+'&pageSize='+that.data.pageSize,
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': sessionToken
-                    },
-                    success:function (res) {
-                        if(res.data.code == 200){
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.readTimes =item.readTimes ||'0'
-                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                return item
-                            })
-                            that.setData({shareList: arr })
-                        }
-
+                that.getData('/my/shares?page=1&pageSize=10','GET').then((res)=>{
+                    if(res.data.code == 200){
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({shareList: arr })
                     }
-                });
+                })
                 //我的喜欢
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/likes?page='+that.data.page+'&pageSize='+that.data.pageSize,
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': sessionToken
-                    },
-                    success:function (res) {
-                        if(res.data.code == 200){
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.readTimes =item.readTimes ||'0'
-                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                return item
-                            })
-                            that.setData({likeList: arr})
-                        }
-
+                that.getData('/my/likes?page=1&pageSize=10','GET').then((res)=>{
+                    if(res.data.code == 200){
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({likeList: arr})
                     }
-                });
+                })
                 //我的数量
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/readCount',
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': sessionToken
-                    },
-                    success:function (res) {
+                that.getData('/my/readCount','GET').then((res)=>{
+                    if(res.data.code == 200){
                         if(Object.keys(res.data.data).length>0){
                             that.setData({num:res.data.data})
                         }else {
 
                         }
-
                     }
-                });
+                })
                 //获取屏幕的宽度
                 wx.getSystemInfo({
                     success: function (res) {
@@ -138,6 +102,19 @@ Page({
         });
 
 
+    },
+    
+    getData:function(url,method,data){
+        return new Promise(function(resolve,reject){
+            wx.request({
+                url: app.baseUrl + app.distroId +url,
+                method:method,
+                data: data,
+                header:{'X-Session-Token':app.sessionToken},
+                fail:reject,
+                success: resolve
+            })
+        })
     },
     bindGetUserInfo: function (e) {
         wx.setStorage({
@@ -164,49 +141,31 @@ Page({
         let that = this;
         if (e.currentTarget.dataset.name == 'share') {
             this.setData({flag: true},()=>{
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/shares?page=1&pageSize='+that.data.pageSize,
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': app.sessionToken
-                    },
-                    success:function (res) {
-                        console.log(res.data.code);
-                        console.log(res.data.data)
-                        if(res.data.code == 200){
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.readTimes =item.readTimes ||'0'
-                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                return item
-                            })
-                            that.setData({shareList: arr },()=>{
-                                console.log(that.data.shareList)
-                            })
-                        }
-
+                that.getData('/my/shares?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                    if(res.data.code == 200){
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({shareList: arr },()=>{
+                            console.log(that.data.shareList)
+                        })
                     }
                 });
             })
         } else {
             this.setData({flag: false},()=>{
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/likes?page=1&pageSize='+that.data.pageSize,
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': app.sessionToken
-                    },
-                    success:function (res) {
-                        if(res.data.code == 200){
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.readTimes =item.readTimes ||'0'
-                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                return item
-                            })
-                            that.setData({likeList: arr})
-                        }
-
+                that.getData('/my/likes?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                    if(res.data.code == 200){
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({likeList: arr})
                     }
                 });
             })
@@ -219,20 +178,13 @@ Page({
         let that = this;
         that.setData({scroll:10})
         if (e.currentTarget.dataset.tab == this.data.dataTab.length) {
-
             this.setData({templateFlag: false, colorTitle: e.currentTarget.dataset.tab})
         }
         else {
-
             this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab})
-            wx.showLoading({title:'加载中'})
-            wx.request({
-                url: app.baseUrl + app.distroId +'/list/'+ e.currentTarget.dataset.tabid+'/articles',
-                method: 'GET',
-                header: {
-                    'X-Session-Token': app.sessionToken
-                },
-                success: function (res) {
+            wx.showLoading({title:'加载中'});
+            that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles','GET').then((res)=>{
+                if(res.data.code == 200){
                     that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:res.data.data},()=>{
                         wx.hideLoading();
                     })
@@ -254,16 +206,9 @@ Page({
         if (this.data.startsWidth >= this.data.screenWidth / 2) {
             if (this.data.startsWidth - this.data.endWidth >= this.data.screenWidth / 2) {
                 this.setData({templateFlag: true, colorTitle: ++this.data.colorTitle},()=>{
-                    wx.request({
-                        url: app.baseUrl + app.distroId +'/list/'+ this.data.dataTab[this.data.colorTitle].id+'/articles',
-                        method: 'GET',
-                        header: {
-                            'X-Session-Token': app.sessionToken
-                        },
-                        success: function (res) {
-                            that.setData({list:res.data.data})
-                        }
-                    });
+                    that.getData('/list/'+ this.data.dataTab[this.data.colorTitle].id+'/articles','GET').then((res)=>{
+                        that.setData({list:res.data.data})
+                    })
                 });
 
                 if (this.data.colorTitle > this.data.dataTab.length) {
@@ -276,16 +221,9 @@ Page({
             //console.log(this.data.startsWidth-this.data.endWidth)
             if (this.data.endWidth - this.data.startsWidth >= this.data.screenWidth / 2) {
                 this.setData({templateFlag: true, colorTitle: --this.data.colorTitle},()=> {
-                    wx.request({
-                        url: app.baseUrl + app.distroId + '/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,
-                        method: 'GET',
-                        header: {
-                            'X-Session-Token': app.sessionToken
-                        },
-                        success: function (res) {
-                            that.setData({list: res.data.data})
-                        }
-                    });
+                    that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                        that.setData({list:res.data.data})
+                    })
                 })
                 if (this.data.colorTitle > this.data.dataTab.length) {
                     this.setData({templateFlag: true, colorTitle: 0})
@@ -304,83 +242,54 @@ Page({
         let that = this;
         if(this.data.colorTitle != this.data.dataTab.length){
             wx.showLoading({title:'加载中'})
-            wx.request({
-                url: app.baseUrl + app.distroId + '/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+(++this.data.page)+'&pageSize='+this.data.pageSize,
-                method: 'GET',
-                header: {
-                    'X-Session-Token': app.sessionToken
-                },
-                success: function (res) {
-                    if(res.data.data.length ==0){
-                        that.setData({hsaMore: false})
-
-                    }else{
-                        if(res.data.code == 200){
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                that.data.list.push(item)
-                                return item
-                            })
-                            that.setData({list: that.data.list.concat(arr) },()=>{
-                                wx.hideLoading();
-                            })
-                        }
-                        setTimeout(function () {
-                            that.setData({hsaMore: true})
-                        },1000)
-                        }
-
-
-
+            that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+(++this.data.page)+'&pageSize='+this.data.pageSize,'GET').then((res)=>{
+                if(res.data.code == 200){
+                    let arr =res.data.data.map((item)=>{
+                        item.sourceWxNickname =item.sourceWxNickname ||'-'
+                        item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                        that.data.list.push(item)
+                        return item
+                    })
+                    that.setData({list: that.data.list.concat(arr) },()=>{
+                        wx.hideLoading();
+                    })
                 }
-            });
+                setTimeout(function () {
+                    that.setData({hsaMore: true})
+                },1000)
+            })
         }else{
             if(this.data.flag){
                 wx.showLoading({title:'加载中'})
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/shares?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': app.sessionToken
-                    },
-                    success:function (res) {
-                        if(res.data.code == 200){
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.readTimes =item.readTimes ||'0'
-                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                return item
-                            })
-                            that.setData({shareList: that.data.shareList.concat(arr) },()=>{
-                                wx.hideLoading();
-                            })
-                        }
+                that.getData('/my/shares?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                    if(res.data.code == 200){
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({shareList: that.data.shareList.concat(arr) },()=>{
+                            wx.hideLoading();
+                        })
                     }
-                });
+                })
             }else{
                 wx.showLoading({title:'加载中'})
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/likes?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,
-                    method: 'GET',
-                    header: {
-                        'X-Session-Token': app.sessionToken
-                    },
-                    success:function (res) {
-                        if(res.data.code == 200){
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.readTimes =item.readTimes ||'0'
-                                item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                                return item
-                            })
-                            that.setData({likeList: that.data.likeList.concat(arr)},()=>{
-                                wx.hideLoading();
-                            })
-                        }
-
+                that.getData('/my/likes?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                    if(res.data.code == 200){
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                            return item
+                        })
+                        that.setData({likeList: that.data.likeList.concat(arr)},()=>{
+                            wx.hideLoading();
+                        })
                     }
-                });
+
+                })
             }
         }
 
@@ -389,13 +298,8 @@ Page({
         if (this.data.colorTitle != this.data.dataTab.length) {
             var that = this;
             this.setData({loadMore:true })
-            wx.request({
-                url: app.baseUrl + app.distroId + '/list/' + this.data.dataTab[this.data.colorTitle].id+ '/articles?page=1&pageSize='+that.data.pageSize,
-                method: 'GET',
-                header: {
-                    'X-Session-Token': app.sessionToken
-                },
-                success: function (res) {
+            that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id+ '/articles?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                if(res.data.code == 200){
                     let arr =res.data.data.map((item)=>{
                         item.sourceWxNickname =item.sourceWxNickname ||'-'
                         item.readTimes =item.readTimes ||'0'
@@ -406,7 +310,8 @@ Page({
                         wx.hideLoading();
                     })
                 }
-            });
+
+            })
         }
 
     },
