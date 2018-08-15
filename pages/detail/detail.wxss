@@ -97,7 +97,7 @@
   /*position: absolute;*//*width: 240rpx;*//*font-size: 28rpx;*/
 }
 
-button {
+._elm-button {
   position: initial;
 }
 
@@ -1169,7 +1169,7 @@ button {
     word-wrap:break-word;
     word-break:break-all
 }
-.qr_code_pc p{
+.qr_code_pc ._elm-p{
     font-size:14px;
     line-height:20px
 }
@@ -1423,7 +1423,7 @@ button {
 .sougou_body .rich_media_area_primary:first-child{
     margin-top:0
 }
-.sougou_body .rich_media_area_primary.sougou ul{
+.sougou_body .rich_media_area_primary.sougou ._elm-ul{
     padding-left:0;
     list-style-type:none
 }
@@ -1490,7 +1490,7 @@ button {
     border-radius:50%;
     overflow:hidden
 }
-.reward-avatar img{
+.reward-avatar ._elm-img{
     width:100%;
     height:100%!important;
     object-fit:cover
@@ -1826,7 +1826,7 @@ button {
     width:20%;
     right:2.22%
 }
-.top_banner .rich_media_extra .brand_logo img{
+.top_banner .rich_media_extra .brand_logo ._elm-img{
     max-height:35px
 }
 .top_banner .rich_media_extra .ad_msg_mask{
@@ -1858,7 +1858,7 @@ button {
 .top_banner .preview_group.obvious_app .pic_app{
     width:66.6%
 }
-.top_banner .preview_group.obvious_app .pic_app img{
+.top_banner .preview_group.obvious_app .pic_app ._elm-img{
     height:100%;
     min-height:54px
 }
@@ -2202,7 +2202,7 @@ button {
     background-size:55px 110px
 }
 .preview_group.obvious_app .info_app .grade_app .stars.star_half{
-    backgroud-position:0
+    background-position:0
 }
 .preview_group.obvious_app .info_app .grade_app .stars.star_one{
     background-position:0 -11px
@@ -2696,7 +2696,7 @@ button {
     position:relative;
     top:-0.5px
 }
-span.img_bg_cover{
+._elm-span.img_bg_cover{
     background-repeat:no-repeat;
     background-position:center center;
     background-size:cover
@@ -3282,7 +3282,7 @@ span.img_bg_cover{
     text-indent:0;
     text-shadow:none 1px 1px rgba(0,0,0,0.5)
 }
-.load_img_wrp img{
+.load_img_wrp ._elm-img{
     vertical-align:top
 }
 .base_loading_opr{
@@ -3335,7 +3335,7 @@ span.img_bg_cover{
     text-indent:0;
     text-shadow:none 1px 1px rgba(0,0,0,0.5)
 }
-.gif_img_wrp img{
+.gif_img_wrp ._elm-img{
     vertical-align:top
 }
 .gif_img_tips{
@@ -3385,7 +3385,7 @@ span.img_bg_cover{
     width:14px;
     height:14px
 }
-i.gif_img_loading{
+._elm-i.gif_img_loading{
     margin-left:-4px
 }
 .gif_bg_tips_wrp{
@@ -3681,7 +3681,7 @@ i.gif_img_loading{
 .link_tips{
     float:right
 }
-.link_tips img{
+.link_tips ._elm-img{
     width:20px;
     height:20px;
     vertical-align:middle;
@@ -4899,7 +4899,7 @@ i.gif_img_loading{
 .rich_media_tool .meta_praise{
     text-align:right
 }
-.media_tool_meta i{
+.media_tool_meta ._elm-i{
     vertical-align:0;
     position:relative;
     top:1px;
@@ -4963,7 +4963,7 @@ i.gif_img_loading{
 .praise_num{
     color:#576b95
 }
-.media_tool_meta i{
+.media_tool_meta ._elm-i{
     margin-right:0
 }
 .rich_media_extra{
@@ -4991,7 +4991,7 @@ i.gif_img_loading{
     margin:0;
     font-size:15px
 }
-.mod_title_context .discuss_icon_tips img{
+.mod_title_context .discuss_icon_tips ._elm-img{
     margin-right:3px
 }
 .mod_title_context .discuss_icon_tips .icon_edit{
@@ -5020,7 +5020,7 @@ i.gif_img_loading{
     display:inline-block;
     font-size:0
 }
-.pic_emotion_switch_wrp img{
+.pic_emotion_switch_wrp ._elm-img{
     width:35px;
     display:block
 }
@@ -5699,7 +5699,7 @@ i.gif_img_loading{
 .discuss_icon_tips{
     margin-bottom:20px
 }
-.discuss_icon_tips img{
+.discuss_icon_tips ._elm-img{
     vertical-align:middle;
     margin-right:3px;
     margin-top:-4px
@@ -6379,7 +6379,7 @@ i.gif_img_loading{
     box-shadow:none;
     border:1px solid #d9dadc
 }
-.weui-desktop-popover_img-text img{
+.weui-desktop-popover_img-text ._elm-img{
     width:140px
 }
 .weui-desktop-popover__desc{
