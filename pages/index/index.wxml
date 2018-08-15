@@ -24,7 +24,6 @@
         <view wx:if="{{topLine}}" class="lineTop"></view>
         <view wx:else> </view>
     </block>
-
     <!--<view class="contentListBox">-->
     <scroll-view scroll-y="true" class="contentListBox"
                  scroll-top="{{scroll}}"
@@ -34,14 +33,12 @@
                  lower-threshold="100"
                  bindscrolltoupper="handleTouchTop"
                  bindscrolltolower="handleTouchBottom">
-        <block>
-            <view wx:if="{{loadMore}}" style="text-align: center;font-size: 30rpx;color: #666666"> 加载中 </view>
-            <view wx:else> </view>
-        </block>
+          
+        
 
         <view class="contentList"
-              bind:touchstart="handleTouchStart"
-              bind:touchend="handleTouchEnd">
+            bind:touchstart="handleTouchStart"
+            bind:touchend="handleTouchEnd">
             <view hidden="{{templateFlag?false:true}}">
                 <template is="list" data="{{list:list,heightFlag:heightFlag}}"/>
             </view>
@@ -89,12 +86,12 @@
                 </view>
             </view>
         </view>
-        <view hidden="{{isMore}}" wx:if="hsaMore？true:false">
+        <!--<view hidden="{{isMore}}" wx:if="hsaMore？true:false">
             加载中。。。
         </view>
         <view hidden="{{isMore}}" wx:else="hsaMore?false:true">
             没有了
-        </view>
+        </view>-->
     </scroll-view>
     <!--</view>-->
 

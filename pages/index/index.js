@@ -25,7 +25,6 @@ Page({
         isMore: true,
         page:1,
         pageSize:10,
-        loadMore:false,
         topLine:false,
         num:{},
         scroll:0
@@ -295,9 +294,10 @@ Page({
 
     },
     handleTouchTop:function () {
+        console.log(1111111111)
         if (this.data.colorTitle != this.data.dataTab.length) {
             var that = this;
-            this.setData({loadMore:true })
+            wx.showLoading({title:'加载中'})
             that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id+ '/articles?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
                 if(res.data.code == 200){
                     let arr =res.data.data.map((item)=>{
@@ -306,9 +306,12 @@ Page({
                         item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
                         return item
                     })
-                    that.setData({list: arr},()=>{
-                        wx.hideLoading();
+                    setTimeout(()=>{
+                        that.setData({list: arr},()=>{
+                            wx.hideLoading();
+                        })
                     })
+                    
                 }
 
             })
