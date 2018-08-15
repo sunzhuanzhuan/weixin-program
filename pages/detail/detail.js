@@ -17,7 +17,7 @@ Page({
         isIphoneX:false,
         article:{},
         iPhoneX:false,
-        art:''
+        art:'',
     },
     onShareAppMessage: function () {
         let that = this;
@@ -51,7 +51,6 @@ Page({
         })
     },
     onLoad(options) {
-        console.log(options)
         let that = this;
         wx.getSystemInfo({
         success: function (res) {
@@ -72,13 +71,13 @@ Page({
         wx.getStorage({
             key: 'scene',
             success: function (res) {
-                if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049 )&& options.art !=undefined) {
+                if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049 ) && options.art !=undefined) {
                     that.setData({art:options.art})
                     wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
                         that.setData({
-                            isEyes: true
+                            isEyes: true,
                         });
                     },
                     fail:function (res) {
@@ -138,7 +137,7 @@ Page({
                             })
                             that_.setData({isEyes: true},()=>{
                                 wx.navigateTo({
-                                    url:'/pages/log/detail'
+                                    url:'/pages/log/detail?nick='+res.userInfo.nickName
                                 })
                             });
                         }

@@ -14,7 +14,7 @@
 <!--图片-->
 <view class="imgBox">
 <image src="{{bgImg}}" class="img" mode="scaleToFill"></image>
-<view class="nameTitle">妞妞</view>
+<view class="nameTitle">{{name}}</view>
 <view class="name">已经知道你阅读过该文章啦</view>
 <button class="btn" bindtap="handleClose">知道啦</button>
 </view>

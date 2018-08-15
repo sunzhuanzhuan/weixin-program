@@ -1,9 +1,12 @@
 let app = getApp().globalData;
 Page({
     data:{
-        iPhoneX:false
+        iPhoneX:false,
+        name:''
     },
-    onShow:function () {
+    onLoad:function (options) {
+        console.log(options)
+        this.setData({name:options.nick})
         let that = this
         wx.getSystemInfo({
             success: function (res) {
@@ -20,10 +23,12 @@ Page({
         wx.navigateBack({
             url:'/pages/detail/detail'
         })
+        this.setData({name:''})
     },
     handleCallHome(){
         wx.navigateTo({
             url:'/pages/index/index'
         })
+        this.setData({name:''})
     }
 })
