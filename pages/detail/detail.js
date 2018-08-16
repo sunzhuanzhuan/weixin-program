@@ -64,7 +64,7 @@ Page({
             key: 'userInfo',
             success: function (res) {
                 that.setData({
-                    type: "share",
+                    type: "",
                     type1:'share'
                 });
             },
@@ -185,11 +185,12 @@ Page({
         })
     },
     handleLike() {
+        console.log(1212)
         let that = this;
         wx.getStorage({
             key: 'userInfo',
             success: function (res) {
-                that.setData({that: !that.data.isLike},()=>{
+                that.setData({isLike: !that.data.isLike},()=>{
                     if(that.data.isLike){
                         wx.request({
                             url: app.baseUrl + app.distroId + '/my/likes',
