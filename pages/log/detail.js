@@ -2,7 +2,8 @@ let app = getApp().globalData;
 Page({
     data:{
         iPhoneX:false,
-        name:''
+        name:'',
+        home: '../../images/home.png',
     },
     onLoad:function (options) {
         console.log(options)

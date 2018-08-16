@@ -1,9 +1,19 @@
+button::after{ border: none; }
 .bottomBox {
   width: 100%;
   height: 180rpx;
   background: #f6f6f6;
 }
-
+.close{
+    width:30rpx;
+    line-height:30rpx;
+    height:30rpx;
+    text-align: left;
+    margin-top:30rpx;
+    margin-right:30rpx;
+    padding-left: 30rpx;
+    float: left;
+}
 .marB {
   margin-bottom: 144rpx;
 }
@@ -69,9 +79,14 @@
 .likeBtn {
   width: 42rpx;
   height: 42rpx;
-  float: right;
-  margin-right: 180rpx;
-  margin-top: 32rpx;
+}
+likeBtnTop{
+    font-size: 28rpx;
+    line-height: 94rpx;
+    background: #ffffff;
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
 }
 
 .eyeBtn {
@@ -92,10 +107,9 @@
 .leftBtn {
   font-size: 28rpx;
   line-height: 94rpx;
-  /*display: inline-block;*/
   background: #fff;
-  /*position: absolute;*//*width: 240rpx;*//*font-size: 28rpx;*/
 }
+
 
 ._elm-button {
   position: initial;

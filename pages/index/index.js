@@ -13,6 +13,7 @@ Page({
         shareBefore: "../../images/shareBefore.png",
         likeAfter: "../../images/likeAfter.png",
         likeBefore: "../../images/likeBefore.png",
+        imgCry:'../../images/cry.png',
         flag: true,
         templateFlag: true,
         colorTitle: 0,
@@ -30,14 +31,52 @@ Page({
         scroll:0
 
     },
-    onLoad: function () {
+    onShow: function () {
+        console.log(1212)
+        wx.showShareMenu({
+            withShareTicket: true
+        })
         let that = this;
         app.tokenPromise.then(function (sessionToken) {
             if (app.sessionToken !='') {
                 wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
-                        that.setData({userInfo: res.data})
+                        that.setData({userInfo: res.data});
+                        //我的分享
+                        that.getData('/my/shares?page=1&pageSize=10','GET').then((res)=>{
+                            if(res.data.code == 200){
+                                let arr =res.data.data.map((item)=>{
+                                    item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                    item.readTimes =item.readTimes ||'0'
+                                    item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                                    return item
+                                })
+                                that.setData({shareList: arr })
+                            }
+                        })
+                        //我的喜欢
+                        that.getData('/my/likes?page=1&pageSize=10','GET').then((res)=>{
+                            if(res.data.code == 200){
+                                let arr =res.data.data.map((item)=>{
+                                    item.article.sourceWxNickname =item.article.sourceWxNickname ||'-'
+                                    item.readTimes =item.readTimes ||'0'
+                                    item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                                    return item
+                                })
+                                that.setData({likeList: arr})
+                            }
+                        })
+                        //我的数量
+                        that.getData('/my/readCount','GET').then((res)=>{
+                            if(res.data.code == 200){
+                                if(Object.keys(res.data.data).length>0){
+                                    that.setData({num:res.data.data})
+                                }else {
+
+                                }
+                            }
+                        })
                     }
                 })
                 that.getData('/lists','GET',).then((res)=>{
@@ -57,40 +96,7 @@ Page({
                         })
                     }
                 })
-                //我的分享
-                that.getData('/my/shares?page=1&pageSize=10','GET').then((res)=>{
-                    if(res.data.code == 200){
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                            return item
-                        })
-                        that.setData({shareList: arr })
-                    }
-                })
-                //我的喜欢
-                that.getData('/my/likes?page=1&pageSize=10','GET').then((res)=>{
-                    if(res.data.code == 200){
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                            return item
-                        })
-                        that.setData({likeList: arr})
-                    }
-                })
-                //我的数量
-                that.getData('/my/readCount','GET').then((res)=>{
-                    if(res.data.code == 200){
-                        if(Object.keys(res.data.data).length>0){
-                            that.setData({num:res.data.data})
-                        }else {
 
-                        }
-                    }
-                })
                 //获取屏幕的宽度
                 wx.getSystemInfo({
                     success: function (res) {
@@ -138,35 +144,48 @@ Page({
     },
     handleTab(e) {
         let that = this;
+        //我的数量
         if (e.currentTarget.dataset.name == 'share') {
             this.setData({flag: true},()=>{
-                that.getData('/my/shares?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                    if(res.data.code == 200){
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                            return item
-                        })
-                        that.setData({shareList: arr },()=>{
-                            console.log(that.data.shareList)
-                        })
+                wx.getStorage({
+                    key: 'userInfo',
+                    success: function (res) {
+                        that.getData('/my/shares?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                            if(res.data.code == 200){
+                                let arr =res.data.data.map((item)=>{
+                                    item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                    item.readTimes =item.readTimes ||'0'
+                                    item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                                    return item
+                                })
+                                that.setData({shareList: arr },()=>{
+                                    console.log(that.data.shareList)
+                                })
+                            }
+                        });
                     }
-                });
+                })
+
             })
         } else {
             this.setData({flag: false},()=>{
-                that.getData('/my/likes?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                    if(res.data.code == 200){
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
-                            return item
-                        })
-                        that.setData({likeList: arr})
+                wx.getStorage({
+                    key: 'userInfo',
+                    success: function (res) {
+                        that.getData('/my/likes?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                            if(res.data.code == 200){
+                                let arr =res.data.data.map((item)=>{
+                                    item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                    item.readTimes =item.readTimes ||'0'
+                                    item.time = util.moment(item.publicAt).format('YYYY-MM-DD')
+                                    return item
+                                })
+                                that.setData({likeList: arr})
+                            }
+                        });
                     }
-                });
+                })
+
             })
         }
     },
@@ -177,7 +196,18 @@ Page({
         let that = this;
         that.setData({scroll:10})
         if (e.currentTarget.dataset.tab == this.data.dataTab.length) {
-            this.setData({templateFlag: false, colorTitle: e.currentTarget.dataset.tab})
+            this.setData({templateFlag: false, colorTitle: e.currentTarget.dataset.tab},()=>{
+                //我的数量
+                that.getData('/my/readCount','GET').then((res)=>{
+                    if(res.data.code == 200){
+                        if(Object.keys(res.data.data).length>0){
+                            that.setData({num:res.data.data})
+                        }else {
+
+                        }
+                    }
+                })
+            })
         }
         else {
             this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab})
@@ -194,7 +224,6 @@ Page({
     },
     //跳转到详情
     handleDetail(e) {
-        // console.log()
         wx.navigateTo({
             url: '/pages/detail/detail?id='+e.currentTarget.dataset.id
         })

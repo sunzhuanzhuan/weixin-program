@@ -1,8 +1,8 @@
 <!--detail.wxml-->
 <view>
   <view class="globalNavigate" style="{{iPhoneX?'top:86rpx;':'top:40rpx'}}">
-    <view style="width:2rem;text-align: left;padding-left: 20rpx;float: left" bindtap="handleCallBack">×</view>
-    <view style="font-size: 14px;max-width:60%;text-align: center;float: left; overflow: hidden; height: 100%">{{article.title}}</view>
+    <image src="{{src}}" class="close" bindtap="handleCallBack"></image>
+    <view style="float: left;font-size: 14px;max-width:60%;text-align: center;float: left; overflow: hidden; height: 100%">{{article.title}}</view>
   </view>
   <scroll-view scroll-y  style="position: absolute;top:150rpx;height: 90%;">
      <rich-text class="_root" nodes="{{nodes}}" bindtouchstart="touchstart" bindtouchend="touchend"></rich-text>
@@ -16,22 +16,30 @@
       <!--</image>-->
     <!--</view>-->
   </scroll-view>
-
   <!--悬浮部分-->
   <view class="fixed" hidden="{{isShow}}" style="{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-    <view>
       <view class="floatShadow"></view>
-      <view hidden="{{isEyes}}" style="float:left;width: 60%;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-        <button class="leftBtn" bindgetuserinfo="handleAuthor" open-type="getUserInfo">
+      <view  style="display: flex;flex-direction: row">
+          <view wx:if="{{isEyes}}" style="flex:3;visibility: hidden;{{isIphoneX?'height:194rpx':'height:134rpx'}}">123</view>
+        <button wx:else class="leftBtn" bindgetuserinfo="handleAuthor" open-type="{{type}}"
+                style="flex:3;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+          <!--hidden="{{isEyes}}"-->
           <image class="eyeBtn" src="../../images/eye.png"></image>
-          <text class="readLetter">让朋友知道我在读</text>
+            <text class="readLetter">让朋友知道我在读</text>
         </button>
-      </view>
-      <image class='likeBtn' catchtap="handleLike" src="{{isLike?('../../images/shareLike.png'):('../../images/likeAfter.png')}}"></image>
+        <button catchtap="handleLike" bindgetuserinfo="handleAuthor" open-type="{{type}}"
+                style="opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
 
-      <image src="{{shareButton}}" class="imgBtn"></image>
-      <button bindtap="handleShare" open-type="share" class="shareButton"></button>
-    </view>
+            <image  class="imgBtn" style="position: relative;z-index: 1;"
+                    src="{{isLike?('../../images/shareLike.png'):('../../images/likeAfter.png')}}"></image>
+
+        </button>
+        <button open-type="{{type1}}" bindgetuserinfo="handleAuthor"
+                style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+          <image src="{{shareButton}}" class="imgBtn" style="position: relative;z-index: 1;"></image>
+        </button>
+
+      </view>
     <view wx:if="{{isIphoneX}}" class="bol"></view>
     <view wx:else></view>
 

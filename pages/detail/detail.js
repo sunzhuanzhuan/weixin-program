@@ -9,6 +9,9 @@ Page({
         start: '',
         end: '',
         shareButton: '../../images/shareAfter.png',
+        close:'../../images/close.png',
+        home: '../../images/home.png',
+        src:'',
         isLike: false,
         isEyes: true,
         bgImg: '',
@@ -18,6 +21,8 @@ Page({
         article:{},
         iPhoneX:false,
         art:'',
+        type:'',
+        type1:''
     },
     onShareAppMessage: function () {
         let that = this;
@@ -50,8 +55,26 @@ Page({
             })
         })
     },
+    onShow:function(){
+
+    },
     onLoad(options) {
         let that = this;
+        wx.getStorage({
+            key: 'userInfo',
+            success: function (res) {
+                that.setData({
+                    type: "share",
+                    type1:'share'
+                });
+            },
+            fail: function (res) {
+                that.setData({
+                    type: 'getUserInfo',
+                    type1:'getUserInfo'
+                });
+            }
+        })
         wx.getSystemInfo({
         success: function (res) {
         if(res.model === 'iPhone X'){
@@ -65,14 +88,15 @@ Page({
         }})
         wx.showLoading({title:'加载中'})
         this.setData({
-            
+
         },()=>{
             //读取local
+        //
         wx.getStorage({
             key: 'scene',
             success: function (res) {
-                if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049 ) && options.art !=undefined) {
-                    that.setData({art:options.art})
+                if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049 ) && options.art !=undefined ) {
+                    that.setData({art:options.art,src:that.data.home})
                     wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
@@ -97,9 +121,9 @@ Page({
                             wx.hideLoading()
                             wx.hideNavigationBarLoading();
                          })
-                    
+
                 } else {
-                    that.setData({isEyes: true,articleId:options.id })
+                    that.setData({isEyes: true,articleId:options.id ,src:that.data.close})
                     // options.id
                     wx.showNavigationBarLoading();
                     that.getData('/article/' + options.id +'/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true','GET').then((res)=>{
@@ -119,7 +143,7 @@ Page({
         })
         })
 
-        
+
     },
     //授权
     handleAuthor() {
@@ -135,11 +159,12 @@ Page({
                                 key: "userInfo",
                                 data: res.userInfo
                             })
-                            that_.setData({isEyes: true},()=>{
-                                wx.navigateTo({
-                                    url:'/pages/log/detail?nick='+res.userInfo.nickName
-                                })
-                            });
+                            that_.setData({type:'',type1:'share'})
+                            // that_.setData({isEyes: true},()=>{
+                            //     wx.navigateTo({
+                            //         url:'/pages/log/detail?nick='+res.userInfo.nickName
+                            //     })
+                            // });
                         }
                     })
                 }
@@ -161,35 +186,59 @@ Page({
     },
     handleLike() {
         let that = this;
-        this.setData({isLike: !this.data.isLike},()=>{
-            if(this.data.isLike){
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/likes',
-                    method: 'POST',
-                    header: {
-                        'X-Session-Token': app.sessionToken
-                    },
-                    data:{
-                        article:that.data.articleId
-                    },
-                    success: function (res) {
+        wx.getStorage({
+            key: 'userInfo',
+            success: function (res) {
+                that.setData({that: !that.data.isLike},()=>{
+                    if(that.data.isLike){
+                        wx.request({
+                            url: app.baseUrl + app.distroId + '/my/likes',
+                            method: 'POST',
+                            header: {
+                                'X-Session-Token': app.sessionToken
+                            },
+                            data:{
+                                article:that.data.articleId
+                            },
+                            success: function (res) {
+                            }
+                        });
+                    }else {
+                        wx.request({
+                            url: app.baseUrl + app.distroId + '/my/likes?action=del',
+                            method: 'POST',
+                            header: {
+                                'X-Session-Token': app.sessionToken
+                            },
+                            data:{
+                                article:that.data.articleId
+                            },
+                            success: function (res) {
+                            }
+                        });
                     }
                 });
-            }else {
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/likes?action=del',
-                    method: 'POST',
-                    header: {
-                        'X-Session-Token': app.sessionToken
-                    },
-                    data:{
-                        article:that.data.articleId
-                    },
-                    success: function (res) {
+
+            },
+            fail: function (res) {
+                wx.getSetting({
+                    success(res) {
+                        if (!res.authSetting['scope.userInfo']) {
+                        } else {
+                            wx.getUserInfo({
+                                withCredentials: true,
+                                success: function (res) {
+                                    wx.setStorage({
+                                        key: "userInfo",
+                                        data: res.userInfo
+                                    })
+                                }
+                            })
+                        }
                     }
-                });
+                })
             }
-        });
+        })
 
     },
 
@@ -204,7 +253,5 @@ Page({
                 url: '/pages/index/index'
             })
         }
-        
-
-    }
+    },
 })

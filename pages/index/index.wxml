@@ -52,15 +52,15 @@
                     </view>
                     <view class="readBox">
                         <view class="smallBox">
-                            <text>{{num.read}}</text>
+                            <text>{{userInfo.nickName?num.read:''}}</text>
                             <text class="readBoxName">阅读</text>
                         </view>
                         <view class="smallBox">
-                            <text>{{num.shared}}</text>
+                            <text>{{userInfo.nickName?num.shared:''}}</text>
                             <text class="readBoxName">分享</text>
                         </view>
                         <view class="smallBox">
-                            <text>{{num.liked}}</text>
+                            <text>{{userInfo.nickName?num.liked:''}}</text>
                             <text class="readBoxName">喜欢</text>
                         </view>
                     </view>
@@ -78,10 +78,11 @@
                 </view>
                 <view>
                     <view  hidden="{{flag ? false : true}}">
-                        <template is="share" data="{{shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                        <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+
                     </view>
                     <view  hidden="{{flag ? true : false}}">
-                        <template is="like"  data="{{likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                        <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
                     </view>
                 </view>
             </view>
