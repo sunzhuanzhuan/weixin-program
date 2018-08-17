@@ -4,8 +4,8 @@
     <image src="{{src}}" class="close" bindtap="handleCallBack"></image>
     <view style="float: left;font-size: 14px;max-width:60%;text-align: center;float: left; overflow: hidden; height: 100%">{{article.title}}</view>
   </view>
-  <scroll-view scroll-y  style="position: absolute;top:150rpx;height: 90%;">
-     <rich-text class="_root" nodes="{{nodes}}" bindtouchstart="touchstart" bindtouchend="touchend"></rich-text>
+  <scroll-view scroll-with-animation="true" bindscroll="logIt" scroll-y  style="position: absolute;top:150rpx;height: 90%;">
+     <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     <!--页面最下面部分-->
     <!--<view class="{{isShow?'':'marB'}}  bottomBox ">-->
       <!--<view class="wxResource">-->
