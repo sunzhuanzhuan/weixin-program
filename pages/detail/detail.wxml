@@ -4,7 +4,8 @@
     <image src="{{src}}" class="close" bindtap="handleCallBack"></image>
     <view style="float: left;font-size: 14px;max-width:60%;text-align: center;float: left; overflow: hidden; height: 100%">{{article.title}}</view>
   </view>
-  <scroll-view scroll-y  style="position: absolute;top:200rpx;height: 90%;" bindscroll="touchMove">
+  <scroll-view scroll-y style="position: absolute;top:200rpx;height: 90%;" bindscroll="touchMove"  scroll-with-animation="true" bindscroll="recordUserscroll" >
+
      <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     <!--页面最下面部分-->
     <!--<view class="{{isShow?'':'marB'}}  bottomBox ">-->
