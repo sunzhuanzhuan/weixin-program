@@ -33,8 +33,8 @@ Page({
 
         reportScrollTimeoutHandler: undefined,
         scrollStartedAt: undefined,
-        scrollStartPos: undefined
-
+        scrollStartPos: undefined,
+        viewPercentage: 0
 
     },
     onShareAppMessage: function () {
@@ -46,7 +46,10 @@ Page({
                 'X-Session-Token': app.sessionToken
             },
             data:{
-                article:that.data.articleId
+                article:that.data.articleId,
+                pos: that.data.viewPercentage,
+                view: that.data.viewId,
+                tPlus: Date.now() - (that.data.enteredAt || 0) - that.data.suspendedFor
             },
             success: function (res) {
             }
@@ -321,6 +324,7 @@ Page({
       this.data.scrollStartPos = event.detail.scrollTop + event.detail.deltaY;
     }
     this.data.reportScrollTimeoutHandler = setTimeout(function(){
+      this.data.viewPercentage = (event.detail.scrollTop / event.detail.scrollHeight) * 100;
       if (this.data.viewId && this.data.articleId) {
         wx.request({
           url: app.baseUrl + app.distroId + '/my/scrolls',
@@ -331,16 +335,17 @@ Page({
           data: {
             article: this.data.articleId,
             view: this.data.viewId,
-            tPlus: this.data.enteredAt - this.data.scrollStartedAt - this.data.suspendedFor,
+            tPlus: this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
             duration: Date.now() - this.data.scrollStartedAt,
-            startPos: this.data.scrollStartPos / event.detail.scrollHeight,
-            endPos: event.detail.scrollTop / event.detail.scrollHeight
+            startPos: (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
+            endPos: this.data.viewPercentage
           },
           success: function (res) {
           }
         });
       }
+      this.data.scrollStartedAt = undefined;
+
     }.bind(this), 500);
-    clearTimeout()
   }
 })
