@@ -26,17 +26,34 @@ Page({
         isMore: true,
         page:1,
         pageSize:10,
-        topLine:false,
         num:{},
         scroll:0
 
     },
-    onShow: function () {
-        console.log(1212)
+    onLoad: function () {
+        let that = this;
+        wx.getSystemInfo({
+            success: function (res) {
+                let model = res.model;
+                let arr = model.split(' ');
+                arr.pop()
+                let c  =arr.join(' ');
+
+                console.log(arr)
+                if(model == 'iPhone X'|| c=='iPhone X'){
+
+                    that.setData({iPhoneX: true})
+                }else {
+                    that.setData({iPhoneX: false })
+                }
+                if (model == 'iPhone X'|| c=='iPhone X') {
+                    that.setData({isIphoneX: true})
+                }else {that.setData({isIphoneX: false })}
+            }})
         wx.showShareMenu({
             withShareTicket: true
         })
-        let that = this;
+        
         app.tokenPromise.then(function (sessionToken) {
             if (app.sessionToken !='') {
                 wx.getStorage({
@@ -348,11 +365,7 @@ Page({
 
     },
     handleScroll:function(e){
-        if(e.detail.scrollTop>50 && this.data.colorTitle != this.data.dataTab.length){
-            this.setData({topLine:true})
-        }else {
-            this.setData({topLine:false})
-        }
+        
     },
     handleSuccessMore(res) {
         this.setData({isMore: false})

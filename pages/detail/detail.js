@@ -5,9 +5,7 @@ let golbal = getApp()
 Page({
     data: {
         nodes: [],
-        isShow: false,
-        start: '',
-        end: '',
+        isShow: true,
         shareButton: '../../images/shareAfter.png',
         close:'../../images/close.png',
         home: '../../images/home.png',
@@ -22,7 +20,8 @@ Page({
         iPhoneX:false,
         art:'',
         type:'',
-        type1:''
+        type1:'',
+        num:0
     },
     onShareAppMessage: function () {
         let that = this;
@@ -77,16 +76,23 @@ Page({
         })
         wx.getSystemInfo({
         success: function (res) {
-        if(res.model === 'iPhone X'){
-            that.setData({iPhoneX: true})
-        }else {
-            that.setData({iPhoneX: false })
-        }
-        if (res.model === 'iPhone X') {
-            that.setData({isIphoneX: true})
-        }else {that.setData({isIphoneX: false })}
-        }})
-        wx.showLoading({title:'加载中'})
+            let model = res.model;
+            let arr = model.split(' ');
+            arr.pop()
+            let c  =arr.join(' ');
+
+            console.log(arr)
+            if(model == 'iPhone X'|| c=='iPhone X'){
+
+                that.setData({iPhoneX: true})
+            }else {
+                that.setData({iPhoneX: false })
+            }
+            if (model == 'iPhone X'|| c=='iPhone X') {
+                that.setData({isIphoneX: true})
+            }else {that.setData({isIphoneX: false })}
+            }})
+            wx.showLoading({title:'加载中'})
         this.setData({
 
         },()=>{
@@ -171,21 +177,25 @@ Page({
             }
         })
     },
-    touchstart(e) {
-        //console.log(e.changedTouches[0].clientY);
-        this.setData({start: e.changedTouches[0].clientY})
-    },
-    touchend(e) {
-        this.setData({end: e.changedTouches[0].clientY}, () => {
-            if (this.data.start >= this.data.end) {
-                this.setData({isShow: true})
-            } else {
-                this.setData({isShow: false})
-            }
-        })
+
+    touchMove(e) {
+        let that = this;
+        setTimeout(()=>{
+            let num1 = e.detail.scrollTop;
+                if (num1 > that.data.num) {
+
+                    that.setData({isShow: false})
+
+                } else {
+                    that.setData({isShow: true})
+
+                }
+            that.data.num = num1
+
+        },500)
+
     },
     handleLike() {
-        console.log(1212)
         let that = this;
         wx.getStorage({
             key: 'userInfo',

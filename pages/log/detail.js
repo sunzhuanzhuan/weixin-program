@@ -11,7 +11,8 @@ Page({
         let that = this
         wx.getSystemInfo({
             success: function (res) {
-                if (res.model === 'iPhone X') {
+                let arr = res.model.split(' ').pop().join(' ');
+                if (res.model === 'iPhone X'|| arr=='iPhone X') {
                     that.setData({iPhoneX: true})
                 } else {
                     that.setData({iPhoneX: false})
