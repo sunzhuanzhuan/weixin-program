@@ -4,7 +4,6 @@ let golbal = getApp()
 
 Page({
     data: {
-        translate: '',
         nodes: [],
         isShow: false,
         shareButton: '../../images/shareAfter.png',
@@ -128,7 +127,8 @@ Page({
             wx.getStorage({
                 key: 'scene',
                 success: function (res) {
-                    if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
+                // && options.art != undefined
+                    if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049)) {
                         that.setData({ art: options.art, src: that.data.home })
                         wx.getStorage({
                             key: 'userInfo',
@@ -309,9 +309,9 @@ Page({
     recordUserscroll: function (event) {
         let num1 = event.detail.scrollTop;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false, transform: 'transform: translateY(20px)' })
+            this.setData({ isShow: false})
         } else {
-            this.setData({ isShow: true, transform: 'transform: translateY(-20px)' });
+            this.setData({ isShow: true });
             var animation = wx.createAnimation({
                 duration: 1000,
                 timingFunction: 'ease',

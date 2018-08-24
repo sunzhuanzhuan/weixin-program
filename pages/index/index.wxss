@@ -126,7 +126,7 @@
   position: absolute;
   top:240rpx;
   z-index: 20;
-  height:80%
+  height:82%
 }
 .lineTop{
   position: fixed;

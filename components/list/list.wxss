@@ -1,8 +1,9 @@
 .bigImg{
     width:686rpx ;
-    height:340rpx ;
-    margin-bottom: 20rpx;
+    height:360rpx ;
+    margin-top: 32rpx;
     border-radius: 4rpx;
+    display: inline-block;
 }
 .time{
 }

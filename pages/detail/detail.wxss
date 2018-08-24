@@ -7,12 +7,18 @@ button::after{ border: none; }
 .state1{
     transition:all 0.3s linear;
 }
+.closeContainer{
+    width: 100rpx;
+    height: 90rpx;
+    float: left;
+}
+
 .close{
-    width:30rpx;
-    line-height:30rpx;
-    height:30rpx;
+    width:40rpx;
+    line-height:40rpx;
+    height:40rpx;
     text-align: left;
-    margin-top:30rpx;
+    margin-top:25rpx;
     margin-right:30rpx;
     padding-left: 30rpx;
     float: left;

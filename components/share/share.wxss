@@ -14,7 +14,7 @@
 .imgBox{
     display: flex;
     position: relative;
-    height:220rpx;
+    height:200rpx;
 }
 
 .avatarRead{
@@ -40,10 +40,7 @@
     font-size: 24rpx;
 }
 .bigBox{
-    margin-top: 32rpx;
-    margin-left:32rpx;
-    margin-right: 32rpx;
-    margin-bottom:30rpx ;
+    padding:25rpx 32rpx 0rpx 32rpx;
 }
 .avatarBox{
     height: 70rpx;
