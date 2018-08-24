@@ -18,7 +18,7 @@
     <!--</view>-->
   </scroll-view>
   <!--悬浮部分-->
-  <view  class="fixed {{isShow?'show':''}} state1"  style="{{isIphoneX?'height:194rpx;':'height:134rpx'}}">
+  <view class="fixed {{isShow?'show':''}} state1">
       <view class="floatShadow"></view>
       <view  style="display: flex;flex-direction: row">
           <view wx:if="{{isEyes}}" style="flex:3;visibility: hidden;{{isIphoneX?'height:194rpx':'height:134rpx'}}">123</view>

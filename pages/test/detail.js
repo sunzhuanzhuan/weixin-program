@@ -85,6 +85,7 @@ Page({
     },
     onLoad(options) {
         let that = this;
+        app.tokenPromise.then(function (sessionToken) {
         wx.getStorage({
             key: 'userInfo',
             success: function (res) {
@@ -120,7 +121,7 @@ Page({
             }
         })
         wx.showLoading({ title: '加载中' })
-        this.setData({
+        that.setData({
 
         }, () => {
             //读取local
@@ -160,7 +161,7 @@ Page({
                         that.setData({ isEyes: true, articleId: options.id, src: that.data.close })
                         // options.id
                         wx.showNavigationBarLoading();
-                        that.getData('/article/' + options.id + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true', 'GET').then((res) => {
+                        that.getData('/article/5b7e839e52914c599b60e2be/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true', 'GET').then((res) => {
                             const r = res.data.data;
                             if (r.article) {
                                 const currentTitle = r.article.title;
@@ -177,6 +178,8 @@ Page({
                 }
             })
         })
+
+    })
 
 
     },
@@ -309,13 +312,11 @@ Page({
     recordUserscroll: function (event) {
         let num1 = event.detail.scrollTop;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false, transform: 'transform: translateY(20px)' })
+            this.setData({ isShow: false,  })
         } else {
-            this.setData({ isShow: true, transform: 'transform: translateY(-20px)' });
-            var animation = wx.createAnimation({
-                duration: 1000,
-                timingFunction: 'ease',
-            })
+            this.setData({ isShow: true, });
+
+            
         }
         this.data.num = num1
         if (!(event && event.type === 'scroll')) {

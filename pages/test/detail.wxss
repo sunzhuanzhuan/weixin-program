@@ -49,6 +49,7 @@ button::after{ border: none; }
 .show{
     bottom:0;
 }
+
 .floatShadow {
   height: 30rpx;
   opacity: 0.04;
@@ -2649,7 +2650,7 @@ likeBtnTop{
     bottom:0;
     overflow:hidden;
     -webkit-transition:width 1s;
-    transition:width 1s
+    transition:width 1s;
 }
 .with_processor .btn_progress_inner{
     right:0;
