@@ -128,6 +128,7 @@ Page({
                 key: 'scene',
                 success: function (res) {
                 //
+                const scene = res.data;
                     if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
                         that.setData({ art: options.art, src: that.data.home })
                         wx.getStorage({
@@ -142,7 +143,7 @@ Page({
                             }
                         })
                         wx.showNavigationBarLoading();
-                        that.getData('/article/' + options.art + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref=' + options.ref, 'GET').then((res) => {
+                      that.getData('/article/' + options.art + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref=' + options.ref, 'GET').then((res) => {
                             const r = res.data.data;
                             if (r.article) {
                                 const currentTitle = r.article.title;
@@ -160,7 +161,7 @@ Page({
                         that.setData({ isEyes: true, articleId: options.id, src: that.data.close })
                         // options.id
                         wx.showNavigationBarLoading();
-                        that.getData('/article/' + options.id + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true', 'GET').then((res) => {
+                      that.getData('/article/' + options.id + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true', 'GET').then((res) => {
                             const r = res.data.data;
                             if (r.article) {
                                 const currentTitle = r.article.title;

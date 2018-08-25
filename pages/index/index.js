@@ -3,6 +3,7 @@ const util = require('../../utils/util');
 
 Page({
     data: {
+        appTitle: '小鱼聚合',
         dataTab: [],
         shareList: [],
         likeList: [],
@@ -32,15 +33,15 @@ Page({
     },
     onShow:function(){
         let that = this;
-        that.getData('/my/readCount','GET').then((res)=>{
-            if(res.data.code == 200){
-                if(Object.keys(res.data.data).length>0){
-                    that.setData({num:res.data.data})
-                }else {
+        // that.getData('/my/readCount','GET').then((res)=>{
+        //     if(res.data.code == 200){
+        //         if(Object.keys(res.data.data).length>0){
+        //             that.setData({num:res.data.data})
+        //         }else {
 
-                }
-            }
-        })
+        //         }
+        //     }
+        // })
     },
     onLoad: function () {
         console.log(util.moment.locale());
@@ -67,6 +68,25 @@ Page({
             withShareTicket: true
         })
         
+      that.getData('', 'GET', ).then((res) => {
+        const r = res.data.data;
+        if (res.data.code == 200) {
+          that.setData({ appTitle: r.title, dataTab: r.lists }, () => {
+            let urlS = '/list/' + r.lists[0].id + '/articles?page=1&pageSize=' + that.data.pageSize;
+            that.getData(urlS, 'GET').then((res) => {
+              if (res.data.code == 200) {
+                let arr = res.data.data.map((item) => {
+                  item.sourceWxNickname = item.sourceWxNickname || '-'
+                  item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                  return item
+                })
+                that.setData({ list: arr })
+              }
+            })
+          })
+        }
+      })
+
         app.tokenPromise.then(function (sessionToken) {
             if (app.sessionToken !='') {
                 wx.getStorage({
@@ -109,23 +129,7 @@ Page({
                         })
                     }
                 })
-                that.getData('/lists','GET',).then((res)=>{
-                    if(res.data.code == 200){
-                        that.setData({dataTab: res.data.data},()=>{
-                            let urlS = '/list/' +res.data.data[0].id+ '/articles?page=1&pageSize='+that.data.pageSize
-                            that.getData(urlS,'GET').then((res)=>{
-                                if(res.data.code == 200){
-                                    let arr =res.data.data.map((item)=>{
-                                        item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                        item.time = util.moment(item.publicAt).startOf('days').fromNow()
-                                        return item
-                                    })
-                                    that.setData({list: arr })
-                                }
-                            })
-                        })
-                    }
-                })
+                
 
                 //获取屏幕的宽度
                 wx.getSystemInfo({
