@@ -232,6 +232,12 @@ Page({
             wx.showLoading({title:'加载中'});
             that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles','GET').then((res)=>{
                 if(res.data.code == 200){
+                    let arr =res.data.data.map((item)=>{
+                        item.sourceWxNickname =item.sourceWxNickname ||'-'
+                        item.readTimes =item.readTimes ||'0'
+                        item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                        return item
+                    })
                     that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:res.data.data},()=>{
                         wx.hideLoading();
                     })

@@ -127,8 +127,8 @@ Page({
             wx.getStorage({
                 key: 'scene',
                 success: function (res) {
-                // && options.art != undefined
-                    if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049)) {
+                //
+                    if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
                         that.setData({ art: options.art, src: that.data.home })
                         wx.getStorage({
                             key: 'userInfo',

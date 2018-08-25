@@ -11,9 +11,9 @@
                     </view>
                     <view class="bottomLine"></view>
                     <block wx:if="{{item.referencers.length>0}}">
-                        <view>
+                        <view style="margin-top: 24rpx">
                             <view class="readNum">已有<text>{{item.referencers.length}}</text>位好友阅读</view>
-                            <view class="{{shinIndex ==index?heightFlag?'avatarBox':'noHeightAvatarBox':'avatarBox'}}">
+                            <view style="margin-top: 24rpx" class="{{shinIndex ==index?heightFlag?'avatarBox':'noHeightAvatarBox':'avatarBox'}}">
                                 <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block" >
                                     <view wx:if="{{item.avatarUrl}}">
                                         <image class="avatarRead" src="{{item.avatarUrl}}"></image>
@@ -32,13 +32,15 @@
 
                     </block>
                     <block wx:else>
-                        <view class="readNum" style="padding-bottom: 20rpx">好友还没有阅读，快去问问他吧</view>
+                        <button  open-type="share"  class="readNum" style="padding-bottom: 20rpx;background: #ffffff;border:none;padding-left: 0;margin-top: 24rpx">
+                        <view>好友还没有阅读，快去问问他吧</view>
+                        </button>
                     </block>
                 </view>
 
             </view>
         </view>
-        <view wx:if="{{shareList.length==0}}" style="text-align: center">
+        <view wx:if="{{shareList.length==0}}" style="text-align: center;margin-top: 20rpx">
             <view>
                 <image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
             </view>

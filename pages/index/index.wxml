@@ -7,7 +7,7 @@
         <view style="width:30%;text-align: center;padding-left: 20rpx;float: left;visibility: hidden">x</view>
         <view style="width:30%;text-align: center;float: left;">微播易</view>
     </view>
-    <scroll-view scroll-x="true" class="titleBox"  style="{{iPhoneX?'top:206rpx;':'top:150rpx'}}">
+    <scroll-view scroll-x="true" class="titleBox"  style="background: #ffffff;{{iPhoneX?'top:206rpx;':'top:150rpx'}}">
         <view>
             <view wx:for="{{dataTab}}" wx:key="{{index}}" data-tabId="{{item.id}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab" data-tab="{{index}}">
                 <text class="{{colorTitle==index? 'dot':''}}">{{item.title}}</text>

@@ -1,6 +1,7 @@
 @import "/components/share/share.wxss";
 @import "/components/like/like.wxss";
 @import "/components/list/list.wxss";
+button::after{ border: none; }
 .readBox{
   display: flex;
   flex-direction: row;
@@ -58,8 +59,8 @@
   margin-bottom: 70rpx;
 }
 .icon{
-  height: 26rpx;
-  width:26rpx;
+  height: 30rpx;
+  width:30rpx;
   margin-right: 10rpx;
 }
 .selected{

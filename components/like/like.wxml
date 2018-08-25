@@ -17,7 +17,7 @@
             </view>
         </view>
     </view>
-    <view wx:if="{{likeList.length==0}}" style="text-align: center">
+    <view wx:if="{{likeList.length==0}}" style="text-align: center;margin-top: 20rpx">
         <view>
             <image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
         </view>
