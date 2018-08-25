@@ -30,6 +30,18 @@ Page({
         scroll:0
 
     },
+    onShow:function(){
+        let that = this;
+        that.getData('/my/readCount','GET').then((res)=>{
+            if(res.data.code == 200){
+                if(Object.keys(res.data.data).length>0){
+                    that.setData({num:res.data.data})
+                }else {
+
+                }
+            }
+        })
+    },
     onLoad: function () {
         console.log(util.moment.locale());
         let that = this;
