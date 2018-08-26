@@ -77,7 +77,7 @@ Page({
               if (res.data.code == 200) {
                 let arr = res.data.data.map((item) => {
                   item.sourceWxNickname = item.sourceWxNickname || '-'
-                  item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                  item.time = util.moment(item.publishedAt).fromNow()
                   return item
                 })
                 that.setData({ list: arr })
@@ -99,7 +99,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.sourceWxNickname =item.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({shareList: arr })
@@ -111,7 +111,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.article.sourceWxNickname =item.article.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({likeList: arr})
@@ -189,7 +189,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.sourceWxNickname =item.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({shareList: arr },()=>{
@@ -211,7 +211,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.sourceWxNickname =item.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({likeList: arr})
@@ -251,7 +251,7 @@ Page({
                     let arr =res.data.data.map((item)=>{
                         item.sourceWxNickname =item.sourceWxNickname ||'-'
                         item.readTimes =item.readTimes ||'0'
-                        item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                        item.time = util.moment(item.publishedAt).fromNow()
                         return item
                     })
                     that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:res.data.data},()=>{
@@ -314,7 +314,7 @@ Page({
                 if(res.data.code == 200){
                     let arr =res.data.data.map((item)=>{
                         item.sourceWxNickname =item.sourceWxNickname ||'-'
-                        item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                        item.time = util.moment(item.publishedAt).fromNow()
                         that.data.list.push(item)
                         return item
                     })
@@ -334,7 +334,7 @@ Page({
                         let arr =res.data.data.map((item)=>{
                             item.sourceWxNickname =item.sourceWxNickname ||'-'
                             item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                            item.time = util.moment(item.publishedAt).fromNow()
                             return item
                         })
                         that.setData({shareList: that.data.shareList.concat(arr) },()=>{
@@ -349,7 +349,7 @@ Page({
                         let arr =res.data.data.map((item)=>{
                             item.sourceWxNickname =item.sourceWxNickname ||'-'
                             item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                            item.time = util.moment(item.publishedAt).fromNow()
                             return item
                         })
                         that.setData({likeList: that.data.likeList.concat(arr)},()=>{
@@ -372,7 +372,7 @@ Page({
                     let arr =res.data.data.map((item)=>{
                         item.sourceWxNickname =item.sourceWxNickname ||'-'
                         item.readTimes =item.readTimes ||'0'
-                        item.time =util.moment(item.publicAt).startOf('days').fromNow()
+                        item.time =util.moment(item.publishedAt).fromNow()
                         return item
                     })
                     setTimeout(()=>{
