@@ -3,6 +3,7 @@ const util = require('../../utils/util');
 
 Page({
     data: {
+        appTitle: '小鱼聚合',
         dataTab: [],
         shareList: [],
         likeList: [],
@@ -70,6 +71,25 @@ Page({
             withShareTicket: true
         })
         
+      that.getData('', 'GET', ).then((res) => {
+        const r = res.data.data;
+        if (res.data.code == 200) {
+          that.setData({ appTitle: r.title, dataTab: r.lists }, () => {
+            let urlS = '/list/' + r.lists[0].id + '/articles?page=1&pageSize=' + that.data.pageSize;
+            that.getData(urlS, 'GET').then((res) => {
+              if (res.data.code == 200) {
+                let arr = res.data.data.map((item) => {
+                  item.sourceWxNickname = item.sourceWxNickname || '-'
+                  item.time = util.moment(item.publishedAt).fromNow()
+                  return item
+                })
+                that.setData({ list: arr })
+              }
+            })
+          })
+        }
+      })
+
         app.tokenPromise.then(function (sessionToken) {
             if (app.sessionToken !='') {
                 wx.getStorage({
@@ -82,7 +102,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.sourceWxNickname =item.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({shareList: arr })
@@ -94,7 +114,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.article.sourceWxNickname =item.article.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({likeList: arr})
@@ -112,23 +132,7 @@ Page({
                         })
                     }
                 })
-                that.getData('/lists','GET',).then((res)=>{
-                    if(res.data.code == 200){
-                        that.setData({dataTab: res.data.data},()=>{
-                            let urlS = '/list/' +res.data.data[0].id+ '/articles?page=1&pageSize='+that.data.pageSize
-                            that.getData(urlS,'GET').then((res)=>{
-                                if(res.data.code == 200){
-                                    let arr =res.data.data.map((item)=>{
-                                        item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                        item.time = util.moment(item.publicAt).startOf('days').fromNow()
-                                        return item
-                                    })
-                                    that.setData({list: arr })
-                                }
-                            })
-                        })
-                    }
-                })
+                
 
                 //获取屏幕的宽度
                 wx.getSystemInfo({
@@ -188,7 +192,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.sourceWxNickname =item.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({shareList: arr },()=>{
@@ -210,7 +214,7 @@ Page({
                                 let arr =res.data.data.map((item)=>{
                                     item.sourceWxNickname =item.sourceWxNickname ||'-'
                                     item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                                    item.time = util.moment(item.publishedAt).fromNow()
                                     return item
                                 })
                                 that.setData({likeList: arr})
@@ -250,7 +254,7 @@ Page({
                     let arr =res.data.data.map((item)=>{
                         item.sourceWxNickname =item.sourceWxNickname ||'-'
                         item.readTimes =item.readTimes ||'0'
-                        item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                        item.time = util.moment(item.publishedAt).fromNow()
                         return item
                     })
                     that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:res.data.data},()=>{
@@ -313,7 +317,7 @@ Page({
                 if(res.data.code == 200){
                     let arr =res.data.data.map((item)=>{
                         item.sourceWxNickname =item.sourceWxNickname ||'-'
-                        item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                        item.time = util.moment(item.publishedAt).fromNow()
                         that.data.list.push(item)
                         return item
                     })
@@ -333,7 +337,7 @@ Page({
                         let arr =res.data.data.map((item)=>{
                             item.sourceWxNickname =item.sourceWxNickname ||'-'
                             item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                            item.time = util.moment(item.publishedAt).fromNow()
                             return item
                         })
                         that.setData({shareList: that.data.shareList.concat(arr) },()=>{
@@ -348,7 +352,7 @@ Page({
                         let arr =res.data.data.map((item)=>{
                             item.sourceWxNickname =item.sourceWxNickname ||'-'
                             item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publicAt).startOf('days').fromNow()
+                            item.time = util.moment(item.publishedAt).fromNow()
                             return item
                         })
                         that.setData({likeList: that.data.likeList.concat(arr)},()=>{
@@ -362,7 +366,7 @@ Page({
 
     },
     handleTouchTop:function () {
-        console.log(1111111111)
+        // console.log(1111111111)
         if (this.data.colorTitle != this.data.dataTab.length) {
             var that = this;
             wx.showLoading({title:'加载中'})
@@ -371,7 +375,7 @@ Page({
                     let arr =res.data.data.map((item)=>{
                         item.sourceWxNickname =item.sourceWxNickname ||'-'
                         item.readTimes =item.readTimes ||'0'
-                        item.time =util.moment(item.publicAt).startOf('days').fromNow()
+                        item.time =util.moment(item.publishedAt).fromNow()
                         return item
                     })
                     setTimeout(()=>{

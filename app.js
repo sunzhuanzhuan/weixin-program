@@ -21,6 +21,7 @@ App({
         let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync(): {};
         this.globalData.appToken = extConfig.appToken||'JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo';
         this.globalData.distroId = extConfig.distroId||'5b63fb56b106d81d9b74972a';
+        this.globalData.baseUrl = (extConfig.baseUri || 'https://yijoin-d.weiboyi.com/v1/distribution') + '/';
         const tokenPromise = new Promise((resolve, reject) => {
             wx.login({
                 success: function(res) {
@@ -48,7 +49,7 @@ App({
         this.globalData.tokenPromise = tokenPromise;
     },
     globalData: {
-        baseUrl:"https://yijoin-d.weiboyi.com/v1/distribution/",
+        baseUrl:"",
         distroId: "",
         appToken: "",
         sessionToken:'',
