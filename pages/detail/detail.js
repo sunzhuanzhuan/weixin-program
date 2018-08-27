@@ -1,5 +1,4 @@
 let app = getApp().globalData;
-let golbal = getApp()
 
 
 Page({
@@ -129,32 +128,35 @@ Page({
                 success: function (res) {
                 const scene = res.data;
                     if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
-                        that.setData({ art: options.art, src: that.data.home })
-                        wx.getStorage({
-                            key: 'userInfo',
-                            success: function (res) {
-                                that.setData({
-                                    isEyes: true,
-                                });
-                            },
-                            fail: function (res) {
-                                that.setData({ isEyes: false })
-                            }
-                        })
-                        wx.showNavigationBarLoading();
-                      that.getData('/article/' + options.art + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref=' + options.ref, 'GET').then((res) => {
+                        app.tokenPromise.then(function (sessionToken) {
+                            that.setData({ art: options.art, src: that.data.home })
+                            wx.getStorage({
+                                key: 'userInfo',
+                                success: function (res) {
+                                    that.setData({
+                                        isEyes: true,
+                                    });
+                                },
+                                fail: function (res) {
+                                    that.setData({ isEyes: false })
+                                }
+                            })
+                            wx.showNavigationBarLoading();
+                            that.getData('/article/' + options.art + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref=' + options.ref, 'GET').then((res) => {
 
-                            const r = res.data.data;
-                            if (r.article) {
-                                const currentTitle = r.article.title;
-                                wx.setNavigationBarTitle({
-                                    title: currentTitle,
-                                });
-                            }
+                                const r = res.data.data;
+                                if (r.article) {
+                                    const currentTitle = r.article.title;
+                                    wx.setNavigationBarTitle({
+                                        title: currentTitle,
+                                    });
+                                }
 
-                            that.setData({ nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
-                            wx.hideLoading()
-                            wx.hideNavigationBarLoading();
+                                that.setData({ nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+                                wx.hideLoading()
+                                wx.hideNavigationBarLoading();
+                            })
+
                         })
 
                     } else {

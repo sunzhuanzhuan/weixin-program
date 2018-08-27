@@ -312,23 +312,29 @@ Page({
     handleTouchBottom(e) {
         let that = this;
         if(this.data.colorTitle != this.data.dataTab.length){
-            wx.showLoading({title:'加载中'})
-            that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+(++this.data.page)+'&pageSize='+this.data.pageSize,'GET').then((res)=>{
-                if(res.data.code == 200){
-                    let arr =res.data.data.map((item)=>{
-                        item.sourceWxNickname =item.sourceWxNickname ||'-'
-                        item.time = util.moment(item.publishedAt).fromNow()
-                        that.data.list.push(item)
-                        return item
-                    })
-                    that.setData({list: that.data.list.concat(arr) },()=>{
-                        wx.hideLoading();
-                    })
-                }
-                setTimeout(function () {
-                    that.setData({hsaMore: true})
-                },1000)
-            })
+            if(this.data.isMore){
+                wx.showLoading({title:'加载中'})
+                that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+(++this.data.page)+'&pageSize='+this.data.pageSize,'GET').then((res)=>{
+                    if(res.data.code == 200){
+                        console.log(res.data.data.length)
+                        if(res.data.data.length == 0){
+                            that.handleSuccessMore(res)
+                        }else{
+                            let arr =res.data.data.map((item)=>{
+                                item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                item.time = util.moment(item.publishedAt).fromNow()
+                                that.data.list.push(item)
+                                return item
+                            })
+                            that.setData({list: that.data.list.concat(arr) },()=>{
+                                wx.hideLoading();
+                            })
+                        }
+
+
+                    }
+                })
+            }
         }else{
             if(this.data.flag){
                 wx.showLoading({title:'加载中'})
@@ -367,26 +373,27 @@ Page({
     },
     handleTouchTop:function () {
         // console.log(1111111111)
-        if (this.data.colorTitle != this.data.dataTab.length) {
-            var that = this;
-            wx.showLoading({title:'加载中'})
-            that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id+ '/articles?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                if(res.data.code == 200){
-                    let arr =res.data.data.map((item)=>{
-                        item.sourceWxNickname =item.sourceWxNickname ||'-'
-                        item.readTimes =item.readTimes ||'0'
-                        item.time =util.moment(item.publishedAt).fromNow()
-                        return item
-                    })
-                    setTimeout(()=>{
-                        that.setData({list: arr},()=>{
-                            wx.hideLoading();
-                        })
-                    })
-                    
-                }
+        if (this.data.colorTitle != this.data.dataTab.length  ) {
+                var that = this;
+                wx.showLoading({title:'加载中'})
+                that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id+ '/articles?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                    if(res.data.code == 200){
+                        if(res.data.data.length == 0){
+                            that.handleSuccessMore(res)
+                        }else {
+                            let arr =res.data.data.map((item)=>{
+                                item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                item.readTimes =item.readTimes ||'0'
+                                item.time =util.moment(item.publishedAt).fromNow()
+                                return item
+                            })
+                                that.setData({list: arr},()=>{
+                                    wx.hideLoading();
+                                })
+                        }
+                    }
 
-            })
+                })
         }
 
     },
@@ -394,11 +401,10 @@ Page({
         
     },
     handleSuccessMore(res) {
-        this.setData({isMore: false})
         if (res.data.data.length == 0) {
-            this.setData({hsaMore: false})
+            this.setData({isMore: false})
         } else {
-            this.setData({hsaMore: true})
+            this.setData({isMore: true})
         }
     }
 

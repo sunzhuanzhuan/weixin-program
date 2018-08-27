@@ -23,7 +23,7 @@
     <block>
         <view class="lineTop"  style="{{iPhoneX?'top:300rpx;':'top:240rpx'}}"></view>
     </block>
-    <!--<view class="contentListBox">-->
+
     <scroll-view scroll-y="true" class="contentListBox"
                  scroll-top="{{scroll}}"
                 style="{{iPhoneX?'top:300rpx;':'top:240rpx'}}"
@@ -31,11 +31,8 @@
                  scroll-with-animation="true"
                  upper-threshold="100"
                  lower-threshold="100"
-                 bindscrolltoupper="handleTouchTop"
-                 bindscrolltolower="handleTouchBottom">
-          
-        
-
+                 bindscrolltolower="handleTouchBottom"
+                 bindscrolltoupper="handleTouchTop">
         <view class="contentList"
             bind:touchstart="handleTouchStart"
             bind:touchend="handleTouchEnd">
@@ -89,10 +86,10 @@
         </view>
         <!--<view hidden="{{isMore}}" wx:if="hsaMore？true:false">
             加载中。。。
-        </view>
-        <view hidden="{{isMore}}" wx:else="hsaMore?false:true">
-            没有了
         </view>-->
+        <view hidden="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+           我是有底线的
+        </view>
     </scroll-view>
     <!--</view>-->
 
