@@ -5,7 +5,7 @@
 <view class="containerBig">
     <view class="globalNavigate" style="{{iPhoneX?'top:86rpx;':'top:40rpx'}}">
         <view style="width:30%;text-align: center;padding-left: 20rpx;float: left;visibility: hidden">x</view>
-        <view style="width:30%;text-align: center;float: left;overflow: hidden;font-size: 30rpx">{{appTitle}}</view>
+        <view style="width:30%;text-align: center;float: left;font-size: 30rpx;overflow-x: hidden;height: 90rpx">{{appTitle}}</view>
     </view>
     <scroll-view scroll-x="true" class="titleBox"  style="background: #ffffff;{{iPhoneX?'top:206rpx;':'top:170rpx'}}">
         <view>

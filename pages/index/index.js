@@ -275,7 +275,7 @@ Page({
         let that = this;
         this.setData({endWidth: e.changedTouches[0].clientX})
         if (this.data.startsWidth >= this.data.screenWidth / 2) {
-            if (this.data.startsWidth - this.data.endWidth >= this.data.screenWidth / 2) {
+            if (this.data.startsWidth - this.data.endWidth >= this.data.screenWidth / 4) {
                 this.setData({templateFlag: true, colorTitle: ++this.data.colorTitle},()=>{
                     that.getData('/list/'+ this.data.dataTab[this.data.colorTitle].id+'/articles','GET').then((res)=>{
                         that.setData({list:res.data.data})
@@ -290,7 +290,7 @@ Page({
             }
         } else {
             //console.log(this.data.startsWidth-this.data.endWidth)
-            if (this.data.endWidth - this.data.startsWidth >= this.data.screenWidth / 2) {
+            if (this.data.endWidth - this.data.startsWidth >= this.data.screenWidth / 4) {
                 this.setData({templateFlag: true, colorTitle: --this.data.colorTitle},()=> {
                     that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
                         that.setData({list:res.data.data})

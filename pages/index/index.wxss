@@ -2,6 +2,11 @@
 @import "/components/like/like.wxss";
 @import "/components/list/list.wxss";
 button::after{ border: none; }
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+}
 .readBox{
   display: flex;
   flex-direction: row;
@@ -37,6 +42,7 @@ button::after{ border: none; }
   white-space: nowrap;
   position: fixed;
   top:150rpx;
+  overflow-x: auto;
 }
 .plTop36{
   margin-top: 72rpx;

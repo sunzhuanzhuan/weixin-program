@@ -1,37 +1,44 @@
 <template name="list">
-    <view wx:for="{{list}}" class="container"  wx:key="{{index}}">
-        <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
-            <view class="bigBox">
-                <view class="imgBox">
-                    <image class="img" src="{{item.coverUrl}}"  mode="center " lazy-load></image>
-                    <view class="letterBox ">
-                        <view class="nowrap">{{item.title}}</view>
-                        <view class="letter">
-                            <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
-                            <text class="time">{{item.time}}</text>
-                            <text class="time flright">{{item.readTimes}}阅读</text>
+    <block  wx:if="{{list.length>0}}" >
+        <view wx:for="{{list}}" class="container"  wx:key="{{index}}">
+            <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
+                <view class="bigBox">
+                    <view class="imgBox">
+                        <image class="img" src="{{item.coverUrl}}"  mode="center " lazy-load></image>
+                        <view class="letterBox ">
+                            <view class="nowrap">{{item.title}}</view>
+                            <view class="letter">
+                                <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
+                                <text class="time">{{item.time}}</text>
+                                <text class="time flright">{{item.readTimes}}阅读</text>
+                            </view>
                         </view>
                     </view>
                 </view>
-            </view>
 
-        </view>
-        <view wx:else bindtap="handleDetail"  data-id="{{item.id}}">
-            <view class="bigBox">
-                <view>
-                    <view class="content">
-                        <image class="bigImg" src="{{item.coverUrl}}"  mode="aspectFill" lazy-load></image>
-                        <view class="nowrapBig">{{item.title}}</view>
-                    </view>
+            </view>
+            <view wx:else bindtap="handleDetail"  data-id="{{item.id}}">
+                <view class="bigBox">
                     <view>
-                        <view class="readResource">
-                            <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
-                            <text class="time">{{item.time}}</text>
-                            <text class="time flright">{{item.readTimes}}阅读</text>
+                        <view class="content">
+                            <image class="bigImg" src="{{item.coverUrl}}"  mode="aspectFill" lazy-load></image>
+                            <view class="nowrapBig">{{item.title}}</view>
+                        </view>
+                        <view>
+                            <view class="readResource">
+                                <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
+                                <text class="time">{{item.time}}</text>
+                                <text class="time flright">{{item.readTimes}}阅读</text>
+                            </view>
                         </view>
                     </view>
                 </view>
             </view>
         </view>
-    </view>
+    </block>
+    <block wx:else>
+        <view style="width: 100%;height: 1000rpx;"></view>
+    </block>
+
+
 </template>
