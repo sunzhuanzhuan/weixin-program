@@ -5,7 +5,7 @@ let golbal = getApp()
 Page({
     data: {
         nodes: [],
-        isShow: false,
+        isShow: true,
         shareButton: '../../images/shareAfter.png',
         close: '../../images/close.png',
         home: '../../images/home.png',
@@ -127,7 +127,6 @@ Page({
             wx.getStorage({
                 key: 'scene',
                 success: function (res) {
-                //
                     if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
                         that.setData({ art: options.art, src: that.data.home })
                         wx.getStorage({
@@ -142,6 +141,7 @@ Page({
                             }
                         })
                         wx.showNavigationBarLoading();
+                        console.log('/article/' + options.art + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref=' + options.ref)
                         that.getData('/article/' + options.art + '/richText?mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref=' + options.ref, 'GET').then((res) => {
                             const r = res.data.data;
                             if (r.article) {

@@ -4,6 +4,22 @@ Page({
         iPhoneX:false,
         name:'',
         home: '../../images/home.png',
+        bgImg:'../../images/date.png',
+        year:'',
+        month:'',
+        day:''
+    },
+    onShow:function(){
+        let a ='';
+        if(new Date().getMonth()+1<10){
+            a = "0"+(new Date().getMonth()+1);
+        }
+
+        this.setData({
+            year:new Date().getFullYear(),
+            month:a,
+            day:new Date().getDate()
+        })
     },
     onLoad:function (options) {
         console.log(options)

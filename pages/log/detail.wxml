@@ -12,8 +12,13 @@
 <!--文字-->
 <view class="letter">点击左上角的回到主页发现更多的好文章好！</view>
 <!--图片-->
-<view class="imgBox">
-<image src="{{bgImg}}" class="img" mode="scaleToFill"></image>
+<view class="imgBox" style="background-image: url({{bgImg}});background-size: cover ">
+<!--<image src="{{bgImg}}" style="width:100%;height: 100%;"></image>-->
+   <view class="time">
+       <text style="margin-left: 60rpx;font-size: 50rpx">{{year}}</text>
+       <text style="margin-left: 100rpx">{{month}}</text>
+       <text style="margin-left: 155rpx">{{day}}</text>
+   </view>
 <view class="nameTitle">{{name}}</view>
 <view class="name">已经知道你阅读过该文章啦</view>
 <button class="btn" bindtap="handleClose">知道啦</button>
