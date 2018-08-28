@@ -22,7 +22,7 @@ button::after{ border: none; }
   border-radius: 50%;
   width:140rpx ;
   height:140rpx;
-  background:#f6f6f6 ;
+  /*background:#f6f6f6 ;*/
   text-align: center;
 
 }
@@ -128,6 +128,7 @@ button::after{ border: none; }
 .contentList{
   overflow-x: hidden;
   width: 100%;
+  -webkit-overflow-scrolling: auto
 }
 .contentListBox{
   position: absolute;

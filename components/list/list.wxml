@@ -35,9 +35,20 @@
                 </view>
             </view>
         </view>
+        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+        </view>
+        <view wx:else style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+            我是有底线的！
+        </view>
     </block>
     <block wx:else>
         <view style="width: 100%;height: 1000rpx;"></view>
+        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;position: fixed;bottom: -800rpx">
+
+        </view>
+        <view wx:else style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;position: fixed;bottom: 0">
+            我是有底线的！
+        </view>
     </block>
 
 

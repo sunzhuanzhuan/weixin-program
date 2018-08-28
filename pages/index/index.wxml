@@ -3,9 +3,9 @@
 <import src="/components/like/like.wxml" />
 <import src="/components/list/list.wxml" />
 <view class="containerBig">
-    <view class="globalNavigate" style="{{iPhoneX?'top:86rpx;':'top:40rpx'}}">
-        <view style="width:30%;text-align: center;padding-left: 20rpx;float: left;visibility: hidden">x</view>
-        <view style="width:30%;text-align: center;float: left;font-size: 30rpx;overflow-x: hidden;height: 90rpx">{{appTitle}}</view>
+    <view class="globalNavigate" style="background: #ffffff;{{iPhoneX?'top:86rpx;':'top:40rpx'}}">
+        <!--<view style="width:30%;text-align: center;padding-left: 20rpx;float: left;visibility: hidden">x</view>-->
+        <view style="padding-left:50rpx;font-size: 36rpx;font-family: 'PingFang SC';width:50%;overflow: hidden;height: 90rpx;white-space:nowrap;text-overflow:ellipsis;">{{appTitle}}</view>
     </view>
     <scroll-view scroll-x="true" class="titleBox"  style="background: #ffffff;{{iPhoneX?'top:206rpx;':'top:170rpx'}}">
         <view>
@@ -26,70 +26,70 @@
 
     <scroll-view scroll-y="true" class="contentListBox"
                  scroll-top="{{scroll}}"
-                style="{{iPhoneX?'top:300rpx;':'top:240rpx'}}"
+                 style="{{iPhoneX?'top:300rpx;':'top:240rpx'}}"
                  bindscroll="handleScroll"
-                 scroll-with-animation="true"
                  upper-threshold="100"
                  lower-threshold="100"
-                 bindscrolltolower="handleTouchBottom"
-                 bindscrolltoupper="handleTouchTop">
+                 catchscrolltolower="handleTouchBottom"
+                 catchscrolltoupper="handleTouchTop">
         <view class="contentList"
             bind:touchstart="handleTouchStart"
             bind:touchend="handleTouchEnd">
-            <view hidden="{{templateFlag?false:true}}">
-                <template is="list" data="{{list:list,heightFlag:heightFlag}}"/>
-            </view>
-            <view hidden="{{templateFlag?true:false}}">
-                <view class="plBottm28">
-                    <view class="smallBox plTop36 plBottm32">
-                        <view  class="avatar">
-                            <image style="width: 140rpx;height: 140rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image></view>
-                        <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">{{userInfo.nickName?userInfo.nickName:'我要登录'}}</button>
+            <block>
+                <view hidden="{{templateFlag?false:true}}">
+                    <template is="list" data="{{list:list,heightFlag:heightFlag,isMore:isMore}}"/>
+                </view>
+                <view hidden="{{templateFlag?true:false}}">
+                    <view class="plBottm28">
+                        <view class="smallBox plTop36 plBottm32">
 
-                    </view>
-                    <view class="readBox">
-                        <view class="smallBox">
-                            <text>{{userInfo.nickName?num.read:''}}</text>
-                            <text class="readBoxName">阅读</text>
-                        </view>
-                        <view class="smallBox">
-                            <text>{{userInfo.nickName?num.shared:''}}</text>
-                            <text class="readBoxName">分享</text>
-                        </view>
-                        <view class="smallBox">
-                            <text>{{userInfo.nickName?num.liked:''}}</text>
-                            <text class="readBoxName">喜欢</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="line"></view>
-                <view class="shareBox">
-                    <view bindtap="handleTab" data-name="share">
-                        <image class="icon" src="{{flag?shareAfter:shareBefore}}"></image>
-                        <text class="{{flag ?'selected':'none'}}">我的分享</text>
-                    </view>
-                    <view bindtap="handleTab" data-name="like">
-                        <image class="icon" src="{{flag== 'true'?likeBefore:likeAfter}}"></image>
-                        <text class="{{flag?'none':'selected'}}">我的喜欢</text>
-                    </view>
-                </view>
-                <view>
-                    <view  hidden="{{flag ? false : true}}">
-                        <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                            <view>
+                                <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                                    <image style="width: 140rpx;height: 140rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
+                                    <view  class="avatar">{{userInfo.nickName?userInfo.nickName:'我要登录'}}</view></button></view>
 
+                        </view>
+                        <view class="readBox">
+                            <view class="smallBox">
+                                <text>{{userInfo.nickName?num.read:''}}</text>
+                                <text class="readBoxName">阅读</text>
+                            </view>
+                            <view class="smallBox">
+                                <text>{{userInfo.nickName?num.shared:''}}</text>
+                                <text class="readBoxName">分享</text>
+                            </view>
+                            <view class="smallBox">
+                                <text>{{userInfo.nickName?num.liked:''}}</text>
+                                <text class="readBoxName">喜欢</text>
+                            </view>
+                        </view>
                     </view>
-                    <view  hidden="{{flag ? true : false}}">
-                        <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                    <view class="line"></view>
+                    <view class="shareBox">
+                        <view bindtap="handleTab" data-name="share">
+                            <image class="icon" src="{{flag?shareAfter:shareBefore}}"></image>
+                            <text class="{{flag ?'selected':'none'}}">我的分享</text>
+                        </view>
+                        <view bindtap="handleTab" data-name="like">
+                            <image class="icon" src="{{flag== 'true'?likeBefore:likeAfter}}"></image>
+                            <text class="{{flag?'none':'selected'}}">我的喜欢</text>
+                        </view>
+                    </view>
+                    <view>
+                        <view  hidden="{{flag ? false : true}}">
+                            <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+
+                        </view>
+                        <view  hidden="{{flag ? true : false}}">
+                            <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                        </view>
                     </view>
                 </view>
-            </view>
+            </block>
+
+
         </view>
-        <!--<view hidden="{{isMore}}" wx:if="hsaMore？true:false">
-            加载中。。。
-        </view>-->
-        <view hidden="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
-           我是有底线的
-        </view>
+
     </scroll-view>
     <!--</view>-->
 

@@ -31,32 +31,100 @@ Page({
         scroll:0
 
     },
+    //获取阅读量
+    handleRead:function(){
+        let that = this;
+        wx.showLoading({title:'加载中'})
+        this.getData('/my/readCount','GET').then((res)=>{
+            if(res.data.code == 200){
+                if(Object.keys(res.data.data).length>0){
+                    that.setData({num:res.data.data},()=>{
+                        wx.hideLoading();
+                    })
+                }
+            }
+        })
+    },
+    //获取分享的数量
+    handleShare:function(page,pageSize){
+        let that = this;
+        wx.showLoading({title:'加载中'})
+        this.getData('/my/shares?page='+page+'&pageSize='+pageSize,'GET').then((res)=>{
+            if(res.data.code == 200){
+                let arr =res.data.data.map((item)=>{
+                    item.sourceWxNickname =item.sourceWxNickname ||'-'
+                    item.readTimes =item.readTimes ||'0'
+                    item.time = util.moment(item.publishedAt).fromNow()
+                    return item
+                })
+                that.setData({shareList: that.data.shareList.concat(arr)},()=>{
+                    wx.hideLoading();
+                })
+            }
+        })
+    },
+    //获取喜欢的数量
+    handleLike:function(page,pageSize){
+        let that = this;
+        wx.showLoading({title:'加载中'})
+        this.getData('/my/likes?page='+page+'&pageSize='+pageSize,'GET').then((res)=>{
+            if(res.data.code == 200){
+                let arr =res.data.data.map((item)=>{
+                    item.article.sourceWxNickname =item.article.sourceWxNickname ||'-'
+                    item.readTimes =item.readTimes ||'0'
+                    item.time = util.moment(item.publishedAt).fromNow()
+                    return item
+                })
+                that.setData({likeList: that.data.likeList.concat(arr)},()=>{
+                    wx.hideLoading();
+                })
+            }
+        })
+    },
+    //获取列表的页面
+    handleList:function(id,page,pageSize){
+        let that = this;
+        wx.showLoading({title:'加载中'});
+        let urlS = '/list/' + id + '/articles?page='+page+'&pageSize=' +pageSize;
+        this.getData(urlS, 'GET').then((res) => {
+            if (res.data.code == 200) {
+                if(res.data.data.length == 0){
+                    that.handleSuccessMore(res);
+                    wx.hideLoading();
+                }else{
+                    let arr =res.data.data.map((item)=>{
+                        item.sourceWxNickname =item.sourceWxNickname ||'-'
+                        item.time = util.moment(item.publishedAt).fromNow()
+                        return item
+                    })
+                    that.setData({list: that.data.list.concat(arr) },()=>{
+                        wx.hideLoading();
+                    })
+                }
+            }
+        })
+    },
+
     onShow:function(){
         let that = this;
+        wx.showShareMenu({withShareTicket: true})
         app.tokenPromise.then(function (sessionToken) {
-            that.getData('/my/readCount','GET').then((res)=>{
-                if(res.data.code == 200){
-                    if(Object.keys(res.data.data).length>0){
-                        that.setData({num:res.data.data})
-                    }else {
-
-                    }
-                }
-            })
+            that.handleRead()
         })
 
     },
     onLoad: function () {
-        console.log(util.moment.locale());
         let that = this;
         wx.getSystemInfo({
             success: function (res) {
+                console.log(res.model)
+                console.log(res.statusBarHeight)
+                console.log(res.screenHeight)
+                console.log(res.windowHeight);
                 let model = res.model;
                 let arr = model.split(' ');
                 arr.pop()
                 let c  =arr.join(' ');
-
-                console.log(arr)
                 if(model == 'iPhone X'|| c=='iPhone X'){
 
                     that.setData({iPhoneX: true})
@@ -67,28 +135,15 @@ Page({
                     that.setData({isIphoneX: true})
                 }else {that.setData({isIphoneX: false })}
             }})
-        wx.showShareMenu({
-            withShareTicket: true
-        })
-        
-      that.getData('', 'GET', ).then((res) => {
-        const r = res.data.data;
-        if (res.data.code == 200) {
-          that.setData({ appTitle: r.title, dataTab: r.lists }, () => {
-            let urlS = '/list/' + r.lists[0].id + '/articles?page=1&pageSize=' + that.data.pageSize;
-            that.getData(urlS, 'GET').then((res) => {
-              if (res.data.code == 200) {
-                let arr = res.data.data.map((item) => {
-                  item.sourceWxNickname = item.sourceWxNickname || '-'
-                  item.time = util.moment(item.publishedAt).fromNow()
-                  return item
+        //文章列表
+        that.getData('', 'GET', ).then((res) => {
+            const r = res.data.data;
+            if (res.data.code == 200) {
+                that.setData({ appTitle: r.title, dataTab: r.lists }, () => {
+                    that.handleList(r.lists[0].id,1,10)
                 })
-                that.setData({ list: arr })
-              }
-            })
-          })
-        }
-      })
+            }
+        })
 
         app.tokenPromise.then(function (sessionToken) {
             if (app.sessionToken !='') {
@@ -97,42 +152,13 @@ Page({
                     success: function (res) {
                         that.setData({userInfo: res.data});
                         //我的分享
-                        that.getData('/my/shares?page=1&pageSize=10','GET').then((res)=>{
-                            if(res.data.code == 200){
-                                let arr =res.data.data.map((item)=>{
-                                    item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                    item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publishedAt).fromNow()
-                                    return item
-                                })
-                                that.setData({shareList: arr })
-                            }
-                        })
+                        that.handleShare(1,10)
                         //我的喜欢
-                        that.getData('/my/likes?page=1&pageSize=10','GET').then((res)=>{
-                            if(res.data.code == 200){
-                                let arr =res.data.data.map((item)=>{
-                                    item.article.sourceWxNickname =item.article.sourceWxNickname ||'-'
-                                    item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publishedAt).fromNow()
-                                    return item
-                                })
-                                that.setData({likeList: arr})
-                            }
-                        })
+                        that.handleLike(1,10)
                         //我的数量
-                        that.getData('/my/readCount','GET').then((res)=>{
-                            if(res.data.code == 200){
-                                if(Object.keys(res.data.data).length>0){
-                                    that.setData({num:res.data.data})
-                                }else {
-
-                                }
-                            }
-                        })
+                        that.handleRead()
                     }
                 })
-                
 
                 //获取屏幕的宽度
                 wx.getSystemInfo({
@@ -142,8 +168,6 @@ Page({
                 });
             }
         });
-
-
     },
     
     getData:function(url,method,data){
@@ -181,25 +205,12 @@ Page({
     },
     handleTab(e) {
         let that = this;
-        //我的数量
         if (e.currentTarget.dataset.name == 'share') {
             this.setData({flag: true},()=>{
                 wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
-                        that.getData('/my/shares?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                            if(res.data.code == 200){
-                                let arr =res.data.data.map((item)=>{
-                                    item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                    item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publishedAt).fromNow()
-                                    return item
-                                })
-                                that.setData({shareList: arr },()=>{
-                                    console.log(that.data.shareList)
-                                })
-                            }
-                        });
+                        that.handleShare(1,10)
                     }
                 })
 
@@ -209,17 +220,7 @@ Page({
                 wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
-                        that.getData('/my/likes?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                            if(res.data.code == 200){
-                                let arr =res.data.data.map((item)=>{
-                                    item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                    item.readTimes =item.readTimes ||'0'
-                                    item.time = util.moment(item.publishedAt).fromNow()
-                                    return item
-                                })
-                                that.setData({likeList: arr})
-                            }
-                        });
+                        that.handleLike(1,10);
                     }
                 })
 
@@ -231,37 +232,30 @@ Page({
     },
     handleTitleTab(e) {
         let that = this;
-        that.setData({scroll:10})
+        that.setData({scroll:10,isMore: true,page:1})
         if (e.currentTarget.dataset.tab == this.data.dataTab.length) {
             this.setData({templateFlag: false, colorTitle: e.currentTarget.dataset.tab},()=>{
                 //我的数量
-                that.getData('/my/readCount','GET').then((res)=>{
-                    if(res.data.code == 200){
-                        if(Object.keys(res.data.data).length>0){
-                            that.setData({num:res.data.data})
-                        }else {
-
-                        }
-                    }
-                })
+                that.handleRead()
             })
         }
         else {
-            this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab})
-            wx.showLoading({title:'加载中'});
-            that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles','GET').then((res)=>{
-                if(res.data.code == 200){
-                    let arr =res.data.data.map((item)=>{
-                        item.sourceWxNickname =item.sourceWxNickname ||'-'
-                        item.readTimes =item.readTimes ||'0'
-                        item.time = util.moment(item.publishedAt).fromNow()
-                        return item
-                    })
-                    that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:res.data.data},()=>{
-                        wx.hideLoading();
-                    })
-                }
-            });
+            this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab},()=>{
+                that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles?page=1&pageSize=10','GET').then((res)=>{
+                    if(res.data.code == 200){
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.readTimes =item.readTimes ||'0'
+                            item.time = util.moment(item.publishedAt).fromNow()
+                            return item
+                        })
+                        that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:res.data.data},()=>{
+                            wx.hideLoading();
+                        })
+                    }
+                });
+
+            })
 
         }
     },
@@ -273,37 +267,37 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        this.setData({endWidth: e.changedTouches[0].clientX})
-        if (this.data.startsWidth >= this.data.screenWidth / 2) {
-            if (this.data.startsWidth - this.data.endWidth >= this.data.screenWidth / 4) {
-                this.setData({templateFlag: true, colorTitle: ++this.data.colorTitle},()=>{
-                    that.getData('/list/'+ this.data.dataTab[this.data.colorTitle].id+'/articles','GET').then((res)=>{
-                        that.setData({list:res.data.data})
-                    })
-                });
+        this.setData({endWidth: e.changedTouches[0].clientX,isMore: true,page:1},()=>{
+            if (that.data.startsWidth >= that.data.screenWidth / 2) {
+                if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
+                    that.setData({templateFlag: true, colorTitle: ++that.data.colorTitle},()=>{
+                        that.getData('/list/'+ this.data.dataTab[that.data.colorTitle].id+'/articles','GET').then((res)=>{
+                            that.setData({list:res.data.data})
+                        })
+                    });
 
-                if (this.data.colorTitle > this.data.dataTab.length) {
-                    this.setData({templateFlag: true, colorTitle: 0})
-                } else if (this.data.colorTitle == this.data.dataTab.length) {
-                    this.setData({templateFlag: false, colorTitle: this.data.dataTab.length})
+                    if (that.data.colorTitle > that.data.dataTab.length) {
+                        that.setData({templateFlag: true, colorTitle: 0})
+                    } else if (that.data.colorTitle == that.data.dataTab.length) {
+                        that.setData({templateFlag: false, colorTitle: that.data.dataTab.length})
+                    }
+                }
+            } else {
+                //console.log(this.data.startsWidth-this.data.endWidth)
+                if (that.data.endWidth - that.data.startsWidth >= that.data.screenWidth / 4) {
+                    that.setData({templateFlag: true, colorTitle: --that.data.colorTitle},()=> {
+                        that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                            that.setData({list:res.data.data})
+                        })
+                    })
+                    if (that.data.colorTitle > that.data.dataTab.length) {
+                        that.setData({templateFlag: true, colorTitle: 0})
+                    } else if (this.data.colorTitle < 0) {
+                        that.setData({templateFlag: false, colorTitle: that.data.dataTab.length})
+                    }
                 }
             }
-        } else {
-            //console.log(this.data.startsWidth-this.data.endWidth)
-            if (this.data.endWidth - this.data.startsWidth >= this.data.screenWidth / 4) {
-                this.setData({templateFlag: true, colorTitle: --this.data.colorTitle},()=> {
-                    that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                        that.setData({list:res.data.data})
-                    })
-                })
-                if (this.data.colorTitle > this.data.dataTab.length) {
-                    this.setData({templateFlag: true, colorTitle: 0})
-                } else if (this.data.colorTitle < 0) {
-                    this.setData({templateFlag: false, colorTitle: this.data.dataTab.length})
-                }
-            }
-        }
-
+        })
     },
     handleTouchStart(e) {
         this.setData({startsWidth: e.changedTouches[0].clientX})
@@ -313,92 +307,25 @@ Page({
         let that = this;
         if(this.data.colorTitle != this.data.dataTab.length){
             if(this.data.isMore){
-                wx.showLoading({title:'加载中'})
-                that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+(++this.data.page)+'&pageSize='+this.data.pageSize,'GET').then((res)=>{
-                    if(res.data.code == 200){
-                        if(res.data.data.length == 0){
-                            that.handleSuccessMore(res)
-                        }else{
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.time = util.moment(item.publishedAt).fromNow()
-                                that.data.list.push(item)
-                                return item
-                            })
-                            that.setData({list: that.data.list.concat(arr) },()=>{
-                                wx.hideLoading();
-                            })
-                        }
-                    }
-                })
+                this.handleList(this.data.dataTab[this.data.colorTitle].id,++this.data.page,this.data.pageSize)
             }else {
                 wx.hideLoading();
             }
-
         }else{
             if(this.data.flag){
-                wx.showLoading({title:'加载中'})
-                that.getData('/my/shares?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                    if(res.data.code == 200){
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publishedAt).fromNow()
-                            return item
-                        })
-                        that.setData({shareList: that.data.shareList.concat(arr) },()=>{
-                            wx.hideLoading();
-                        })
-                    }
-                })
+                this.handleShare(++that.data.page,that.data.pageSize)
             }else{
-                wx.showLoading({title:'加载中'})
-                that.getData('/my/likes?page='+(++that.data.page)+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                    if(res.data.code == 200){
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publishedAt).fromNow()
-                            return item
-                        })
-                        that.setData({likeList: that.data.likeList.concat(arr)},()=>{
-                            wx.hideLoading();
-                        })
-                    }
-
-                })
+                this.handleLike(++that.data.page,that.data.pageSize)
             }
         }
 
     },
     handleTouchTop:function () {
-        // console.log(1111111111)
         if (this.data.colorTitle != this.data.dataTab.length  ) {
-                var that = this;
+                this.handleList(this.data.dataTab[this.data.colorTitle].id,1,10)
                 wx.showLoading({title:'加载中'})
-                that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id+ '/articles?page=1&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                    if(res.data.code == 200){
-                        if(res.data.data.length == 0){
-                            that.handleSuccessMore(res)
-                        }else {
-                            let arr =res.data.data.map((item)=>{
-                                item.sourceWxNickname =item.sourceWxNickname ||'-'
-                                item.readTimes =item.readTimes ||'0'
-                                item.time =util.moment(item.publishedAt).fromNow()
-                                return item
-                            })
-                                that.setData({list: arr},()=>{
-                                    wx.hideLoading();
-                                })
-                        }
-                    }
-
-                })
         }
 
-    },
-    handleScroll:function(e){
-        
     },
     handleSuccessMore(res) {
         if (res.data.data.length == 0) {
