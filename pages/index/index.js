@@ -316,7 +316,6 @@ Page({
                 wx.showLoading({title:'加载中'})
                 that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+(++this.data.page)+'&pageSize='+this.data.pageSize,'GET').then((res)=>{
                     if(res.data.code == 200){
-                        console.log(res.data.data.length)
                         if(res.data.data.length == 0){
                             that.handleSuccessMore(res)
                         }else{
@@ -330,11 +329,12 @@ Page({
                                 wx.hideLoading();
                             })
                         }
-
-
                     }
                 })
+            }else {
+                wx.hideLoading();
             }
+
         }else{
             if(this.data.flag){
                 wx.showLoading({title:'加载中'})

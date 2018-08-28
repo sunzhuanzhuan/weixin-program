@@ -198,11 +198,11 @@ Page({
                                 data: res.userInfo
                             })
                             that_.setData({ type: '', type1: 'share' })
-                            // that_.setData({isEyes: true},()=>{
-                            //     wx.navigateTo({
-                            //         url:'/pages/log/detail?nick='+res.userInfo.nickName
-                            //     })
-                            // });
+                            that_.setData({isEyes: true},()=>{
+                                wx.navigateTo({
+                                    url:'/pages/log/detail?nick='+res.userInfo.nickName
+                                })
+                            });
                         }
                     })
                 }
