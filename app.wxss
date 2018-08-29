@@ -4,8 +4,6 @@
 }
 page {
   height:100%;
-  /*overflow-x: auto;*/
-  /*overflow-y: auto;*/
 }
 .globalNavigate{
   width: 100%;

@@ -4,7 +4,7 @@
     <view  class="closeContainer" bindtap="handleCallBack"><image src="{{src}}" class="close"></image></view>
     <view style="float: left;font-size: 14px;width:40%;overflow: hidden; height: 100%">{{article.title}}</view>
   </view>
-  <scroll-view scroll-y style="position: absolute;{{iPhoneX?'top:210rpx;':'top:202rpx'}};height: 91%;" bindscroll="recordUserscroll" >
+  <scroll-view scroll-y style="position: absolute;{{iPhoneX?'top:210rpx;':'top:160rpx'}};height: 91%;" bindscroll="recordUserscroll" >
      <rich-text class="_root" nodes="{{nodes}}"></rich-text>
   </scroll-view>
   <!--悬浮部分-->

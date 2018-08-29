@@ -1,5 +1,6 @@
 <template name="share">
-        <view wx:if="{{shareList.length>0}}" wx:for="{{shareList}}" class="container"  wx:key="{{index}}">
+    <block wx:if="{{shareList.length>0}}" >
+        <view wx:for="{{shareList}}" class="container"  wx:key="{{index}}">
             <view class="box"  data-id="{{item.id}}"  >
                 <view class="bigBox">
                     <view class="imgBox" bindtap="handleDetail" data-id="{{item.article.id}}" >
@@ -31,19 +32,29 @@
                     </block>
                     <block wx:else>
                         <button  open-type="share"  class="readNum" style="padding-bottom: 20rpx;background: #ffffff;border:none;padding-left: 0;margin-top: 24rpx">
-                        <view>好友还没有阅读，快去问问他吧</view>
+                            <view>好友还没有阅读，快去问问他吧</view>
                         </button>
                     </block>
                 </view>
 
             </view>
         </view>
+        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+        </view>
+        <view wx:else style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+            我是有底线的！
+        </view>
+    </block>
+    <block>
         <view wx:if="{{shareList.length==0}}" style="text-align: center;margin-top: 20rpx">
             <view>
                 <image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
             </view>
-           <view>
-               <text style="font-size: 28rpx;color: #c3c3c3">分享为空</text>
-           </view>
+            <view>
+                <text style="font-size: 28rpx;color: #c3c3c3">分享为空</text>
+            </view>
         </view>
+    </block>
+
+
 </template>

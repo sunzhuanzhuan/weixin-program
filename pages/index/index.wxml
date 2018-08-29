@@ -4,10 +4,9 @@
 <import src="/components/list/list.wxml" />
 <view class="containerBig">
     <view class="globalNavigate" style="background: #ffffff;{{iPhoneX?'top:86rpx;':'top:40rpx'}}">
-        <!--<view style="width:30%;text-align: center;padding-left: 20rpx;float: left;visibility: hidden">x</view>-->
         <view style="padding-left:50rpx;font-size: 36rpx;font-family: 'PingFang SC';width:50%;overflow: hidden;height: 90rpx;white-space:nowrap;text-overflow:ellipsis;">{{appTitle}}</view>
     </view>
-    <scroll-view scroll-x="true" class="titleBox"  style="background: #ffffff;{{iPhoneX?'top:206rpx;':'top:170rpx'}}">
+    <scroll-view scroll-x="true" class="titleBox"  style="{{iPhoneX?'top:206rpx;':''}}">
         <view>
             <view wx:for="{{dataTab}}" wx:key="{{index}}" data-tabId="{{item.id}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab" data-tab="{{index}}">
                 <text class="{{colorTitle==index? 'dot':''}}">{{item.title}}</text>
@@ -77,11 +76,11 @@
                     </view>
                     <view>
                         <view  hidden="{{flag ? false : true}}">
-                            <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                            <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
 
                         </view>
                         <view  hidden="{{flag ? true : false}}">
-                            <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex}}"/>
+                            <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
                         </view>
                     </view>
                 </view>

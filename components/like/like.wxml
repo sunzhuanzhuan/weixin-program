@@ -1,28 +1,42 @@
 <template name="like">
-    <view wx:if="{{likeList.length>0}}" wx:for="{{likeList}}"  class="container"  wx:key="{{index}}"  bindtap="handleDetail" data-id="{{item.article.id}}">
-        <view>
-            <view class="bigBox">
-                <view class="imgBox">
-                    <image class="img" src="{{item.article.coverUrl}}" lazy-load></image>
-                    <view class="letterBox">
-                        <view class="nowrap">{{item.article.title}}</view>
-                        <view class="letter">
-                            <text class="ellipsisLike">{{item.article.sourceWxNickname}}</text>
-                            <text class="">{{item.time}}</text>
-                            <text class="time flright">{{item.article.readTimes}}阅读</text>
+    <block wx:if="{{likeList.length>0}}">
+        <view wx:for="{{likeList}}"  class="container"  wx:key="{{index}}"  bindtap="handleDetail" data-id="{{item.article.id}}">
+            <view>
+                <view class="bigBox">
+                    <view class="imgBox">
+                        <image class="img" src="{{item.article.coverUrl}}" lazy-load></image>
+                        <view class="letterBox">
+                            <view class="nowrap">{{item.article.title}}</view>
+                            <view class="letter">
+                                <text class="ellipsisLike">{{item.article.sourceWxNickname}}</text>
+                                <text class="">{{item.time}}</text>
+                                <text class="time flright">{{item.article.readTimes}}阅读</text>
+                            </view>
                         </view>
                     </view>
+                    <view class="bottomLine"></view>
                 </view>
-                <view class="bottomLine"></view>
+            </view>
+            <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+            </view>
+
+        </view>
+        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+        </view>
+        <view wx:else style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+            我是有底线的！
+        </view>
+    </block>
+    <block>
+        <view wx:if="{{likeList.length==0}}" style="text-align: center;margin-top: 20rpx">
+            <view>
+                <image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
+            </view>
+            <view>
+                <text style="font-size: 28rpx;color: #c3c3c3">喜欢为空</text>
             </view>
         </view>
-    </view>
-    <view wx:if="{{likeList.length==0}}" style="text-align: center;margin-top: 20rpx">
-        <view>
-            <image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
-        </view>
-        <view>
-            <text style="font-size: 28rpx;color: #c3c3c3">喜欢为空</text>
-        </view>
-    </view>
+    </block>
+
+
 </template>
