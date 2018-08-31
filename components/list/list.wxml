@@ -4,7 +4,7 @@
             <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
                 <view class="bigBox">
                     <view class="imgBox">
-                        <image class="img" src="{{item.coverUrl}}"  mode="center " lazy-load></image>
+                        <image class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
                         <view class="letterBox ">
                             <view class="nowrap">{{item.title}}</view>
                             <view class="letter">
@@ -21,7 +21,7 @@
                 <view class="bigBox">
                     <view>
                         <view class="content">
-                            <image class="bigImg" src="{{item.coverUrl}}"  mode="aspectFill" lazy-load></image>
+                            <image class="bigImg" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
                             <view class="nowrapBig">{{item.title}}</view>
                         </view>
                         <view>
