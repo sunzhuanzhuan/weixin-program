@@ -20,18 +20,19 @@
     width: 60rpx;
     height: 60rpx;
     border-radius: 50%;
-    border:1px solid #666666;
     font-size: 20rpx;
     text-align: center;
     line-height: 60rpx;
     display:inline-block;
-    margin-top: 10rpx;}
+    margin-top: 10rpx;
+    margin-right: 20rpx;
+}
 
 .avatarRead{
     width: 60rpx;
     height: 60rpx;
     border-radius: 50%;
-    border:1px solid #666666;
+    margin-right: 20rpx;
 
 }
 .letterBox{
@@ -56,7 +57,7 @@
     padding:25rpx 32rpx 0rpx 32rpx;
 }
 .avatarBox{
-    height: 70rpx;
+    height: 80rpx;
     overflow-y: hidden;
 }
 .noHeightAvatarBox{}

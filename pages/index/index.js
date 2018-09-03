@@ -24,7 +24,7 @@ Page({
         screenHeight: '',
         endWidth: '',
         startsWidth: '',
-        isMore: false,
+        isMore: true,
         page:1,
         allPages:'',
         pageSize:10,
@@ -118,6 +118,7 @@ Page({
             this.getData(urlS, 'GET').then((res) => {
                 if (res.data.code == 200) {
                     if(res.data.data.length == 0){
+                        that.setData({isMore:false})
                         that.handleSuccessMore(res);
                         wx.hideLoading();
                     }else{
@@ -138,7 +139,7 @@ Page({
                                 wx.stopPullDownRefresh()
                             }
                             wx.hideLoading();
-                            that.setData({isLoading:false});
+                            that.setData({isLoading:false,isMore:true});
                         })
                     }
                 }

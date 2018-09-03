@@ -19,7 +19,9 @@
                                     <view wx:if="{{item.avatarUrl}}">
                                         <image class="avatarRead" src="{{item.avatarUrl}}"></image>
                                     </view>
-                                    <text wx:else class="avatarReadS" wx:key="{{item.id}}">神秘人</text>
+                                    <view wx:else wx:key="{{item.id}}">
+                                        <image class="avatarReadS" src="/images/shenmi.png"></image>
+                                    </view>
                                 </view>
                             </view>
 
