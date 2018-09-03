@@ -1,47 +1,63 @@
-<!--detail.wxml-->
-<view>
-  <view class="globalNavigate" style="{{iPhoneX?'top:86rpx;':'top:40rpx'}}">
-    <image src="{{src}}" class="close" bindtap="handleCallBack"></image>
-    <view style="float: left;font-size: 14px;max-width:60%;text-align: center;float: left; overflow: hidden; height: 100%">{{article.title}}</view>
-  </view>
-  <scroll-view scroll-y style="position: absolute;top:200rpx;height: 90%;" scroll-with-animation="true" bindscroll="recordUserscroll" >
+<!--&lt;!&ndash;detail.wxml&ndash;&gt;-->
+<!--<view>-->
+  <!--<view class="globalNavigate" style="{{iPhoneX?'top:86rpx;':'top:40rpx'}}">-->
+    <!--<image src="{{src}}" class="close" bindtap="handleCallBack"></image>-->
+    <!--<view style="float: left;font-size: 14px;max-width:60%;text-align: center;float: left; overflow: hidden; height: 100%">{{article.title}}</view>-->
+  <!--</view>-->
+  <!--<scroll-view scroll-y style="position: absolute;top:200rpx;height: 90%;" scroll-with-animation="true" bindscroll="recordUserscroll" >-->
 
-     <rich-text class="_root" nodes="{{nodes}}"></rich-text>
-    <!--页面最下面部分-->
-    <!--<view class="{{isShow?'':'marB'}}  bottomBox ">-->
-      <!--<view class="wxResource">-->
-        <!--<view> <text style="color:#878787;font-size:24rpx">原创 | {{article.author}}</text></view>-->
-        <!--<view><text style="color:#878787;font-size:24rpx">公众号来源 | {{article.sourceWxNickname}}</text></view>-->
+     <!--<rich-text class="_root" nodes="{{nodes}}"></rich-text>-->
+    <!---->
+  <!--</scroll-view>-->
+  <!--&lt;!&ndash;悬浮部分&ndash;&gt;-->
+  <!--<view class="fixed {{isShow?'show':''}} state1">-->
+      <!--<view class="floatShadow"></view>-->
+      <!--<view  style="display: flex;flex-direction: row">-->
+          <!--<view wx:if="{{isEyes}}" style="flex:3;visibility: hidden;{{isIphoneX?'height:194rpx':'height:134rpx'}}">123</view>-->
+        <!--<button wx:else class="leftBtn" bindgetuserinfo="handleAuthor" open-type="{{type}}"-->
+                <!--style="flex:3;{{isIphoneX?'height:194rpx':'height:134rpx'}}">-->
+          <!--&lt;!&ndash;hidden="{{isEyes}}"&ndash;&gt;-->
+          <!--<image class="eyeBtn" src="../../images/eye.png"></image>-->
+            <!--<text class="readLetter">让朋友知道我在读</text>-->
+        <!--</button>-->
+        <!--<button catchtap="handleLike" bindgetuserinfo="handleAuthor" open-type="{{type}}"-->
+                <!--style="opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">-->
+
+            <!--<image  class="imgBtn" style="position: relative;z-index: 1;"-->
+                    <!--src="{{isLike?('../../images/shareLike.png'):('../../images/likeAfter.png')}}"></image>-->
+
+        <!--</button>-->
+        <!--<button open-type="{{type1}}" bindgetuserinfo="handleAuthor"-->
+                <!--style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">-->
+          <!--<image src="{{shareButton}}" class="imgBtn" style="position: relative;z-index: 1;"></image>-->
+        <!--</button>-->
+
       <!--</view>-->
-      <!--<image src="http://www.liantu.com/images/2013/liantu.png" class="wxCode">-->
-      <!--</image>-->
-    <!--</view>-->
-  </scroll-view>
-  <!--悬浮部分-->
-  <view class="fixed {{isShow?'show':''}} state1">
-      <view class="floatShadow"></view>
-      <view  style="display: flex;flex-direction: row">
-          <view wx:if="{{isEyes}}" style="flex:3;visibility: hidden;{{isIphoneX?'height:194rpx':'height:134rpx'}}">123</view>
-        <button wx:else class="leftBtn" bindgetuserinfo="handleAuthor" open-type="{{type}}"
-                style="flex:3;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-          <!--hidden="{{isEyes}}"-->
-          <image class="eyeBtn" src="../../images/eye.png"></image>
-            <text class="readLetter">让朋友知道我在读</text>
-        </button>
-        <button catchtap="handleLike" bindgetuserinfo="handleAuthor" open-type="{{type}}"
-                style="opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+    <!--<view wx:if="{{isIphoneX}}" class="bol"></view>-->
+    <!--<view wx:else></view>-->
+      <!--</view>-->
+  <!--</view>-->
 
-            <image  class="imgBtn" style="position: relative;z-index: 1;"
-                    src="{{isLike?('../../images/shareLike.png'):('../../images/likeAfter.png')}}"></image>
+<view class="section">
+    <view class="section__title">vertical scroll</view>
+    <scroll-view scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <view id="green" class="scroll-view-item bc_green"></view>
+        <view id="red"  class="scroll-view-item bc_red"></view>
+        <view id="yellow" class="scroll-view-item bc_yellow"></view>
+        <view id="blue" class="scroll-view-item bc_blue"></view>
+    </scroll-view>
 
-        </button>
-        <button open-type="{{type1}}" bindgetuserinfo="handleAuthor"
-                style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-          <image src="{{shareButton}}" class="imgBtn" style="position: relative;z-index: 1;"></image>
-        </button>
-
-      </view>
-    <view wx:if="{{isIphoneX}}" class="bol"></view>
-    <view wx:else></view>
-      </view>
-  </view>
+    <view class="btn-area">
+        <button size="mini" bindtap="tap">click me to scroll into view </button>
+        <button size="mini" bindtap="tapMove">click me to scroll</button>
+    </view>
+</view>
+<view class="section section_gap">
+    <view class="section__title">horizontal scroll</view>
+    <scroll-view class="scroll-view_H" scroll-x style="width: 100%">
+        <view id="green" class="scroll-view-item_H bc_green"></view>
+        <view id="red"  class="scroll-view-item_H bc_red"></view>
+        <view id="yellow" class="scroll-view-item_H bc_yellow"></view>
+        <view id="blue" class="scroll-view-item_H bc_blue"></view>
+    </scroll-view>
+</view>

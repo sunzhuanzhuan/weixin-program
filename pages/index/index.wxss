@@ -37,11 +37,11 @@ button::after{ border: none; }
 .titleBox{
   width: 96%;
   margin: 0 2%;
-  height: 84rpx;
+  height: 90rpx;
   display: flex;
   white-space: nowrap;
   position: fixed;
-  top:150rpx;
+  top:130rpx;
   overflow-x: auto;
 }
 .plTop36{
@@ -132,9 +132,9 @@ button::after{ border: none; }
 }
 .contentListBox{
   position: absolute;
-  top:240rpx;
   z-index: 20;
-  height:82%
+  margin-top: 230rpx;
+  width: 100%;
 }
 .lineTop{
   position: fixed;
@@ -146,4 +146,9 @@ button::after{ border: none; }
   background: -o-linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0)); /* Opera 11.1 - 12.0 */
   background: -moz-linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0)); /* Firefox 3.6 - 15 */
   background: linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0));
+}
+.lineTop1{
+  position: fixed;
+  width: 100%;
+  height: 30rpx;
 }

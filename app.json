@@ -1,9 +1,8 @@
 {
   "pages":[
-
     "pages/index/index",
-    "pages/log/detail",
     "pages/test/detail",
+    "pages/log/detail",
     "pages/detail/detail"
 
   ],
@@ -12,6 +11,7 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "微播易",
     "navigationBarTextStyle":"black",
-    "navigationStyle":"custom"
+    "navigationStyle":"custom",
+    "backgroundColor":"#ffffff"
   }
 }

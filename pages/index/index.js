@@ -24,12 +24,16 @@ Page({
         screenHeight: '',
         endWidth: '',
         startsWidth: '',
-        isMore: true,
+        isMore: false,
         page:1,
+        allPages:'',
         pageSize:10,
         num:{},
-        scroll:0,
-        windowHeight:''
+        scrollTop:1,
+        windowHeight:'',
+        isLoading:false,
+        upLoad:true,
+        toView:''
 
     },
     //获取阅读量
@@ -99,6 +103,7 @@ Page({
                     }, [])
                     that.setData({likeList:newArr},()=>{
                         wx.hideLoading();
+
                     })
                 }
             }
@@ -107,31 +112,37 @@ Page({
     //获取列表的页面
     handleList:function(id,page,pageSize){
         let that = this;
-        wx.showLoading({title:'加载中'});
-        let urlS = '/list/' + id + '/articles?page='+page+'&pageSize=' +pageSize;
-        this.getData(urlS, 'GET').then((res) => {
-            if (res.data.code == 200) {
-                if(res.data.data.length == 0){
-                    that.handleSuccessMore(res);
-                    wx.hideLoading();
-                }else{
-                    let arr =res.data.data.map((item)=>{
-                        item.sourceWxNickname =item.sourceWxNickname ||'-'
-                        item.time = util.moment(item.publishedAt).fromNow()
-                        return item
-                    })
-                    let hash = {};
-                    let repeatArr =  that.data.list.concat(arr)
-                    let newArr = repeatArr.reduce(function(item, next) {
-                        hash[next.id] ? '' : hash[next.id] = true && item.push(next);
-                        return item
-                    }, [])
-                    that.setData({list:newArr},()=>{
+            wx.showLoading({title:'加载中'});
+            this.setData({isLoading:true})
+            let urlS = '/list/' + id + '/articles?page='+page+'&pageSize=' +pageSize;
+            this.getData(urlS, 'GET').then((res) => {
+                if (res.data.code == 200) {
+                    if(res.data.data.length == 0){
+                        that.handleSuccessMore(res);
                         wx.hideLoading();
-                    })
+                    }else{
+                        let arr =res.data.data.map((item)=>{
+                            item.sourceWxNickname =item.sourceWxNickname ||'-'
+                            item.time = util.moment(item.publishedAt).fromNow()
+                            return item
+                        })
+                        let hash = {};
+                        let repeatArr =  that.data.list.concat(arr)
+                        let newArr = repeatArr.reduce(function(item, next) {
+                            hash[next.id] ? '' : hash[next.id] = true && item.push(next);
+                            return item
+                        }, [])
+                        that.setData({list:newArr},()=>{
+                            if(that.data.page == 1){
+                                that.setData({upLoad:false});
+                                wx.stopPullDownRefresh()
+                            }
+                            wx.hideLoading();
+                            that.setData({isLoading:false});
+                        })
+                    }
                 }
-            }
-        })
+            })
     },
 
     onShow:function(){
@@ -147,7 +158,6 @@ Page({
         wx.getSystemInfo({
             success: function (res) {
             that.setData({windowHeight:res.windowHeight})
-                console.log(res.pixelRatio);
                 let model = res.model;
                 let arr = model.split(' ');
                 arr.pop()
@@ -226,14 +236,12 @@ Page({
                 'X-Session-Token': app.sessionToken
             },
             success: function (res) {
-                console.log(res)
             }
         })
     },
     handleTab(e) {
         let that = this;
         if (e.currentTarget.dataset.name == 'share') {
-            console.log(1111111)
             this.setData({flag: true},()=>{
                 wx.getStorage({
                     key: 'userInfo',
@@ -259,8 +267,12 @@ Page({
         this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})
     },
     handleTitleTab(e) {
+        wx.pageScrollTo({
+            scrollTop: 0,
+            duration: 400
+        });
         let that = this;
-        that.setData({scroll:10,isMore: true,page:1})
+        that.setData({isMore: true,page:1})
         if (e.currentTarget.dataset.tab == this.data.dataTab.length) {
             this.setData({templateFlag: false, colorTitle: e.currentTarget.dataset.tab},()=>{
                 //我的数量
@@ -295,12 +307,23 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        this.setData({endWidth: e.changedTouches[0].clientX,isMore: true,page:1},()=>{
+        this.setData({endWidth: e.changedTouches[0].clientX,isMore: true},()=>{
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
                     that.setData({templateFlag: true, colorTitle: ++that.data.colorTitle},()=>{
-                        that.getData('/list/'+ this.data.dataTab[that.data.colorTitle].id+'/articles','GET').then((res)=>{
-                            that.setData({list:res.data.data})
+                        wx.showLoading({title:'加载中'})
+                        that.getData('/list/'+ this.data.dataTab[that.data.colorTitle].id+'/articles?page=1&pageSize=10','GET').then((res)=>{
+                            let arr =res.data.data.map((item)=>{
+                                item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                item.time = util.moment(item.publishedAt).fromNow()
+                                return item
+                            })
+                            that.setData({list:arr})
+                            wx.pageScrollTo({
+                                scrollTop: 0,
+                                duration: 400
+                            });
+                            wx.hideLoading();
                         })
                     });
 
@@ -314,8 +337,19 @@ Page({
                 //console.log(this.data.startsWidth-this.data.endWidth)
                 if (that.data.endWidth - that.data.startsWidth >= that.data.screenWidth / 4) {
                     that.setData({templateFlag: true, colorTitle: --that.data.colorTitle},()=> {
+                        wx.showLoading({title:'加载中'})
                         that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
-                            that.setData({list:res.data.data})
+                            let arr =res.data.data.map((item)=>{
+                                item.sourceWxNickname =item.sourceWxNickname ||'-'
+                                item.time = util.moment(item.publishedAt).fromNow()
+                                return item
+                            })
+                            that.setData({list:arr})
+                            wx.hideLoading();
+                            wx.pageScrollTo({
+                                scrollTop: 0,
+                                duration: 400
+                            });
                         })
                     })
                     if (that.data.colorTitle > that.data.dataTab.length) {
@@ -331,12 +365,16 @@ Page({
         this.setData({startsWidth: e.changedTouches[0].clientX})
     },
 
-    handleTouchBottom(e) {
+    onReachBottom(){
+        if (this.data.isLoading) { // 防止数据还没回来再次触发加载
+            return;
+        }
         let that = this;
         if(this.data.colorTitle != this.data.dataTab.length){
             if(this.data.isMore){
-                this.handleList(this.data.dataTab[this.data.colorTitle].id,++this.data.page,this.data.pageSize)
+                this.handleList(this.data.dataTab[this.data.colorTitle].id,++that.data.page,this.data.pageSize)
             }else {
+                console.log(that.data.isMore)
                 wx.hideLoading();
             }
         }else{
@@ -348,11 +386,11 @@ Page({
         }
 
     },
-    handleTouchTop:function () {
+    onPullDownRefresh() {
         if (this.data.colorTitle != this.data.dataTab.length  ) {
+            this.setData({upLoad:true});
             this.handleList(this.data.dataTab[this.data.colorTitle].id,1,10)
         }
-
     },
     handleSuccessMore(res) {
         if (res.data.data.length == 0) {

@@ -38,7 +38,7 @@
     margin-top: 32rpx;
     margin-left:32rpx;
     font-size: 32rpx;
-    width:426rpx;
+    width:390rpx;
     height: 180rpx;
     position: relative;
 }
@@ -76,18 +76,22 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    width: 390rpx;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 .nowrapBig{
     overflow:hidden;
     text-overflow:ellipsis;
-    white-space:nowrap
+    white-space:nowrap;
+    width:686rpx;
+
 }
 .letterArtical{
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: -200rpx;
     font-size: 24rpx;
     color: #333333;
+    width: 390rpx;
 }
