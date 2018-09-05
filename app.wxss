@@ -12,6 +12,7 @@ page {
   height: 90rpx;
   line-height: 90rpx;
   position: fixed;
+  top: 0px;
   background: #ffffff;
   padding-top: 40rpx;
 

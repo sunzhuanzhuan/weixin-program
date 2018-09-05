@@ -73,6 +73,9 @@ Page({
                         return item
                     }, [])
                     that.setData({shareList:newArr},()=>{
+                        if(that.data.page == 1){
+                            wx.stopPullDownRefresh()
+                        }
                         wx.hideLoading();
                     })
                 }
@@ -102,6 +105,9 @@ Page({
                         return item
                     }, [])
                     that.setData({likeList:newArr},()=>{
+                        if(that.data.page == 1){
+                            wx.stopPullDownRefresh()
+                        }
                         wx.hideLoading();
 
                     })
@@ -118,7 +124,7 @@ Page({
             this.getData(urlS, 'GET').then((res) => {
                 if (res.data.code == 200) {
                     if(res.data.data.length == 0){
-                        that.setData({isMore:false})
+                        that.setData({isMore:false,isLoading:false})
                         that.handleSuccessMore(res);
                         wx.hideLoading();
                     }else{
@@ -139,7 +145,7 @@ Page({
                                 wx.stopPullDownRefresh()
                             }
                             wx.hideLoading();
-                            that.setData({isLoading:false,isMore:true});
+                            that.setData({isLoading:false});
                         })
                     }
                 }
@@ -281,7 +287,7 @@ Page({
             })
         }
         else {
-            this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab},()=>{
+            this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:[]},()=>{
                 that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles?page=1&pageSize=10','GET').then((res)=>{
                     if(res.data.code == 200){
                         let arr =res.data.data.map((item)=>{
@@ -290,7 +296,7 @@ Page({
                             item.time = util.moment(item.publishedAt).fromNow()
                             return item
                         })
-                        that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:res.data.data},()=>{
+                        that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:arr},()=>{
                             wx.hideLoading();
                         })
                     }
@@ -308,10 +314,10 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        this.setData({endWidth: e.changedTouches[0].clientX,isMore: true},()=>{
+        this.setData({endWidth: e.changedTouches[0].clientX},()=>{
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
-                    that.setData({templateFlag: true, colorTitle: ++that.data.colorTitle},()=>{
+                    that.setData({templateFlag: true, colorTitle: ++that.data.colorTitle,isMore: true,list:[]},()=>{
                         wx.showLoading({title:'加载中'})
                         that.getData('/list/'+ this.data.dataTab[that.data.colorTitle].id+'/articles?page=1&pageSize=10','GET').then((res)=>{
                             let arr =res.data.data.map((item)=>{
@@ -337,7 +343,7 @@ Page({
             } else {
                 //console.log(this.data.startsWidth-this.data.endWidth)
                 if (that.data.endWidth - that.data.startsWidth >= that.data.screenWidth / 4) {
-                    that.setData({templateFlag: true, colorTitle: --that.data.colorTitle},()=> {
+                    that.setData({templateFlag: true, colorTitle: --that.data.colorTitle,list:[]},()=> {
                         wx.showLoading({title:'加载中'})
                         that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
                             let arr =res.data.data.map((item)=>{
@@ -375,7 +381,7 @@ Page({
             if(this.data.isMore){
                 this.handleList(this.data.dataTab[this.data.colorTitle].id,++that.data.page,this.data.pageSize)
             }else {
-                console.log(that.data.isMore)
+                this.setData({isMore:false})
                 wx.hideLoading();
             }
         }else{
@@ -391,6 +397,12 @@ Page({
         if (this.data.colorTitle != this.data.dataTab.length  ) {
             this.setData({upLoad:true});
             this.handleList(this.data.dataTab[this.data.colorTitle].id,1,10)
+        }else {
+            if(this.data.flag){
+                this.handleShare(1,this.data.pageSize)
+            }else{
+                this.handleLike(1,this.data.pageSize)
+            }
         }
     },
     handleSuccessMore(res) {
