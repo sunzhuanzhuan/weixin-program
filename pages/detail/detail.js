@@ -1,6 +1,5 @@
 let app = getApp().globalData;
-
-
+const txvContext = requirePlugin("tencentvideo");
 Page({
     data: {
         nodes: [],
@@ -21,8 +20,8 @@ Page({
         type: '',
         type1: '',
         num: 0,
-        // --- For view tracking ---
-
+        videoSource:[],
+        videoId:'',
         viewId: '',
         suspendedFor: 0,
         lastSuspendedAt: undefined,
@@ -82,6 +81,8 @@ Page({
         }
     },
     onLoad(options) {
+        // this.txvContext = txvContext.getTxvContext('txv1');
+        // this.txvContext.play();
         let that = this;
         wx.getStorage({
             key: 'userInfo',
@@ -104,17 +105,11 @@ Page({
                 let arr = model.split(' ');
                 arr.pop()
                 let c = arr.join(' ');
-
-                console.log(arr)
                 if (model == 'iPhone X' || c == 'iPhone X') {
-
                     that.setData({ iPhoneX: true })
                 } else {
                     that.setData({ iPhoneX: false })
                 }
-                if (model == 'iPhone X' || c == 'iPhone X') {
-                    that.setData({ isIphoneX: true })
-                } else { that.setData({ isIphoneX: false }) }
             }
         })
         wx.showLoading({ title: '加载中' })
@@ -152,7 +147,11 @@ Page({
                                     });
                                 }
 
-                                that.setData({ nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+                                if(res.data.data.article.txvVids.length>0){
+                                    that.setData({videoId:res.data.data.article.txvVids[0]})
+                                }
+
+                                that.setData({ videoSource:res.data.data.article.txvVids,nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
                                 wx.hideLoading()
                                 wx.hideNavigationBarLoading();
                             })
@@ -165,13 +164,16 @@ Page({
                         wx.showNavigationBarLoading();
                       that.getData('/article/' + options.id + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true', 'GET').then((res) => {
                             const r = res.data.data;
+                          if(res.data.data.article.txvVids.length>0){
+                              that.setData({videoId:res.data.data.article.txvVids[0]})
+                          }
                             if (r.article) {
                                 const currentTitle = r.article.title;
                                 wx.setNavigationBarTitle({
                                     title: currentTitle,
                                 });
                             }
-                            that.setData({ nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+                            that.setData({videoSource:res.data.data.article.txvVids, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
                             wx.hideLoading();
                             wx.hideNavigationBarLoading();
                         })
@@ -182,6 +184,11 @@ Page({
         })
 
 
+    },
+    //切换视屏播放
+    handleVideoTap:function(e){
+        let index = e.currentTarget.dataset.videoid
+        this.setData({videoId:this.data.videoSource[index]})
     },
     //授权
     handleAuthor() {

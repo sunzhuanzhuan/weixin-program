@@ -4,7 +4,19 @@
     <view  class="closeContainer" bindtap="handleCallBack"><image src="{{src}}" class="close"></image></view>
     <view style="float: left;font-size: 14px;width:40%;overflow: hidden; height: 100%">{{article.title}}</view>
   </view>
-  <scroll-view scroll-y style="position: absolute;{{iPhoneX?'top:210rpx;':'top:160rpx'}};height: 91%;" bindscroll="recordUserscroll" >
+    <!--{{article.title}}-->
+  <scroll-view scroll-y  style="position: absolute;{{iPhoneX?'top:210rpx;':'top:160rpx'}};height: 91%;"  bindscroll="recordUserscroll" >
+      <!--播放视频的位置-->
+      <view wx:if="{{videoSource.length>0}}"  style="heigh:200rpx;margin:0 24rpx;{{videoTop}}" >
+          <view>
+              <txv-video vid="{{videoId}}" playerid="txv1" autoplay="{{true}}"></txv-video>
+          </view>
+          <view wx:if="{{videoSource.length==1}}" ></view>
+          <view wx:else style="text-align: center;">
+              <view hover-class="borderCircle" wx:for="{{videoSource}}" data-videoId="{{index}}" bindtap="handleVideoTap" class="borderNum">{{index+1}}</view>
+          </view>
+      </view>
+      <view wx:else></view>
      <rich-text class="_root" nodes="{{nodes}}"></rich-text>
   </scroll-view>
   <!--悬浮部分-->

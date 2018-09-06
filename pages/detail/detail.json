@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "微播易"
+  "usingComponents": {
+    "txv-video": "plugin://tencentvideo/video"
+  }
 }
