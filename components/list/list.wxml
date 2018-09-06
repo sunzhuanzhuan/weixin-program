@@ -1,10 +1,16 @@
 <template name="list">
     <block  wx:if="{{list.length>0}}" >
+        <!--下面是小的图的视频-->
         <view wx:for="{{list}}" class="container"  wx:key="{{index}}">
             <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
                 <view class="bigBox">
                     <view class="imgBox">
-                        <image class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
+                        <view style="position: relative">
+                            <image  class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
+                            <image wx:if="{{item.txvVids.length>0}}" src="/images/v_small.png" class="videoPngSmall"></image>
+                            <view wx:else></view>
+                        </view>
+
                         <view class="letterBox ">
                             <view class="nowrap">{{item.title}}</view>
                             <view class="letter">
@@ -17,11 +23,16 @@
                 </view>
 
             </view>
+            <!--下面是大的视频-->
             <view wx:else bindtap="handleDetail"  data-id="{{item.id}}">
                 <view class="bigBox">
                     <view>
                         <view class="content">
-                            <image class="bigImg" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
+                            <view style="position: relative">
+                                <image class="bigImg" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
+                                <image wx:if="{{item.txvVids.length>0}}" src="/images/v_big.png" class="videoPngBIg"></image>
+                                <view wx:else></view>
+                            </view>
                             <view class="nowrapBig">{{item.title}}</view>
                         </view>
                         <view>
