@@ -133,7 +133,6 @@ button::after{ border: none; }
 .contentListBox{
   position: absolute;
   z-index: 20;
-  margin-top: 230rpx;
   width: 100%;
 }
 .lineTop{

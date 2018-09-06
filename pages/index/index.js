@@ -165,7 +165,8 @@ Page({
         let that = this;
         wx.getSystemInfo({
             success: function (res) {
-            that.setData({windowHeight:res.windowHeight})
+            that.setData({windowHeight:res.windowHeight});
+            console.log(res.statusBarHeight)
                 let model = res.model;
                 let arr = model.split(' ');
                 arr.pop()

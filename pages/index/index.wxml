@@ -3,11 +3,11 @@
 <import src="/components/like/like.wxml" />
 <import src="/components/list/list.wxml" />
 <view class="containerBig">
-    <view class="globalNavigate" style="background: #0aba07;z-index: 26;{{iPhoneX?'top:86rpx;':''}}">
+    <view class="globalNavigate" style="background: #fff;z-index: 26;{{iPhoneX?'height: 190rpx;line-height:190rpx':'height:90rpx'}}">
         <!--{{appTitle}}-->
-        <view style="padding-left:50rpx;font-size: 36rpx;font-family: 'PingFang SC';width:50%;overflow: hidden;height: 90rpx;white-space:nowrap;text-overflow:ellipsis;">{{appTitle}}</view>
+        <view style="padding-left:50rpx;font-size: 36rpx;font-family: 'PingFang SC';width:50%;overflow: hidden;white-space:nowrap;text-overflow:ellipsis;">{{appTitle}}</view>
     </view>
-    <scroll-view  scroll-into-view="{{toView}}" scroll-x="true" class="titleBox"  style="background: #d04b4e;;z-index: 26;{{iPhoneX?'top:206rpx;':'130rpx'}}">
+    <scroll-view  scroll-into-view="{{toView}}" scroll-x="true" class="titleBox"  style="background: #fff;;z-index: 26;{{iPhoneX?'top:206rpx;':'130rpx'}}">
         <view>
             <view wx:for="{{dataTab}}" wx:key="{{index}}" data-tabId="{{item.id}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab" data-tab="{{index}}">
                 <text class="{{colorTitle==index? 'dot':''}}">{{item.title}}</text>
@@ -28,7 +28,7 @@
 
     <!--<scroll-view scroll-y="true" class="contentListBox" scroll-top="{{scrollTop}}"-->
                  <!--style="{{iPhoneX?'top:300rpx;':''}}">-->
-        <view class="contentListBox" style="{{iPhoneX?'top:300rpx;':''}}"
+        <view class="contentListBox" style="{{iPhoneX?'margin-top: 260rpx;':'margin-top: 200rpx;'}}"
             bind:touchstart="handleTouchStart"
             bind:touchend="handleTouchEnd">
             <block>
