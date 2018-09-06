@@ -32,7 +32,7 @@ Page({
         scrollTop:1,
         windowHeight:'',
         isLoading:false,
-        upLoad:true,
+        // upLoad:true,
         toView:''
 
     },
@@ -141,7 +141,7 @@ Page({
                         }, [])
                         that.setData({list:newArr},()=>{
                             if(that.data.page == 1){
-                                that.setData({upLoad:false});
+                                // that.setData({upLoad:false});
                                 wx.stopPullDownRefresh()
                             }
                             wx.hideLoading();
@@ -155,10 +155,11 @@ Page({
     onShow:function(){
         let that = this;
         wx.showShareMenu({withShareTicket: true})
-        app.tokenPromise.then(function (sessionToken) {
-            that.handleRead()
-        })
-
+        if (that.data.colorTitle == that.data.dataTab.length) {
+            app.tokenPromise.then(function (sessionToken) {
+                that.handleRead()
+            })
+        }
     },
     onLoad: function () {
         let that = this;
@@ -395,7 +396,7 @@ Page({
     },
     onPullDownRefresh() {
         if (this.data.colorTitle != this.data.dataTab.length  ) {
-            this.setData({upLoad:true});
+            // this.setData({upLoad:true});
             this.handleList(this.data.dataTab[this.data.colorTitle].id,1,10)
         }else {
             if(this.data.flag){
