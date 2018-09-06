@@ -21,6 +21,7 @@ Page({
         type1: '',
         num: 0,
         videoSource:[],
+        selectedCricle:0,
         videoId:'',
         viewId: '',
         suspendedFor: 0,
@@ -81,8 +82,6 @@ Page({
         }
     },
     onLoad(options) {
-        // this.txvContext = txvContext.getTxvContext('txv1');
-        // this.txvContext.play();
         let that = this;
         wx.getStorage({
             key: 'userInfo',
@@ -188,7 +187,11 @@ Page({
     //切换视屏播放
     handleVideoTap:function(e){
         let index = e.currentTarget.dataset.videoid
-        this.setData({videoId:this.data.videoSource[index]})
+        this.setData({videoId:this.data.videoSource[index],selectedCricle:index},()=>{
+            // let video = txvContext.getTxvContext('video');
+            // video.play();  // 播放
+        });
+
     },
     //授权
     handleAuthor() {
