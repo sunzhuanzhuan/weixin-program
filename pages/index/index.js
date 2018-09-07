@@ -27,13 +27,14 @@ Page({
         isMore: true,
         page:1,
         allPages:'',
-        pageSize:10,
+        pageSize:20,
         num:{},
         scrollTop:1,
         windowHeight:'',
         isLoading:false,
         // upLoad:true,
-        toView:''
+        // toView:'',
+        scrollLeft:0,
 
     },
     //获取阅读量
@@ -166,7 +167,6 @@ Page({
         wx.getSystemInfo({
             success: function (res) {
             that.setData({windowHeight:res.windowHeight});
-            console.log(res.statusBarHeight)
                 let model = res.model;
                 let arr = model.split(' ');
                 arr.pop()
@@ -186,7 +186,7 @@ Page({
             const r = res.data.data;
             if (res.data.code == 200) {
                 that.setData({ appTitle: r.title, dataTab: r.lists }, () => {
-                    that.handleList(r.lists[0].id,1,10)
+                    that.handleList(r.lists[0].id,1,20)
                 })
             }
         })
@@ -198,9 +198,9 @@ Page({
                     success: function (res) {
                         that.setData({userInfo: res.data});
                         //我的分享
-                        that.handleShare(1,10)
+                        that.handleShare(1,20)
                         //我的喜欢
-                        that.handleLike(1,10)
+                        that.handleLike(1,20)
                         //我的数量
                         that.handleRead()
                     }
@@ -255,7 +255,7 @@ Page({
                 wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
-                        that.handleShare(1,10)
+                        that.handleShare(1,20)
                     }
                 })
 
@@ -265,7 +265,7 @@ Page({
                 wx.getStorage({
                     key: 'userInfo',
                     success: function (res) {
-                        that.handleLike(1,10);
+                        that.handleLike(1,20);
                     }
                 })
 
@@ -276,9 +276,8 @@ Page({
         this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})
     },
     handleTitleTab(e) {
-        wx.pageScrollTo({
-            scrollTop: 0,
-            duration: 400
+        this.setData({
+            scrollTop: this.data.scrollTop = 0
         });
         let that = this;
         that.setData({isMore: true,page:1})
@@ -290,7 +289,8 @@ Page({
         }
         else {
             this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:[]},()=>{
-                that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles?page=1&pageSize=10','GET').then((res)=>{
+                wx.showLoading({title:'加载中'})
+                that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles?page=1&pageSize=20','GET').then((res)=>{
                     if(res.data.code == 200){
                         let arr =res.data.data.map((item)=>{
                             item.sourceWxNickname =item.sourceWxNickname ||'-'
@@ -321,16 +321,16 @@ Page({
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
                     that.setData({templateFlag: true, colorTitle: ++that.data.colorTitle,isMore: true,list:[]},()=>{
                         wx.showLoading({title:'加载中'})
-                        that.getData('/list/'+ this.data.dataTab[that.data.colorTitle].id+'/articles?page=1&pageSize=10','GET').then((res)=>{
+                        that.getData('/list/'+ this.data.dataTab[that.data.colorTitle].id+'/articles?page=1&pageSize=20','GET').then((res)=>{
                             let arr =res.data.data.map((item)=>{
                                 item.sourceWxNickname =item.sourceWxNickname ||'-'
                                 item.time = util.moment(item.publishedAt).fromNow()
                                 return item
                             })
                             that.setData({list:arr})
-                            wx.pageScrollTo({
-                                scrollTop: 0,
-                                duration: 400
+                            that.setData({
+                                scrollTop: that.data.scrollTop = 0,
+                                scrollLeft:that.data.scrollLeft+50,
                             });
                             wx.hideLoading();
                         })
@@ -338,8 +338,14 @@ Page({
 
                     if (that.data.colorTitle > that.data.dataTab.length) {
                         that.setData({templateFlag: true, colorTitle: 0})
+                        that.setData({
+                            scrollLeft:that.data.scrollLeft=-100,
+                        });
                     } else if (that.data.colorTitle == that.data.dataTab.length) {
                         that.setData({templateFlag: false, colorTitle: that.data.dataTab.length})
+                        that.setData({
+                            scrollLeft:that.data.scrollLeft+50,
+                        });
                     }
                 }
             } else {
@@ -355,16 +361,23 @@ Page({
                             })
                             that.setData({list:arr})
                             wx.hideLoading();
-                            wx.pageScrollTo({
-                                scrollTop: 0,
-                                duration: 400
+                            that.setData({
+                                scrollTop: that.data.scrollTop = 0,
+                                scrollLeft:that.data.scrollLeft-50,
                             });
                         })
                     })
                     if (that.data.colorTitle > that.data.dataTab.length) {
-                        that.setData({templateFlag: true, colorTitle: 0})
-                    } else if (this.data.colorTitle < 0) {
+                        that.setData({templateFlag: true, colorTitle: 0,scrollLeft:that.data.scrollLeft=0});
+                        wx.hideLoading();
+                    } else if (that.data.colorTitle < 0) {
                         that.setData({templateFlag: false, colorTitle: that.data.dataTab.length})
+
+                        that.setData({
+                            scrollLeft:that.data.scrollLeft=50*that.data.dataTab.length,
+                        },()=>{
+                            wx.hideLoading();
+                        });
                     }
                 }
             }
@@ -398,7 +411,7 @@ Page({
     onPullDownRefresh() {
         if (this.data.colorTitle != this.data.dataTab.length  ) {
             // this.setData({upLoad:true});
-            this.handleList(this.data.dataTab[this.data.colorTitle].id,1,10)
+            this.handleList(this.data.dataTab[this.data.colorTitle].id,1,20)
         }else {
             if(this.data.flag){
                 this.handleShare(1,this.data.pageSize)
