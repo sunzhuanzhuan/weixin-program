@@ -3,7 +3,7 @@ const util = require('../../utils/util');
 
 Page({
     data: {
-        appTitle: '小鱼聚合',
+        appTitle:app.appName,
         dataTab: [],
         shareList: [],
         likeList: [],
