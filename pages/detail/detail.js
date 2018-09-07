@@ -16,6 +16,7 @@ Page({
         isIphoneX: false,
         article: {},
         iPhoneX: false,
+        isMuted:true,
         art: '',
         type: '',
         type1: '',
@@ -33,6 +34,11 @@ Page({
         scrollStartPos: undefined,
         viewPercentage: 0
     },
+    //是否静音播放
+    handleIsMuted:function(){
+        this.setData({isMuted:!this.data.isMuted})
+    },
+
     onShareAppMessage: function () {
         let that = this;
         wx.request({

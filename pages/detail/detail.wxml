@@ -9,12 +9,24 @@
       <!--播放视频的位置-->
       <view wx:if="{{videoSource.length>0}}"  style="heigh:200rpx;margin:0 24rpx;{{videoTop}}" >
           <view>
-              <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}"></txv-video>
+              <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
           </view>
-          <view wx:if="{{videoSource.length==1}}" ></view>
+          <view wx:if="{{videoSource.length==1}}" style=" height:80rpx;margin: 30rpx 0;">
+             <view  bindtap="handleIsMuted" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: -4rpx" >
+                 <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
+             </view>
+              <text style="color: #E6E6E6;display:inline-block;height:40rpx;margin-right: 50rpx;float: right;"> | </text>
+          </view>
           <view wx:else style="text-align: center;">
-              <view wx:for="{{videoSource}}" data-videoId="{{index}}" bindtap="handleVideoTap" class="{{selectedCricle == index?'borderCircle':'borderNum'}}">{{index+1}}</view>
+              <view wx:for="{{videoSource}}" data-videoId="{{index}}" bindtap="handleVideoTap" class="{{selectedCricle == index?'borderCircle':'borderNum'}}">
+                  <text style="font-size: 24rpx">视频{{index+1}}</text>
+              </view>
+              <view  bindtap="handleIsMuted" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: 40rpx" >
+                  <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
+              </view>
+              <text style="color: #E6E6E6;display:inline-block;height:40rpx;margin-right: 50rpx;float: right;margin-top: 40rpx"> | </text>
           </view>
+
       </view>
       <view wx:else></view>
      <rich-text class="_root" nodes="{{nodes}}"></rich-text>
