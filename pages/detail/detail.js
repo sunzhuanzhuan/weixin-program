@@ -214,11 +214,21 @@ Page({
                                 data: res.userInfo
                             })
                             that_.setData({ type: '', type1: 'share' })
-                            that_.setData({isEyes: true},()=>{
-                                wx.navigateTo({
-                                    url:'/pages/log/detail?nick='+res.userInfo.nickName
+                            wx.getStorage({
+                                key: 'scene',
+                                success: function (res) {
+                                    const scene = res.data;
+                                    if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049)){
+                                        that_.setData({isEyes: true},()=>{
+                                            wx.navigateTo({
+                                                url:'/pages/log/detail?nick='+res.userInfo.nickName
+                                            })
+                                        });
+                                    }
+                                }
                                 })
-                            });
+
+
                         }
                     })
                 }

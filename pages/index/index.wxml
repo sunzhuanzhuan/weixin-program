@@ -3,11 +3,11 @@
 <import src="/components/like/like.wxml" />
 <import src="/components/list/list.wxml" />
 <view class="containerBig">
-    <view class="globalNavigate" style="background: #ffffff;z-index: 26;{{iPhoneX?'top:86rpx;':''}}">
+    <view class="globalNavigate" style="background: #fff;z-index: 26;{{iPhoneX?'height: 190rpx;line-height:190rpx':'height:90rpx;line-height:90rpx'}}">
         <!--{{appTitle}}-->
-        <view style="padding-left:50rpx;font-size: 36rpx;font-family: 'PingFang SC';width:50%;overflow: hidden;height: 90rpx;white-space:nowrap;text-overflow:ellipsis;">{{appTitle}}</view>
+        <view style="padding-left:50rpx;font-size: 36rpx;font-family: 'PingFang SC';width:50%;overflow: hidden;white-space:nowrap;text-overflow:ellipsis;">{{appTitle}}</view>
     </view>
-    <scroll-view  scroll-into-view="{{toView}}" scroll-x="true" class="titleBox"  style="background: #ffffff;;z-index: 26;{{iPhoneX?'top:206rpx;':'130rpx'}}">
+    <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x="true" class="titleBox"  style="background: #fff;;z-index: 26;{{iPhoneX?'top:206rpx;':'130rpx'}}">
         <view>
             <view wx:for="{{dataTab}}" wx:key="{{index}}" data-tabId="{{item.id}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab" data-tab="{{index}}">
                 <text class="{{colorTitle==index? 'dot':''}}">{{item.title}}</text>
@@ -22,14 +22,14 @@
 
     <block>
         <view class="lineTop"  style="{{iPhoneX?'top:300rpx;':'top:220rpx'}}"></view>
-        <view wx:if="{{upLoad}}" class="lineTop1"  style="text-align: center;z-index: 27;{{iPhoneX?'top:300rpx;':'top:220rpx'}}">加载中。。。</view>
-        <view wx:else></view>
+        <!--<view wx:if="{{upLoad}}" class="lineTop1"  style="text-align: center;z-index: 27;{{iPhoneX?'top:300rpx;':'top:220rpx'}}">加载中。。。</view>-->
+        <!--<view wx:else></view>-->
     </block>
 
-    <!--<scroll-view scroll-y="true" class="contentListBox" scroll-top="{{scrollTop}}"-->
-                 <!--style="{{iPhoneX?'top:300rpx;':''}}">-->
-        <view class="contentListBox" style="{{iPhoneX?'top:300rpx;':''}}"
-            bind:touchstart="handleTouchStart"
+    <scroll-view scroll-y="true" class="contentListBox" scroll-top="{{scrollTop}}"
+                 style="{{iPhoneX?'margin-top: 260rpx;':'margin-top: 200rpx;'}}">
+        <!--class="contentListBox" style="{{iPhoneX?'margin-top: 260rpx;':'margin-top: 200rpx;'}}"-->
+        <view bind:touchstart="handleTouchStart"
             bind:touchend="handleTouchEnd">
             <block>
                 <view hidden="{{templateFlag?false:true}}">
@@ -86,7 +86,7 @@
 
         </view>
 
-    <!--</scroll-view>-->
+    </scroll-view>
     <!--</view>-->
 
 

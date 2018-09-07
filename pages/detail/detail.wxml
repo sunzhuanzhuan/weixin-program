@@ -1,8 +1,10 @@
 <!--detail.wxml-->
 <view>
-  <view class="globalNavigate" style="{{iPhoneX?'top:86rpx;':''}}">
-    <view  class="closeContainer" bindtap="handleCallBack"><image src="{{src}}" class="close"></image></view>
-    <view style="float: left;font-size: 14px;width:40%;overflow: hidden; height: 100%">{{article.title}}</view>
+  <view class="globalNavigate" style="{{iPhoneX?'top:50rpx;':''}}">
+    <view  class="closeContainer" bindtap="handleCallBack">
+        <image src="{{src}}" class="close"></image>
+    </view>
+    <view style="font-size: 14px;width:400rpx;overflow: hidden; height:90rpx;line-height:90rpx;white-space:nowrap">{{article.title}}</view>
   </view>
     <!--{{article.title}}-->
   <scroll-view scroll-y  style="position: absolute;{{iPhoneX?'top:210rpx;':'top:160rpx'}};height: 91%;"  bindscroll="recordUserscroll" >
