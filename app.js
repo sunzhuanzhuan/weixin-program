@@ -6,13 +6,7 @@ App({
                 // session_key 已经失效，需要重新执行登录流程
             }
         })
-        wx.getSystemInfo({
-            success: function(res) {
-                // console.log(res.statusBarHeight)
-                console.log(res.model)
-                console.log(res.windowHeight)
-            }
-        })
+
         wx.setStorage({
             key:'scene',
             data:options.scene
@@ -21,6 +15,7 @@ App({
         let extConfig = wx.getExtConfigSync ? wx.getExtConfigSync(): {};
         this.globalData.appToken = extConfig.appToken||'JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo';
         this.globalData.distroId = extConfig.distroId||'5b63fb56b106d81d9b74972a';
+        this.globalData.appName = extConfig.appName||'';
         this.globalData.baseUrl = (extConfig.baseUri || 'https://yijoin-d.weiboyi.com/v1/distribution') + '/';
         const tokenPromise = new Promise((resolve, reject) => {
             wx.login({
