@@ -266,6 +266,7 @@ Page({
                                 article: that.data.articleId
                             },
                             success: function (res) {
+                                
                             }
                         });
                     }
