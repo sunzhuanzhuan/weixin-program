@@ -14,7 +14,7 @@
 }
 .videoPngSmall{
     position: absolute;
-    bottom:-2rpx;
+    bottom:-6rpx;
     right: 10rpx;
     width: 60rpx;
     height: 40rpx;
