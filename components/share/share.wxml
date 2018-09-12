@@ -44,7 +44,7 @@
         <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
         </view>
         <view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
-            由小鱼聚合平台提供技术支持
+            <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>由小鱼聚合平台提供技术支持
         </view>
     </block>
     <block>
