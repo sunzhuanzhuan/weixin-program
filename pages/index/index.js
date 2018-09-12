@@ -341,11 +341,15 @@ Page({
                         that.setData({
                             scrollLeft:that.data.scrollLeft=-100,
                         });
+                        wx.hideLoading();
                     } else if (that.data.colorTitle == that.data.dataTab.length) {
-                        that.setData({templateFlag: false, colorTitle: that.data.dataTab.length})
+                        that.setData({templateFlag: false, colorTitle: that.data.dataTab.length},()=>{
+                            wx.hideLoading();
+                        })
                         that.setData({
                             scrollLeft:that.data.scrollLeft+50,
                         });
+                        wx.hideLoading();
                     }
                 }
             } else {
