@@ -5,7 +5,7 @@
 <view class="containerBig" style="height: {{winHeight}}px;">
     <view style="height:88rpx;background:#ffffff;">
         <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x
-                      style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-61}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
+                      style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-50}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
             <view class="nav">
                 <view  wx:for="{{dataTab}}" class='tag-box' wx:key="id" style="display: inline-block">
                     <view class="taga-item {{colorTitle==index?'bold':''}}"
