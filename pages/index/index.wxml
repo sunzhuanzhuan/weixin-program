@@ -2,84 +2,36 @@
 <import src="/components/share/share.wxml" />
 <import src="/components/like/like.wxml" />
 <import src="/components/list/list.wxml" />
-<view class="containerBig">
-    <view class="globalNavigate" style="background: #fff;z-index: 26;{{iPhoneX?'height: 190rpx;line-height:190rpx':'height:90rpx;line-height:90rpx'}}">
-        <!--{{appTitle}}-->
-        <view style="padding-left:50rpx;font-size: 36rpx;font-family: 'PingFang SC';width:50%;overflow: hidden;white-space:nowrap;text-overflow:ellipsis;">{{appTitle}}</view>
-    </view>
-    <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x="true" class="titleBox"  style="background: #fff;;z-index: 26;{{iPhoneX?'top:206rpx;':'130rpx'}}">
-        <view>
-            <view wx:for="{{dataTab}}" wx:key="{{index}}" data-tabId="{{item.id}}" class="chineseLetter {{colorTitle==index? 'titleFontSize':'noTitleFontSize'}}" bindtap="handleTitleTab" data-tab="{{index}}">
-                <text class="{{colorTitle==index? 'dot':''}}">{{item.title}}</text>
+<view class="containerBig" style="height: {{winHeight}}px;">
+    <view style="height:88rpx;background:#ffffff;">
+        <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x
+                      style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-50}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
+            <view class="nav">
+                <view  wx:for="{{dataTab}}" class='tag-box' wx:key="id" style="display: inline-block">
+                    <view class="taga-item {{colorTitle==index?'bold':''}}"
+                          data-tab="{{index}}" data-name='{{item.title}}'
+                          data-tabid="{{item.id}}" bindtap="handleTitleTab">{{item.title}}</view>
+                </view>
             </view>
-            <view bindtap="handleTitleTab" class="chineseLetter {{colorTitle==dataTab.length? 'titleFontSize':'noTitleFontSize'}}"
-                  data-tab="{{dataTab.length}}">
-                <text class="{{colorTitle==dataTab.length? 'dot':''}}">我的</text>
-            </view>
+        </scroll-view>
+        <view data-current="{{dataTab.length}}" data-name='{{item.title}}'
+              data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:122rpx;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
+            <image src="/images/my.jpg" style="width:122rpx;height: 90rpx;" data-id="{{dataTab.length}}" ></image>
         </view>
-
-    </scroll-view>
+    </view>
 
     <block>
-        <view class="lineTop"  style="{{iPhoneX?'top:300rpx;':'top:220rpx'}}"></view>
+        <view class="lineTop"></view>
         <!--<view wx:if="{{upLoad}}" class="lineTop1"  style="text-align: center;z-index: 27;{{iPhoneX?'top:300rpx;':'top:220rpx'}}">加载中。。。</view>-->
         <!--<view wx:else></view>-->
     </block>
 
-    <scroll-view scroll-y="true" class="contentListBox" scroll-top="{{scrollTop}}"
-                 style="{{iPhoneX?'margin-top: 260rpx;':'margin-top: 200rpx;'}}">
-        <!--class="contentListBox" style="{{iPhoneX?'margin-top: 260rpx;':'margin-top: 200rpx;'}}"-->
+    <scroll-view scroll-y="true" class="contentListBox" scroll-top="{{scrollTop}}" >
         <view bind:touchstart="handleTouchStart"
             bind:touchend="handleTouchEnd">
             <block>
-                <view hidden="{{templateFlag?false:true}}">
+                <view>
                     <template is="list" data="{{list:list,heightFlag:heightFlag,isMore:isMore}}"/>
-                </view>
-                <view hidden="{{templateFlag?true:false}}">
-                    <view class="plBottm28">
-                        <view class="smallBox plTop36 plBottm32">
-
-                            <view>
-                                <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-                                    <image style="width: 140rpx;height: 140rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
-                                    <view  class="avatar">{{userInfo.nickName?userInfo.nickName:'我要登录'}}</view></button></view>
-
-                        </view>
-                        <view class="readBox">
-                            <view class="smallBox">
-                                <text>{{userInfo.nickName?num.read:''}}</text>
-                                <text class="readBoxName">阅读</text>
-                            </view>
-                            <view class="smallBox">
-                                <text>{{userInfo.nickName?num.shared:''}}</text>
-                                <text class="readBoxName">分享</text>
-                            </view>
-                            <view class="smallBox">
-                                <text>{{userInfo.nickName?num.liked:''}}</text>
-                                <text class="readBoxName">喜欢</text>
-                            </view>
-                        </view>
-                    </view>
-                    <view class="line"></view>
-                    <view class="shareBox">
-                        <view bindtap="handleTab" data-name="share">
-                            <image class="icon" src="{{flag?shareAfter:shareBefore}}"></image>
-                            <text class="{{flag ?'selected':'none'}}">我的分享</text>
-                        </view>
-                        <view bindtap="handleTab" data-name="like">
-                            <image class="icon" src="{{flag== 'true'?likeBefore:likeAfter}}"></image>
-                            <text class="{{flag?'none':'selected'}}">我的喜欢</text>
-                        </view>
-                    </view>
-                    <view>
-                        <view  hidden="{{flag ? false : true}}">
-                            <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
-
-                        </view>
-                        <view  hidden="{{flag ? true : false}}">
-                            <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
-                        </view>
-                    </view>
                 </view>
             </block>
 

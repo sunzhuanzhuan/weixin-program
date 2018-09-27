@@ -1,16 +1,4 @@
 
 .containerBig {
   font-family: "PingFang SC";
-  background: #ffffff;
-}
-page {
-  height:100%;
-  background: #ffffff;
-}
-.globalNavigate{
-  width: 100%;
-  position: fixed;
-  background: #ffffff;
-  padding-top: 40rpx;
-
 }

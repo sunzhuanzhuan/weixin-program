@@ -48,6 +48,8 @@ App({
         distroId: "",
         appToken: "",
         sessionToken:'',
+        articleId:''
+
     },
     
 

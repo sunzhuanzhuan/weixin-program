@@ -15,13 +15,15 @@ Page({
         likeAfter: "../../images/likeAfter.png",
         likeBefore: "../../images/likeBefore.png",
         imgCry:'../../images/cry.png',
-        flag: true,
-        templateFlag: true,
+        // flag: true,
+        // templateFlag: true,
         colorTitle: 0,
         shinIndex: 999999,
         //屏幕的宽度
         screenWidth: '',
         screenHeight: '',
+        winHeight: 0,
+        winWidth:0,
         endWidth: '',
         startsWidth: '',
         isMore: true,
@@ -147,6 +149,7 @@ Page({
                             }
                             wx.hideLoading();
                             that.setData({isLoading:false});
+                            console.log(that.data.isLoading)
                         })
                     }
                 }
@@ -166,20 +169,8 @@ Page({
         let that = this;
         wx.getSystemInfo({
             success: function (res) {
-            that.setData({windowHeight:res.windowHeight});
-                let model = res.model;
-                let arr = model.split(' ');
-                arr.pop()
-                let c  =arr.join(' ');
-                if(model == 'iPhone X'|| c=='iPhone X'){
-
-                    that.setData({iPhoneX: true})
-                }else {
-                    that.setData({iPhoneX: false })
-                }
-                if (model == 'iPhone X'|| c=='iPhone X') {
-                    that.setData({isIphoneX: true})
-                }else {that.setData({isIphoneX: false })}
+            that.setData({windowHeight:res.windowHeight ,winHeight:res.windowHeight,
+                winWidth:res.windowWidth});
             }})
         //文章列表
         that.getData('', 'GET', ).then((res) => {
@@ -280,33 +271,22 @@ Page({
             scrollTop: this.data.scrollTop = 0
         });
         let that = this;
-        that.setData({isMore: true,page:1})
-        if (e.currentTarget.dataset.tab == this.data.dataTab.length) {
-            this.setData({templateFlag: false, colorTitle: e.currentTarget.dataset.tab},()=>{
-                //我的数量
-                that.handleRead()
-            })
-        }
-        else {
-            this.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:[]},()=>{
-                wx.showLoading({title:'加载中'})
-                that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles?page=1&pageSize=20','GET').then((res)=>{
-                    if(res.data.code == 200){
-                        let arr =res.data.data.map((item)=>{
-                            item.sourceWxNickname =item.sourceWxNickname ||'-'
-                            item.readTimes =item.readTimes ||'0'
-                            item.time = util.moment(item.publishedAt).fromNow()
-                            return item
-                        })
-                        that.setData({templateFlag: true, colorTitle: e.currentTarget.dataset.tab,list:arr},()=>{
-                            wx.hideLoading();
-                        })
-                    }
-                });
-
-            })
-
-        }
+        that.setData({isMore: true,page:1,colorTitle: e.currentTarget.dataset.tabid,list:[]},()=>{
+            wx.showLoading({title:'加载中'})
+            that.getData('/list/'+ e.currentTarget.dataset.tabid+'/articles?page=1&pageSize=20','GET').then((res)=>{
+                if(res.data.code == 200){
+                    let arr =res.data.data.map((item)=>{
+                        item.sourceWxNickname =item.sourceWxNickname ||'-'
+                        item.readTimes =item.readTimes ||'0'
+                        item.time = util.moment(item.publishedAt).fromNow()
+                        return item
+                    })
+                    that.setData({ colorTitle: e.currentTarget.dataset.tab,list:arr},()=>{
+                        wx.hideLoading();
+                    })
+                }
+            });
+        })
     },
     //跳转到详情
     handleDetail(e) {
@@ -336,18 +316,10 @@ Page({
                         })
                     });
 
-                    if (that.data.colorTitle > that.data.dataTab.length) {
-                        that.setData({templateFlag: true, colorTitle: 0})
+                    if (that.data.colorTitle === that.data.dataTab.length) {
+                        that.setData({colorTitle: 0})
                         that.setData({
                             scrollLeft:that.data.scrollLeft=-100,
-                        });
-                        wx.hideLoading();
-                    } else if (that.data.colorTitle == that.data.dataTab.length) {
-                        that.setData({templateFlag: false, colorTitle: that.data.dataTab.length},()=>{
-                            wx.hideLoading();
-                        })
-                        that.setData({
-                            scrollLeft:that.data.scrollLeft+50,
                         });
                         wx.hideLoading();
                     }
@@ -355,9 +327,22 @@ Page({
             } else {
                 //console.log(this.data.startsWidth-this.data.endWidth)
                 if (that.data.endWidth - that.data.startsWidth >= that.data.screenWidth / 4) {
-                    that.setData({templateFlag: true, colorTitle: --that.data.colorTitle,list:[]},()=> {
+               if (that.data.colorTitle=== 0) {
+                    that.setData({
+                        scrollLeft:that.data.scrollLeft=50*that.data.dataTab.length,
+                        colorTitle: that.data.dataTab.length,
+                    },()=>{
+                        wx.hideLoading();
+                    })
+                 }
+                    that.setData({colorTitle: --that.data.colorTitle,list:[]},()=> {
+                        console.log(that.data.colorTitle)
+                        if (that.data.colorTitle > that.data.dataTab.length) {
+                            that.setData({templateFlag: true, colorTitle: 0,scrollLeft:that.data.scrollLeft=0});
+                            wx.hideLoading();
+                        }
                         wx.showLoading({title:'加载中'})
-                        that.getData('/list/' + this.data.dataTab[this.data.colorTitle].id + '/articles?page='+that.data.page+'&pageSize='+that.data.pageSize,'GET').then((res)=>{
+                        that.getData('/list/' + that.data.dataTab[that.data.colorTitle].id + '/articles?page=1&pageSize=20','GET').then((res)=>{
                             let arr =res.data.data.map((item)=>{
                                 item.sourceWxNickname =item.sourceWxNickname ||'-'
                                 item.time = util.moment(item.publishedAt).fromNow()
@@ -371,18 +356,7 @@ Page({
                             });
                         })
                     })
-                    if (that.data.colorTitle > that.data.dataTab.length) {
-                        that.setData({templateFlag: true, colorTitle: 0,scrollLeft:that.data.scrollLeft=0});
-                        wx.hideLoading();
-                    } else if (that.data.colorTitle < 0) {
-                        that.setData({templateFlag: false, colorTitle: that.data.dataTab.length})
 
-                        that.setData({
-                            scrollLeft:that.data.scrollLeft=50*that.data.dataTab.length,
-                        },()=>{
-                            wx.hideLoading();
-                        });
-                    }
                 }
             }
         })
@@ -390,25 +364,15 @@ Page({
     handleTouchStart(e) {
         this.setData({startsWidth: e.changedTouches[0].clientX})
     },
-
     onReachBottom(){
         if (this.data.isLoading) { // 防止数据还没回来再次触发加载
             return;
         }
-        let that = this;
-        if(this.data.colorTitle != this.data.dataTab.length){
-            if(this.data.isMore){
-                this.handleList(this.data.dataTab[this.data.colorTitle].id,++that.data.page,this.data.pageSize)
-            }else {
-                this.setData({isMore:false})
-                wx.hideLoading();
-            }
-        }else{
-            if(this.data.flag){
-                this.handleShare(++that.data.page,that.data.pageSize)
-            }else{
-                this.handleLike(++that.data.page,that.data.pageSize)
-            }
+        if(this.data.isMore){
+            this.handleList(this.data.dataTab[this.data.colorTitle].id,++this.data.page,this.data.pageSize)
+        }else {
+            this.setData({isMore:false})
+            wx.hideLoading();
         }
 
     },
@@ -430,6 +394,11 @@ Page({
         } else {
             this.setData({isMore: true})
         }
-    }
+    },
+    selectMy:function(){
+        wx.navigateTo({
+            url:'/pages/my/my'
+        })
+    },
 
 })
