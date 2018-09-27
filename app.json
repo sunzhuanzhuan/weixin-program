@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/test/detail",
     "pages/log/detail",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/my/my"
 
   ],
   "window":{
@@ -11,7 +12,6 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "微播易",
     "navigationBarTextStyle":"black",
-    "navigationStyle":"custom",
     "backgroundColor":"#ffffff"
   }
 }

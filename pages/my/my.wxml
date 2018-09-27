@@ -1,0 +1,49 @@
+
+<import src="/components/like/like.wxml" />
+<import src="/components/share/share.wxml" />
+<view>
+    <view class="plBottm28">
+        <view class="smallBox plTop36 plBottm32">
+
+            <view>
+                <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                    <image style="width: 140rpx;height: 140rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
+                    <view  class="avatar">{{userInfo.nickName?userInfo.nickName:'我要登录'}}</view></button></view>
+
+        </view>
+        <view class="readBox">
+            <view class="smallBox">
+                <text>{{userInfo.nickName?num.read:''}}</text>
+                <text class="readBoxName">阅读</text>
+            </view>
+            <view class="smallBox">
+                <text>{{userInfo.nickName?num.shared:''}}</text>
+                <text class="readBoxName">分享</text>
+            </view>
+            <view class="smallBox">
+                <text>{{userInfo.nickName?num.liked:''}}</text>
+                <text class="readBoxName">喜欢</text>
+            </view>
+        </view>
+    </view>
+    <view class="line"></view>
+    <view class="shareBox">
+        <view bindtap="handleTab" data-name="share">
+            <image class="icon" src="{{flag?shareAfter:shareBefore}}"></image>
+            <text class="{{flag ?'selected':'none'}}">我的分享</text>
+        </view>
+        <view bindtap="handleTab" data-name="like">
+            <image class="icon" src="{{flag?likeBefore:likeAfter}}"></image>
+            <text class="{{flag?'none':'selected'}}">我的喜欢</text>
+        </view>
+    </view>
+    <view>
+        <scroll-view  hidden="{{flag ? false : true}}" enable-back-to-top="true">
+            <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
+
+        </scroll-view>
+        <view  hidden="{{flag ? true : false}}" enable-back-to-top="true">
+            <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
+        </view>
+    </view>
+</view>
