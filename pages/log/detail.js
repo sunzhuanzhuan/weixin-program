@@ -24,7 +24,6 @@ Page({
     onLoad:function (options) {
         console.log(options)
         this.setData({name:options.nick})
-        let that = this
         // wx.getSystemInfo({
         //     success: function (res) {
         //         let arr = res.model.split(' ').pop().join(' ');

@@ -21,6 +21,7 @@ Page({
         type: '',
         type1: '',
         num: 0,
+        isShare:false,
         // --- For view tracking ---
 
         viewId: '',
@@ -31,7 +32,9 @@ Page({
         reportScrollTimeoutHandler: undefined,
         scrollStartedAt: undefined,
         scrollStartPos: undefined,
-        viewPercentage: 0
+        viewPercentage: 0,
+        nickName:'',
+        shareName:''
     },
     onShareAppMessage: function () {
         let that = this;
@@ -52,7 +55,7 @@ Page({
         });
         return {
             title: this.data.article.title || '默认转发标题',
-            path: 'pages/detail/detail?ref=' + this.data.shareId + '&art=' + this.data.articleId
+            path: 'pages/detail/detail?ref=' + this.data.shareId + '&art=' + this.data.articleId+'&nickName='+this.data.nickName
         }
     },
     getData: function (url, method, data) {
@@ -88,7 +91,8 @@ Page({
             success: function (res) {
                 that.setData({
                     type: "",
-                    type1: 'share'
+                    type1: 'share',
+                    nickName:res.data.nickName
                 });
             },
             fail: function (res) {
@@ -129,7 +133,7 @@ Page({
                 const scene = res.data;
                     if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
                         app.tokenPromise.then(function (sessionToken) {
-                            that.setData({ art: options.art, src: that.data.home })
+                            that.setData({ art: options.art, src: that.data.home,isShare:true ,shareName:options.nickName })
                             wx.getStorage({
                                 key: 'userInfo',
                                 success: function (res) {
@@ -186,6 +190,7 @@ Page({
     //授权
     handleAuthor() {
         let that_ = this;
+        console.log(that_.data.shareName)
         wx.getSetting({
             success(res) {
                 if (!res.authSetting['scope.userInfo']) {
@@ -205,7 +210,7 @@ Page({
                                     if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049)){
                                         that_.setData({isEyes: true},()=>{
                                             wx.navigateTo({
-                                                url:'/pages/log/detail?nick='+res.userInfo.nickName
+                                                url:'/pages/log/detail?nick='+that_.data.shareName
                                             })
                                         });
                                     }
@@ -292,16 +297,19 @@ Page({
     },
 
     onPageScroll: function (ev) {
-        console.log(ev);
+        // console.log(ev);
     },
 
     logIt: function (ev) {
-        console.log(ev);
+        // console.log(ev);
     },
     onHide: function () {
         this.setData({ lastSuspendAt: Date.now() });
     },
     onUnload: function () {
+        if(!this.data.isLike){
+            app.articleId=this.data.articleId
+        }
         if (this.data.viewId && this.data.articleId) {
             wx.request({
                 url: app.baseUrl + app.distroId + '/my/lefts',
@@ -321,13 +329,31 @@ Page({
     },
     recordUserscroll: function (event) {
         let num1 = event.detail.scrollTop;
+        let that = this;
         if (num1 > this.data.num) {
             this.setData({ isShow: false})
+            wx.getStorage({
+                key: 'scene',
+                success: function (res) {
+                    if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
+                        that.setData({isShare: false})
+                    }
+                }
+            })
         } else {
             this.setData({ isShow: true });
-            var animation = wx.createAnimation({
-                duration: 1000,
-                timingFunction: 'ease',
+            wx.getStorage({
+                key: 'scene',
+                success: function (res) {
+                    if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
+                        if(that.data.nickName){
+                            that.setData({isShare: false})
+                        }else {
+                            that.setData({isShare: true})
+                        }
+
+                    }
+                }
             })
         }
         this.data.num = num1
@@ -365,5 +391,10 @@ Page({
             this.data.scrollStartedAt = undefined;
 
         }.bind(this), 500);
-    }
+    },
+    handleBack:function(){
+        wx.reLaunch({
+            url:'/pages/index/index'
+        })
+    },
 })
