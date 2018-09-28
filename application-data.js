@@ -125,14 +125,16 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 return request(
                     method,
                     url,
-                    otherOptions
+                    queryOptions
                 ).then((res) => {
                     if (autoLoadingState) {
                         this.emit('loadingComplete');
                     }
                     if (res.header) {
-                        if (res.header['X-Set-Session-Token']) {
-                            this.emit('sessionToken', res.header['X-Set-Session-Token']);
+                        const TOKEN_HEADER_NAME = 'X-Set-Session-Token';
+                        const tokenValue = res.header[TOKEN_HEADER_NAME] || res.header[TOKEN_HEADER_NAME.toLowerCase()];
+                        if (tokenValue) {
+                            this.emit('sessionToken', tokenValue);
                         }
                         if (res.header['Set-Cookie']) {
                             this.emit('cookie', res.header['Set-Cookie']);
