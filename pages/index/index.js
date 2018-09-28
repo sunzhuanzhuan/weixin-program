@@ -40,7 +40,8 @@ Page({
         coverUrl:'',
         miniTitle:'',
         isModal:false,
-        isNew:true
+        isNew:true,
+        isClickMy:false
 
     },
     //获取阅读量
@@ -165,7 +166,12 @@ Page({
         wx.getStorage({
             key: "userInfo",
             success:function(){
-                that.setData({isNew:false})
+                if(that.data.isClickMy){
+                    that.setData({isNew:false})
+                }else{
+                    that.setData({isNew:true})
+                }
+                
             },
             fail:function(){
                 that.setData({isNew:true})
@@ -201,6 +207,9 @@ Page({
         that.getData('', 'GET', ).then((res) => {
             const r = res.data.data;
             if (res.data.code == 200) {
+                wx.setNavigationBarTitle({
+                    title:r.title
+                })
                 that.setData({ appTitle: r.title,coverUrl:r.avatarUrl, dataTab: r.lists }, () => {
                     that.handleList(r.lists[0].id,1,20)
                 })
@@ -263,30 +272,6 @@ Page({
             success: function (res) {
             }
         })
-    },
-    handleTab(e) {
-        let that = this;
-        if (e.currentTarget.dataset.name == 'share') {
-            this.setData({flag: true},()=>{
-                wx.getStorage({
-                    key: 'userInfo',
-                    success: function (res) {
-                        that.handleShare(1,20)
-                    }
-                })
-
-            })
-        } else {
-            this.setData({flag: false},()=>{
-                wx.getStorage({
-                    key: 'userInfo',
-                    success: function (res) {
-                        that.handleLike(1,20);
-                    }
-                })
-
-            })
-        }
     },
     handleShrink(e) {
         this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})
@@ -422,6 +407,9 @@ Page({
         }
     },
     selectMy:function(){
+        this.setData({
+            isClickMy:true
+        })
         wx.navigateTo({
             url:'/pages/my/my'
         })

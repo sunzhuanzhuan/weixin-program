@@ -5,7 +5,7 @@
 <view class="containerBig" style="height: {{winHeight}}px;">
     <view style="height:88rpx;background:#ffffff;">
         <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x
-                      style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-70}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
+                      style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-85}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
             <view class="nav">
                 <view  wx:for="{{dataTab}}" class='tag-box' wx:key="id" style="display: inline-block">
                     <view class="taga-item {{colorTitle==index?'bold':''}}"
@@ -14,10 +14,10 @@
                 </view>
             </view>
         </scroll-view>
-        <view style="height:88rpx;width:30rpx;display:inline-block;background:#ffffff;position:fixed;z-index:27;right:100rpx;"></view>
+        <view style="height:88rpx;width:40rpx;display:inline-block;background:#ffffff;position:fixed;z-index:27;left:calc({{winWidth-85}}px)"></view>
         <view data-current="{{dataTab.length}}" data-name='{{item.title}}'
-              data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:100rpx;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
-            <image src="/images/my.jpg" style="width:122rpx;height: 90rpx;" data-id="{{dataTab.length}}" ></image>
+              data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:122rpx;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
+            <image src="/images/my.jpg" style="width:122rpx;height: 88rpx;" data-id="{{dataTab.length}}" ></image>
         </view>
     </view>
 
