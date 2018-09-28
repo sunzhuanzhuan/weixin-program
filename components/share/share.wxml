@@ -2,7 +2,7 @@
     <block wx:if="{{shareList.length>0}}" >
         <view wx:for="{{shareList}}" class="container"  wx:key="{{index}}">
             <view class="box"  data-id="{{item.id}}"  >
-                <view class="bigBox">
+                <view class="bigBox" style="padding:0 32rpx">
                     <view class="imgBox" bindtap="handleDetail" data-id="{{item.article.id}}" >
                         <image class="img" src="{{item.article.coverUrl}}" lazy-load></image>
                         <view class="letterBox">

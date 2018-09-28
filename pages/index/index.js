@@ -37,6 +37,10 @@ Page({
         // upLoad:true,
         // toView:'',
         scrollLeft:0,
+        coverUrl:'',
+        miniTitle:'',
+        isModal:false,
+        isNew:true
 
     },
     //获取阅读量
@@ -149,7 +153,6 @@ Page({
                             }
                             wx.hideLoading();
                             that.setData({isLoading:false});
-                            console.log(that.data.isLoading)
                         })
                     }
                 }
@@ -157,16 +160,38 @@ Page({
     },
 
     onShow:function(){
-        let that = this;
-        wx.showShareMenu({withShareTicket: true})
-        if (that.data.colorTitle == that.data.dataTab.length) {
-            app.tokenPromise.then(function (sessionToken) {
-                that.handleRead()
-            })
-        }
+        wx.showShareMenu({withShareTicket: true});
+        let that = this
+        wx.getStorage({
+            key: "userInfo",
+            success:function(){
+                that.setData({isNew:false})
+            },
+            fail:function(){
+                that.setData({isNew:true})
+            }
+        })
     },
     onLoad: function () {
         let that = this;
+        wx.getStorage({
+            key:'scene',
+            success:function(res){
+                if(that.data.userInfo.nickName != undefined){
+                    that.setData({isModal:false})
+                    
+                }else if(that.data.userInfo.nickName == undefined){
+                    that.setData({isModal:true})
+                }
+
+
+            },
+            fail:function (res) {
+                console.log(res)
+            }
+
+        })
+
         wx.getSystemInfo({
             success: function (res) {
             that.setData({windowHeight:res.windowHeight ,winHeight:res.windowHeight,
@@ -176,7 +201,7 @@ Page({
         that.getData('', 'GET', ).then((res) => {
             const r = res.data.data;
             if (res.data.code == 200) {
-                that.setData({ appTitle: r.title, dataTab: r.lists }, () => {
+                that.setData({ appTitle: r.title,coverUrl:r.avatarUrl, dataTab: r.lists }, () => {
                     that.handleList(r.lists[0].id,1,20)
                 })
             }
@@ -290,8 +315,9 @@ Page({
     },
     //跳转到详情
     handleDetail(e) {
+        let that = this;
         wx.navigateTo({
-            url: '/pages/detail/detail?id='+e.currentTarget.dataset.id
+            url: '/pages/detail/detail?id='+e.currentTarget.dataset.id+'&num='+that.data.detailTap
         })
     },
     handleTouchEnd(e) {
@@ -400,5 +426,8 @@ Page({
             url:'/pages/my/my'
         })
     },
+    handleClose:function () {
+        this.setData({isModal:false})
+    }
 
 })

@@ -2,7 +2,7 @@
     <block wx:if="{{likeList.length>0}}">
         <view wx:for="{{likeList}}"  class="container"  wx:key="{{index}}"  bindtap="handleDetail" data-id="{{item.article.id}}">
             <view>
-                <view class="bigBox">
+                <view class="bigBox"  style="padding:0 32rpx">
                     <view class="imgBox">
                         <image class="img" src="{{item.article.coverUrl}}" lazy-load></image>
                         <view class="letterBox">
@@ -17,9 +17,6 @@
                     <view class="bottomLine"></view>
                 </view>
             </view>
-            <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
-            </view>
-
         </view>
         <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
         </view>
