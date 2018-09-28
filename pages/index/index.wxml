@@ -14,7 +14,7 @@
                 </view>
             </view>
         </scroll-view>
-        <view style="height:88rpx;width:40rpx;display:inline-block;background:#ffffff;position:fixed;z-index:27;left:calc({{winWidth-85}}px)"></view>
+        <view style="height:88rpx;width:50rpx;display:inline-block;background:#ffffff;position:fixed;z-index:27;left:calc({{winWidth-85}}px)"></view>
         <view data-current="{{dataTab.length}}" data-name='{{item.title}}'
               data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:122rpx;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
             <image src="/images/my.jpg" style="width:122rpx;height: 88rpx;" data-id="{{dataTab.length}}" ></image>
@@ -32,7 +32,7 @@
             bind:touchend="handleTouchEnd">
             <block> 
                 <view wx:if="{{colorTitle ==0}}" >
-                    <image wx:if="{{isNew}}" src="/images/new.png" class="bigBox" style="width:91%;"></image>
+                    <image wx:if="{{isNew}}" src="/images/new.png" class="bigBox" style="width:91%;height:430rpx"></image>
                 </view>
                     
                 <view>
