@@ -116,6 +116,9 @@ Page({
                 let arr = model.split(' ');
                 arr.pop()
                 let c = arr.join(' ');
+
+                console.log(arr)
+                console.log(options)
                 if (model == 'iPhone X' || c == 'iPhone X') {
                     that.setData({ iPhoneX: true })
                 } else {
@@ -133,9 +136,10 @@ Page({
                 key: 'scene',
                 success: function (res) {
                 const scene = res.data;
+                console.log(scene)
                     if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
                         app.tokenPromise.then(function (sessionToken) {
-                            that.setData({ art: options.art, src: that.data.home,isShare:true ,shareName:options.nickName })
+                            that.setData({ art: options.art, src: that.data.home,articleId:options.art,isShare:true ,shareName:options.nickName })
                             wx.getStorage({
                                 key: 'userInfo',
                                 success: function (res) {
@@ -206,9 +210,9 @@ Page({
 
     },
     //授权
-    handleAuthor() {
+    handleAuthor(e) {
         let that_ = this;
-        console.log(that_.data.shareName)
+        console.log()
         wx.getSetting({
             success(res) {
                 if (!res.authSetting['scope.userInfo']) {
@@ -220,7 +224,40 @@ Page({
                                 key: "userInfo",
                                 data: res.userInfo
                             })
-                            that_.setData({ type: '', type1: 'share' })
+                           
+                            that_.setData({ type: '', type1: 'share' ,nickName:res.userInfo.nickName},()=>{
+                                console.log(res.userInfo)
+                                if(e.currentTarget.dataset.item === 'like'){
+                                    that_.setData({ isLike: !that_.data.isLike });
+                                    wx.request({
+                                        url: app.baseUrl + app.distroId + '/my/likes',
+                                        method: 'POST',
+                                        header: {
+                                            'X-Session-Token': app.sessionToken
+                                        },
+                                        data: {
+                                            article: that_.data.articleId
+                                        },
+                                        success: function (res) {
+                                        }
+                                    });
+                                }else if(e.currentTarget.dataset.item  === 'share'){
+                                    
+                                }
+                            })
+                            wx.request({
+                                method: 'POST',
+                                url: app.baseUrl + app.distroId + '/my/profile',
+                                data: {
+                                    encryptedData: res.encryptedData,
+                                    iv: res.iv
+                                },
+                                header: {
+                                    'X-Session-Token': app.sessionToken
+                                },
+                                success: function (res) {
+                                }
+                            })
                             wx.getStorage({
                                 key: 'scene',
                                 success: function (res) {
@@ -233,7 +270,7 @@ Page({
                                         });
                                     }
                                 }
-                                })
+                            })
 
 
                         }
@@ -359,6 +396,7 @@ Page({
                     }
                 }
             })
+
         } else {
             this.setData({ isShow: true });
             wx.getStorage({
@@ -374,6 +412,7 @@ Page({
                     }
                 }
             })
+
         }
         this.data.num = num1
         if (!(event && event.type === 'scroll')) {

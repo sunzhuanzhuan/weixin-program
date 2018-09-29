@@ -30,23 +30,24 @@
     <view class="fixed {{isShow?'show':''}} state1">
         <view class="floatShadow"></view>
         <view style="display: flex;flex-direction: row;background: #ffffff;height: 94rpx;">
-            <view wx:if="{{isEyes}}" style="flex:2;visibility: hidden;">123</view>
-            <button wx:else class="leftBtn" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}"
-                    style="flex:2;">
+            <view  wx:if="{{isEyes}}"  style="flex:3;visibility: hidden;">123</view>
+            <button  wx:else class="leftBtn" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}"
+                    style="flex:3;">
                 <!--hidden="{{isEyes}}"-->
                 <image class="eyeBtn" src="../../images/eye.png"></image>
-                <text class="readLetter">让朋友知道</text>
+                <text class="readLetter">让朋友知道我在读</text>
             </button>
             <button catchtap="handleLike" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}"
-                    style="opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                    style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
 
                 <image class="imgBtn" style="position: relative;z-index: 1;"
                        src="{{isLike?('../../images/likeAfter.png'):('../../images/likeBefore.png')}}"></image>
 
             </button>
             <button open-type="{{type1}}" data-item="share" bindgetuserinfo="handleAuthor"
-                    style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                    style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
                 <image src="{{shareButton}}" class="imgBtn" style="position: relative;z-index: 1;"></image>
+                <!-- <image class="eyeBtn" src="../../images/eye.png"></image> -->
             </button>
             <!--<button open-type="{{type}}"  data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster"-->
                     <!--style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">-->
