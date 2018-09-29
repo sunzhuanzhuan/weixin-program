@@ -188,9 +188,9 @@ Page({
 
     },
     //授权
-    handleAuthor() {
+    handleAuthor(e) {
         let that_ = this;
-        console.log(that_.data.shareName)
+        console.log()
         wx.getSetting({
             success(res) {
                 if (!res.authSetting['scope.userInfo']) {
@@ -202,7 +202,38 @@ Page({
                                 key: "userInfo",
                                 data: res.userInfo
                             })
-                            that_.setData({ type: '', type1: 'share' })
+                            that_.setData({ type: '', type1: 'share' },()=>{
+                                if(e.currentTarget.dataset.item === 'like'){
+                                    that_.setData({ isLike: !that_.data.isLike });
+                                    wx.request({
+                                        url: app.baseUrl + app.distroId + '/my/likes',
+                                        method: 'POST',
+                                        header: {
+                                            'X-Session-Token': app.sessionToken
+                                        },
+                                        data: {
+                                            article: that_.data.articleId
+                                        },
+                                        success: function (res) {
+                                        }
+                                    });
+                                }else if(e.currentTarget.dataset.item  === 'share'){
+                                    
+                                }
+                            })
+                            wx.request({
+                                method: 'POST',
+                                url: app.baseUrl + app.distroId + '/my/profile',
+                                data: {
+                                    encryptedData: res.encryptedData,
+                                    iv: res.iv
+                                },
+                                header: {
+                                    'X-Session-Token': app.sessionToken
+                                },
+                                success: function (res) {
+                                }
+                            })
                             wx.getStorage({
                                 key: 'scene',
                                 success: function (res) {
@@ -215,7 +246,7 @@ Page({
                                         });
                                     }
                                 }
-                                })
+                            })
 
 
                         }
