@@ -4,7 +4,7 @@
             <view>
                 <view class="bigBox"  style="padding:0 32rpx">
                     <view class="imgBox">
-                        <image class="img" src="{{item.article.coverUrl}}" lazy-load></image>
+                        <image class="img" mode="aspectFill" src="{{item.article.coverUrl}}" lazy-load></image>
                         <view class="letterBox">
                             <view class="nowrap">{{item.article.title}}</view>
                             <view class="letter">
