@@ -366,17 +366,32 @@ Page({
         let num1 = event.detail.scrollTop;
         let that = this;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false,isShare: false})
+            this.setData({ isShow: false})
             wx.getStorage({
                 key: 'scene',
                 success: function (res) {
                     if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
-                        that.setData({})
+                        that.setData({isShare: false})
                     }
                 }
             })
+
         } else {
-            this.setData({ isShow: true, isShare: true,});
+            this.setData({ isShow: true });
+            wx.getStorage({
+                key: 'scene',
+                success: function (res) {
+                    if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
+                        if(that.data.nickName){
+                            that.setData({isShare: false,isEyes:true})
+                        }else {
+                            that.setData({isShare: true,isEyes:false})
+                        }
+
+                    }
+                }
+            })
+
         }
         this.data.num = num1
         if (!(event && event.type === 'scroll')) {
