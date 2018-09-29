@@ -170,7 +170,7 @@ Page({
                         })
 
                     } else {
-                        that.setData({ isEyes: true, articleId: options.id, src: that.data.close })
+                        that.setData({ isEyes: true, articleId: options.id, src: that.data.close,isShare:false , })
                         // options.id
                         wx.showNavigationBarLoading();
                       that.getData('/article/' + options.id + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true', 'GET').then((res) => {
@@ -366,9 +366,9 @@ Page({
                 success: function (res) {
                     if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
                         if(that.data.nickName){
-                            that.setData({isShare: false})
+                            that.setData({isShare: false,isEyes:true})
                         }else {
-                            that.setData({isShare: true})
+                            that.setData({isShare: true,isEyes:false})
                         }
 
                     }
@@ -411,7 +411,7 @@ Page({
 
         }.bind(this), 500);
     },
-    handleBack:function(){
+    handleBack:function(e){
         wx.reLaunch({
             url:'/pages/index/index'
         })

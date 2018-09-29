@@ -28,6 +28,7 @@ page{
 .tag-box {
   position: relative;
   padding-left:50rpx;
+  
   /* margin: 0 30rpx; */
   color:#222;
   box-sizing: border-box;
@@ -35,6 +36,7 @@ page{
 .tag-box view{
   font-size: 32rpx;
   color: #222;
+  
 }
 
 .borderline {

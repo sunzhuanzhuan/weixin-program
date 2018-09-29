@@ -10,7 +10,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "微播易",
+    "navigationBarTitleText": "",
     "navigationBarTextStyle":"black",
     "backgroundColor":"#ffffff"
   },

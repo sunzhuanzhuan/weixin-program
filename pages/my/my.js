@@ -147,7 +147,8 @@ Page({
                     },
                     fail:function(){
                         wx.showToast({
-                            title:'还没有授权登录呢！'
+                            title:'未登录授权',
+                            icon:'none'
                         })
                     }
                 })
@@ -162,7 +163,8 @@ Page({
                     },
                     fail:function(){
                         wx.showToast({
-                            title:'还没有授权登录呢！'
+                            title:'未登录授权',
+                            icon:'none'
                         })
                     }
                 })
