@@ -110,6 +110,7 @@ Page({
                 let c = arr.join(' ');
 
                 console.log(arr)
+                console.log(options)
                 if (model == 'iPhone X' || c == 'iPhone X') {
 
                     that.setData({ iPhoneX: true })
@@ -131,9 +132,10 @@ Page({
                 key: 'scene',
                 success: function (res) {
                 const scene = res.data;
+                console.log(scene)
                     if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
                         app.tokenPromise.then(function (sessionToken) {
-                            that.setData({ art: options.art, src: that.data.home,isShare:true ,shareName:options.nickName })
+                            that.setData({ art: options.art, src: that.data.home,articleId:options.art,isShare:true ,shareName:options.nickName })
                             wx.getStorage({
                                 key: 'userInfo',
                                 success: function (res) {
@@ -202,7 +204,9 @@ Page({
                                 key: "userInfo",
                                 data: res.userInfo
                             })
-                            that_.setData({ type: '', type1: 'share' },()=>{
+                           
+                            that_.setData({ type: '', type1: 'share' ,nickName:res.userInfo.nickName},()=>{
+                                console.log(res.userInfo)
                                 if(e.currentTarget.dataset.item === 'like'){
                                     that_.setData({ isLike: !that_.data.isLike });
                                     wx.request({
@@ -362,30 +366,17 @@ Page({
         let num1 = event.detail.scrollTop;
         let that = this;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false})
+            this.setData({ isShow: false,isShare: false})
             wx.getStorage({
                 key: 'scene',
                 success: function (res) {
                     if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
-                        that.setData({isShare: false})
+                        that.setData({})
                     }
                 }
             })
         } else {
-            this.setData({ isShow: true });
-            wx.getStorage({
-                key: 'scene',
-                success: function (res) {
-                    if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
-                        if(that.data.nickName){
-                            that.setData({isShare: false,isEyes:true})
-                        }else {
-                            that.setData({isShare: true,isEyes:false})
-                        }
-
-                    }
-                }
-            })
+            this.setData({ isShow: true, isShare: true,});
         }
         this.data.num = num1
         if (!(event && event.type === 'scroll')) {

@@ -5,7 +5,7 @@ button::after{ border: none; }
     background: #f6f6f6;
 }
 .state1{
-    transition:all 0.05s linear;
+    transition:all 0.1s linear;
 }
 .goHomeStyle{
     position: fixed;
