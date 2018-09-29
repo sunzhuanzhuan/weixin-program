@@ -9,6 +9,7 @@
             <view class="nav">
                 <view  wx:for="{{dataTab}}" class='tag-box' wx:key="id" style="display: inline-block">
                     <view class="taga-item {{colorTitle==index?'bold':''}}"
+                    style="{{colorTitle==index?'color:#000':'color:#999'}}"
                           data-tab="{{index}}" data-name='{{item.title}}'
                           data-tabid="{{item.id}}" bindtap="handleTitleTab">{{item.title}}</view>
                 </view>
