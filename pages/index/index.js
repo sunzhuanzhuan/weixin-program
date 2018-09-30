@@ -4,120 +4,98 @@ const util = require('../../utils/util');
 
 Page({
     data: {
-        appTitle:app.appName,
-        // dataTab: [],
-        
-       
+        appTitle: app.appName,
         heightFlag: true,
-        userInfo: {},
-      
-       
-        //屏幕的宽度
         screenWidth: '',
         screenHeight: '',
         winHeight: 0,
-        winWidth:0,
+        winWidth: 0,
         endWidth: '',
         startsWidth: '',
-        
-        num:{},
-        scrollTop:1,
-        windowHeight:'',
-        
-        
-        scrollLeft:0,
-       
-        isModal:false,
-        isNew:true,
-        isClickMy:false,
-
-
+        num: {},
+        scrollTop: 0,
+        scrollLeft: 0,
+        isModal: false,
+        isNew: true,
+        isClickMy: false,
         //新的标量
-        lists:[],
+        lists: [],
         //哪一个tab
-        currentTabIndex:0
+        currentTabIndex: 0
 
     },
-   
-   
-    onShow:function(){
-        wx.showShareMenu({withShareTicket: true});
-        let that = this
-        wx.getStorage({
-            key: "userInfo",
-            success:function(){
-                if(that.data.isClickMy){
-                    that.setData({isNew:false})
-                }else{
-                    that.setData({isNew:true})
-                }
-                
-            },
-            fail:function(){
-                that.setData({isNew:true})
+    onShow: function () {
+        wx.showShareMenu({ withShareTicket: true });
+        gdt.userInfo.then((x) => {
+            if (this.data.isClickMy) {
+                this.setData({ isNew: false })
+            } else {
+                this.setData({ isNew: true })
             }
-        })
+        }).catch(() => {
+            this.setData({ isNew: true })
+        });
+
     },
-   
-    
+
     handleTitleTab(e) {
-        
         this.setData({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab
         });
-        let that = this;
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {
             gdt.magicListItemFirstLoad(currentListInstance._id);
-            
+
         }
     },
     //跳转到详情
     handleDetail(e) {
         let that = this;
         wx.navigateTo({
-            url: '/pages/detail/detail?id='+e.currentTarget.dataset.id+'&num='+that.data.detailTap
+            url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap
         })
     },
     handleTouchEnd(e) {
         let that = this;
-        this.setData({endWidth: e.changedTouches[0].clientX},()=>{
+        this.setData({ endWidth: e.changedTouches[0].clientX }, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
-                    that.setData({templateFlag: true, currentTabIndex: ++that.data.currentTabIndex,isMore: true,list:[]},()=>{
-                        
+                    that.setData({
+                        scrollTop: that.data.scrollTop = 0,
+                        scrollLeft: that.data.scrollLeft + 50,
+                        templateFlag: true, currentTabIndex: ++that.data.currentTabIndex, isMore: true, list: []
+                    }, () => {
                         const currentListInstance = that.data.lists[that.data.currentTabIndex];
-                        if (that.data.currentTabIndex !== that.data.lists.length){
+                        if (that.data.currentTabIndex !== that.data.lists.length) {
                             gdt.magicListItemFirstLoad(currentListInstance._id);
                         }
                     });
 
                     if (that.data.currentTabIndex === that.data.lists.length) {
-                        that.setData({currentTabIndex: 0})
+                        that.setData({ currentTabIndex: 0 })
                         that.setData({
-                            scrollLeft:that.data.scrollLeft=-100,
+                            scrollLeft: that.data.scrollLeft = -100,
                         });
                         wx.hideLoading();
                     }
                 }
             } else {
-                //console.log(this.data.startsWidth-this.data.endWidth)
                 if (that.data.endWidth - that.data.startsWidth >= that.data.screenWidth / 4) {
-               if (that.data.currentTabIndex=== 0) {
-                    that.setData({
-                        scrollLeft:that.data.scrollLeft=50*that.data.lists.length,
-                        currentTabIndex: that.data.lists.length,
-                    },()=>{
-                        wx.hideLoading();
-                    })
-                 }
-                    that.setData({currentTabIndex: --that.data.currentTabIndex,list:[]},()=> {
+                    if (that.data.currentTabIndex === 0) {
                         that.setData({
-                            currentTabIndex: that.data.currentTabIndex
-                        });
+                            scrollLeft: that.data.scrollLeft = 50 * that.data.lists.length,
+                            currentTabIndex: that.data.lists.length,
+                        })
+                    }
+                    if (that.data.currentTabIndex === 1) {
+                        that.setData({ scrollLeft: that.data.scrollLeft = 0 });
+                    }
+
+                    that.setData({ currentTabIndex: --that.data.currentTabIndex, list: [] }, () => {
+
                         const currentListInstance = that.data.lists[that.data.currentTabIndex];
-                        if (!currentListInstance.length){
+                        if (!currentListInstance.length) {
                             gdt.magicListItemFirstLoad(currentListInstance._id);
                         }
                     })
@@ -127,34 +105,30 @@ Page({
         })
     },
     handleTouchStart(e) {
-        this.setData({startsWidth: e.changedTouches[0].clientX})
+        this.setData({ startsWidth: e.changedTouches[0].clientX })
     },
-    
-   
-    selectMy:function(){
+
+
+    selectMy: function () {
         this.setData({
-            isClickMy:true
+            isClickMy: true
         })
         wx.navigateTo({
-            url:'/pages/my/my'
+            url: '/pages/my/my'
         })
     },
-    handleClose:function () {
-        this.setData({isModal:false})
+    handleClose: function () {
+        this.setData({ isModal: false })
     },
-
-
-
-
 
     // 分割线
 
     onReady: function () {
         let that = this;
-        gdt.userInfo.then((res)=>{
-            this.setData({isModal:false})
-        }).catch(()=>{
-            this.setData({isModal:true})
+        gdt.userInfo.then((res) => {
+            this.setData({ isModal: false })
+        }).catch(() => {
+            this.setData({ isModal: true })
         })
         gdt.appName.then((x) => {
             wx.setNavigationBarTitle({
@@ -169,10 +143,10 @@ Page({
                 });
             }
             this.setData({ lists: x.lists });
-            gdt.on('listItems', (listId, updateRange, itemList)=> {
+            gdt.on('listItems', (listId, updateRange, itemList) => {
                 if (itemList && itemList.length) {
                     const itemIndex = this.appState.itemIndex;
-                    itemList.forEach((x)=> {
+                    itemList.forEach((x) => {
                         if (itemIndex[x._id]) {
                             const indexedItem = itemIndex[x._id];
                             indexedItem._sourceWxDisplayName = x.sourceWxNickname || '-';
@@ -181,10 +155,10 @@ Page({
                             x._sourceWxDisplayName = x.sourceWxNickname || '-';
                             x._publishedFromNow = util.moment(x.publishedAt).fromNow();
                         }
-                        
+
                     });
                 }
-                this.setData({ lists: x.lists },()=>{
+                this.setData({ lists: x.lists }, () => {
                 });
             });
             if (x.lists.length) {
@@ -199,25 +173,25 @@ Page({
                 screenHeight: x.screenHeight,
             });
         });
-        
+
     },
     //上拉加载
-    onReachBottom:function(){
+    onReachBottom: function () {
         const currentListInstance = this.data.lists[this.data.currentTabIndex]
         if (currentListInstance) {
             gdt.magicListItemLoadMore(currentListInstance._id);
         }
     },
     //下拉刷新
-    onPullDownRefresh:function(){
-        const currentListInstance = this.data.lists[ this.data.currentTabIndex]
+    onPullDownRefresh: function () {
+        const currentListInstance = this.data.lists[this.data.currentTabIndex]
         if (currentListInstance) {
-            gdt.magicListItemLoadLatest(currentListInstance._id).then(()=> {
-                setTimeout(()=> {
+            gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
+                setTimeout(() => {
                     wx.stopPullDownRefresh();
                 }, 500);
             });
-            
+
         }
     },
 

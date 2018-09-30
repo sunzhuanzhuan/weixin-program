@@ -89,17 +89,14 @@ Page({
     },
     onLoad(options) {
         let that = this;
-        
         gdt.userInfo.then((x)=> {
             this.setData({
-                isEyes: true,
                 type: "",
                 type1: 'share',
                 nickName: x.userInfo.nickName
             });
         }).catch(()=> {
             this.setData({
-                isEyes: false,
                 type: 'getUserInfo',
                 type1: 'getUserInfo'
             });
@@ -108,7 +105,16 @@ Page({
         let qPromise;
         const articleId = options.art || options.id;
         if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) && options.art != undefined) {
-            this.setData({ art: articleId, src: this.data.home,isShare:true ,shareName:options.nickName})
+            this.setData({ art: articleId, src: this.data.home,isShare:true ,shareName:options.nickName,articleId:options.art });
+            gdt.userInfo.then((x)=> {
+                this.setData({
+                    isEyes: true
+                });
+            }).catch(()=> {
+                this.setData({
+                    isEyes: false
+                });
+            });
             qPromise = gdt.fetchArticleDetail(articleId, {
                 scene: scene,
                 keepH5Links: true,
