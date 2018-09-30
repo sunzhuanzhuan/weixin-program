@@ -13,37 +13,37 @@
         </view>
         <view class="readBox">
             <view class="smallBox">
-                <text>{{userInfo.nickName?num.read:''}}</text>
+                <text>{{userInfo ? num.read : ''}}</text>
                 <text class="readBoxName">阅读</text>
             </view>
             <view class="smallBox">
-                <text>{{userInfo.nickName?num.shared:''}}</text>
+                <text>{{userInfo ? num.shared : ''}}</text>
                 <text class="readBoxName">分享</text>
             </view>
             <view class="smallBox">
-                <text>{{userInfo.nickName?num.liked:''}}</text>
+                <text>{{userInfo ? num.liked : ''}}</text>
                 <text class="readBoxName">喜欢</text>
             </view>
         </view>
     </view>
     <view class="line"></view>
     <view class="shareBox">
-        <view bindtap="handleTab" data-name="share">
-            <image class="icon" src="{{flag?shareAfter:shareBefore}}"></image>
-            <text class="{{flag ?'selected':'none'}}">我的分享</text>
+        <view bindtap="handleTab" data-name="myShares">
+            <image class="icon" src="{{currentTab === 'myShares' ? shareAfter : shareBefore}}"></image>
+            <text class="{{currentTab === 'myShares' ? 'selected' : 'none'}}">我的分享</text>
         </view>
-        <view bindtap="handleTab" data-name="like">
-            <image class="icon" src="{{flag?likeBefore:likeAfter}}"></image>
-            <text class="{{flag?'none':'selected'}}">我的喜欢</text>
+        <view bindtap="handleTab" data-name="myLikes">
+            <image class="icon" src="{{currentTab === 'myLikes' ? likeBefore : likeAfter}}"></image>
+            <text class="{{currentTab === 'myLikes' ? 'selected' : 'none'}}">我的喜欢</text>
         </view>
     </view>
     <view>
-        <scroll-view  hidden="{{flag ? false : true}}" enable-back-to-top="true">
-            <template is="share" data="{{imgCry:imgCry,shareList:shareList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
+        <scroll-view  hidden="{{currentTab !== 'myShares'}}" enable-back-to-top="true">
+            <template is="share" data="{{imgCry:imgCry,shareList:userInfo ? myShares : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: myShares.__hasMore !== false}}"/>
 
         </scroll-view>
-        <view  hidden="{{flag ? true : false}}" enable-back-to-top="true">
-            <template is="like"  data="{{imgCry:imgCry,likeList:likeList,heightFlag:heightFlag,shinIndex:shinIndex,isMore:isMore}}"/>
+        <view  hidden="{{currentTab !== 'myLikes'}}" enable-back-to-top="true">
+            <template is="like"  data="{{imgCry:imgCry,likeList:userInfo ? myLikes : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: myLikes.__hasMore !== false}}"/>
         </view>
     </view>
 </view>
