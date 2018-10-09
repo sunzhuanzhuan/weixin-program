@@ -195,7 +195,10 @@ Page({
         }
     },
     getFormID: function (e) {
-        console.log( e.detail.formId)
+        if (e.detail.formId) {
+            gdt.collectTplMessageQuotaByForm(e.detail.formId);
+        }
+        // console.log( e.detail.formId)
         // this.setData({
         // formId: e.detail.formId }) 
     }

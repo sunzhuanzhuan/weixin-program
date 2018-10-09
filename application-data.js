@@ -819,4 +819,16 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
     //推送消息
+
+    collectTplMessageQuotaByForm(formId, otherOptions) {
+        const queryBody = _.merge({ formId: formId, type: 'form' }, otherOptions || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall('POST', '/my/tplMsgQuota', {
+                body: queryBody
+            });
+
+            return queryPromise;
+        });
+    }
 }
