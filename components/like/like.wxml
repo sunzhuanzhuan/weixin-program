@@ -9,7 +9,7 @@
                             <view class="nowrap">{{item.article.title}}</view>
                             <view class="letter">
                                 <text class="ellipsisLike">{{item.article.sourceWxNickname}}</text>
-                                <text class="">{{item.time}}</text>
+                                <text class="">{{item.article._publishedFromNow}}</text>
                                 <text class="time flright">{{item.article.readTimes}}阅读</text>
                             </view>
                         </view>

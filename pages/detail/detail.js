@@ -1,5 +1,7 @@
 let app = getApp().globalData;
 const txvContext = requirePlugin("tencentvideo");
+const gdt = app.applicationDataContext;
+
 Page({
     data: {
         nodes: [],
@@ -66,18 +68,7 @@ Page({
             path: 'pages/detail/detail?ref=' + this.data.shareId + '&art=' + this.data.articleId+'&nickName='+this.data.nickName
         }
     },
-    getData: function (url, method, data) {
-        return new Promise(function (resolve, reject) {
-            wx.request({
-                url: app.baseUrl + app.distroId + url,
-                method: method,
-                data: data,
-                header: { 'X-Session-Token': app.sessionToken },
-                fail: reject,
-                success: resolve
-            })
-        })
-    },
+    
     onShow: function () {
         
         const now = Date.now();
@@ -92,110 +83,94 @@ Page({
             // this.setData({ lastSuspendAt: null });
         }
     },
+    //授权的时候发生的
+    handleAuthor:function(e){
+
+        if (e.detail && e.detail.userInfo) {
+            gdt.emit('userInfo', e.detail);
+        }
+
+    },
+    handleLikeButtonTapped: function (e) {
+        gdt.userInfo.then(()=> {
+            this.setData({ isLike: !this.data.isLike }, () => {
+                if (this.data.isLike) {
+                    gdt.likeItem(this.data.articleId);
+                } else {
+                    gdt.unlikeItem(this.data.articleId);
+                }
+            });
+        }).catch(()=> {
+            gdt.once('userInfo', ()=> {
+                this.setData({ isLike: !this.data.isLike }, () => {
+                    if (this.data.isLike) {
+                        gdt.likeItem(this.data.articleId);
+                    } else {
+                        gdt.unlikeItem(this.data.articleId);
+                    }
+                });
+            });
+        });
+        
+    },
     onLoad(options) {
         let that = this;
-        wx.getStorage({
-            key: 'userInfo',
-            success: function (res) {
-                that.setData({
-                    type: "",
-                    type1: 'share',
-                    nickName:res.data.nickName
+        gdt.userInfo.then((x)=> {
+            this.setData({
+                type: "",
+                type1: 'share',
+                nickName: x.userInfo.nickName
+            });
+        }).catch(()=> {
+            this.setData({
+                type: 'getUserInfo',
+                type1: 'getUserInfo'
+            });
+            gdt.once('userInfo', ()=> {
+                this.setData({type1: 'share'});
+            });
+        });
+        const scene = gdt.showParam.scene;
+        let qPromise;
+        const articleId = options.art || options.id;
+        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) && options.art != undefined) {
+            this.setData({ art: articleId, src: this.data.home,isShare:true ,shareName:options.nickName,articleId:options.art });
+            gdt.userInfo.then((x)=> {
+                this.setData({
+                    isEyes: true
                 });
-            },
-            fail: function (res) {
-                that.setData({
-                    type: 'getUserInfo',
-                    type1: 'getUserInfo'
+            }).catch(()=> {
+                this.setData({
+                    isEyes: false
+                });
+            });
+            qPromise = gdt.fetchArticleDetail(articleId, {
+                scene: scene,
+                keepH5Links: true,
+                mapSrc: 'data',
+                overrideStyle: 'false',
+                fixWxMagicSize: 'true',
+                ref: options.ref
+            });
+        } else {
+            this.setData({ isEyes: true, articleId: options.id, src: this.data.close })
+            qPromise = gdt.fetchArticleDetail(articleId, {
+                scene: scene,
+                keepH5Links: true,
+                mapSrc: 'data',
+                overrideStyle: 'false',
+                fixWxMagicSize: 'true'
+            });
+        }
+
+        qPromise.then((r)=> {
+            if (r.article) {
+                const currentTitle = r.article.title;
+                wx.setNavigationBarTitle({
+                    title: currentTitle,
                 });
             }
-        })
-        wx.getSystemInfo({
-            success: function (res) {
-                let model = res.model;
-                let arr = model.split(' ');
-                arr.pop()
-                let c = arr.join(' ');
-
-                console.log(arr)
-                console.log(options)
-                if (model == 'iPhone X' || c == 'iPhone X') {
-                    that.setData({ iPhoneX: true })
-                } else {
-                    that.setData({ iPhoneX: false })
-                }
-            }
-        })
-        wx.showLoading({ title: '加载中' })
-        this.setData({
-
-        }, () => {
-            //读取local
-            //
-            wx.getStorage({
-                key: 'scene',
-                success: function (res) {
-                const scene = res.data;
-                console.log(scene)
-                    if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) && options.art != undefined) {
-                        app.tokenPromise.then(function (sessionToken) {
-                            that.setData({ art: options.art, src: that.data.home,articleId:options.art,isShare:true ,shareName:options.nickName })
-                            wx.getStorage({
-                                key: 'userInfo',
-                                success: function (res) {
-                                    that.setData({
-                                        isEyes: true,
-                                    });
-                                },
-                                fail: function (res) {
-                                    that.setData({ isEyes: false })
-                                }
-                            })
-                            wx.showNavigationBarLoading();
-                            that.getData('/article/' + options.art + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true&ref=' + options.ref, 'GET').then((res) => {
-
-                                const r = res.data.data;
-                                if (r.article) {
-                                    const currentTitle = r.article.title;
-                                    wx.setNavigationBarTitle({
-                                        title: currentTitle,
-                                    });
-                                }
-
-                                if(res.data.data.article.txvVids.length>0){
-                                    that.setData({videoId:res.data.data.article.txvVids[0]})
-                                }
-
-                                that.setData({ videoSource:res.data.data.article.txvVids,nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
-                                wx.hideLoading()
-                                wx.hideNavigationBarLoading();
-                            })
-
-                        })
-
-                    } else {
-                        that.setData({ isEyes: true, articleId: options.id, src: that.data.close,isShare:false , })
-                        // options.id
-                        wx.showNavigationBarLoading();
-                      that.getData('/article/' + options.id + '/richText?scene=' + scene + '&mapSrc=data&overrideStyle=false&fixWxMagicSize=true', 'GET').then((res) => {
-                            const r = res.data.data;
-                          if(res.data.data.article.txvVids.length>0){
-                              that.setData({videoId:res.data.data.article.txvVids[0]})
-                          }
-                            if (r.article) {
-                                const currentTitle = r.article.title;
-                                wx.setNavigationBarTitle({
-                                    title: currentTitle,
-                                });
-                            }
-                            that.setData({videoSource:res.data.data.article.txvVids, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
-                            wx.hideLoading();
-                            wx.hideNavigationBarLoading();
-                        })
-                    }
-
-                }
-            })
+            this.setData({ videoId:r.article.txvVids[0],videoSource:r.article.txvVids,articalName:r.article.title,nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
         })
 
 
@@ -209,136 +184,7 @@ Page({
         });
 
     },
-    //授权
-    handleAuthor(e) {
-        let that_ = this;
-        console.log()
-        wx.getSetting({
-            success(res) {
-                if (!res.authSetting['scope.userInfo']) {
-                } else {
-                    wx.getUserInfo({
-                        withCredentials: true,
-                        success: function (res) {
-                            wx.setStorage({
-                                key: "userInfo",
-                                data: res.userInfo
-                            })
-                           
-                            that_.setData({ type: '', type1: 'share' ,nickName:res.userInfo.nickName},()=>{
-                                console.log(res.userInfo)
-                                if(e.currentTarget.dataset.item === 'like'){
-                                    that_.setData({ isLike: !that_.data.isLike });
-                                    wx.request({
-                                        url: app.baseUrl + app.distroId + '/my/likes',
-                                        method: 'POST',
-                                        header: {
-                                            'X-Session-Token': app.sessionToken
-                                        },
-                                        data: {
-                                            article: that_.data.articleId
-                                        },
-                                        success: function (res) {
-                                        }
-                                    });
-                                }else if(e.currentTarget.dataset.item  === 'share'){
-                                    
-                                }
-                            })
-                            wx.request({
-                                method: 'POST',
-                                url: app.baseUrl + app.distroId + '/my/profile',
-                                data: {
-                                    encryptedData: res.encryptedData,
-                                    iv: res.iv
-                                },
-                                header: {
-                                    'X-Session-Token': app.sessionToken
-                                },
-                                success: function (res) {
-                                }
-                            })
-                            wx.getStorage({
-                                key: 'scene',
-                                success: function (res) {
-                                    const scene = res.data;
-                                    if ((res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049)){
-                                        that_.setData({isEyes: true},()=>{
-                                            wx.navigateTo({
-                                                url:'/pages/log/detail?nick='+that_.data.shareName
-                                            })
-                                        });
-                                    }
-                                }
-                            })
-
-
-                        }
-                    })
-                }
-            }
-        })
-    },
-
-    handleLike() {
-        let that = this;
-        wx.getStorage({
-            key: 'userInfo',
-            success: function (res) {
-                that.setData({ isLike: !that.data.isLike }, () => {
-                    if (that.data.isLike) {
-                        wx.request({
-                            url: app.baseUrl + app.distroId + '/my/likes',
-                            method: 'POST',
-                            header: {
-                                'X-Session-Token': app.sessionToken
-                            },
-                            data: {
-                                article: that.data.articleId
-                            },
-                            success: function (res) {
-                            }
-                        });
-                    } else {
-                        wx.request({
-                            url: app.baseUrl + app.distroId + '/my/likes?action=del',
-                            method: 'POST',
-                            header: {
-                                'X-Session-Token': app.sessionToken
-                            },
-                            data: {
-                                article: that.data.articleId
-                            },
-                            success: function (res) {
-                                
-                            }
-                        });
-                    }
-                });
-
-            },
-            fail: function (res) {
-                wx.getSetting({
-                    success(res) {
-                        if (!res.authSetting['scope.userInfo']) {
-                        } else {
-                            wx.getUserInfo({
-                                withCredentials: true,
-                                success: function (res) {
-                                    wx.setStorage({
-                                        key: "userInfo",
-                                        data: res.userInfo
-                                    })
-                                }
-                            })
-                        }
-                    }
-                })
-            }
-        })
-
-    },
-
+   
     //回到首页
     handleCallBack: function () {
         if (this.data.art != '') {
@@ -352,13 +198,6 @@ Page({
         }
     },
 
-    onPageScroll: function (ev) {
-        // console.log(ev);
-    },
-
-    logIt: function (ev) {
-        // console.log(ev);
-    },
     onHide: function () {
         this.setData({ lastSuspendAt: Date.now() });
     },
@@ -385,36 +224,22 @@ Page({
     },
     recordUserscroll: function (event) {
         let num1 = event.detail.scrollTop;
-        let that = this;
+        const scene = gdt.showParam.scene;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false})
-            wx.getStorage({
-                key: 'scene',
-                success: function (res) {
-                    if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
-                        that.setData({isShare: false})
-                    }
-                }
-            })
+            this.setData({ isShow: false});
+            
+            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) {
+                this.setData({isShare: false});
+            }
 
         } else {
             this.setData({ isShow: true });
-            wx.getStorage({
-                key: 'scene',
-                success: function (res) {
-                    if (res.data == 1007 || res.data == 1008 || res.data == 1012 || res.data == 1049) {
-                        if(that.data.nickName){
-                            that.setData({isShare: false,isEyes:true})
-                        }else {
-                            that.setData({isShare: true,isEyes:false})
-                        }
-
-                    }
-                }
-            })
+            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) {
+                this.setData({isShare: true});
+            }
 
         }
-        this.data.num = num1
+        this.data.num = num1;
         if (!(event && event.type === 'scroll')) {
             return;
         }
@@ -428,27 +253,19 @@ Page({
         this.data.reportScrollTimeoutHandler = setTimeout(function () {
             this.data.viewPercentage = (event.detail.scrollTop / event.detail.scrollHeight) * 100;
             if (this.data.viewId && this.data.articleId) {
-                wx.request({
-                    url: app.baseUrl + app.distroId + '/my/scrolls',
-                    method: 'POST',
-                    header: {
-                        'X-Session-Token': app.sessionToken
-                    },
-                    data: {
-                        article: this.data.articleId,
-                        view: this.data.viewId,
-                        tPlus: this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
-                        duration: Date.now() - this.data.scrollStartedAt,
-                        startPos: (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
-                        endPos: this.data.viewPercentage
-                    },
-                    success: function (res) {
-                    }
-                });
+                gdt.trackScrollActionInViewing(
+                    this.data.articleId, 
+                    this.data.viewId,
+                    this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
+                    Date.now() - this.data.scrollStartedAt,
+                    (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
+                    this.data.viewPercentage
+                );
             }
             this.data.scrollStartedAt = undefined;
 
         }.bind(this), 500);
+   
     },
     handleBack:function(e){
         wx.reLaunch({
