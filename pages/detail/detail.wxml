@@ -15,7 +15,7 @@
                 <image class="eyeBtn" src="../../images/eye.png"></image>
                 <text class="readLetter">让朋友知道我在读</text>
             </button>
-            <button catchtap="handleLike" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}"
+            <button catchtap="handleLikeButtonTapped" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}"
                     style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
 
                 <image class="imgBtn" style="position: relative;z-index: 1;"

@@ -75,7 +75,14 @@ Page({
     },
     //授权的时候发生的
     handleAuthor:function(e){
-        if(e.currentTarget.dataset.item === 'like'){
+
+        if (e.detail && e.detail.userInfo) {
+            gdt.emit('userInfo', e.detail);
+        }
+
+    },
+    handleLikeButtonTapped: function (e) {
+        gdt.userInfo.then(()=> {
             this.setData({ isLike: !this.data.isLike }, () => {
                 if (this.data.isLike) {
                     gdt.likeItem(this.data.articleId);
@@ -83,9 +90,18 @@ Page({
                     gdt.unlikeItem(this.data.articleId);
                 }
             });
-        }else if(e.currentTarget.dataset.item === 'share'){
-                this.setData({type1: 'share'});
-        }
+        }).catch(()=> {
+            gdt.once('userInfo', ()=> {
+                this.setData({ isLike: !this.data.isLike }, () => {
+                    if (this.data.isLike) {
+                        gdt.likeItem(this.data.articleId);
+                    } else {
+                        gdt.unlikeItem(this.data.articleId);
+                    }
+                });
+            });
+        });
+        
     },
     onLoad(options) {
         let that = this;
@@ -99,6 +115,9 @@ Page({
             this.setData({
                 type: 'getUserInfo',
                 type1: 'getUserInfo'
+            });
+            gdt.once('userInfo', ()=> {
+                this.setData({type1: 'share'});
             });
         });
         const scene = gdt.showParam.scene;
