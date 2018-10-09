@@ -821,6 +821,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
     //推送消息
 
     collectTplMessageQuotaByForm(formId, otherOptions) {
+        if (formId === 'the formId is a mock one') {
+            console.log('Ignoring mocked formId');
+            return;
+        }
         const queryBody = _.merge({ formId: formId, type: 'form' }, otherOptions || {});
 
         return this.currentUser.then(() => {
