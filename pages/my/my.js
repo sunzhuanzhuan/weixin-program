@@ -64,6 +64,12 @@ Page({
           gdt.magicMySharedFirstLoad();
           gdt.fetchDashboardAnalytics();
       },
+      onShow:function(){
+        this.appState = gdt.localState;
+        this.setData({
+            num: this.appState.dashboardAnalytics
+        });
+      },
       handleShrink: function(e) {
           this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})
       },
