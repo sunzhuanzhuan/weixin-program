@@ -110,5 +110,10 @@ Page({
               path: `pages/detail/detail?ref=${clip._id}&art=${clip.articleId}&nickName=${this.data.userInfo.nickName}`,
               imageUrl: articleBref.coverUrl
           }
-      }
+      },
+      getFormID: function (e) {
+        console.log( e.detail.formId)
+        // this.setData({
+        // formId: e.detail.formId }) 
+    }
   })

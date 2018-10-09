@@ -7,7 +7,7 @@ const PAGESIZE = 20;
 const __FAILSAFE_DEMO_EXTCONFIG = {
   "distroId": "5b63fb56b106d81d9b74972a",
   "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
-  "appName": "無名",
+  "appName": "",
   "baseUri": "https://yijoin-d.weiboyi.com/v1/distribution"
 };
 
@@ -818,4 +818,5 @@ module.exports = class GlobalDataContext extends EventEmitter {
             return qBody;
         });
     }
+    //推送消息
 }

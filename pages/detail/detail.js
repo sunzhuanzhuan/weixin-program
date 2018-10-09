@@ -253,4 +253,9 @@ Page({
             url:'/pages/index/index'
         })
     },
+    getFormID: function (e) {
+        console.log( e.detail.formId)
+        // this.setData({
+        // formId: e.detail.formId }) 
+    }
 })
