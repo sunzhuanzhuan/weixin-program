@@ -31,7 +31,6 @@ Page({
           });
           gdt.userInfo.then((x)=> {
               this.setData({userInfo: x.userInfo});
-              console.log( x.userInfo)
           });
           gdt.on('userInfo', (x)=> {
               this.setData({userInfo: x.userInfo});

@@ -225,7 +225,6 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.__firstLogin = 'done';
         });
         this.userInfo = this.authSetting.then((authSetting) => {
-            console.log(authSetting['scope.userInfo'])
             if (authSetting['scope.userInfo']) {
                 return this.currentUser.then(() => {
                     return new Promise((resolve, reject) => {

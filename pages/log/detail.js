@@ -22,7 +22,6 @@ Page({
         })
     },
     onLoad:function (options) {
-        console.log(options)
         this.setData({name:options.nick})
         // wx.getSystemInfo({
         //     success: function (res) {

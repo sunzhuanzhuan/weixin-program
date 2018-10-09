@@ -158,9 +158,7 @@ Page({
 
                     });
                 }
-                this.setData({ lists: x.lists }, () => {
-                    console.log(this.data.lists)
-                });
+                this.setData({ lists: x.lists });
             });
             if (x.lists.length) {
                 gdt.magicListItemLoadMore(x.lists[0]._id);
@@ -180,9 +178,7 @@ Page({
     onReachBottom: function () {
         const currentListInstance = this.data.lists[this.data.currentTabIndex]
         if (currentListInstance) {
-            gdt.magicListItemLoadMore(currentListInstance._id).catch((err)=> {
-              console.log(err.toString(), err.stack)
-            });
+            gdt.magicListItemLoadMore(currentListInstance._id);
         }
     },
     //下拉刷新

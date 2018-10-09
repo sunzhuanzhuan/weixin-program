@@ -7,7 +7,6 @@ App({
     onShow: function (showParam) {
         this.globalData.applicationDataContext.onAppShow(showParam);
         this.globalData.applicationDataContext.checkAndFixUserLogin();
-        console.log(this.globalData.applicationDataContext);
     },
     onError: function (error) {
         this.globalData.applicationDataContext.onAppError(error);
