@@ -225,6 +225,9 @@ Page({
     data: {
         myLikes: undefined,
         myShares: undefined,
+
+        myLikesHasMore: undefined,
+        mySharesHasMore: undefined,
   
         userInfo: undefined,
         shareAfter: '../../images/shareAfter.png',
@@ -265,13 +268,13 @@ Page({
                   articleBref.readTimes = articleBref.readTimes || 0;
                   articleBref._publishedFromNow = util.moment(articleBref.publishedAt).fromNow();
               });
-              this.setData({ myLikes: this.appState.myLikes });
+              this.setData({ myLikes: this.appState.myLikes, myLikesHasMore: this.appState.myLikes.__hasMore !== false });
           };
           gdt.on('sharedItems', ()=> {
-              this.setData({ myShares: this.appState.myShares });
+              this.setData({ myShares: this.appState.myShares, mySharesHasMore: this.appState.myShares.__hasMore !== false });
           });
           gdt.on('shared', ()=> {
-              this.setData({ myShares: this.appState.myShares });
+              this.setData({ myShares: this.appState.myShares, mySharesHasMore: this.appState.myShares.__hasMore !== false });
           });
           gdt.on('likedItems', makeMyLikes);
           gdt.on('liked', makeMyLikes);
