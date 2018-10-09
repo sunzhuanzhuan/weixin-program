@@ -3,6 +3,7 @@
 <import src="/components/like/like.wxml" />
 <import src="/components/list/list.wxml" />
 <view class="containerBig" style="height: {{winHeight}}px;">
+
     <view style="height:88rpx;background:#ffffff;">
         <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x
                       style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-81}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
@@ -23,6 +24,7 @@
     </view>
 
     <block>
+    
         <view class="lineTop"></view>
         <!--<view wx:if="{{upLoad}}" class="lineTop1"  style="text-align: center;z-index: 27;{{iPhoneX?'top:300rpx;':'top:220rpx'}}">加载中。。。</view>-->
         <!--<view wx:else></view>-->
@@ -33,12 +35,13 @@
             bind:touchend="handleTouchEnd">
             <block> 
                 <view wx:if="{{currentTabIndex ==0}}" >
+                
                     <image wx:if="{{isNew}}" src="/images/new.png" class="bigBox" style="width:91%;height:430rpx"></image>
                 </view>
                     
                 <view>
                     
-                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:list.__hasMore !== false}}"/>
+                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false}}"/>
                 </view>
             </block>
 

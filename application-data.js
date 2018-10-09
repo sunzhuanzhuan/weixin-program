@@ -307,7 +307,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             const listInstance = this.localState.listIndex[listId];
             const targetList = listInstance.items;
             const itemIndex = this.localState.itemIndex;
-            if ((!articles || articles.length < (end - start))) {
+            if ((articles && articles.length < (end - start))) {
                 listInstance.__hasMore = false;
             }
             if (start === 0) {
@@ -356,7 +356,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('sharedItems', ([start, end], clips) => {
             const targetList = this.localState.myShares;
             const itemIndex = this.localState.clipIndex;;
-            if ((!clips || clips.length < (end - start))) {
+            if ((clips && clips.length < (end - start))) {
                 targetList.__hasMore = false;
             }
             if (start === 0) {
@@ -406,6 +406,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
             const targetList = this.localState.myShares;
             const itemIndex = this.localState.clipIndex;
             let indexedItem = itemIndex[x._id];
+            if ((targetList && targetList.length < (end - start))) {
+                targetList.__hasMore = false;
+            }
             if (indexedItem) {
                 _.merge(indexedItem, x);
             } else {
@@ -424,7 +427,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('likedItems', ([start, end], clips) => {
             const targetList = this.localState.myLikes;
             const itemIndex = this.localState.clipIndex;
-            if ((!clips || clips.length < (end - start))) {
+            if ((clips && clips.length < (end - start))) {
                 targetList.__hasMore = false;
             }
             if (start === 0) {
@@ -557,7 +560,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
     magicListItemLoadMore(listId) {
         const listInstance = this.localState.listIndex[listId];
 
-        if (!listInstance || listInstance.__hasMore === false) {
+        if (listInstance && listInstance.__hasMore === false) {
             return Promise.resolve();
         }
         const currentLength = listInstance.items ? listInstance.items.length || 0 : 0;

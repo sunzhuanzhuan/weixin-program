@@ -1,4 +1,5 @@
 <template name="list">
+
     <block  wx:if="{{list.length>0}}" >
         <view wx:for="{{list}}" class="container"  wx:key="{{index}}">
             <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">

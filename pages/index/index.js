@@ -159,6 +159,7 @@ Page({
                     });
                 }
                 this.setData({ lists: x.lists }, () => {
+                    console.log(this.data.lists)
                 });
             });
             if (x.lists.length) {

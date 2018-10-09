@@ -39,11 +39,12 @@
     </view>
     <view>
         <scroll-view  hidden="{{currentTab !== 'myShares'}}" enable-back-to-top="true">
-            <template is="share" data="{{imgCry:imgCry,shareList:userInfo ? myShares : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: myShares.__hasMore !== false}}"/>
+        
+            <template is="share" data="{{imgCry:imgCry,shareList:userInfo ? myShares : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: myShares[0].__hasMore !== false}}"/>
 
         </scroll-view>
         <view  hidden="{{currentTab !== 'myLikes'}}" enable-back-to-top="true">
-            <template is="like"  data="{{imgCry:imgCry,likeList:userInfo ? myLikes : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: myLikes.__hasMore !== false}}"/>
+            <template is="like"  data="{{imgCry:imgCry,likeList:userInfo ? myLikes : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: myLikes[0].__hasMore !== false}}"/>
         </view>
     </view>
 </view>
