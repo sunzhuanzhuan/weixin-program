@@ -180,7 +180,9 @@ Page({
     onReachBottom: function () {
         const currentListInstance = this.data.lists[this.data.currentTabIndex]
         if (currentListInstance) {
-            gdt.magicListItemLoadMore(currentListInstance._id);
+            gdt.magicListItemLoadMore(currentListInstance._id).catch((err)=> {
+              console.log(err.toString(), err.stack)
+            });
         }
     },
     //下拉刷新
