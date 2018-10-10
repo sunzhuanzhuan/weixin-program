@@ -9,24 +9,26 @@
         <button form-type="submit" class="btnForm">
             <view class="fixed {{isShow?'show':''}} state1">
                 <view class="floatShadow"></view>
-                <view style="display: flex;flex-direction: row;background: #ffffff;height: 94rpx;">
-                    <view wx:if="{{isEyes}}" style="flex:3;visibility: hidden;">123</view>
-                    <button wx:else class="leftBtn" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:3;">
+                <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%">
+                    <!-- <view wx:if="{{isEyes}}">123</view> -->
+                    <button class="btnBoxKonw" style='flex:4' form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}">
                         <!-- hidden="{{isEyes}}" -->
-                        <image class="eyeBtn" src="../../images/eye.png"></image>
-                        <text class="readLetter">让朋友知道我在读</text>
+                        <image class="imgBtnKonw" src="/images/eye.png"></image>
+                        <view class="letterKonw">让朋友知道我在读</view>
                     </button>
-                    <button catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-                        <image class="imgBtn" style="position: relative;z-index: 1;" src="{{isLike?('../../images/likeAfter.png'):('../../images/likeBefore.png')}}"></image>
+                    <button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                        <image class="imgBtn" src="{{isLike?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
+                        <view  class="letter">收藏</view>
                     </button>
-                    <button open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-                        <image src="{{shareButton}}" class="imgBtn" style="position: relative;z-index: 1;"></image>
-                        <!-- <image class="eyeBtn" src="../../images/eye.png"></image> -->
+                    <button class="btnBox" style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                        <image class="imgBtn" src="{{shareButton}}"></image>
+                        <view  class="letter">分享</view>
                     </button>
-                    <!-- <button open-type="{{type}}"  data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster" -->
-                    <!-- style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}"> -->
-                    <!-- 生成海报 -->
-                    <!-- </button> -->
+                    <button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster"
+                    style="{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                        <image class="imgBtn"  src="/images/circle.png"></image>
+                        <view class="letter">生成分享海报</view>
+                   </button>
                 </view>
                 <view wx:if="{{isIphoneX}}" class="bol"></view>
                 <view wx:else></view>
@@ -40,3 +42,8 @@
         <image src="/images/goHome.png" class="{{isShare?'goHomeStyle':'goHomeStyle1'}} state1" bindtap="handleBack"></image>
     </button>
 </form>
+
+<!-- 生成海报 -->
+<view style="position:fixed;bottom:0;left:0;right:0;top:0;background:#000;opacity:0.85">
+    <canvas style="width: 320px; height: 380px;background:#fff;margin-top:100px;margin-left:54rpx;border-radius:16rpx;" canvas-id="shareCanvas"></canvas>
+</view>

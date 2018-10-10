@@ -69,6 +69,7 @@ button{
     width: 100%;
     line-height: 94rpx;
     border-top:none;
+    left:0;
 }
 .show{
     bottom:0;
@@ -94,48 +95,39 @@ button{
 }
 
 .imgBtn {
-    width: 60rpx;
-    height: 60rpx;
-    float: right;
-    position: absolute;
-    right: 0;
-    z-index: 1;
-    background: #fff;
-    margin-right: 48rpx;
-    margin-top: 20rpx;
-}
-
-.likeBtn {
-    width: 60rpx;
-    height: 60rpx;
-}
-likeBtnTop{
-    font-size: 28rpx;
-    line-height: 94rpx;
-    background: #ffffff;
-    opacity: 0;
-    position: absolute;
-    z-index: 2;
-}
-
-.eyeBtn {
     width: 40rpx;
-    height:40rpx;
-    float: left;
-    margin-top: 29rpx;
+    height: 40rpx;
+    margin-bottom: -10rpx;
+    margin-top:-6rpx
 }
-
-.readLetter {
-    font-size: 28rpx;
-    color: #333;
-    display: inline-block;
-    margin-left:-60px;
+.imgBtnKonw{
+    width: 40rpx;
+    height: 40rpx;
+    margin-left:60rpx;
+    margin-top: 18rpx;
 }
-
-.leftBtn {
-    font-size: 28rpx;
-    line-height: 94rpx;
+.btnBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: #fff;
+}
+.btnBoxKonw{
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+.letter{
+    font-size: 20rpx;
+    color:#666;
+    margin:10rpx 0;
+}
+.letterKonw{
+    font-size: 20rpx;
+    color:#666;
+    text-align: left;
+    
 }
 
 
