@@ -187,20 +187,7 @@ Page({
             app.articleId=this.data.articleId
         }
         if (this.data.viewId && this.data.articleId) {
-            wx.request({
-                url: app.baseUrl + app.distroId + '/my/lefts',
-                method: 'POST',
-                header: {
-                    'X-Session-Token': app.sessionToken
-                },
-                data: {
-                    article: this.data.articleId,
-                    view: this.data.viewId,
-                    duration: Date.now() - this.data.enteredAt - this.data.suspendedFor
-                },
-                success: function (res) {
-                }
-            });
+            gdt.trackLeftViewing(this.data.articleId, this.data.viewId, Date.now() - this.data.enteredAt - this.data.suspendedFor);
         }
     },
     recordUserscroll: function (event) {
