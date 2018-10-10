@@ -821,7 +821,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
     //推送消息
 
     collectTplMessageQuotaByForm(formId, otherOptions) {
-        if (formId === 'the formId is a mock one') {
+        // Real formIds were not likely to contain spaces.
+        if (formId.indexOf(' ') >= 0) {
             console.log('Ignoring mocked formId');
             return;
         }
