@@ -4,7 +4,7 @@ const util = require('../../utils/util');
 
 Page({
     data: {
-        appTitle: app.appName,
+        appTitle: '',
         heightFlag: true,
         screenWidth: '',
         screenHeight: '',
@@ -54,7 +54,7 @@ Page({
         
         let that = this;
         wx.navigateTo({
-            url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap
+            url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap+'&appName='+this.data.appTitle
         })
     },
     handleTouchEnd(e) {
@@ -143,7 +143,7 @@ Page({
                     title: x.title,
                 });
             }
-            this.setData({ lists: x.lists });
+            this.setData({ lists: x.lists ,appTitle:x.title,coverUrl:x.avatarUrl});
             gdt.on('listItems', (listId, updateRange, itemList) => {
                 if (itemList && itemList.length) {
                     const itemIndex = this.appState.itemIndex;

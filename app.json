@@ -1,10 +1,10 @@
 {
   "pages":[
-    "pages/detail/detail",
+    
     "pages/index/index",
     "pages/test/detail",
     "pages/log/detail",
-   
+   "pages/detail/detail",
     "pages/my/my"
 
   ],

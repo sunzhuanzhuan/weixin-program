@@ -93,7 +93,17 @@ button{
     margin-right: 48rpx;
     top: 50rpx;
 }
-
+.btnSavePicture{
+   background: #000;
+   border-radius: 20px; 
+   font-size: 28rpx;
+   color: #fff;
+   margin-top:32rpx;
+   width:480rpx;
+   height:80rpx;
+   line-height: 80rpx;
+   text-align: center;
+}
 .imgBtn {
     width: 40rpx;
     height: 40rpx;
