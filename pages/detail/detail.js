@@ -277,7 +277,8 @@ Page({
         let yOffset = 50;
         //绘制标题背景
         const ctx = wx.createCanvasContext('shareCanvas');
-        
+        ctx.setFillStyle('#ffffff')
+        ctx.fillRect(0, 0, 320, 400)
        
         // 绘制接口的文章数量和分享和背景
         ctx.rect(75, 60, 236, 80)
@@ -367,26 +368,29 @@ Page({
             ctx.fillText(canvasDescribe2, 30, 240,220);
         }
         
-        
+        ctx.moveTo(30, 270)
+        ctx.setStrokeStyle('#F0F0F0');
+        ctx.lineTo(300, 270)
+        ctx.stroke()
         //小程序二维码
         const code = this.data.logo;
-        ctx.drawImage(code, 20, 250,96, 96)
+        ctx.drawImage(code, 20, 280,96, 96)
 
         //绘制长按小程序
         let miniApp = '长按识别,进入小程序'
         ctx.setFontSize(14)
         ctx.setFillStyle('#333333');
-        ctx.fillText(miniApp, 130, 270,220);
+        ctx.fillText(miniApp, 130, 320,220);
        
         let miniAppShare = '分享来自'
         ctx.setFontSize(14)
         ctx.setFillStyle('#333333');
-        ctx.fillText(miniAppShare, 130,300,220);
+        ctx.fillText(miniAppShare, 130,350,220);
         ctx.font = 'normal bold 16px sans-serif';
         let appName = '「'+this.data.appName+'」';
         
         ctx.setFillStyle('#000');
-        ctx.fillText(appName, 120, 320,220);
+        ctx.fillText(appName, 120, 368,220);
 
         ctx.font = 'normal bold 18px sans-serif';
         const numArtical = this.data.numArtical;
@@ -402,10 +406,12 @@ Page({
             wx.canvasToTempFilePath({
                 x: 0,
                 y: 0,
-                width: 390,
-                height: 800,
-                destWidth: 390,
-                destHeight: 800,
+                width: 320,
+                height: 400,
+                destWidth: 1520,
+                destHeight: 1920,
+                fileType:'jpg',
+                quality:1,
                 canvasId: 'shareCanvas',
                 success: function (res) {
                     console.log(res)
@@ -413,15 +419,15 @@ Page({
                         shareImage: res.tempFilePath,
                         showSharePic: true
                     },()=>{
-                        // wx.saveImageToPhotosAlbum({
-                        //     filePath:that.data.shareImage,
-                        //     success:function () {
-                        //         console.log('保存成功')
-                        //     },
-                        //     fail:function () {
-                        //         console.log('保存失败')
-                        //     }
-                        // })
+                        wx.saveImageToPhotosAlbum({
+                            filePath:that.data.shareImage,
+                            success:function () {
+                                console.log('保存成功')
+                            },
+                            fail:function () {
+                                console.log('保存失败')
+                            }
+                        })
                     })
                     wx.hideLoading();
                 },
