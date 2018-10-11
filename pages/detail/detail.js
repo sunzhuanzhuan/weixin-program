@@ -331,10 +331,11 @@ Page({
             yOffset += 25;
         });
         // 绘制文章的标题和描述
-        yOffset = 180;
+        yOffset = 200;
         const title= this.data.articalTitle;
         const describe = this.data.articalDescribe;
         let canvasTtile
+        let canvasDescribe
         if(title.length<12){
             canvasTtile = title;
         }else{
@@ -344,13 +345,32 @@ Page({
         ctx.setFontSize(16)
         ctx.setFillStyle('#333333');
         ctx.fillText(canvasTtile, 30, yOffset);
-        ctx.setFontSize(12)
-        ctx.setFillStyle('#666666');
-        ctx.fillText(describe, 30, 220,220);
+        //z绘制描述
+        if(describe.length<18){
+            canvasDescribe = describe;
+            ctx.setFontSize(12)
+            ctx.setFillStyle('#666666');
+            ctx.fillText(canvasDescribe, 30, 220,220);
+        }else if(describe.length<36 && describe.length>18){
+            canvasDescribe = describe.slice(0,19);
+            ctx.setFontSize(12);
+            ctx.setFillStyle('#666666');
+            ctx.fillText(canvasDescribe, 30, 220,220);
+            let canvasDescribe1 = describe.slice(19, describe.length)
+            ctx.fillText(canvasDescribe1, 30, 240,220);
+        }else{
+            canvasDescribe = describe.slice(0,19);
+            ctx.setFontSize(12);
+            ctx.setFillStyle('#666666');
+            ctx.fillText(canvasDescribe, 30, 220,220);
+            let canvasDescribe2 = describe.slice(19, 35)+'...'
+            ctx.fillText(canvasDescribe2, 30, 240,220);
+        }
+        
         
         //小程序二维码
         const code = this.data.logo;
-        ctx.drawImage(code, 20, 230,96, 96)
+        ctx.drawImage(code, 20, 250,96, 96)
 
         //绘制长按小程序
         let miniApp = '长按识别,进入小程序'
