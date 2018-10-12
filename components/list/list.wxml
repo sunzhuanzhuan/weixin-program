@@ -26,12 +26,7 @@
                  </button>
             </form>  
             </view>
-<<<<<<< HEAD
             <!--下面是大的视频-->
-=======
-
-           
->>>>>>> master
             <view wx:else bindtap="handleDetail"  data-id="{{item.id}}">
             <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
             <button form-type="submit" class="btnForm" hover-class='none'>

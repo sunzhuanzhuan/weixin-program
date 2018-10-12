@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-
-<!--detail.wxml-->
-<!--detail.wxml-->
-=======
 <!-- detail.wxml -->
 <!-- detail.wxml -->
->>>>>>> master
 <view>
     <scroll-view scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll">
     <!--播放视频的位置-->
