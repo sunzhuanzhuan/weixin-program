@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 
 <!--detail.wxml-->
 <!--detail.wxml-->
+=======
+<!-- detail.wxml -->
+<!-- detail.wxml -->
+>>>>>>> master
 <view>
     <scroll-view scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll">
     <!--播放视频的位置-->
@@ -27,38 +32,39 @@
       </view>
         <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     </scroll-view>
-    <!--悬浮部分-->
-    <view class="fixed {{isShow?'show':''}} state1">
-        <view class="floatShadow"></view>
-        <view style="display: flex;flex-direction: row;background: #ffffff;height: 94rpx;">
-            <view  wx:if="{{isEyes}}"  style="flex:3;visibility: hidden;">123</view>
-            <button  wx:else class="leftBtn" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}"
-                    style="flex:3;">
-                <!--hidden="{{isEyes}}"-->
-                <image class="eyeBtn" src="../../images/eye.png"></image>
-                <text class="readLetter">让朋友知道我在读</text>
-            </button>
-            <button catchtap="handleLikeButtonTapped" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}"
-                    style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-
-                <image class="imgBtn" style="position: relative;z-index: 1;"
-                       src="{{isLike?('../../images/likeAfter.png'):('../../images/likeBefore.png')}}"></image>
-
-            </button>
-            <button open-type="{{type1}}" data-item="share" bindgetuserinfo="handleAuthor"
-                    style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-                <image src="{{shareButton}}" class="imgBtn" style="position: relative;z-index: 1;"></image>
-                <!-- <image class="eyeBtn" src="../../images/eye.png"></image> -->
-            </button>
-            <!--<button open-type="{{type}}"  data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster"-->
-                    <!--style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">-->
-                <!--生成海报-->
-            <!--</button>-->
-        </view>
-        <view wx:if="{{isIphoneX}}" class="bol"></view>
-        <view wx:else></view>
-    </view>
+    <!-- 悬浮部分 -->
+    <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+        <button form-type="submit" class="btnForm">
+            <view class="fixed {{isShow?'show':''}} state1">
+                <view class="floatShadow"></view>
+                <view style="display: flex;flex-direction: row;background: #ffffff;height: 94rpx;">
+                    <view wx:if="{{isEyes}}" style="flex:3;visibility: hidden;">123</view>
+                    <button wx:else class="leftBtn" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:3;">
+                        <!-- hidden="{{isEyes}}" -->
+                        <image class="eyeBtn" src="../../images/eye.png"></image>
+                        <text class="readLetter">让朋友知道我在读</text>
+                    </button>
+                    <button catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                        <image class="imgBtn" style="position: relative;z-index: 1;" src="{{isLike?('../../images/likeAfter.png'):('../../images/likeBefore.png')}}"></image>
+                    </button>
+                    <button open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                        <image src="{{shareButton}}" class="imgBtn" style="position: relative;z-index: 1;"></image>
+                        <!-- <image class="eyeBtn" src="../../images/eye.png"></image> -->
+                    </button>
+                    <!-- <button open-type="{{type}}"  data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster" -->
+                    <!-- style="border-color: #ffffff;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}"> -->
+                    <!-- 生成海报 -->
+                    <!-- </button> -->
+                </view>
+                <view wx:if="{{isIphoneX}}" class="bol"></view>
+                <view wx:else></view>
+            </view>
+        </button>
+    </form>
 </view>
-
-<!--悬浮回到首页-->
-<image src="/images/goHome.png" class="{{isShare?'goHomeStyle':'goHomeStyle1'}} state1" bindtap="handleBack"></image>
+<!-- 悬浮回到首页 -->
+<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+    <button form-type="submit" class="btnForm">
+        <image src="/images/goHome.png" class="{{isShare?'goHomeStyle':'goHomeStyle1'}} state1" bindtap="handleBack"></image>
+    </button>
+</form>

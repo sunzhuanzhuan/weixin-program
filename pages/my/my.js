@@ -31,7 +31,6 @@ Page({
           });
           gdt.userInfo.then((x)=> {
               this.setData({userInfo: x.userInfo});
-              console.log( x.userInfo)
           });
           gdt.on('userInfo', (x)=> {
               this.setData({userInfo: x.userInfo});
@@ -111,5 +110,13 @@ Page({
               path: `pages/detail/detail?ref=${clip._id}&art=${clip.articleId}&nickName=${this.data.userInfo.nickName}`,
               imageUrl: articleBref.coverUrl
           }
-      }
+      },
+      getFormID: function (e) {
+        if (e.detail.formId) {
+            gdt.collectTplMessageQuotaByForm(e.detail.formId);
+        }
+        // console.log( e.detail.formId)
+        // this.setData({
+        // formId: e.detail.formId }) 
+    }
   })

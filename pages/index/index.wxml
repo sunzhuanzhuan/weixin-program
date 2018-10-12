@@ -7,20 +7,26 @@
     <view style="height:88rpx;background:#ffffff;">
         <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x
                       style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-81}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
-            <view class="nav">
-                <view  wx:for="{{lists}}" class='tag-box' wx:key="id" style="display: inline-block">
-                    <view class="taga-item {{currentTabIndex==index?'bold':''}}"
-                    style="{{currentTabIndex==index?'color:#000':'color:#999'}}"
+           
+           <view class="nav">
+                
+                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'  wx:for="{{lists}}" class='tag-box' wx:key="id" style="display: inline-block">
+                     
+                    <button form-type="submit" hover-class='none' class="btnForm taga-item {{currentTabIndex==index?'bold':''}}"
+                    style="font-size:32rpx;{{currentTabIndex==index?'color:#000':'color:#999'}}"
                           data-tab="{{index}}" data-name='{{item.title}}'
-                          data-tabid="{{item.id}}" bindtap="handleTitleTab">{{item.title}}</view>
-                </view>
+                          data-tabid="{{item.id}}" bindtap="handleTitleTab">{{item.title}}</button>
+                </form>
+                
             </view>
         </scroll-view>
         <view style="height:88rpx;width:50rpx;display:inline-block;background:#ffffff;position:fixed;z-index:25;right:120rpx"></view>
-        <view data-current="{{dataTab.length}}" data-name='{{item.title}}'
+        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' >
+        <button  form-type="submit" class='btnForm' data-current="{{dataTab.length}}" data-name='{{item.title}}' hover-class='none' 
               data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:120rpx;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
             <image src="/images/my.jpg" style="width:120rpx;height: 88rpx;" data-id="{{dataTab.length}}" ></image>
-        </view>
+        </button>
+        </form>
     </view>
 
     <block>

@@ -7,7 +7,7 @@ const PAGESIZE = 20;
 const __FAILSAFE_DEMO_EXTCONFIG = {
   "distroId": "5b63fb56b106d81d9b74972a",
   "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
-  "appName": "無名",
+  "appName": "",
   "baseUri": "https://yijoin-d.weiboyi.com/v1/distribution"
 };
 
@@ -125,14 +125,16 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 return request(
                     method,
                     url,
-                    otherOptions
+                    queryOptions
                 ).then((res) => {
                     if (autoLoadingState) {
                         this.emit('loadingComplete');
                     }
                     if (res.header) {
-                        if (res.header['X-Set-Session-Token']) {
-                            this.emit('sessionToken', res.header['X-Set-Session-Token']);
+                        const TOKEN_HEADER_NAME = 'X-Set-Session-Token';
+                        const tokenValue = res.header[TOKEN_HEADER_NAME] || res.header[TOKEN_HEADER_NAME.toLowerCase()];
+                        if (tokenValue) {
+                            this.emit('sessionToken', tokenValue);
                         }
                         if (res.header['Set-Cookie']) {
                             this.emit('cookie', res.header['Set-Cookie']);
@@ -223,7 +225,6 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.__firstLogin = 'done';
         });
         this.userInfo = this.authSetting.then((authSetting) => {
-            console.log(authSetting['scope.userInfo'])
             if (authSetting['scope.userInfo']) {
                 return this.currentUser.then(() => {
                     return new Promise((resolve, reject) => {
@@ -815,6 +816,24 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
             console.log(qBody);
             return qBody;
+        });
+    }
+    //推送消息
+
+    collectTplMessageQuotaByForm(formId, otherOptions) {
+        // Real formIds were not likely to contain spaces.
+        if (formId.indexOf(' ') >= 0) {
+            console.log('Ignoring mocked formId');
+            return;
+        }
+        const queryBody = _.merge({ formId: formId, type: 'form' }, otherOptions || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall('POST', '/my/tplMsgQuota', {
+                body: queryBody
+            });
+
+            return queryPromise;
         });
     }
 }

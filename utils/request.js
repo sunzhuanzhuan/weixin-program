@@ -35,8 +35,9 @@ module.exports = function (method, url, _options) {
     }
 
     if (options.query) {
-        let queryString = Object.entries(options.query || {}).map((x)=> {
-            let [k, v] = x;
+        let queryString = Object.keys(options.query || {}).map((x)=> {
+            let k = x;
+            let v = options.query[k];
             return `${encodeURIComponent(k)}=${v === undefined ? '' : encodeURIComponent(v)}`;
         }).join('&');
         if (qObj.url.includes('?')) {

@@ -51,6 +51,7 @@ Page({
     },
     //跳转到详情
     handleDetail(e) {
+        
         let that = this;
         wx.navigateTo({
             url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap
@@ -158,9 +159,7 @@ Page({
 
                     });
                 }
-                this.setData({ lists: x.lists }, () => {
-                    console.log(this.data.lists)
-                });
+                this.setData({ lists: x.lists });
             });
             if (x.lists.length) {
                 gdt.magicListItemLoadMore(x.lists[0]._id);
@@ -195,5 +194,13 @@ Page({
 
         }
     },
+    getFormID: function (e) {
+        if (e.detail.formId) {
+            gdt.collectTplMessageQuotaByForm(e.detail.formId);
+        }
+        // console.log( e.detail.formId)
+        // this.setData({
+        // formId: e.detail.formId }) 
+    }
 
 })
