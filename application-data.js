@@ -1,6 +1,7 @@
 const _ = require('./utils/lodash.custom.min.js');
 const EventEmitter = require("./utils/EventEmitter.min.js");
-const request = require("./utils/request.js");
+const request = require("./utils/request.js").request;
+const download = require("./utils/request.js").download;
 
 const PAGESIZE = 20;
 
@@ -152,6 +153,68 @@ module.exports = class GlobalDataContext extends EventEmitter {
                         }
 
                         return body;
+                    }
+
+                    return res;
+                }, (err) => {
+                    if (autoLoadingState) {
+                        this.emit('loadingComplete');
+                    }
+                    return Promise.reject(err);
+                });
+            });
+    }
+
+    simpleApiDownload(uri, otherOptions) {
+        const queryOptions = otherOptions || {};
+        if (this.localState.sessionToken) {
+            const queryHeaders = queryOptions.header || {};
+            queryHeaders['X-Session-Token'] = this.localState.sessionToken;
+            queryOptions.header = queryHeaders;
+        }
+        let simpleMode = true;
+        if (queryOptions.notSimple) {
+            simpleMode = false;
+        }
+        delete queryOptions.notSimple;
+
+        let autoLoadingState = false;
+        if (queryOptions.autoLoadingState) {
+            autoLoadingState = true;
+        }
+        delete queryOptions.autoLoadingState;
+
+        if (autoLoadingState) {
+            this.emit('loading');
+        }
+
+        return this.composeApiUrl(uri)
+            .then((url) => {
+                return download(
+                    url,
+                    queryOptions
+                ).then((res) => {
+                    if (autoLoadingState) {
+                        this.emit('loadingComplete');
+                    }
+                    if (res.header) {
+                        const TOKEN_HEADER_NAME = 'X-Set-Session-Token';
+                        const tokenValue = res.header[TOKEN_HEADER_NAME] || res.header[TOKEN_HEADER_NAME.toLowerCase()];
+                        if (tokenValue) {
+                            this.emit('sessionToken', tokenValue);
+                        }
+                        if (res.header['Set-Cookie']) {
+                            this.emit('cookie', res.header['Set-Cookie']);
+                        }
+                    }
+                    if (simpleMode) {
+                        const filePath = res.tempFilePath || options.filePath;
+
+                        if (res.statusCode !== 200) {
+                            return Promise.reject(res);
+                        }
+
+                        return filePath;
                     }
 
                     return res;
@@ -372,7 +435,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
-                        return;
+                        _.remove(targetList, r);
                     }
                     targetList.unshift(indexedItem);
                     return;
@@ -407,9 +470,6 @@ module.exports = class GlobalDataContext extends EventEmitter {
             const targetList = this.localState.myShares;
             const itemIndex = this.localState.clipIndex;
             let indexedItem = itemIndex[x._id];
-            if ((targetList && targetList.length < (end - start))) {
-                targetList.__hasMore = false;
-            }
             if (indexedItem) {
                 _.merge(indexedItem, x);
             } else {
@@ -821,7 +881,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
     //推送消息
 
     collectTplMessageQuotaByForm(formId, otherOptions) {
-        if (formId === 'the formId is a mock one') {
+        // Real formIds were not likely to contain spaces.
+        if (formId.indexOf(' ') >= 0) {
             console.log('Ignoring mocked formId');
             return;
         }
@@ -833,6 +894,26 @@ module.exports = class GlobalDataContext extends EventEmitter {
             });
 
             return queryPromise;
+        });
+    }
+
+    downloadMyAvatar() {
+        return this.userInfo.then(()=> {
+            return this.simpleApiDownload('/my/avatar')
+        });
+    }
+
+    downloadWxaCode(width, page, scene, color, hyaline) {
+        return this.userInfo.then(()=> {
+            return this.simpleApiDownload('/wxaCodeImage', {
+                query: {
+                    path: page,
+                    width: width,
+                    scene: scene,
+                    color: color,
+                    isHyaline: hyaline
+                }
+            })
         });
     }
 }
