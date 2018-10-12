@@ -37,25 +37,16 @@ Page({
         shareName:''
     },
     onShareAppMessage: function () {
-        let that = this;
-        wx.request({
-            url: app.baseUrl + app.distroId + '/my/shares',
-            method: 'POST',
-            header: {
-                'X-Session-Token': app.sessionToken
-            },
-            data: {
-                article: that.data.articleId,
-                pos: that.data.viewPercentage,
-                view: that.data.viewId,
-                tPlus: Date.now() - (that.data.enteredAt || 0) - that.data.suspendedFor
-            },
-            success: function (res) {
-            }
-        });
+        if (this.data.articleId) {
+            gdt.trackShareItem(this.data.articleId, {
+                pos: this.data.viewPercentage,
+                view: this.data.viewId,
+                tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
+            });
+        }
         return {
             title: this.data.article.title || '默认转发标题',
-            path: 'pages/detail/detail?ref=' + this.data.shareId + '&art=' + this.data.articleId+'&nickName='+this.data.nickName
+            path: 'pages/detail/detail?ref=' + this.data.shareId + '&id=' + this.data.articleId+'&nickName='+this.data.nickName
         }
     },
     
