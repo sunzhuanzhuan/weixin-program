@@ -132,7 +132,7 @@ Page({
         const scene = gdt.showParam.scene;
         let qPromise;
         const articleId = options.art || options.id;
-        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) && options.art != undefined) {
+        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 ) && options.art != undefined) {
             this.setData({ art: articleId, src: this.data.home,isShare:true ,shareName:options.nickName,articleId:options.art });
             gdt.userInfo.then((x)=> {
                 this.setData({
@@ -150,6 +150,15 @@ Page({
                 overrideStyle: 'false',
                 fixWxMagicSize: 'true',
                 ref: options.ref
+            });
+        }else if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073){
+            this.setData({ isEyes: true, articleId: options.id, src: this.data.close,isShare:true })
+            qPromise = gdt.fetchArticleDetail(articleId, {
+                scene: scene,
+                keepH5Links: true,
+                mapSrc: 'data',
+                overrideStyle: 'false',
+                fixWxMagicSize: 'true'
             });
         } else {
             this.setData({ isEyes: true, articleId: options.id, src: this.data.close })
@@ -218,13 +227,13 @@ Page({
         if (num1 > this.data.num) {
             this.setData({ isShow: false});
             
-            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) {
+            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
                 this.setData({isShare: false});
             }
 
         } else {
             this.setData({ isShow: true });
-            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) {
+            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
                 this.setData({isShare: true});
             }
 

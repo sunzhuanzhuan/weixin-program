@@ -20,10 +20,15 @@ Page({
         num:{},
         shinIndex: 999999,
         
-        currentTab: 'myShares'
+        currentTab: 'myShares',
+        isHome:false
     },
       onLoad: function() {
           this.appState = gdt.localState;
+          const scene = gdt.showParam.scene;
+          if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073){
+            this.setData({isHome:true})
+          }
           this.setData({
               num: this.appState.dashboardAnalytics,
               myShares: this.appState.myShares,
@@ -118,5 +123,10 @@ Page({
         // console.log( e.detail.formId)
         // this.setData({
         // formId: e.detail.formId }) 
-    }
+    },
+    handleBack:function(e){
+        wx.reLaunch({
+            url:'/pages/index/index'
+        })
+    },
   })

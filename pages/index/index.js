@@ -126,6 +126,7 @@ Page({
 
     onReady: function () {
         let that = this;
+        
         gdt.userInfo.then((res) => {
             this.setData({ isModal: false })
         }).catch(() => {
