@@ -114,7 +114,7 @@ button{
     width: 40rpx;
     height: 40rpx;
     margin-left:60rpx;
-    margin-top: 18rpx;
+    margin-top: 14rpx;
 }
 .btnBox{
     display: flex;
@@ -147,6 +147,7 @@ button{
 
 .bol {
     height: 68rpx !important;
+    background: #ffffff;
 }
 
 

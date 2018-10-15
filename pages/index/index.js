@@ -51,7 +51,6 @@ Page({
     },
     //跳转到详情
     handleDetail(e) {
-        
         let that = this;
         wx.navigateTo({
             url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap+'&appName='+this.data.appTitle
