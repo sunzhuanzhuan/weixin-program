@@ -112,7 +112,7 @@ Page({
         
     },
     onLoad(options) {
-       
+       console.log(options)
         gdt.systemInfo.then((x) => {
             this.setData({
                 ratio: x.windowWidth*2/750,
@@ -163,9 +163,10 @@ Page({
                 fixWxMagicSize: 'true',
                 ref: options.ref
             });
-        }else if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073){
-            this.setData({ isEyes: true, articleId: options.id, src: this.data.close,isShare:true })
-            qPromise = gdt.fetchArticleDetail(articleId, {
+        }else if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073 || scene ==1048){
+            this.setData({ isEyes: true, articleId: options.id, src: this.data.close,isShare:true });
+            // fetchArticleDetailByReferenceId(referenceId, {...options})
+            qPromise = gdt.fetchArticleDetailByReferenceId('11111111', {
                 scene: scene,
                 keepH5Links: true,
                 mapSrc: 'data',
@@ -173,7 +174,6 @@ Page({
                 fixWxMagicSize: 'true'
             });
         } else {
-            console.log(1111)
             this.setData({ isEyes: true, articleId: options.id, src: this.data.close })
             qPromise = gdt.fetchArticleDetail(articleId, {
                 scene: scene,
@@ -294,22 +294,22 @@ Page({
     handlePoster:function () {
         this.setData({isShowPoster:true})
         let ratio = this.data.ratio;
-        console.log(ratio)
         let that = this;
         wx.showLoading({
             title: '正在生成图片...',
             mask: true,
         });
-        // gdt.downloadMyAvatar().then((r1)=> {
-        //     gdt.downloadWxaCode(320, 'pages/index/index', '666', 'auto').then((r2)=>{
-                 //y方向的偏移量，因为是从上往下绘制的，所以y一直向下偏移，不断增大。
-                let yOffset = 30*ratio;
+        let artical = gdt.fetchArticleMeta(this.data.articleId);
+        let downAvatar = gdt.downloadMyAvatar();
+        let downCode = gdt.downloadWxaCode(320, 'pages/detail/detail', this.data.shareId, 'auto')
+        Promise.all([artical,downAvatar,downCode]).then((res)=>{
+          let yOffset = 30*ratio;
                 //绘制标题背景
                 const ctx = wx.createCanvasContext('shareCanvas');
                 ctx.setFillStyle('#ffffff')
                 ctx.fillRect(0, 0, 320*ratio, 450*ratio)
             // 绘制通话的框
-                ctx.moveTo(70*ratio, 62*ratio)
+                ctx.moveTo(65*ratio, 62*ratio)
                 ctx.lineTo(75*ratio, 52*ratio);
                 ctx.lineTo(75*ratio, 72*ratio);
                 ctx.closePath()
@@ -327,16 +327,69 @@ Page({
                 grd.addColorStop(0.83, '#F1E8ED')
                 grd.addColorStop(1, '#F1E8ED')
                 ctx.setFillStyle(grd)
-                ctx.fill()
+                ctx.fill();
+                // 绘制数字
+                ctx.font = 'normal bold 18px sans-serif';
+
+                
+                const numArtical = res[0].readingMeta.nthRead + '';
+                ctx.setFillStyle('#101010');
+                ctx.fillText(numArtical, 100*ratio, 96*ratio);
+
+                
+               
+
+
                 const bigTitle = ('这是我在'+this.data.appName+'小程序阅读的第')
                 ctx.setFontSize(12*ratio)
                 ctx.setFillStyle('#101010');
                 ctx.fillText(bigTitle, 100*ratio, 74*ratio);
                 
-                const friend = ('篇已经有       个好友阅读了我的')
+                const friend = ('篇已经有')
                 ctx.setFontSize(12*ratio)
                 ctx.setFillStyle('#101010');
-                ctx.fillText(friend, 134*ratio, 96*ratio);
+                
+                const my = (' 个好友阅读了我的')
+                ctx.setFontSize(12*ratio)
+                ctx.setFillStyle('#101010');
+
+                const numFriend = res[0].readingMeta.referencers+ '';
+                // const numFriend = 154+ '';
+
+                if(numFriend.length === 1){
+                    ctx.fillText(my, 194*ratio, 96*ratio);
+                }else if(numFriend.length === 2){
+                    ctx.fillText(my, 200*ratio, 96*ratio);
+                }else if(numFriend.length === 3){
+                    ctx.fillText(my, 210*ratio, 96*ratio);
+                }
+
+                ctx.save();
+                ctx.font = 'normal bold 18px sans-serif';
+                if(numFriend.length === 1){
+                   
+                    ctx.fillText(numFriend, 184*ratio, 96*ratio);
+                }else if(numFriend.length === 2){
+                    
+                    ctx.fillText(numFriend, 180*ratio, 96*ratio);
+                }else if(numFriend.length === 3){
+                    
+                    ctx.fillText(numFriend, 184*ratio, 96*ratio);
+                }
+                ctx.restore()
+                
+                if(numArtical.length === 1){
+                    ctx.fillText(friend, 114*ratio, 96*ratio);
+                }else if(numArtical.length === 2){
+                    ctx.fillText(friend, 124*ratio, 96*ratio);;
+                }else if(numArtical.length === 3){
+                    ctx.fillText(friend, 134*ratio, 96*ratio);
+                }else if(numArtical.length === 4){
+                    ctx.fillText(friend, 144*ratio, 96*ratio);
+                }else if(numArtical.length === 5){
+                    ctx.fillText(friend, 154*ratio, 96*ratio);
+                }
+                
                 ctx.setFontSize(12*ratio)
                 ctx.setFillStyle('#101010');
                 ctx.fillText('分享', 100*ratio, 116*ratio);
@@ -345,7 +398,7 @@ Page({
                 ctx.drawImage(yinHao,80*ratio, 56*ratio,14*ratio, 14*ratio)
               
                 // 绘制头像
-                const imgPath = app.avatar;
+                const imgPath =res[1];
                 ctx.save()
                 ctx.beginPath()
                 ctx.arc(40*ratio, 47*ratio, 23*ratio, 0, 2*Math.PI)
@@ -409,7 +462,7 @@ Page({
                 ctx.lineTo(300*ratio, 260*ratio)
                 ctx.stroke()
                 //小程序二维码
-                const code = app.code;
+                const code = res[2];
                 ctx.drawImage(code, 20*ratio, 270*ratio,96*ratio, 96*ratio)
 
                 //绘制长按小程序
@@ -426,16 +479,9 @@ Page({
                 let appName = '「'+this.data.appName+'」';
                 
                 ctx.setFillStyle('#000');
-                ctx.fillText(appName, 120*ratio, 346*ratio,220*ratio);
+                ctx.fillText(appName, 124*ratio, 346*ratio,220*ratio);
 
-                ctx.font = 'normal bold 18px sans-serif';
-                const numArtical = this.data.numArtical;
-                ctx.setFillStyle('#101010');
-                ctx.fillText(numArtical, 100*ratio, 96*ratio);
-                const numFriend = this.data.numFriend;
-                ctx.setFillStyle('#101010');
-                ctx.fillText(numFriend, 186*ratio, 96*ratio);
-
+                
                 const title= this.data.articalTitle;
                 let canvasTtile
                 if(title.length<parseInt(14/ratio)){
@@ -456,9 +502,9 @@ Page({
                         x: 0,
                         y: 0,
                         width: 320,
-                        height: 380,
-                        destWidth: 1220,
-                        destHeight: 1520,
+                        height: 370,
+                        destWidth: 1280,
+                        destHeight: 1480,
                         fileType:'jpg',
                         quality:1,
                         canvasId: 'shareCanvas',
@@ -468,15 +514,15 @@ Page({
                                 shareImage: res.tempFilePath,
                                 showSharePic: true
                             },()=>{
-                                wx.saveImageToPhotosAlbum({
-                                    filePath:that.data.shareImage,
-                                    success:function () {
-                                        console.log('保存成功')
-                                    },
-                                    fail:function () {
-                                        console.log('保存失败')
-                                    }
-                                })
+                                // wx.saveImageToPhotosAlbum({
+                                //     filePath:that.data.shareImage,
+                                //     success:function () {
+                                //         console.log('保存成功')
+                                //     },
+                                //     fail:function () {
+                                //         console.log('保存失败')
+                                //     }
+                                // })
                             })
                             wx.hideLoading();
                         },
@@ -485,7 +531,12 @@ Page({
                             wx.hideLoading();
                         }
                     })
-                }, 2000);
+                }, 2000);    
+        })
+        // gdt.downloadMyAvatar().then((r1)=> {
+        //     gdt.downloadWxaCode(320, 'pages/index/index', '666', 'auto').then((r2)=>{
+                 //y方向的偏移量，因为是从上往下绘制的，所以y一直向下偏移，不断增大。
+                
         //     })
         // });
         
