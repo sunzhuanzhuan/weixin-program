@@ -73,6 +73,7 @@ Page({
         this.setData({
             num: this.appState.dashboardAnalytics
         });
+        gdt.track('show-my-dashboard');
       },
       handleShrink: function(e) {
           this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})
@@ -80,10 +81,13 @@ Page({
       handleTab: function(e) {
           if (e.currentTarget.dataset.name == 'myShares') {
               gdt.magicMySharedFirstLoad().then(()=> this.setData({ myShares: this.appState.myShares }));
-          } else {
+              gdt.track('my-dashboard-show-share');
+            } else {
               gdt.magicMyLikedFirstLoad().then(()=> this.setData({ myLikes: this.appState.myLikes }));
-          }
-          this.setData({currentTab: e.currentTarget.dataset.name})
+              gdt.track('my-dashboard-show-like');
+            }
+          this.setData({currentTab: e.currentTarget.dataset.name});
+          
       },
       //授权登录传递给后台
       bindGetUserInfo: function(e) {
@@ -110,6 +114,8 @@ Page({
   
           const articleBref = clip.article;
           gdt.trackShareItem(articleBref._id);
+          gdt.track('share-item', { itemId: clip.articleId, refId: clip._id });
+        
           return {
               title: articleBref.title || '默认转发标题',
               path: `pages/detail/detail?ref=${clip._id}&art=${clip.articleId}&nickName=${this.data.userInfo.nickName}`,

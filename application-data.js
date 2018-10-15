@@ -6,10 +6,10 @@ const download = require("./utils/request.js").download;
 const PAGESIZE = 20;
 
 const __FAILSAFE_DEMO_EXTCONFIG = {
-  "distroId": "5b63fb56b106d81d9b74972a",
-  "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
-  "appName": "",
-  "baseUri": "https://yijoin-d.weiboyi.com/v1/distribution"
+    "distroId": "5b63fb56b106d81d9b74972a",
+    "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
+    "appName": "",
+    "baseUri": "https://yijoin-d.weiboyi.com/v1/distribution"
 };
 
 module.exports = class GlobalDataContext extends EventEmitter {
@@ -20,7 +20,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.showParam = launchParam;
         this.extConfig = new Promise((resolve, reject) => {
             wx.getExtConfig({
-              success: (x) => resolve(_.merge(__FAILSAFE_DEMO_EXTCONFIG, x.extConfig)),
+                success: (x) => resolve(_.merge(__FAILSAFE_DEMO_EXTCONFIG, x.extConfig)),
                 fail: reject
             });
         });
@@ -303,6 +303,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     });
                 });
             }
+
+            // Not authorized for UserInfo.
+            this.on('userInfo', ()=> {
+                this.track('userInfoAuthorized');
+            });
             return Promise.reject(null);
         });
 
@@ -564,9 +569,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
             }
             this.localState.dashboardAnalytics.liked = (this.localState.dashboardAnalytics.liked - 1) || 0;
 
-            _.remove(targetList, (v)=> v._id === x._id);
+            _.remove(targetList, (v) => v._id === x._id);
         });
 
+        this.ready.then(()=> {
+            this.track('launch');
+        });
     }
 
     suspendAutoLoadingState() {
@@ -781,6 +789,43 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
 
+    fetchArticleDetailByReferenceId(referenceId, options) {
+        const qOptions = _.merge({
+            mapSrc: 'data',
+            overrideStyle: 'false',
+            fixWxMagicSize: 'true',
+        }, options || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/reference/${referenceId}/richText`,
+                {
+                    query: qOptions,
+                    autoLoadingState: true
+                }
+            );
+            queryPromise.then((x) => {
+                this.emit('articleDetail', articleId, x);
+            });
+
+            return queryPromise;
+        });
+    }
+
+    fetchArticleMeta(articleId) {
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/article/${articleId}`
+            );
+            queryPromise.then((x) => {
+                this.emit('articleMeta', articleId, x);
+            });
+
+            return queryPromise;
+        });
+    }
+
     likeItem(itemId) {
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/likes', {
@@ -865,17 +910,14 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
     track(eventName, props) {
 
-        return Promise.all([this.systemInfo, this.networkType]).then((x) => {
+        return Promise.all([this.systemInfo, this.networkType, this.currentUser]).then((x) => {
             const [systemInfo, networkType] = x;
             const qBody = {
                 event: eventName,
-                data: props || {},
-                systemInfo: systemInfo,
-                networkType: networkType
+                data: { ...(props || {}), systemInfo, networkType, scene: this.showParam.scene, showParam: this.showParam }
             }
 
-            console.log(qBody);
-            return qBody;
+            return this.simpleApiCall('POST', '/ev-collect', { body: qBody });
         });
     }
     //推送消息
@@ -898,13 +940,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     downloadMyAvatar() {
-        return this.userInfo.then(()=> {
+        return this.userInfo.then(() => {
             return this.simpleApiDownload('/my/avatar')
         });
     }
 
     downloadWxaCode(width, page, scene, color, hyaline) {
-        return this.userInfo.then(()=> {
+        return this.userInfo.then(() => {
             return this.simpleApiDownload('/wxaCodeImage', {
                 query: {
                     path: page,
