@@ -789,6 +789,43 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
 
+    fetchArticleDetailByReferenceId(referenceId, options) {
+        const qOptions = _.merge({
+            mapSrc: 'data',
+            overrideStyle: 'false',
+            fixWxMagicSize: 'true',
+        }, options || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/reference/${referenceId}/richText`,
+                {
+                    query: qOptions,
+                    autoLoadingState: true
+                }
+            );
+            queryPromise.then((x) => {
+                this.emit('articleDetail', articleId, x);
+            });
+
+            return queryPromise;
+        });
+    }
+
+    fetchArticleMeta(articleId) {
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/article/${articleId}`
+            );
+            queryPromise.then((x) => {
+                this.emit('articleMeta', articleId, x);
+            });
+
+            return queryPromise;
+        });
+    }
+
     likeItem(itemId) {
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/likes', {
