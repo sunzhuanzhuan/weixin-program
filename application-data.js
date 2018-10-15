@@ -570,6 +570,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.ready.then(()=> {
             this.track('launch');
         });
+        this.on('userInfo', ()=> {
+            this.track('userInfoAuthorized');
+        });
     }
 
     suspendAutoLoadingState() {
