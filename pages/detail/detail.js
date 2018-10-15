@@ -335,11 +335,6 @@ Page({
                 const numArtical = res[0].readingMeta.nthRead + '';
                 ctx.setFillStyle('#101010');
                 ctx.fillText(numArtical, 100*ratio, 96*ratio);
-
-                
-               
-
-
                 const bigTitle = ('这是我在'+this.data.appName+'小程序阅读的第')
                 ctx.setFontSize(12*ratio)
                 ctx.setFillStyle('#101010');
@@ -354,8 +349,7 @@ Page({
                 ctx.setFillStyle('#101010');
 
                 const numFriend = res[0].readingMeta.referencers+ '';
-                // const numFriend = 154+ '';
-
+                
                 if(numFriend.length === 1){
                     ctx.fillText(my, 194*ratio, 96*ratio);
                 }else if(numFriend.length === 2){
@@ -428,35 +422,30 @@ Page({
                 let canvasDescribe
                
                 //z绘制描述
+                ctx.save();
+                ctx.setFontSize(14*ratio)
+                ctx.setFillStyle('#666666');
                 if(describe.length<parseInt(21/ratio)){
                     canvasDescribe = describe;
-                    ctx.setFontSize(14*ratio)
-                    ctx.setFillStyle('#666666');
+                    
                     ctx.fillText(canvasDescribe, 30*ratio, 210*ratio,260*ratio);
                 }else if(describe.length<parseInt(42/ratio) && describe.length>parseInt(21/ratio)){
                     canvasDescribe = describe.slice(0,parseInt(23/ratio));
-                    ctx.setFontSize(14*ratio);
-                    ctx.setFillStyle('#666666');
                     ctx.fillText(canvasDescribe, 30*ratio, 210*ratio,260*ratio);
 
                     let canvasDescribe1 = describe.slice(parseInt(21/ratio), describe.length);
-                    ctx.setFontSize(14*ratio);
-                    ctx.setFillStyle('#666666');
                     ctx.fillText(canvasDescribe1, 30*ratio, 230*ratio,260*ratio);
                     
                 }else{
                     canvasDescribe = describe.slice(0,parseInt(21/ratio));
-                    ctx.setFontSize(14*ratio);
-                    ctx.setFillStyle('#666666');
                     ctx.fillText(canvasDescribe, 30*ratio, 210*ratio,260*ratio);
                     
                     let canvasDescribe2 = describe.slice(parseInt(21/ratio), parseInt(42/ratio))+'...';
-                    ctx.setFontSize(14*ratio);
-                    ctx.setFillStyle('#666666');
                     ctx.fillText(canvasDescribe2, 30*ratio, 230*ratio,260*ratio);
                     
                 }
-                
+                ctx.restore()
+
                 ctx.moveTo(30*ratio, 260*ratio)
                 ctx.setStrokeStyle('#F0F0F0');
                 ctx.lineTo(300*ratio, 260*ratio)
@@ -509,20 +498,19 @@ Page({
                         quality:1,
                         canvasId: 'shareCanvas',
                         success: function (res) {
-                            console.log(res)
                             that.setData({
                                 shareImage: res.tempFilePath,
                                 showSharePic: true
                             },()=>{
-                                // wx.saveImageToPhotosAlbum({
-                                //     filePath:that.data.shareImage,
-                                //     success:function () {
-                                //         console.log('保存成功')
-                                //     },
-                                //     fail:function () {
-                                //         console.log('保存失败')
-                                //     }
-                                // })
+                                wx.saveImageToPhotosAlbum({
+                                    filePath:that.data.shareImage,
+                                    success:function () {
+                                        console.log('保存成功')
+                                    },
+                                    fail:function () {
+                                        console.log('保存失败')
+                                    }
+                                })
                             })
                             wx.hideLoading();
                         },
@@ -533,16 +521,7 @@ Page({
                     })
                 }, 2000);    
         })
-        // gdt.downloadMyAvatar().then((r1)=> {
-        //     gdt.downloadWxaCode(320, 'pages/index/index', '666', 'auto').then((r2)=>{
-                 //y方向的偏移量，因为是从上往下绘制的，所以y一直向下偏移，不断增大。
-                
-        //     })
-        // });
-        
-       
-       
-       
+      
     },
     handleSavePicture:function(){
         this.setData({isShowPoster:false});
