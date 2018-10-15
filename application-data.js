@@ -303,6 +303,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     });
                 });
             }
+
+            // Not authorized for UserInfo.
+            this.on('userInfo', ()=> {
+                this.track('userInfoAuthorized');
+            });
             return Promise.reject(null);
         });
 
@@ -569,9 +574,6 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
         this.ready.then(()=> {
             this.track('launch');
-        });
-        this.on('userInfo', ()=> {
-            this.track('userInfoAuthorized');
         });
     }
 
