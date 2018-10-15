@@ -43,6 +43,8 @@ Page({
                 view: this.data.viewId,
                 tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
             });
+            gdt.track('share-item', { itemId: this.data.articleId, title: this.data.article.title, refId: this.data.shareId, viewId: this.data.viewId });
+        
         }
         return {
             title: this.data.article.title || '默认转发标题',
@@ -63,6 +65,7 @@ Page({
             this.data.lastSuspendAt = null;
             // this.setData({ lastSuspendAt: null });
         }
+        gdt.track('show-detail', { itemId: this.data.articleId, refId: this.data.shareId, viewId: this.data.viewId });
     },
     //授权的时候发生的
     handleAuthor:function(e){
@@ -77,17 +80,21 @@ Page({
             this.setData({ isLike: !this.data.isLike }, () => {
                 if (this.data.isLike) {
                     gdt.likeItem(this.data.articleId);
+                    gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
                 } else {
                     gdt.unlikeItem(this.data.articleId);
+                    gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
                 }
             });
         }).catch(()=> {
             gdt.once('userInfo', ()=> {
                 this.setData({ isLike: !this.data.isLike }, () => {
                     if (this.data.isLike) {
+                        gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
                         gdt.likeItem(this.data.articleId);
                     } else {
                         gdt.unlikeItem(this.data.articleId);
+                        gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
                     }
                 });
             });
@@ -152,6 +159,7 @@ Page({
                 });
             }
             this.setData({ articalName:r.article.title,nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            gdt.track('detail-load', { itemId: r.article._id, title: r.article.title, refId: r.refId, viewId: r.viewId });
         })
 
 
@@ -220,6 +228,7 @@ Page({
                     (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
                     this.data.viewPercentage
                 );
+                gdt.track('detail-scroll', { itemId: this.data.articleId, viewId: this.data.viewId });
             }
             this.data.scrollStartedAt = undefined;
 

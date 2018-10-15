@@ -35,7 +35,7 @@ Page({
         }).catch(() => {
             this.setData({ isNew: true })
         });
-
+        gdt.track('show-index');
     },
 
     handleTitleTab(e) {
@@ -46,12 +46,12 @@ Page({
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {
             gdt.magicListItemFirstLoad(currentListInstance._id);
-
+            gdt.track('index-show-tab', { listId: currentListInstance._id, title: currentListInstance.title });
         }
     },
     //跳转到详情
     handleDetail(e) {
-        
+
         let that = this;
         wx.navigateTo({
             url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap
@@ -179,7 +179,9 @@ Page({
     onReachBottom: function () {
         const currentListInstance = this.data.lists[this.data.currentTabIndex]
         if (currentListInstance) {
-            gdt.magicListItemLoadMore(currentListInstance._id);
+            gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
+                gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
+            });
         }
     },
     //下拉刷新
@@ -187,11 +189,11 @@ Page({
         const currentListInstance = this.data.lists[this.data.currentTabIndex]
         if (currentListInstance) {
             gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
+                gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
                 setTimeout(() => {
                     wx.stopPullDownRefresh();
                 }, 500);
             });
-
         }
     },
     getFormID: function (e) {
