@@ -187,6 +187,11 @@ Page({
         }
         if (this.data.viewId && this.data.articleId) {
             gdt.trackLeftViewing(this.data.articleId, this.data.viewId, Date.now() - this.data.enteredAt - this.data.suspendedFor);
+            gdt.track('detail-close', { 
+                itemId: this.data.articleId, 
+                viewId: this.data.viewId,
+                duration: Date.now() - this.data.enteredAt - this.data.suspendedFor
+            });
         }
     },
     recordUserscroll: function (event) {
@@ -220,15 +225,22 @@ Page({
         this.data.reportScrollTimeoutHandler = setTimeout(function () {
             this.data.viewPercentage = (event.detail.scrollTop / event.detail.scrollHeight) * 100;
             if (this.data.viewId && this.data.articleId) {
-                gdt.trackScrollActionInViewing(
-                    this.data.articleId, 
-                    this.data.viewId,
-                    this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
-                    Date.now() - this.data.scrollStartedAt,
-                    (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
-                    this.data.viewPercentage
-                );
-                gdt.track('detail-scroll', { itemId: this.data.articleId, viewId: this.data.viewId });
+                // gdt.trackScrollActionInViewing(
+                //     this.data.articleId, 
+                //     this.data.viewId,
+                //     this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
+                //     Date.now() - this.data.scrollStartedAt,
+                //     (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
+                //     this.data.viewPercentage
+                // );
+                gdt.track('detail-scroll', { 
+                    itemId: this.data.articleId, 
+                    viewId: this.data.viewId,
+                    tPlus: this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
+                    duration: Date.now() - this.data.scrollStartedAt,
+                    startPos: (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
+                    endPos: this.data.viewPercentage
+                 });
             }
             this.data.scrollStartedAt = undefined;
 
