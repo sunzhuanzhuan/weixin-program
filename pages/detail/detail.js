@@ -83,7 +83,7 @@ Page({
                     gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
                 } else {
                     gdt.unlikeItem(this.data.articleId);
-                    gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+                    gdt.track('unlike-item', { itemId: this.data.articleId, viewId: this.data.viewId });
                 }
             });
         }).catch(()=> {
@@ -94,7 +94,7 @@ Page({
                         gdt.likeItem(this.data.articleId);
                     } else {
                         gdt.unlikeItem(this.data.articleId);
-                        gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+                        gdt.track('unlike-item', { itemId: this.data.articleId, viewId: this.data.viewId });
                     }
                 });
             });
