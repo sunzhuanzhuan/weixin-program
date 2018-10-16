@@ -83,9 +83,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.emit('appShow', showParam);
     }
 
-    onAppHide(showParam) {
-        this.showParam = showParam;
-        this.emit('appShow', showParam);
+    onAppHide() {
+        this.emit('appHide');
     }
 
     onAppError(err) {
@@ -575,6 +574,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.ready.then(()=> {
             this.track('launch');
         });
+
+        this.on('appHide', ()=> {
+            this.track('hide');
+        })
     }
 
     suspendAutoLoadingState() {
