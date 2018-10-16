@@ -11,7 +11,7 @@
                 <view class="floatShadow"></view>
                 <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%">
                     <view wx:if="{{isEyes}}" class="btnBoxKonw" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}"></view>
-                    <button wx:else class="btnBoxKonw" form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}">
+                    <button wx:else class="btnBoxKonw" form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}" catchtap="handleJump">
                         <!-- hidden="{{isEyes}}" -->
                         <image class="imgBtnKonw" src="/images/eye.png"></image>
                         <view class="letterKonw">让朋友知道我在读</view>

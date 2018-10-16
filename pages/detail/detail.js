@@ -58,12 +58,16 @@ Page({
         }
         return {
             title: this.data.article.title || '默认转发标题',
-            path: 'pages/detail/detail?ref=' + this.data.shareId + '&id=' + this.data.articleId + '&nickName=' + this.data.nickName
+            path: 'pages/detail/detail?ref=' + this.data.shareId + '&id=' + this.data.articleId + '&nickName=' + this.data.nickName+'&appName='+this.data.appName
         }
     },
 
     onShow: function () {
-
+        gdt.userInfo.then(() => {
+            if(this.data.isEyes === false){
+                this.setData({isEyes:true})
+            }
+        })
         const now = Date.now();
         const lastSuspendAt = this.data.lastSuspendAt;
         if (lastSuspendAt) {
@@ -84,6 +88,22 @@ Page({
             gdt.emit('userInfo', e.detail);
         }
 
+    },
+    handleJump:function(){
+        gdt.userInfo.then(() => {
+            wx.navigateTo({
+                url: '/pages/log/detail?nick='+this.data.shareName
+            })
+            gdt.track('let-friend-know-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+        }).catch(() => {
+            gdt.once('userInfo', () => {
+                wx.navigateTo({
+                    url: '/pages/log/detail?nick='+this.data.shareName
+                })
+            });
+            gdt.track('let-friend-know-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+        });
+        
     },
     handleLikeButtonTapped: function (e) {
         gdt.userInfo.then(() => {
@@ -112,13 +132,6 @@ Page({
 
     },
     onLoad(options) {
-
-        console.log(1111111111111111111)
-
-        console.log(gdt.showParam)
-        console.log(options)
-
-        console.log(22222222222222222222)
         gdt.systemInfo.then((x) => {
             this.setData({
                 ratio: x.windowWidth * 2 / 750,
@@ -131,7 +144,7 @@ Page({
             }
         });
         let that = this;
-        this.setData({ appName: options.appName })
+        
         gdt.userInfo.then((x) => {
             this.setData({
                 type: "",
@@ -149,9 +162,14 @@ Page({
         });
         const scene = gdt.showParam.scene;
         let qPromise;
-        const articleId = options.art || options.id;
-        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) && options.art != undefined) {
-            this.setData({ art: articleId, src: this.data.home, isShare: true, shareName: options.nickName, articleId: options.art });
+       
+        // 
+        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049)&& Object.keys(gdt.showParam.query).length >0   ) {
+            let { query:{id ,nickName,ref,appName}} = gdt.showParam;
+            const articleId = id;
+            console.log(gdt.showParam)
+            this.setData({ art: articleId, src: this.data.home, isShare: true, shareName: nickName, articleId: articleId,appName:appName });
+            
             gdt.userInfo.then((x) => {
                 this.setData({
                     isEyes: true
@@ -167,12 +185,14 @@ Page({
                 mapSrc: 'data',
                 overrideStyle: 'false',
                 fixWxMagicSize: 'true',
-                ref: options.ref
+                ref:ref
             });
         } else if (scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
-            this.setData({ isEyes: true, articleId: options.id, src: this.data.close, isShare: true });
+            let { query:{id ,nickName,ref}} = gdt.showParam;
+            const articleId = id;
+            this.setData({ isEyes: true, src: this.data.close, isShare: true,appName:options.appName });
             // fetchArticleDetailByReferenceId(referenceId, {...options})
-            qPromise = gdt.fetchArticleDetail(articleId, {
+            qPromise = gdt.fetchArticleDetail(id, {
                 scene: scene,
                 keepH5Links: true,
                 mapSrc: 'data',
@@ -181,7 +201,7 @@ Page({
             });
         } else if (scene == 1048) {
             const referencers = (options.scene)
-            this.setData({ isEyes: true, articleId: options.id, src: this.data.close, isShare: true });
+            this.setData({ isEyes: true,  src: this.data.close, isShare: true });
             qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
                 scene: scene,
                 keepH5Links: true,
@@ -190,8 +210,10 @@ Page({
                 fixWxMagicSize: 'true'
             });
         } else {
-            this.setData({ isEyes: true, articleId: options.id, src: this.data.close })
-            qPromise = gdt.fetchArticleDetail(articleId, {
+            // this.setData({ })
+            let {id} = options;
+            this.setData({ isEyes: true, articleId: id, src: this.data.close ,appName: options.appName })
+            qPromise = gdt.fetchArticleDetail(id, {
                 scene: scene,
                 keepH5Links: true,
                 mapSrc: 'data',
@@ -207,7 +229,7 @@ Page({
                     title: currentTitle,
                 });
             }
-            this.setData({ articalTitle: r.article.title, articalDescribe: r.article.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～', articalName: r.article.title, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({ articleId: r.article.id,articalTitle: r.article.title, articalDescribe: r.article.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～', articalName: r.article.title, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.article._id, title: r.article.title, refId: r.refId, viewId: r.viewId });
         })
@@ -443,22 +465,22 @@ Page({
             ctx.save();
             ctx.setFontSize(14 * ratio)
             ctx.setFillStyle('#666666');
-            if (describe.length < parseInt(21 / ratio)) {
+            if (describe.length < parseInt(19/ ratio)) {
                 canvasDescribe = describe;
 
                 ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
-            } else if (describe.length < parseInt(42 / ratio) && describe.length > parseInt(21 / ratio)) {
-                canvasDescribe = describe.slice(0, parseInt(23 / ratio));
+            } else if (describe.length < parseInt(38 / ratio) && describe.length > parseInt(19 / ratio)) {
+                canvasDescribe = describe.slice(0, parseInt(19 / ratio));
                 ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
 
-                let canvasDescribe1 = describe.slice(parseInt(21 / ratio), describe.length);
+                let canvasDescribe1 = describe.slice(parseInt(19/ ratio), describe.length);
                 ctx.fillText(canvasDescribe1, 30 * ratio, 230 * ratio, 260 * ratio);
 
             } else {
-                canvasDescribe = describe.slice(0, parseInt(21 / ratio));
+                canvasDescribe = describe.slice(0, parseInt(19 / ratio));
                 ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
 
-                let canvasDescribe2 = describe.slice(parseInt(21 / ratio), parseInt(42 / ratio)) + '...';
+                let canvasDescribe2 = describe.slice(parseInt(19/ ratio), parseInt(38 / ratio)) + '...';
                 ctx.fillText(canvasDescribe2, 30 * ratio, 230 * ratio, 260 * ratio);
 
             }
