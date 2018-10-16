@@ -112,7 +112,13 @@ Page({
         
     },
     onLoad(options) {
-       console.log(options)
+
+        console.log(1111111111111111111)
+       
+        console.log(gdt.showParam)
+      console.log(options)
+
+      console.log(22222222222222222222)
         gdt.systemInfo.then((x) => {
             this.setData({
                 ratio: x.windowWidth*2/750,
@@ -163,10 +169,20 @@ Page({
                 fixWxMagicSize: 'true',
                 ref: options.ref
             });
-        }else if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073 || scene ==1048){
+        }else if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073){
             this.setData({ isEyes: true, articleId: options.id, src: this.data.close,isShare:true });
             // fetchArticleDetailByReferenceId(referenceId, {...options})
-            qPromise = gdt.fetchArticleDetailByReferenceId('11111111', {
+            qPromise = gdt.fetchArticleDetail(articleId, {
+                scene: scene,
+                keepH5Links: true,
+                mapSrc: 'data',
+                overrideStyle: 'false',
+                fixWxMagicSize: 'true'
+            });
+        }else if(scene == 1048){
+            const referencers = decodeURIComponent(options.scene)
+            this.setData({ isEyes: true, articleId: options.id, src: this.data.close,isShare:true });
+            qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
                 scene: scene,
                 keepH5Links: true,
                 mapSrc: 'data',
