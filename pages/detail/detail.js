@@ -327,7 +327,7 @@ Page({
             ctx.fillRect(8, 8, 304 * ratio, 434 * ratio);
             
             // 绘制通话的框
-            ctx.moveTo(65 * ratio, 62 * ratio)
+            ctx.moveTo(68 * ratio, 62 * ratio)
             ctx.lineTo(75 * ratio, 52 * ratio);
             ctx.lineTo(75 * ratio, 72 * ratio);
             ctx.closePath()
