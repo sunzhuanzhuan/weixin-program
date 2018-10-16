@@ -180,7 +180,7 @@ Page({
                 fixWxMagicSize: 'true'
             });
         } else if (scene == 1048) {
-            const referencers = decodeURIComponent(options.scene)
+            const referencers = (options.scene)
             this.setData({ isEyes: true, articleId: options.id, src: this.data.close, isShare: true });
             qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
                 scene: scene,
