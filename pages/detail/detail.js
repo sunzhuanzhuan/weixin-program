@@ -267,6 +267,9 @@ Page({
         }
     },
     recordUserscroll: function (event) {
+        if(event.detail.scrollTop <0){
+            return 
+        }
         let num1 = event.detail.scrollTop;
         const scene = gdt.showParam.scene;
         if (num1 > this.data.num) {
