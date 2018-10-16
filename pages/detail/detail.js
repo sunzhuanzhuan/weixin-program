@@ -207,7 +207,7 @@ Page({
                     title: currentTitle,
                 });
             }
-            this.setData({ articalTitle: r.article.title, articalDescribe: r.article.bref || '哈哈哈哈', articalName: r.article.title, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({ articalTitle: r.article.title, articalDescribe: r.article.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～', articalName: r.article.title, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.article._id, title: r.article.title, refId: r.refId, viewId: r.viewId });
         })
