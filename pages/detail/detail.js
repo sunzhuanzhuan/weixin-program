@@ -163,7 +163,7 @@ Page({
         const scene = gdt.showParam.scene;
         let qPromise;
        
-        // 
+        console.log(options)
         if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049)&& Object.keys(gdt.showParam.query).length >0   ) {
             let { query:{id ,nickName,ref,appName}} = gdt.showParam;
             const articleId = id;
@@ -201,7 +201,10 @@ Page({
             });
         } else if (scene == 1048) {
             const referencers = (options.scene)
-            this.setData({ isEyes: true,  src: this.data.close, isShare: true });
+            gdt.ready.then((r)=> {
+                this.setData({ isEyes: true,  src: this.data.close, isShare: true ,appName:r.title});
+            });
+            
             qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
                 scene: scene,
                 keepH5Links: true,
@@ -275,13 +278,13 @@ Page({
         if (num1 > this.data.num) {
             this.setData({ isShow: false });
 
-            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
+            if (scene == 1048 || scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
                 this.setData({ isShare: false });
             }
 
         } else {
             this.setData({ isShow: true });
-            if (scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
+            if (scene == 1048 ||scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
                 this.setData({ isShare: true });
             }
 
