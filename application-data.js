@@ -16,6 +16,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
     constructor(launchParam) {
         super();
+        this.launchTime = Date.now();
         this.launchParam = launchParam;
         this.showParam = launchParam;
         this.extConfig = new Promise((resolve, reject) => {
@@ -304,7 +305,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             }
 
             // Not authorized for UserInfo.
-            this.on('userInfo', ()=> {
+            this.on('userInfo', () => {
                 this.track('userInfoAuthorized');
             });
             return Promise.reject(null);
@@ -571,12 +572,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
             _.remove(targetList, (v) => v._id === x._id);
         });
 
-        this.ready.then(()=> {
+        this.ready.then(() => {
             this.track('launch');
         });
 
-        this.on('appHide', ()=> {
-            this.track('hide');
+        this.on('appHide', () => {
+            this.track('hide', { duration: Date.now() - this.launchTime });
         })
     }
 
