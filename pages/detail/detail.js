@@ -7,8 +7,7 @@ Page({
         nodes: [],
         isShow: true,
         shareButton: '../../images/shareAfter.png',
-        close: '../../images/close.png',
-        home: '../../images/home.png',
+       
         src: '',
         isLike: false,
         isEyes: true,
@@ -132,6 +131,8 @@ Page({
 
     },
     onLoad(options) {
+       
+        console.log(getCurrentPages()[0].route === 'pages/detail/detail')
         gdt.systemInfo.then((x) => {
             this.setData({
                 ratio: x.windowWidth * 2 / 750,
@@ -163,13 +164,16 @@ Page({
         const scene = gdt.showParam.scene;
         let qPromise;
        
-        console.log(options)
+        console.log(options);
+        console.log(gdt.showParam)
         if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049)&& Object.keys(gdt.showParam.query).length >0   ) {
             let { query:{id ,nickName,ref,appName}} = gdt.showParam;
             const articleId = id;
-            console.log(gdt.showParam)
-            this.setData({ art: articleId, src: this.data.home, isShare: true, shareName: nickName, articleId: articleId,appName:appName });
             
+            this.setData({ art: articleId, shareName: nickName, articleId: articleId,appName:appName });
+            if(getCurrentPages()[0].route === 'pages/detail/detail'){
+                this.setData({  isShare: true });
+            }
             gdt.userInfo.then((x) => {
                 this.setData({
                     isEyes: true
@@ -187,42 +191,82 @@ Page({
                 fixWxMagicSize: 'true',
                 ref:ref
             });
-        } else if (scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
-            let { query:{id ,nickName,ref}} = gdt.showParam;
-            const articleId = id;
-            this.setData({ isEyes: true, src: this.data.close, isShare: true,appName:options.appName });
-            // fetchArticleDetailByReferenceId(referenceId, {...options})
-            qPromise = gdt.fetchArticleDetail(id, {
-                scene: scene,
-                keepH5Links: true,
-                mapSrc: 'data',
-                overrideStyle: 'false',
-                fixWxMagicSize: 'true'
-            });
-        } else if (scene == 1048) {
-            const referencers = (options.scene)
-            gdt.ready.then((r)=> {
-                this.setData({ isEyes: true,  src: this.data.close, isShare: true ,appName:r.title});
-            });
+        }
+        //  else if (scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
+        //     let { query:{id ,nickName,ref}} = gdt.showParam;
+        //     const articleId = id;
+        //     this.setData({ isEyes: true,  isShare: true,appName:options.appName });
+        //     // fetchArticleDetailByReferenceId(referenceId, {...options})
+        //     qPromise = gdt.fetchArticleDetail(id, {
+        //         scene: scene,
+        //         keepH5Links: true,
+        //         mapSrc: 'data',
+        //         overrideStyle: 'false',
+        //         fixWxMagicSize: 'true'
+        //     });
+        // } else if (scene == 1048 || scene == 1047 || scene == 1049) {
+        //     const referencers = (options.scene)
+        //     gdt.ready.then((r)=> {
+        //         this.setData({ isEyes: true,  isShare: true ,appName:r.title});
+        //     });
             
-            qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
-                scene: scene,
-                keepH5Links: true,
-                mapSrc: 'data',
-                overrideStyle: 'false',
-                fixWxMagicSize: 'true'
+        //     qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
+        //         scene: scene,
+        //         keepH5Links: true,
+        //         mapSrc: 'data',
+        //         overrideStyle: 'false',
+        //         fixWxMagicSize: 'true'
+        //     });
+        // }
+         else {
+            if(getCurrentPages()[0].route === 'pages/detail/detail'){
+                this.setData({  isShare: true });
+            }
+            
+            if(options.id.length >0){
+                
+                let  {id}  = options; 
+                qPromise = gdt.fetchArticleDetail(id, {
+                    scene: scene,
+                    keepH5Links: true,
+                    mapSrc: 'data',
+                    overrideStyle: 'false',
+                    fixWxMagicSize: 'true'
+                });
+            }else if( Object.keys(gdt.showParam.query).length >0){
+                let { query:{id ,nickName,ref}} = gdt.showParam;
+               
+                qPromise = gdt.fetchArticleDetail(id, {
+                    scene: scene,
+                    keepH5Links: true,
+                    mapSrc: 'data',
+                    overrideStyle: 'false',
+                    fixWxMagicSize: 'true'
+                });
+            }else{
+                let referencers = (options.scene);
+                gdt.ready.then((r)=> {
+                    this.setData({ isEyes: true,isShare: true ,appName:r.title});
+                });
+                qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
+                    scene: scene,
+                    keepH5Links: true,
+                    mapSrc: 'data',
+                    overrideStyle: 'false',
+                    fixWxMagicSize: 'true'
+                });
+            }
+            gdt.ready.then((r)=> {
+                this.setData({ isEyes: true,appName:r.title });
             });
-        } else {
-            // this.setData({ })
-            let {id} = options;
-            this.setData({ isEyes: true, articleId: id, src: this.data.close ,appName: options.appName })
-            qPromise = gdt.fetchArticleDetail(id, {
-                scene: scene,
-                keepH5Links: true,
-                mapSrc: 'data',
-                overrideStyle: 'false',
-                fixWxMagicSize: 'true'
-            });
+            // this.setData({ isEyes: true, articleId: id, ,appName: options.appName })
+            // qPromise = gdt.fetchArticleDetail(id, {
+            //     scene: scene,
+            //     keepH5Links: true,
+            //     mapSrc: 'data',
+            //     overrideStyle: 'false',
+            //     fixWxMagicSize: 'true'
+            // });
         }
 
         qPromise.then((r) => {
@@ -277,16 +321,21 @@ Page({
         const scene = gdt.showParam.scene;
         if (num1 > this.data.num) {
             this.setData({ isShow: false });
-
-            if (scene == 1048 || scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
-                this.setData({ isShare: false });
+            if(getCurrentPages()[0].route === 'pages/detail/detail'){
+                this.setData({  isShare: false });
             }
+            // if (scene == 1048 || scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
+            //     this.setData({ isShare: false });
+            // }
 
         } else {
             this.setData({ isShow: true });
-            if (scene == 1048 ||scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
-                this.setData({ isShare: true });
+            if(getCurrentPages()[0].route === 'pages/detail/detail'){
+                this.setData({  isShare: true });
             }
+            // if (scene == 1048 ||scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
+            //     this.setData({ isShare: true });
+            // }
 
         }
         this.data.num = num1;
