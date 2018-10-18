@@ -7,14 +7,14 @@
 }
 .videoPngBIg{
     position: absolute;
-    bottom:20rpx;
+    bottom:38rpx;
     right: 10rpx;
     width: 100rpx;
     height: 50rpx;
 }
 .videoPngSmall{
     position: absolute;
-    bottom:-6rpx;
+    bottom:8rpx;
     right: 10rpx;
     width: 60rpx;
     height: 40rpx;
