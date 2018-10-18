@@ -96,7 +96,7 @@
     text-overflow:ellipsis;
     white-space:nowrap;
     width:686rpx;
-    line-height:1.5
+    line-height:1.2
 
 }
 .letterArtical{
