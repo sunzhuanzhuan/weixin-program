@@ -141,8 +141,6 @@ Page({
 
     },
     onLoad(options) {
-       
-        console.log(getCurrentPages()[0].route === 'pages/detail/detail')
         gdt.systemInfo.then((x) => {
             this.setData({
                 ratio: x.windowWidth * 2 / 750,
@@ -173,9 +171,6 @@ Page({
         });
         const scene = gdt.showParam.scene;
         let qPromise;
-       
-        console.log(options);
-        console.log(gdt.showParam)
         if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049)&& Object.keys(gdt.showParam.query).length >0   ) {
             let { query:{id ,nickName,ref,appName}} = gdt.showParam;
             const articleId = id;
