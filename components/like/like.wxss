@@ -7,7 +7,7 @@
     font-size: 32rpx;
 }
 .readResource{
-    margin-top: 16rpx;
+    margin-top: 0rpx;
     color: #898989;
     font-size: 24rpx;
     width:686rpx;
