@@ -13,8 +13,8 @@ Page({
         userInfo: undefined,
         shareAfter: '../../images/shareAfter.png',
         shareBefore: "../../images/shareBefore.png",
-        likeAfter: "../../images/likeAfter1.png",
-        likeBefore: "../../images/likeBefore.png",
+        likeAfter: "../../images/selectBefore.png",
+        likeBefore: "../../images/selectAfter.png",
         imgCry:'../../images/cry.png',
   
         num:{},

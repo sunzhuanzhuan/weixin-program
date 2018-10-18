@@ -1,7 +1,7 @@
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <view>
-    <scroll-view scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll">
+    <scroll-view scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
         <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     </scroll-view>
     <!-- 悬浮部分 -->
