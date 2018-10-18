@@ -13,6 +13,8 @@ Page({
         let a ='';
         if(new Date().getMonth()+1<10){
             a = "0"+(new Date().getMonth()+1);
+        }else{
+            a = new Date().getMonth()+1;
         }
 
         this.setData({
@@ -22,7 +24,6 @@ Page({
         })
     },
     onLoad:function (options) {
-        console.log(options)
         this.setData({name:options.nick})
         // wx.getSystemInfo({
         //     success: function (res) {

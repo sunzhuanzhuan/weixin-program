@@ -1,4 +1,4 @@
-module.exports = function (method, url, _options) {
+module.exports.request = function (method, url, _options) {
     let options = _options || {};
     const qObj = {
         url: url,
@@ -35,8 +35,9 @@ module.exports = function (method, url, _options) {
     }
 
     if (options.query) {
-        let queryString = Object.entries(options.query || {}).map((x)=> {
-            let [k, v] = x;
+        let queryString = Object.keys(options.query || {}).map((x)=> {
+            let k = x;
+            let v = options.query[k];
             return `${encodeURIComponent(k)}=${v === undefined ? '' : encodeURIComponent(v)}`;
         }).join('&');
         if (qObj.url.includes('?')) {
@@ -50,6 +51,41 @@ module.exports = function (method, url, _options) {
         qObj.success = resolve;
         qObj.fail = reject;
         wx.request(qObj);
+    });
+
+}
+
+module.exports.download = function (url, _options) {
+    let options = _options || {};
+    const qObj = {
+        url: url
+    };
+
+    if (options.header) {
+        qObj.header = options.header;
+    }
+
+    if (options.query) {
+        let queryString = Object.keys(options.query || {}).map((x)=> {
+            let k = x;
+            let v = options.query[k];
+            return `${encodeURIComponent(k)}=${v === undefined ? '' : encodeURIComponent(v)}`;
+        }).join('&');
+        if (qObj.url.includes('?')) {
+            qObj.url = qObj.url.replace(/\?/, `?${queryString}&`);
+        } else {
+            qObj.url = `${qObj.url}?${queryString}`
+        }
+    }
+
+    if (options.filePath) {
+        qObj.filePath = filePath;
+    }
+
+    return new Promise((resolve, reject) => {
+        qObj.success = resolve;
+        qObj.fail = reject;
+        wx.downloadFile(qObj);
     });
 
 }

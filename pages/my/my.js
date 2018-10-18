@@ -13,17 +13,22 @@ Page({
         userInfo: undefined,
         shareAfter: '../../images/shareAfter.png',
         shareBefore: "../../images/shareBefore.png",
-        likeAfter: "../../images/likeAfter1.png",
-        likeBefore: "../../images/likeBefore.png",
+        likeAfter: "../../images/selectBefore.png",
+        likeBefore: "../../images/selectAfter.png",
         imgCry:'../../images/cry.png',
   
         num:{},
         shinIndex: 999999,
         
-        currentTab: 'myShares'
+        currentTab: 'myShares',
+        isHome:false
     },
       onLoad: function() {
           this.appState = gdt.localState;
+          const scene = gdt.showParam.scene;
+          if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073){
+            this.setData({isHome:true})
+          }
           this.setData({
               num: this.appState.dashboardAnalytics,
               myShares: this.appState.myShares,
@@ -31,7 +36,6 @@ Page({
           });
           gdt.userInfo.then((x)=> {
               this.setData({userInfo: x.userInfo});
-              console.log( x.userInfo)
           });
           gdt.on('userInfo', (x)=> {
               this.setData({userInfo: x.userInfo});
@@ -69,6 +73,7 @@ Page({
         this.setData({
             num: this.appState.dashboardAnalytics
         });
+        gdt.track('show-my-dashboard');
       },
       handleShrink: function(e) {
           this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})
@@ -76,10 +81,13 @@ Page({
       handleTab: function(e) {
           if (e.currentTarget.dataset.name == 'myShares') {
               gdt.magicMySharedFirstLoad().then(()=> this.setData({ myShares: this.appState.myShares }));
-          } else {
+              gdt.track('my-dashboard-show-share');
+            } else {
               gdt.magicMyLikedFirstLoad().then(()=> this.setData({ myLikes: this.appState.myLikes }));
-          }
-          this.setData({currentTab: e.currentTarget.dataset.name})
+              gdt.track('my-dashboard-show-like');
+            }
+          this.setData({currentTab: e.currentTarget.dataset.name});
+          
       },
       //授权登录传递给后台
       bindGetUserInfo: function(e) {
@@ -106,10 +114,25 @@ Page({
   
           const articleBref = clip.article;
           gdt.trackShareItem(articleBref._id);
+          gdt.track('share-item', { itemId: clip.articleId, refId: clip._id });
+        
           return {
               title: articleBref.title || '默认转发标题',
               path: `pages/detail/detail?ref=${clip._id}&art=${clip.articleId}&nickName=${this.data.userInfo.nickName}`,
               imageUrl: articleBref.coverUrl
           }
-      }
+      },
+      getFormID: function (e) {
+        if (e.detail.formId) {
+            gdt.collectTplMessageQuotaByForm(e.detail.formId);
+        }
+        // console.log( e.detail.formId)
+        // this.setData({
+        // formId: e.detail.formId }) 
+    },
+    handleBack:function(e){
+        wx.reLaunch({
+            url:'/pages/index/index'
+        })
+    },
   })

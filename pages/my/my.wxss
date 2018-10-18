@@ -12,6 +12,13 @@ button::after{ border: none; }
   flex-direction: row;
   justify-content: space-around;
 }
+.goHomeStyle{
+  position: fixed;
+  left:0;
+  bottom: 200rpx;
+  width: 119rpx;
+  height:94rpx;
+}
 .smallBox{
   display: flex;
   flex-direction: column;

@@ -1,10 +1,11 @@
 <template name="list">
-
     <block  wx:if="{{list.length>0}}" >
         <!--下面是小的图的视频-->
         <view wx:for="{{list}}" class="container"  wx:key="{{index}}">
             <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
-                <view class="bigBox">
+            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+             <button form-type="submit" class="btnForm" hover-class='none'>
+                <view class="bigBox" >
                     <view class="imgBox" >
                         <view style="position: relative">
                             <image  class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
@@ -22,11 +23,17 @@
                         </view>
                     </view>
                 </view>
-
+                 </button>
+            </form>  
             </view>
             <!--下面是大的视频-->
+
+           
             <view wx:else bindtap="handleDetail"  data-id="{{item.id}}">
+            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+            <button form-type="submit" class="btnForm" hover-class='none'>
                 <view class="bigBox">
+                
                     <view>
                         <view class="content">
                             <view style="position: relative">
@@ -45,6 +52,8 @@
                         </view>
                     </view>
                 </view>
+ </button>
+            </form>  
             </view>
         </view>
         <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">

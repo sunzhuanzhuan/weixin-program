@@ -1,25 +1,27 @@
 const _ = require('./utils/lodash.custom.min.js');
 const EventEmitter = require("./utils/EventEmitter.min.js");
-const request = require("./utils/request.js");
+const request = require("./utils/request.js").request;
+const download = require("./utils/request.js").download;
 
 const PAGESIZE = 20;
 
 const __FAILSAFE_DEMO_EXTCONFIG = {
-  "distroId": "5b63fb56b106d81d9b74972a",
-  "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
-  "appName": "無名",
-  "baseUri": "https://yijoin-d.weiboyi.com/v1/distribution"
+    "distroId": "5b63fb56b106d81d9b74972a",
+    "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
+    "appName": "",
+    "baseUri": "https://yijoin-d.weiboyi.com/v1/distribution"
 };
 
 module.exports = class GlobalDataContext extends EventEmitter {
 
     constructor(launchParam) {
         super();
+        this.launchTime = Date.now();
         this.launchParam = launchParam;
         this.showParam = launchParam;
         this.extConfig = new Promise((resolve, reject) => {
             wx.getExtConfig({
-              success: (x) => resolve(_.merge(__FAILSAFE_DEMO_EXTCONFIG, x.extConfig)),
+                success: (x) => resolve(_.merge(__FAILSAFE_DEMO_EXTCONFIG, x.extConfig)),
                 fail: reject
             });
         });
@@ -82,9 +84,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.emit('appShow', showParam);
     }
 
-    onAppHide(showParam) {
-        this.showParam = showParam;
-        this.emit('appShow', showParam);
+    onAppHide() {
+        this.emit('appHide');
     }
 
     onAppError(err) {
@@ -125,14 +126,16 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 return request(
                     method,
                     url,
-                    otherOptions
+                    queryOptions
                 ).then((res) => {
                     if (autoLoadingState) {
                         this.emit('loadingComplete');
                     }
                     if (res.header) {
-                        if (res.header['X-Set-Session-Token']) {
-                            this.emit('sessionToken', res.header['X-Set-Session-Token']);
+                        const TOKEN_HEADER_NAME = 'X-Set-Session-Token';
+                        const tokenValue = res.header[TOKEN_HEADER_NAME] || res.header[TOKEN_HEADER_NAME.toLowerCase()];
+                        if (tokenValue) {
+                            this.emit('sessionToken', tokenValue);
                         }
                         if (res.header['Set-Cookie']) {
                             this.emit('cookie', res.header['Set-Cookie']);
@@ -150,6 +153,68 @@ module.exports = class GlobalDataContext extends EventEmitter {
                         }
 
                         return body;
+                    }
+
+                    return res;
+                }, (err) => {
+                    if (autoLoadingState) {
+                        this.emit('loadingComplete');
+                    }
+                    return Promise.reject(err);
+                });
+            });
+    }
+
+    simpleApiDownload(uri, otherOptions) {
+        const queryOptions = otherOptions || {};
+        if (this.localState.sessionToken) {
+            const queryHeaders = queryOptions.header || {};
+            queryHeaders['X-Session-Token'] = this.localState.sessionToken;
+            queryOptions.header = queryHeaders;
+        }
+        let simpleMode = true;
+        if (queryOptions.notSimple) {
+            simpleMode = false;
+        }
+        delete queryOptions.notSimple;
+
+        let autoLoadingState = false;
+        if (queryOptions.autoLoadingState) {
+            autoLoadingState = true;
+        }
+        delete queryOptions.autoLoadingState;
+
+        if (autoLoadingState) {
+            this.emit('loading');
+        }
+
+        return this.composeApiUrl(uri)
+            .then((url) => {
+                return download(
+                    url,
+                    queryOptions
+                ).then((res) => {
+                    if (autoLoadingState) {
+                        this.emit('loadingComplete');
+                    }
+                    if (res.header) {
+                        const TOKEN_HEADER_NAME = 'X-Set-Session-Token';
+                        const tokenValue = res.header[TOKEN_HEADER_NAME] || res.header[TOKEN_HEADER_NAME.toLowerCase()];
+                        if (tokenValue) {
+                            this.emit('sessionToken', tokenValue);
+                        }
+                        if (res.header['Set-Cookie']) {
+                            this.emit('cookie', res.header['Set-Cookie']);
+                        }
+                    }
+                    if (simpleMode) {
+                        const filePath = res.tempFilePath || options.filePath;
+
+                        if (res.statusCode !== 200) {
+                            return Promise.reject(res);
+                        }
+
+                        return filePath;
                     }
 
                     return res;
@@ -223,7 +288,6 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.__firstLogin = 'done';
         });
         this.userInfo = this.authSetting.then((authSetting) => {
-            console.log(authSetting['scope.userInfo'])
             if (authSetting['scope.userInfo']) {
                 return this.currentUser.then(() => {
                     return new Promise((resolve, reject) => {
@@ -239,6 +303,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     });
                 });
             }
+
+            // Not authorized for UserInfo.
+            this.on('userInfo', () => {
+                this.track('userInfoAuthorized');
+            });
             return Promise.reject(null);
         });
 
@@ -371,7 +440,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
-                        return;
+                        _.remove(targetList, r);
                     }
                     targetList.unshift(indexedItem);
                     return;
@@ -406,9 +475,6 @@ module.exports = class GlobalDataContext extends EventEmitter {
             const targetList = this.localState.myShares;
             const itemIndex = this.localState.clipIndex;
             let indexedItem = itemIndex[x._id];
-            if ((targetList && targetList.length < (end - start))) {
-                targetList.__hasMore = false;
-            }
             if (indexedItem) {
                 _.merge(indexedItem, x);
             } else {
@@ -503,9 +569,16 @@ module.exports = class GlobalDataContext extends EventEmitter {
             }
             this.localState.dashboardAnalytics.liked = (this.localState.dashboardAnalytics.liked - 1) || 0;
 
-            _.remove(targetList, (v)=> v._id === x._id);
+            _.remove(targetList, (v) => v._id === x._id);
         });
 
+        this.ready.then(() => {
+            this.track('launch');
+        });
+
+        this.on('appHide', () => {
+            this.track('hide', { duration: Date.now() - this.launchTime });
+        })
     }
 
     suspendAutoLoadingState() {
@@ -720,6 +793,43 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
 
+    fetchArticleDetailByReferenceId(referenceId, options) {
+        const qOptions = _.merge({
+            mapSrc: 'data',
+            overrideStyle: 'false',
+            fixWxMagicSize: 'true',
+        }, options || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/reference/${referenceId}/richText`,
+                {
+                    query: qOptions,
+                    autoLoadingState: true
+                }
+            );
+            queryPromise.then((x) => {
+                this.emit('articleDetail', articleId, x);
+            });
+
+            return queryPromise;
+        });
+    }
+
+    fetchArticleMeta(articleId) {
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/article/${articleId}`
+            );
+            queryPromise.then((x) => {
+                this.emit('articleMeta', articleId, x);
+            });
+
+            return queryPromise;
+        });
+    }
+
     likeItem(itemId) {
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/likes', {
@@ -804,17 +914,52 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
     track(eventName, props) {
 
-        return Promise.all([this.systemInfo, this.networkType]).then((x) => {
+        return Promise.all([this.systemInfo, this.networkType, this.currentUser]).then((x) => {
             const [systemInfo, networkType] = x;
             const qBody = {
                 event: eventName,
-                data: props || {},
-                systemInfo: systemInfo,
-                networkType: networkType
+                data: { ...(props || {}), systemInfo, networkType, scene: this.showParam.scene, showParam: this.showParam }
             }
 
-            console.log(qBody);
-            return qBody;
+            return this.simpleApiCall('POST', '/ev-collect', { body: qBody });
+        });
+    }
+    //推送消息
+
+    collectTplMessageQuotaByForm(formId, otherOptions) {
+        // Real formIds were not likely to contain spaces.
+        if (formId.indexOf(' ') >= 0) {
+            console.log('Ignoring mocked formId');
+            return;
+        }
+        const queryBody = _.merge({ formId: formId, type: 'form' }, otherOptions || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall('POST', '/my/tplMsgQuota', {
+                body: queryBody
+            });
+
+            return queryPromise;
+        });
+    }
+
+    downloadMyAvatar() {
+        return this.userInfo.then(() => {
+            return this.simpleApiDownload('/my/avatar')
+        });
+    }
+
+    downloadWxaCode(width, page, scene, color, hyaline) {
+        return this.userInfo.then(() => {
+            return this.simpleApiDownload('/wxaCodeImage', {
+                query: {
+                    path: page,
+                    width: width,
+                    scene: scene,
+                    color: color,
+                    isHyaline: hyaline
+                }
+            })
         });
     }
 }
