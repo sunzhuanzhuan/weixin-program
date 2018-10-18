@@ -11,10 +11,10 @@ Page({
         mySharesHasMore: undefined,
   
         userInfo: undefined,
-        shareAfter: '../../images/shareAfter.png',
-        shareBefore: "../../images/shareBefore.png",
-        likeAfter: "../../images/selectBefore.png",
-        likeBefore: "../../images/selectAfter.png",
+        shareAfter: '../../images/fenAfter.png',
+        shareBefore: "../../images/fenBefore.png",
+        likeAfter: "../../images/xinBefore.png",
+        likeBefore: "../../images/xinAfter.png",
         imgCry:'../../images/cry.png',
   
         num:{},
