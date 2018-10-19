@@ -152,9 +152,17 @@ Page({
                             const indexedItem = itemIndex[x._id];
                             indexedItem._sourceWxDisplayName = x.sourceWxNickname || '-';
                             indexedItem._publishedFromNow = util.moment(x.publishedAt).fromNow();
+                            let read = x.readTimes +''
+                            if(read.length === 1){
+                                x.readTimes = parseInt(Math.random()*20+30)
+                            }
                         } else {
                             x._sourceWxDisplayName = x.sourceWxNickname || '-';
                             x._publishedFromNow = util.moment(x.publishedAt).fromNow();
+                            let read = x.readTimes +''
+                            if(read.length === 1){
+                                x.readTimes = parseInt(Math.random()*20+30)
+                            }
                         }
 
                     });

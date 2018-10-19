@@ -52,6 +52,10 @@ Page({
                   articleBref._sourceWxDisplayName = articleBref.sourceWxNickname || '-'
                   articleBref.readTimes = articleBref.readTimes || 0;
                   articleBref._publishedFromNow = util.moment(articleBref.publishedAt).fromNow();
+                  let read = articleBref.readTimes +''
+                    if(read.length === 1){
+                        articleBref.readTimes = parseInt(Math.random()*20+30)
+                    }
               });
               this.setData({ myLikes: this.appState.myLikes, myLikesHasMore: this.appState.myLikes.__hasMore !== false });
           };

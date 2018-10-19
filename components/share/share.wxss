@@ -54,7 +54,7 @@
     text-align: left;
 }
 .bigBox{
-    padding:25rpx 32rpx 0rpx 32rpx;
+    padding:8rpx 32rpx 0rpx 32rpx;
    
     
 }
@@ -96,7 +96,8 @@
     text-overflow:ellipsis;
     white-space:nowrap;
     width:686rpx;
-    line-height:1.2
+    line-height:1.0;
+    margin-top:-10rpx;
 
 }
 .letterArtical{
