@@ -1,7 +1,7 @@
 .bigImg{
     width:686rpx ;
     height:360rpx ;
-    margin-top: 32rpx;
+    margin-top: 20rpx;
     border-radius: 4rpx;
     display: inline-block;
 }
