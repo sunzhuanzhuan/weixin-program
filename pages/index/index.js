@@ -17,7 +17,6 @@ Page({
         scrollLeft: 0,
         isModal: false,
         isNew: true,
-        isClickMy: false,
         //新的标量
         lists: [],
         //哪一个tab
@@ -25,16 +24,24 @@ Page({
 
     },
     onShow: function () {
+        let that = this
         wx.showShareMenu({ withShareTicket: true });
-        gdt.userInfo.then((x) => {
-            if (this.data.isClickMy) {
-                this.setData({ isNew: false })
-            } else {
-                this.setData({ isNew: true })
+        wx.getStorageInfo({
+            success:function(res){
+                if(res.keys.indexOf('isClickMy') >-1 ){
+                    gdt.userInfo.then((x) => {
+                        that.setData({ isNew: false })
+                        
+                    }).catch(() => {
+                        that.setData({ isNew: true })
+                    });
+                }
+            },
+            fail:function(){
+                that.setData({ isNew: true })
             }
-        }).catch(() => {
-            this.setData({ isNew: true })
-        });
+        })
+        
         gdt.track('show-index');
     },
 
@@ -110,12 +117,14 @@ Page({
 
 
     selectMy: function () {
-        this.setData({
-            isClickMy: true
+        wx.setStorage({
+            key:"isClickMy",
+            data:true
         })
         wx.navigateTo({
             url: '/pages/my/my'
-        })
+        });
+        
     },
     handleClose: function () {
         this.setData({ isModal: false })
@@ -136,15 +145,16 @@ Page({
                 title: x,
             });
         });
-        gdt.ready.then((x) => {
-            this.appState = x;
-            if (x.title) {
+        gdt.ready.then((app) => {
+            this.appState = app;
+            if (app.title) {
                 wx.setNavigationBarTitle({
-                    title: x.title,
+                    title: app.title,
                 });
             }
-            this.setData({ lists: x.lists ,appTitle:x.title,coverUrl:x.avatarUrl});
+            this.setData({ lists: app.lists ,appTitle:app.title,coverUrl:app.avatarUrl});
             gdt.on('listItems', (listId, updateRange, itemList) => {
+
                 if (itemList && itemList.length) {
                     const itemIndex = this.appState.itemIndex;
                     itemList.forEach((x) => {
@@ -154,23 +164,23 @@ Page({
                             indexedItem._publishedFromNow = util.moment(x.publishedAt).fromNow();
                             let read = x.readTimes +''
                             if(read.length === 1){
-                                x.readTimes = parseInt(Math.random()*20+30)
+                                indexedItem.readTimes = parseInt(Math.random()*60+30)
                             }
                         } else {
                             x._sourceWxDisplayName = x.sourceWxNickname || '-';
                             x._publishedFromNow = util.moment(x.publishedAt).fromNow();
                             let read = x.readTimes +''
                             if(read.length === 1){
-                                x.readTimes = parseInt(Math.random()*20+30)
+                                x.readTimes = parseInt(Math.random()*60+30)
                             }
                         }
 
                     });
                 }
-                this.setData({ lists: x.lists });
+                this.setData({ lists: app.lists });
             });
-            if (x.lists.length) {
-                gdt.magicListItemLoadMore(x.lists[0]._id);
+            if (app.lists.length) {
+                gdt.magicListItemLoadMore(app.lists[0]._id);
             }
         });
         gdt.systemInfo.then((x) => {
