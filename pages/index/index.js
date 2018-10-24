@@ -109,6 +109,7 @@ Page({
     },
 
 
+
     selectMy: function () {
         this.setData({
             isClickMy: true
@@ -152,9 +153,9 @@ Page({
                             const indexedItem = itemIndex[x._id];
                             indexedItem._sourceWxDisplayName = x.sourceWxNickname || '-';
                             indexedItem._publishedFromNow = util.moment(x.publishedAt).fromNow();
-                            let read = x.readTimes +''
+                            let read = indexedItem.readTimes +''
                             if(read.length === 1){
-                                x.readTimes = parseInt(Math.random()*20+30)
+                                indexedItem.readTimes = parseInt(Math.random()*20+30)
                             }
                         } else {
                             x._sourceWxDisplayName = x.sourceWxNickname || '-';
