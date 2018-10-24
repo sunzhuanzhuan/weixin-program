@@ -134,7 +134,7 @@ Page({
 
     onReady: function () {
         let that = this;
-        
+        let randomNum =parseInt(Math.random()*60+30);
         gdt.userInfo.then((res) => {
             this.setData({ isModal: false })
         }).catch(() => {
@@ -146,6 +146,7 @@ Page({
             });
         });
         gdt.ready.then((app) => {
+            
             this.appState = app;
             if (app.title) {
                 wx.setNavigationBarTitle({
@@ -153,34 +154,38 @@ Page({
                 });
             }
             this.setData({ lists: app.lists ,appTitle:app.title,coverUrl:app.avatarUrl});
+           
+            
+            
             gdt.on('listItems', (listId, updateRange, itemList) => {
-
+                //itemIndex 是老的储存，newIndex是新的
                 if (itemList && itemList.length) {
                     const itemIndex = this.appState.itemIndex;
-                    itemList.forEach((x) => {
-                        if (itemIndex[x._id]) {
-                            const indexedItem = itemIndex[x._id];
-                            indexedItem._sourceWxDisplayName = x.sourceWxNickname || '-';
-                            indexedItem._publishedFromNow = util.moment(x.publishedAt).fromNow();
-                            let read = x.readTimes +''
-                            if(read.length === 1){
-                                indexedItem.readTimes = parseInt(Math.random()*60+30)
-                            }
+                    itemList.forEach((newIndex) => {
+                        if (itemIndex[newIndex._id]) {
+                            const indexedItem = itemIndex[newIndex._id];
+                            indexedItem._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
+                            indexedItem._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
+                            
+                            indexedItem._readTimes = newIndex.readTimes > (indexedItem._readTimes || 10) ? 
+                            newIndex.readTimes : (indexedItem.randomNum + newIndex.readTimes);
+
                         } else {
-                            x._sourceWxDisplayName = x.sourceWxNickname || '-';
-                            x._publishedFromNow = util.moment(x.publishedAt).fromNow();
-                            let read = x.readTimes +''
-                            if(read.length === 1){
-                                x.readTimes = parseInt(Math.random()*60+30)
-                            }
+                            newIndex._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
+                            newIndex._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
+                            
+                            newIndex._readTimes = newIndex.readTimes > (newIndex._readTimes || 10) ? 
+                            newIndex.readTimes : (newIndex.randomNum + newIndex.readTimes);
                         }
 
                     });
                 }
+                
                 this.setData({ lists: app.lists });
             });
+            
             if (app.lists.length) {
-                gdt.magicListItemLoadMore(app.lists[0]._id);
+                gdt.magicListItemLoadMore(app.lists[0]._id)
             }
         });
         gdt.systemInfo.then((x) => {

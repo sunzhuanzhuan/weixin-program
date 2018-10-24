@@ -12,7 +12,7 @@
                             <view class="letter">
                                 <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
                                 <text class="time">{{item._publishedFromNow}}</text>
-                                <text class="time flright">{{item.readTimes}}阅读</text>
+                                <text class="time flright">{{item._readTimes}}阅读</text>
                             </view>
                         </view>
                     </view>
@@ -36,7 +36,7 @@
                             <view class="readResource">
                                 <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
                                 <text class="time">{{item._publishedFromNow}}</text>
-                                <text class="time flright">{{item.readTimes}}阅读</text>
+                                <text class="time flright">{{item._readTimes}}阅读</text>
                             </view>
                         </view>
                     </view>

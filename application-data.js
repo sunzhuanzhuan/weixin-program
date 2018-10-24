@@ -282,7 +282,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     applicationKickOff() {
+        
         this.appBaseInfo = this.fetchDistributionIndex();
+        
         this.currentUser = this.appBaseInfo.then(() => this.autoLogin());
         this.currentUser.then(() => {
             this.__firstLogin = 'done';
@@ -371,7 +373,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             deferred.resolve(this.localState);
         });
 
-
+        
         this.on('listItems', (listId, [start, end], articles) => {
             const listInstance = this.localState.listIndex[listId];
             const targetList = listInstance.items;
@@ -388,7 +390,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
                         indexedItem = x;
                         itemIndex[x._id] = indexedItem;
                     }
-
+                    
+                    if (!indexedItem.randomNum) {
+                        indexedItem.randomNum = Math.floor(Math.random()*60+30);
+                    }
+                    
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
                         return;
@@ -412,6 +418,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     indexedItem = incoming;
                     itemIndex[incoming._id] = indexedItem;
                 }
+                if (!indexedItem.randomNum) {
+                    indexedItem.randomNum = Math.floor(Math.random()*60+30);
+                }
                 let curItem = targetList[idx];
                 if (curItem) {
                     return;
@@ -421,7 +430,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 return;
             });
         });
-
+       
         this.on('sharedItems', ([start, end], clips) => {
             const targetList = this.localState.myShares;
             const itemIndex = this.localState.clipIndex;;
