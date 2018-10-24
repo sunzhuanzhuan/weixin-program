@@ -116,6 +116,7 @@ Page({
     },
 
 
+
     selectMy: function () {
         wx.setStorage({
             key:"isClickMy",
