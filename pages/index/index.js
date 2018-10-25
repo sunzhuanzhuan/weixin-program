@@ -16,7 +16,7 @@ Page({
         scrollTop: 0,
         scrollLeft: 0,
         isModal: false,
-        isNew: true,
+        dashboardTipShouldDisplay: undefined,
         //新的标量
         lists: [],
         //哪一个tab
@@ -154,7 +154,20 @@ Page({
                     title: app.title,
                 });
             }
-            this.setData({ lists: app.lists ,appTitle:app.title,coverUrl:app.avatarUrl});
+            this.setData({
+                lists: app.lists,
+                appTitle:app.title,
+                coverUrl:app.avatarUrl,
+                dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
+            });
+           
+            
+            gdt.on("storageSet",(k, v)=>{
+                if (k === 'dashboardTipShouldDisplay') {
+                    this.setData({dashboardTipShouldDisplay: v});
+                }
+            })
+
            
             
             

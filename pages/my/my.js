@@ -24,6 +24,14 @@ Page({
         isHome:false
     },
       onLoad: function() {
+          gdt.userInfo.then(()=> {
+            gdt.setLocalStorage('dashboardTipShouldDisplay', false);
+          }, ()=> {
+            gdt.once('userInfo', ()=> {
+                gdt.setLocalStorage('dashboardTipShouldDisplay', false);
+            });
+          });
+          
           this.appState = gdt.localState;
           const scene = gdt.showParam.scene;
           if(scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073){

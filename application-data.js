@@ -31,6 +31,31 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.distroId = this.extConfig.then((x) => x.distroId);
         this.appName = this.extConfig.then((x) => x.appName);
 
+        this.localStorage = new Promise((resolve, reject)=> {
+          wx.getStorageInfo({
+            success: (res)=> {
+              if (res.keys) {
+                const storageSnapshot = {};
+                Promise.all(res.keys.map((x) => {
+                  return new Promise((_res, _rej) => {
+                    wx.getStorage({
+                      key: x,
+                      success: (_x) => {
+                        storageSnapshot[x] = _x.data;
+                        _res(_x.data);
+                      },
+                      fail: _rej
+                    });
+                  });
+                })).then(()=> resolve(storageSnapshot), reject);
+                return;
+              }
+              return resolve({});
+            },
+            fail: reject
+          });
+        });
+
         wx.onNetworkStatusChange((x) => {
             this.emit('networkStatusChange', x);
         });
@@ -324,8 +349,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.localState.pendingRequests = 0;
         this.localState.autoLoadingState = true;
         this.localState.dashboardAnalytics = {};
-
+        this.localState.localStorage = {};
         this.localState.clipIndex = {};
+
+        this.localStorage.then((storageObj)=>{
+          this.localState.localStorage = storageObj;
+        });
 
         this.on('loading', () => {
             const originalPendingRequests = this.localState.pendingRequests;
@@ -369,10 +398,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
             }
             this.localState.listIndex = _.keyBy(this.localState.lists, '_id');
             this.localState.itemIndex = {};
-            this.emit('ready', this.localState);
-            deferred.resolve(this.localState);
+            this.localStorage.then(()=> {
+                this.emit('ready', this.localState);
+                deferred.resolve(this.localState);
+            }).catch(deferred.reject);
         });
-
         
         this.on('listItems', (listId, [start, end], articles) => {
             const listInstance = this.localState.listIndex[listId];
@@ -588,6 +618,20 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('appHide', () => {
             this.track('hide', { duration: Date.now() - this.launchTime });
         })
+    }
+
+    setLocalStorage(k, v) {
+        this.localState.localStorage[k] = v;
+        return new Promise((resolve, reject)=> {
+            wx.setStorage({
+                key: k,
+                data: v,
+                success: resolve,
+                fail: reject
+            });
+        }).then(()=> {
+            this.emit('storageSet', k, v);
+        });
     }
 
     suspendAutoLoadingState() {
