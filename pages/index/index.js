@@ -16,7 +16,7 @@ Page({
         scrollTop: 0,
         scrollLeft: 0,
         isModal: false,
-        isNew: true,
+        dashboardTipShouldDisplay: undefined,
         //新的标量
         lists: [],
         //哪一个tab
@@ -26,21 +26,6 @@ Page({
     onShow: function () {
         let that = this
         wx.showShareMenu({ withShareTicket: true });
-        wx.getStorageInfo({
-            success:function(res){
-                if(res.keys.indexOf('isClickMy') >-1 ){
-                    gdt.userInfo.then((x) => {
-                        that.setData({ isNew: false })
-                        
-                    }).catch(() => {
-                        that.setData({ isNew: true })
-                    });
-                }
-            },
-            fail:function(){
-                that.setData({ isNew: true })
-            }
-        })
         
         gdt.track('show-index');
     },
@@ -134,6 +119,7 @@ Page({
     // 分割线
 
     onReady: function () {
+      console.log(9)
         let that = this;
         let randomNum =parseInt(Math.random()*60+30);
         gdt.userInfo.then((res) => {
@@ -154,9 +140,18 @@ Page({
                     title: app.title,
                 });
             }
-            this.setData({ lists: app.lists ,appTitle:app.title,coverUrl:app.avatarUrl});
+            this.setData({
+                lists: app.lists,
+                appTitle:app.title,
+                coverUrl:app.avatarUrl,
+                dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
+            });
            
-            
+            gdt.on("storageSet",(k, v)=>{
+                if (k === 'dashboardTipShouldDisplay') {
+                    this.setData({dashboardTipShouldDisplay: v});
+                }
+            })
             
             gdt.on('listItems', (listId, updateRange, itemList) => {
                 //itemIndex 是老的储存，newIndex是新的

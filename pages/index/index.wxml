@@ -42,7 +42,7 @@
             <block> 
                 <view wx:if="{{currentTabIndex ==0}}" >
                 
-                    <image wx:if="{{isNew}}" src="/images/new.png" class="bigBox" style="width:91%;height:430rpx"></image>
+                    <image wx:if="{{dashboardTipShouldDisplay}}" src="/images/new.png" class="bigBox" style="width:91%;height:430rpx"></image>
                 </view>
                     
                 <view>
