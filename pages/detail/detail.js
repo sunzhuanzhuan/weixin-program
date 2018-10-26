@@ -7,7 +7,7 @@ Page({
         nodes: [],
         isShow: true,
         shareButton: '../../images/shareAfter.png',
-       
+
         src: '',
         isLike: false,
         isEyes: true,
@@ -43,28 +43,32 @@ Page({
         numArtical: 200,
         numFriend: 90,
         ratio: 0,
-        yinHao: '/images/yinHao.png'
+        yinHao: '/images/yinHao.png',
+
+        entityId: undefined,
+        entity: {},
+        fullPicture: {}
     },
     onShareAppMessage: function () {
-        if (this.data.articleId) {
-            gdt.trackShareItem(this.data.articleId, {
+        if (this.data.entityId) {
+            gdt.trackShareItem(this.data.entityId, {
                 pos: this.data.viewPercentage,
                 view: this.data.viewId,
                 tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
             });
-            gdt.track('share-item', { itemId: this.data.articleId, title: this.data.article.title, refId: this.data.shareId, viewId: this.data.viewId });
+            gdt.track('share-item', { itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
 
         }
         return {
-            title: this.data.article.title || '默认转发标题',
-            path: 'pages/detail/detail?ref=' + this.data.shareId + '&id=' + this.data.articleId + '&nickName=' + this.data.nickName+'&appName='+this.data.appName
+            title: this.data.entity.title || '默认转发标题',
+            path: 'pages/detail/detail?ref=' + this.data.shareId + '&id=' + this.data.entityId + '&nickName=' + this.data.nickName + '&appName=' + this.data.appName
         }
     },
 
     onShow: function () {
         gdt.userInfo.then(() => {
-            if(this.data.isEyes === false){
-                this.setData({isEyes:true})
+            if (this.data.isEyes === false) {
+                this.setData({ isEyes: true })
             }
         })
         const now = Date.now();
@@ -78,7 +82,7 @@ Page({
             this.data.lastSuspendAt = null;
             // this.setData({ lastSuspendAt: null });
         }
-        gdt.track('show-detail', { itemId: this.data.articleId, refId: this.data.shareId, viewId: this.data.viewId });
+        gdt.track('show-detail', { itemId: this.data.entityId, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
     },
     //授权的时候发生的
     handleAuthor: function (e) {
@@ -88,42 +92,42 @@ Page({
         }
 
     },
-    handleJump:function(){
+    handleJump: function () {
         gdt.userInfo.then(() => {
             wx.navigateTo({
-                url: '/pages/log/detail?nick='+this.data.shareName
+                url: '/pages/log/detail?nick=' + this.data.shareName
             })
-            gdt.track('let-friend-know-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+            gdt.track('let-friend-know-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
         }).catch(() => {
             gdt.once('userInfo', () => {
                 wx.navigateTo({
-                    url: '/pages/log/detail?nick='+this.data.shareName
+                    url: '/pages/log/detail?nick=' + this.data.shareName
                 })
             });
-            gdt.track('let-friend-know-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+            gdt.track('let-friend-know-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
         });
-        
+
     },
     handleLikeButtonTapped: function (e) {
         gdt.userInfo.then(() => {
             this.setData({ isLike: !this.data.isLike }, () => {
                 if (this.data.isLike) {
-                    gdt.likeItem(this.data.articleId);
-                    gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+                    gdt.likeItem(this.data.entityId);
+                    gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
                 } else {
-                    gdt.unlikeItem(this.data.articleId);
-                    gdt.track('unlike-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+                    gdt.unlikeItem(this.data.entityId);
+                    gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
                 }
             });
         }).catch(() => {
             gdt.once('userInfo', () => {
                 this.setData({ isLike: !this.data.isLike }, () => {
                     if (this.data.isLike) {
-                        gdt.track('like-item', { itemId: this.data.articleId, viewId: this.data.viewId });
-                        gdt.likeItem(this.data.articleId);
+                        gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+                        gdt.likeItem(this.data.entityId);
                     } else {
-                        gdt.unlikeItem(this.data.articleId);
-                        gdt.track('unlike-item', { itemId: this.data.articleId, viewId: this.data.viewId });
+                        gdt.unlikeItem(this.data.entityId);
+                        gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
                     }
                 });
             });
@@ -143,7 +147,7 @@ Page({
             }
         });
         let that = this;
-        
+
         gdt.userInfo.then((x) => {
             this.setData({
                 type: "",
@@ -161,13 +165,13 @@ Page({
         });
         const scene = gdt.showParam.scene;
         let qPromise;
-        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049)&& Object.keys(gdt.showParam.query).length >0   ) {
-            let { query:{id ,nickName,ref,appName}} = gdt.showParam;
-            const articleId = id;
-            
-            this.setData({ art: articleId, shareName: nickName, articleId: articleId,appName:appName });
-            if(getCurrentPages()[0].route === 'pages/detail/detail'){
-                this.setData({  isShare: true });
+        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) && Object.keys(gdt.showParam.query).length > 0) {
+            let { query: { id, nickName, ref, appName } } = gdt.showParam;
+            const entityId = id;
+
+            this.setData({ art: entityId, shareName: nickName, entityId: entityId, appName: appName });
+            if (getCurrentPages()[0].route === 'pages/detail/detail') {
+                this.setData({ isShare: true });
             }
             gdt.userInfo.then((x) => {
                 this.setData({
@@ -178,13 +182,13 @@ Page({
                     isEyes: false
                 });
             });
-            qPromise = gdt.fetchArticleDetail(articleId, {
+            qPromise = gdt.fetchEntityDetail(entityId, {
                 scene: scene,
                 keepH5Links: true,
                 mapSrc: 'data',
                 overrideStyle: 'false',
                 fixWxMagicSize: 'true',
-                ref:ref
+                ref: ref
             });
         }
         //  else if (scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
@@ -204,7 +208,7 @@ Page({
         //     gdt.ready.then((r)=> {
         //         this.setData({ isEyes: true,  isShare: true ,appName:r.title});
         //     });
-            
+
         //     qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
         //         scene: scene,
         //         keepH5Links: true,
@@ -213,37 +217,37 @@ Page({
         //         fixWxMagicSize: 'true'
         //     });
         // }
-         else {
-            if(getCurrentPages()[0].route === 'pages/detail/detail'){
-                this.setData({  isShare: true });
+        else {
+            if (getCurrentPages()[0].route === 'pages/detail/detail') {
+                this.setData({ isShare: true });
             }
-            
-            if(options.id.length >0){
-                
-                let  {id}  = options; 
-                qPromise = gdt.fetchArticleDetail(id, {
+
+            if (options.id.length > 0) {
+
+                let { id } = options;
+                qPromise = gdt.fetchEntityDetail(id, {
                     scene: scene,
                     keepH5Links: true,
                     mapSrc: 'data',
                     overrideStyle: 'false',
                     fixWxMagicSize: 'true'
                 });
-            }else if( Object.keys(gdt.showParam.query).length >0){
-                let { query:{id ,nickName,ref}} = gdt.showParam;
-               
-                qPromise = gdt.fetchArticleDetail(id, {
+            } else if (Object.keys(gdt.showParam.query).length > 0) {
+                let { query: { id, nickName, ref } } = gdt.showParam;
+
+                qPromise = gdt.fetchEntityDetail(id, {
                     scene: scene,
                     keepH5Links: true,
                     mapSrc: 'data',
                     overrideStyle: 'false',
                     fixWxMagicSize: 'true'
                 });
-            }else{
+            } else {
                 let referencers = (options.scene);
-                gdt.ready.then((r)=> {
-                    this.setData({ isEyes: true,isShare: true ,appName:r.title});
+                gdt.ready.then((r) => {
+                    this.setData({ isEyes: true, isShare: true, appName: r.title });
                 });
-                qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
+                qPromise = gdt.fetchEntityDetailByReferenceId(referencers, {
                     scene: scene,
                     keepH5Links: true,
                     mapSrc: 'data',
@@ -251,8 +255,8 @@ Page({
                     fixWxMagicSize: 'true'
                 });
             }
-            gdt.ready.then((r)=> {
-                this.setData({ isEyes: true,appName:r.title });
+            gdt.ready.then((r) => {
+                this.setData({ isEyes: true, appName: r.title });
             });
             // this.setData({ isEyes: true, articleId: id, ,appName: options.appName })
             // qPromise = gdt.fetchArticleDetail(id, {
@@ -265,15 +269,15 @@ Page({
         }
 
         qPromise.then((r) => {
-            if (r.article) {
-                const currentTitle = r.article.title;
+            if (r.entity) {
+                const currentTitle = r.entity.title;
                 wx.setNavigationBarTitle({
                     title: currentTitle,
                 });
             }
-            this.setData({ articleId: r.article.id,articalTitle: r.article.title, articalDescribe: r.article.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～', articalName: r.article.title, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({ fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
-            gdt.track('detail-load', { itemId: r.article._id, title: r.article.title, refId: r.refId, viewId: r.viewId });
+            gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
 
 
@@ -296,28 +300,26 @@ Page({
         this.setData({ lastSuspendAt: Date.now() });
     },
     onUnload: function () {
-        if (!this.data.isLike) {
-            app.articleId = this.data.articleId
-        }
-        if (this.data.viewId && this.data.articleId) {
-            gdt.trackLeftViewing(this.data.articleId, this.data.viewId, Date.now() - this.data.enteredAt - this.data.suspendedFor);
+        if (this.data.viewId && this.data.entityId) {
+            gdt.trackLeftViewing(this.data.entityId, this.data.viewId, Date.now() - this.data.enteredAt - this.data.suspendedFor);
             gdt.track('detail-close', {
-                itemId: this.data.articleId,
+                itemId: this.data.entityId,
+                type: this.data.entity.type,
                 viewId: this.data.viewId,
                 duration: Date.now() - this.data.enteredAt - this.data.suspendedFor
             });
         }
     },
     recordUserscroll: function (event) {
-        if(event.detail.scrollTop <0){
-            return 
+        if (event.detail.scrollTop < 0) {
+            return
         }
         let num1 = event.detail.scrollTop;
         const scene = gdt.showParam.scene;
         if (num1 > this.data.num) {
             this.setData({ isShow: false });
-            if(getCurrentPages()[0].route === 'pages/detail/detail'){
-                this.setData({  isShare: false });
+            if (getCurrentPages()[0].route === 'pages/detail/detail') {
+                this.setData({ isShare: false });
             }
             // if (scene == 1048 || scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
             //     this.setData({ isShare: false });
@@ -325,8 +327,8 @@ Page({
 
         } else {
             this.setData({ isShow: true });
-            if(getCurrentPages()[0].route === 'pages/detail/detail'){
-                this.setData({  isShare: true });
+            if (getCurrentPages()[0].route === 'pages/detail/detail') {
+                this.setData({ isShare: true });
             }
             // if (scene == 1048 ||scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
             //     this.setData({ isShare: true });
@@ -346,7 +348,7 @@ Page({
         }
         this.data.reportScrollTimeoutHandler = setTimeout(function () {
             this.data.viewPercentage = (event.detail.scrollTop / event.detail.scrollHeight) * 100;
-            if (this.data.viewId && this.data.articleId) {
+            if (this.data.viewId && this.data.entityId) {
                 // gdt.trackScrollActionInViewing(
                 //     this.data.articleId, 
                 //     this.data.viewId,
@@ -356,7 +358,8 @@ Page({
                 //     this.data.viewPercentage
                 // );
                 gdt.track('detail-scroll', {
-                    itemId: this.data.articleId,
+                    type: this.data.entity.type,
+                    itemId: this.data.entityId,
                     viewId: this.data.viewId,
                     tPlus: this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
                     duration: Date.now() - this.data.scrollStartedAt,
@@ -379,7 +382,7 @@ Page({
             gdt.collectTplMessageQuotaByForm(e.detail.formId);
         }
     },
-   
+
     handleDrowPicture: function () {
         this.setData({ isShowPoster: true })
         let ratio = this.data.ratio;
@@ -388,7 +391,7 @@ Page({
             title: '正在生成图片...',
             mask: true,
         });
-        let artical = gdt.fetchArticleMeta(this.data.articleId);
+        let artical = gdt.fetchEntityMeta(this.data.entityId);
         let downAvatar = gdt.downloadMyAvatar();
         let downCode = gdt.downloadWxaCode(320, 'pages/detail/detail', this.data.shareId, 'auto')
         Promise.all([artical, downAvatar, downCode]).then((res) => {
@@ -397,7 +400,7 @@ Page({
             const ctx = wx.createCanvasContext('shareCanvas');
             ctx.setFillStyle('#ffffff')
             ctx.fillRect(8, 8, 304 * ratio, 434 * ratio);
-            
+
             // 绘制通话的框
             ctx.moveTo(68 * ratio, 62 * ratio)
             ctx.lineTo(75 * ratio, 52 * ratio);
@@ -508,14 +511,14 @@ Page({
                 yOffset += 25 * ratio;
             });
             // 绘制文章的标题和描述
-            const describe = this.data.articalDescribe;
+            const describe = this.data.entity.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～';
             let canvasDescribe
 
             //z绘制描述
             ctx.save();
             ctx.setFontSize(14 * ratio)
             ctx.setFillStyle('#666666');
-            if (describe.length < parseInt(19/ ratio)) {
+            if (describe.length < parseInt(19 / ratio)) {
                 canvasDescribe = describe;
 
                 ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
@@ -523,14 +526,14 @@ Page({
                 canvasDescribe = describe.slice(0, parseInt(19 / ratio));
                 ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
 
-                let canvasDescribe1 = describe.slice(parseInt(19/ ratio), describe.length);
+                let canvasDescribe1 = describe.slice(parseInt(19 / ratio), describe.length);
                 ctx.fillText(canvasDescribe1, 30 * ratio, 230 * ratio, 260 * ratio);
 
             } else {
                 canvasDescribe = describe.slice(0, parseInt(19 / ratio));
                 ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
 
-                let canvasDescribe2 = describe.slice(parseInt(19/ ratio), parseInt(38 / ratio)) + '...';
+                let canvasDescribe2 = describe.slice(parseInt(19 / ratio), parseInt(38 / ratio)) + '...';
                 ctx.fillText(canvasDescribe2, 30 * ratio, 230 * ratio, 260 * ratio);
 
             }
@@ -561,7 +564,7 @@ Page({
             ctx.fillText(appName, 124 * ratio, 346 * ratio, 220 * ratio);
 
 
-            const title = this.data.articalTitle;
+            const title = this.data.entity.title;
             let canvasTtile
             if (title.length < parseInt(14 / ratio)) {
                 canvasTtile = title;
@@ -621,7 +624,7 @@ Page({
                 this.handleDrowPicture()
             });
         })
-    }, 
+    },
     handleSavePicture: function () {
         this.setData({ isShowPoster: false });
     }
