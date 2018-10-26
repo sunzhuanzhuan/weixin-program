@@ -919,14 +919,14 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
 
-    fetchArticleMeta(articleId) {
+    fetchEntityMeta(entityId) {
 
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall(
-                'GET', `/article/${articleId}`
+                'GET', `/entity/${entityId}`
             );
             queryPromise.then((x) => {
-                this.emit('articleMeta', articleId, x);
+                this.emit('entityMeta', x);
             });
 
             return queryPromise;
