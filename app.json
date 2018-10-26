@@ -14,5 +14,12 @@
     "navigationBarTitleText": "",
     "navigationBarTextStyle":"black",
     "backgroundColor":"#ffffff"
+  },
+  "plugins": {
+    "tencentvideo": {
+      "version": "1.2.0",
+      "provider": "wxa75efa648b60994b"
+    }
   }
+
 }

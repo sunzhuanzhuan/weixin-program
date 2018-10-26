@@ -1,67 +1,72 @@
 <template name="list">
-    <block  wx:if="{{list.length>0}}" >
-        <view wx:for="{{list}}" class="container"  wx:key="{{index}}">
+    <block wx:if="{{list.length>0}}">
+        <view wx:for="{{list}}" class="container" wx:key="{{index}}">
+        <view >
+            <view><txv-video vid="{{item.txvVid}}" playerid="video" autoplay="{{false}}" muted="{{isMuted}}"></txv-video></view>
+            <view class="nowrap">{{item.title}}</view>
+        </view>
+        <view wx:if="{{!item.txvVid}}">
             <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
-            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-             <button form-type="submit" class="btnForm" hover-class='none'>
-                <view class="bigBox" >
-                    <view class="imgBox" >
-                        <image class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
-                        <view class="letterBox ">
-                            <view class="nowrap">{{item.title}}</view>
-                            <view class="letter">
-                                <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
-                                <text class="time">{{item._publishedFromNow}}</text>
-                                <text class="time flright">{{item._readTimes}}阅读</text>
+                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                    <button form-type="submit" class="btnForm" hover-class='none'>
+                        <view class="bigBox">
+                            <view class="imgBox">
+                                <image class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
+                                <view class="letterBox ">
+                                    <view class="nowrap">{{item.title}}</view>
+                                    <view class="letter">
+                                        <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
+                                        <text class="time">{{item._publishedFromNow}}</text>
+                                        <text class="time flright">{{item._readTimes}}阅读</text>
+                                    </view>
+                                </view>
                             </view>
                         </view>
-                    </view>
-                </view>
-                 </button>
-            </form>  
+                    </button>
+                </form>
             </view>
-
-           
-            <view wx:else bindtap="handleDetail"  data-id="{{item.id}}">
-            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-            <button form-type="submit" class="btnForm" hover-class='none'>
-                <view class="bigBox">
-                
-                    <view>
-                        <view class="content">
-                            <image class="bigImg" mode="aspectFill" src="{{item.coverUrl}}" lazy-load style="{{index==0?'margin-top:0':'margin-top:32rpx'}}"></image>
-                            <view class="nowrapBig">{{item.title}}</view>
-                        </view>
-                        <view>
-                            <view class="readResource">
-                                <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
-                                <text class="time">{{item._publishedFromNow}}</text>
-                                <text class="time flright">{{item._readTimes}}阅读</text>
+            <view wx:else bindtap="handleDetail" data-id="{{item.id}}">
+                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                    <button form-type="submit" class="btnForm" hover-class='none'>
+                        <view class="bigBox">
+                            <view>
+                                <view class="content">
+                                    <image class="bigImg" mode="aspectFill" src="{{item.coverUrl}}" lazy-load style="{{index==0?'margin-top:0':'margin-top:32rpx'}}"></image>
+                                    <view class="nowrapBig">{{item.title}}</view>
+                                </view>
+                                <view>
+                                    <view class="readResource">
+                                        <text class="ellipsisLike">{{item.sourceWxNickname}}</text>
+                                        <text class="time">{{item._publishedFromNow}}</text>
+                                        <text class="time flright">{{item._readTimes}}阅读</text>
+                                    </view>
+                                </view>
                             </view>
                         </view>
-                    </view>
-                </view>
- </button>
-            </form>  
+                    </button>
+                </form>
             </view>
         </view>
-        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
+            
         </view>
+        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;"></view>
         <view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
-            <view style='height:50rpx;'> <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>由小鱼聚合平台提供技术支持</view>
+            <view style='height:50rpx;'>
+                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>
+                由小鱼聚合平台提供技术支持
+            </view>
             <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view>
         </view>
     </block>
     <block wx:else>
         <view style="width: 100%;height: 1000rpx;"></view>
-        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;position: fixed;bottom: -800rpx">
-
-        </view>
+        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;position: fixed;bottom: -800rpx"></view>
         <view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
-            <view style='height:50rpx;'> <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>由小鱼聚合平台提供技术支持</view>
+            <view style='height:50rpx;'>
+                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>
+                由小鱼聚合平台提供技术支持
+            </view>
             <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view>
         </view>
     </block>
-
-
 </template>
