@@ -14,8 +14,9 @@ const __FAILSAFE_DEMO_EXTCONFIG = {
 
 module.exports = class GlobalDataContext extends EventEmitter {
 
-    constructor(launchParam) {
+    constructor(launchParam, entityTypes) {
         super();
+        this.entityTypes = entityTypes;
         this.launchTime = Date.now();
         this.launchParam = launchParam;
         this.showParam = launchParam;
@@ -31,29 +32,29 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.distroId = this.extConfig.then((x) => x.distroId);
         this.appName = this.extConfig.then((x) => x.appName);
 
-        this.localStorage = new Promise((resolve, reject)=> {
-          wx.getStorageInfo({
-            success: (res)=> {
-              if (res.keys) {
-                const storageSnapshot = {};
-                Promise.all(res.keys.map((x) => {
-                  return new Promise((_res, _rej) => {
-                    wx.getStorage({
-                      key: x,
-                      success: (_x) => {
-                        storageSnapshot[x] = _x.data;
-                        _res(_x.data);
-                      },
-                      fail: _rej
-                    });
-                  });
-                })).then(()=> resolve(storageSnapshot), reject);
-                return;
-              }
-              return resolve({});
-            },
-            fail: reject
-          });
+        this.localStorage = new Promise((resolve, reject) => {
+            wx.getStorageInfo({
+                success: (res) => {
+                    if (res.keys) {
+                        const storageSnapshot = {};
+                        Promise.all(res.keys.map((x) => {
+                            return new Promise((_res, _rej) => {
+                                wx.getStorage({
+                                    key: x,
+                                    success: (_x) => {
+                                        storageSnapshot[x] = _x.data;
+                                        _res(_x.data);
+                                    },
+                                    fail: _rej
+                                });
+                            });
+                        })).then(() => resolve(storageSnapshot), reject);
+                        return;
+                    }
+                    return resolve({});
+                },
+                fail: reject
+            });
         });
 
         wx.onNetworkStatusChange((x) => {
@@ -307,9 +308,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     applicationKickOff() {
-        
+
         this.appBaseInfo = this.fetchDistributionIndex();
-        
+
         this.currentUser = this.appBaseInfo.then(() => this.autoLogin());
         this.currentUser.then(() => {
             this.__firstLogin = 'done';
@@ -352,8 +353,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.localState.localStorage = {};
         this.localState.clipIndex = {};
 
-        this.localStorage.then((storageObj)=>{
-          this.localState.localStorage = storageObj;
+        this.localStorage.then((storageObj) => {
+            this.localState.localStorage = storageObj;
         });
 
         this.on('loading', () => {
@@ -398,21 +399,21 @@ module.exports = class GlobalDataContext extends EventEmitter {
             }
             this.localState.listIndex = _.keyBy(this.localState.lists, '_id');
             this.localState.itemIndex = {};
-            this.localStorage.then(()=> {
+            this.localStorage.then(() => {
                 this.emit('ready', this.localState);
                 deferred.resolve(this.localState);
             }).catch(deferred.reject);
         });
-        
-        this.on('listItems', (listId, [start, end], articles) => {
+
+        this.on('listItems', (listId, [start, end], entities) => {
             const listInstance = this.localState.listIndex[listId];
             const targetList = listInstance.items;
             const itemIndex = this.localState.itemIndex;
-            if ((articles && articles.length < (end - start))) {
+            if ((entities && entities.length < (end - start))) {
                 listInstance.__hasMore = false;
             }
             if (start === 0) {
-                articles.reverse().forEach((x) => {
+                entities.reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
                     if (indexedItem) {
                         _.merge(indexedItem, x);
@@ -420,11 +421,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
                         indexedItem = x;
                         itemIndex[x._id] = indexedItem;
                     }
-                    
+
                     if (!indexedItem.randomNum) {
-                        indexedItem.randomNum = Math.floor(Math.random()*60+30);
+                        indexedItem.randomNum = Math.floor(Math.random() * 60 + 30);
                     }
-                    
+
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
                         return;
@@ -437,7 +438,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             }
 
             _.range(start, end, 1).map((idx, incomingIdx) => {
-                const incoming = articles[incomingIdx];
+                const incoming = entities[incomingIdx];
                 if (!incoming) {
                     return;
                 }
@@ -449,7 +450,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     itemIndex[incoming._id] = indexedItem;
                 }
                 if (!indexedItem.randomNum) {
-                    indexedItem.randomNum = Math.floor(Math.random()*60+30);
+                    indexedItem.randomNum = Math.floor(Math.random() * 60 + 30);
                 }
                 let curItem = targetList[idx];
                 if (curItem) {
@@ -460,7 +461,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 return;
             });
         });
-       
+
         this.on('sharedItems', ([start, end], clips) => {
             const targetList = this.localState.myShares;
             const itemIndex = this.localState.clipIndex;;
@@ -622,14 +623,14 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
     setLocalStorage(k, v) {
         this.localState.localStorage[k] = v;
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             wx.setStorage({
                 key: k,
                 data: v,
                 success: resolve,
                 fail: reject
             });
-        }).then(()=> {
+        }).then(() => {
             this.emit('storageSet', k, v);
         });
     }
@@ -649,7 +650,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         return queryPromise;
     }
 
-    fetchListItems(listId, page, pageSize) {
+    fetchListItems(listId, page, pageSize, _queryParams) {
         if (!page) {
             page = 1;
         }
@@ -667,8 +668,17 @@ module.exports = class GlobalDataContext extends EventEmitter {
         if (lastPendingOp) {
             return lastPendingOp;
         }
+        const qParams = {};
+        if (Array.isArray(this.entityTypes) && this.entityTypes.length) {
+            qParams.types = this.entityTypes.join(',');
+        }
         const queryPromise =
-            this.simpleApiCall('GET', `/list/${listId}/articles`, { query: { page: page, pageSize: pageSize }, autoLoadingState: true });
+            this.simpleApiCall(
+                'GET', `/list/${listId}/entities`,
+                {
+                    query: _.merge({ page: page, pageSize: pageSize }, qParams, _queryParams || {}),
+                    autoLoadingState: true
+                });
 
         this.__fetchListOps[lockKey] = queryPromise;
         queryPromise.then((x) => {
@@ -846,6 +856,46 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
 
+    fetchEntityDetail(entityId, options) {
+        const qOptions = _.merge({
+        }, options || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/entity/${entityId}/detail`,
+                {
+                    query: qOptions,
+                    autoLoadingState: true
+                }
+            );
+            queryPromise.then((x) => {
+                this.emit('entityDetail', x);
+            });
+
+            return queryPromise;
+        });
+    }
+
+    fetchEntityDetailByReferenceId(referenceId, options) {
+        const qOptions = _.merge({
+        }, options || {});
+
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall(
+                'GET', `/reference/${referenceId}/detail`,
+                {
+                    query: qOptions,
+                    autoLoadingState: true
+                }
+            );
+            queryPromise.then((x) => {
+                this.emit('entityDetail', x);
+            });
+
+            return queryPromise;
+        });
+    }
+
     fetchArticleDetailByReferenceId(referenceId, options) {
         const qOptions = _.merge({
             mapSrc: 'data',
@@ -862,7 +912,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 }
             );
             queryPromise.then((x) => {
-                this.emit('articleDetail', articleId, x);
+                this.emit('articleDetail', x);
             });
 
             return queryPromise;
