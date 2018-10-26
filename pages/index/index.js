@@ -27,21 +27,6 @@ Page({
     onShow: function () {
         let that = this
         wx.showShareMenu({ withShareTicket: true });
-        wx.getStorageInfo({
-            success:function(res){
-                if(res.keys.indexOf('isClickMy') >-1 ){
-                    gdt.userInfo.then((x) => {
-                        that.setData({ isNew: false })
-                        
-                    }).catch(() => {
-                        that.setData({ isNew: true })
-                    });
-                }
-            },
-            fail:function(){
-                that.setData({ isNew: true })
-            }
-        })
         
         gdt.track('show-index');
     },
@@ -135,6 +120,7 @@ Page({
     // 分割线
 
     onReady: function () {
+      console.log(9)
         let that = this;
         let randomNum =parseInt(Math.random()*60+30);
         gdt.userInfo.then((res) => {
@@ -162,15 +148,11 @@ Page({
                 dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
             });
            
-            
             gdt.on("storageSet",(k, v)=>{
                 if (k === 'dashboardTipShouldDisplay') {
                     this.setData({dashboardTipShouldDisplay: v});
                 }
             })
-
-           
-            
             
             gdt.on('listItems', (listId, updateRange, itemList) => {
                 //itemIndex 是老的储存，newIndex是新的

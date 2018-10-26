@@ -1,4 +1,5 @@
 let app = getApp().globalData;
+const txvContext = requirePlugin("tencentvideo");
 const gdt = app.applicationDataContext;
 
 Page({
@@ -17,11 +18,15 @@ Page({
         isIphoneX: false,
         article: {},
         iPhoneX: false,
+        isMuted:true,
         art: '',
         type: '',
         type1: '',
         num: 0,
-        isShare: false,
+        videoSource:[],
+        selectedCricle:0,
+        videoId:'',
+        isShare:false,
         // --- For view tracking ---
 
         viewId: '',
@@ -45,6 +50,11 @@ Page({
         ratio: 0,
         yinHao: '/images/yinHao.png'
     },
+    //是否静音播放
+    handleIsMuted:function(){
+        this.setData({isMuted:!this.data.isMuted})
+    },
+
     onShareAppMessage: function () {
         if (this.data.articleId) {
             gdt.trackShareItem(this.data.articleId, {
@@ -271,6 +281,7 @@ Page({
                     title: currentTitle,
                 });
             }
+            this.setData({ videoId:r.article.txvVids[0],videoSource:r.article.txvVids,articalName:r.article.title,nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
             this.setData({ articleId: r.article.id,articalTitle: r.article.title, articalDescribe: r.article.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～', articalName: r.article.title, nodes: [r], shareId: r.refId, article: r.article, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.article._id, title: r.article.title, refId: r.refId, viewId: r.viewId });
@@ -278,6 +289,16 @@ Page({
 
 
     },
+    //切换视屏播放
+    handleVideoTap:function(e){
+        let index = e.currentTarget.dataset.videoid
+        this.setData({videoId:this.data.videoSource[index],selectedCricle:index},()=>{
+            // let video = txvContext.getTxvContext('video');
+            // video.play();  // 播放
+        });
+
+    },
+   
 
     //回到首页
     handleCallBack: function () {

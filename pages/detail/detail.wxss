@@ -1,4 +1,41 @@
 button::after{ border: none; }
+.borderNum{
+    display: inline-block;
+    border:1rpx solid #e6e6e6;
+    color:#e6e6e6;
+    height: 80rpx;
+    margin: 30rpx 0;
+    width: 80rpx;
+    border-radius: 50%;
+    font-size:28rpx;
+    text-align: center;
+    line-height: 80rpx;
+    margin-right:40rpx;
+}
+.borderCircle{
+    border:1rpx solid #000;
+    color:#000;
+    display: inline-block;
+    height: 80rpx;
+    margin: 30rpx 0;
+    width: 80rpx;
+    border-radius: 50%;
+    font-size:28rpx;
+    text-align: center;
+    line-height: 80rpx;
+    margin-right:40rpx
+}
+.line{
+    border-right: 1px solid #E6E6E6;
+    display: inline-block;
+    height: 50rpx;
+    margin-top: 50rpx;
+    width: 4rpx;
+    line-height: 50rpx;
+    margin-right:40rpx;
+    float: right;
+}
+
 button{
     padding-left:12px;
     padding-right: 12px;
