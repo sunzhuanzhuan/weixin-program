@@ -1,35 +1,55 @@
-
-      
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <view>
-    <scroll-view scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
-       
-         <!--播放视频的位置-->
-        <view wx:if="{{videoSource.length>0}}"  style="heigh:200rpx;margin:0 24rpx;{{videoTop}}" >
-          <view>
-              <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
-          </view>
-          <view wx:if="{{videoSource.length==1}}" style=" height:80rpx;margin: 30rpx 0;">
-             <view  bindtap="handleIsMuted" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: -2rpx" >
-                 <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
-             </view>
-              <text style="color: #E6E6E6;display:inline-block;height:40rpx;margin-right: 50rpx;float: right;"> | </text>
-          </view>
-          <view wx:else style="text-align: center;">
-              <view wx:for="{{videoSource}}" data-videoId="{{index}}" bindtap="handleVideoTap" class="{{selectedCricle == index?'borderCircle':'borderNum'}}">
-                  <text style="font-size: 24rpx">视频{{index+1}}</text>
-              </view>
-              <view  bindtap="handleIsMuted" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: 46rpx" >
-                  <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
-              </view>
-              <text class="line"> </text>
-          </view>
-
-      </view>
-        
+    <scroll-view  wx:if="{{entity.type !=='txvVideo'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
+        <!-- 播放视频的位置 -->
+        <view wx:if="{{videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
+            <view>
+                <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
+            </view>
+            <view wx:if="{{videoSource.length==1}}" style=" height:80rpx;margin: 30rpx 0;">
+                <view bindtap="handleIsMuted" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: -2rpx">
+                    <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
+                </view>
+                <text style="color: #E6E6E6;display:inline-block;height:40rpx;margin-right: 50rpx;float: right;">
+                    |
+                </text>
+            </view>
+            <view wx:else style="text-align: center;">
+                <view wx:for="{{videoSource}}" data-videoId="{{index}}" bindtap="handleVideoTap" class="{{selectedCricle == index?'borderCircle':'borderNum'}}">
+                    <text style="font-size: 24rpx">视频{{index+1}}</text>
+                </view>
+                <view bindtap="handleIsMuted" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: 46rpx">
+                    <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
+                </view>
+                <text class="line"></text>
+            </view>
+        </view>
         <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     </scroll-view>
+    <!-- 纯视频的布局 -->
+    <view wx:else>
+        <view>
+            <txv-video vid="{{entity.txvVid}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
+        </view>
+        <view>
+            <view>相关视频</view>
+            <view style="height:400px;overflow-y:scroll"> 
+                <view wx:for="{{recommendations}}">
+                    <view style="width:260rpx;height:160rpx;margin-bottom:20rpx;">
+                        <txv-video vid="{{item.txvVid}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
+                    </view>
+                </view>
+            </view >
+            
+        </view>
+    </view>
+    
+
+
+
+
+
     <!-- 悬浮部分 -->
     <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
         <button form-type="submit" class="btnForm">

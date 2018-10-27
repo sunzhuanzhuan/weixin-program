@@ -47,7 +47,9 @@ Page({
 
         entityId: undefined,
         entity: {},
-        fullPicture: {}
+        fullPicture: {},
+        //推荐视频
+        recommendations:[]
     },
     onShareAppMessage: function () {
         if (this.data.entityId) {
@@ -275,8 +277,9 @@ Page({
                 wx.setNavigationBarTitle({
                     title: currentTitle,
                 });
-            }
-            this.setData({ fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            };
+           
+            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
