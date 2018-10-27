@@ -1,9 +1,9 @@
 <template name="list">
     <block wx:if="{{list.length>0}}">
         <view wx:for="{{list}}" class="container" wx:key="{{index}}">
-        <view >
-            <view><txv-video vid="{{item.txvVid}}" playerid="video" autoplay="{{false}}" muted="{{isMuted}}"></txv-video></view>
-            <view class="nowrap">{{item.title}}</view>
+        <view>
+            <view class="bigBox" ><txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video"></txv-video></view>
+            <view class="nowrapBig" style="margin:10px 0;margin-left:36rpx">{{item.title}}</view>
         </view>
         <view wx:if="{{!item.txvVid}}">
             <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
