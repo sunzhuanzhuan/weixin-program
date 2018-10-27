@@ -1,5 +1,4 @@
 let app = getApp().globalData;
-const txvContext = requirePlugin("tencentvideo");
 const gdt = app.applicationDataContext;
 
 Page({
@@ -18,15 +17,11 @@ Page({
         isIphoneX: false,
         article: {},
         iPhoneX: false,
-        isMuted:true,
         art: '',
         type: '',
         type1: '',
         num: 0,
-        videoSource:[],
-        selectedCricle:0,
-        videoId:'',
-        isShare:false,
+        isShare: false,
         // --- For view tracking ---
 
         viewId: '',
@@ -54,11 +49,6 @@ Page({
         entity: {},
         fullPicture: {}
     },
-    //是否静音播放
-    handleIsMuted:function(){
-        this.setData({isMuted:!this.data.isMuted})
-    },
-
     onShareAppMessage: function () {
         if (this.data.entityId) {
             gdt.trackShareItem(this.data.entityId, {
@@ -292,16 +282,6 @@ Page({
 
 
     },
-    //切换视屏播放
-    handleVideoTap:function(e){
-        let index = e.currentTarget.dataset.videoid
-        this.setData({videoId:this.data.videoSource[index],selectedCricle:index},()=>{
-            // let video = txvContext.getTxvContext('video');
-            // video.play();  // 播放
-        });
-
-    },
-   
 
     //回到首页
     handleCallBack: function () {
