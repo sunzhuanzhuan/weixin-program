@@ -49,7 +49,12 @@ Page({
         entity: {},
         fullPicture: {},
         //推荐视频
-        recommendations:[]
+        recommendations:[],
+        videoId:''
+    },
+    // 点击切换视频
+    handleVideo:function(e){
+        this.setData({videoId:e.currentTarget.dataset.videoid})
     },
     onShareAppMessage: function () {
         if (this.data.entityId) {
@@ -279,7 +284,7 @@ Page({
                 });
             };
            
-            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({videoId:r.entity.txvVid,recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })

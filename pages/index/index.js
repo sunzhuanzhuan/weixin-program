@@ -21,7 +21,43 @@ Page({
         //新的标量
         lists: [],
         //哪一个tab
-        currentTabIndex: 0
+        currentTabIndex: 0,
+        type: 'getUserInfo',
+        type1: 'getUserInfo',
+    },
+    //授权
+    //授权的时候发生的
+    handleAuthor: function (e) {
+
+        if (e.detail && e.detail.userInfo) {
+            gdt.emit('userInfo', e.detail);
+        }
+
+    },
+    handleLikeButtonTapped: function (e) {
+        gdt.userInfo.then(() => {
+            this.setData({ isLike: !this.data.isLike }, () => {
+                if (this.data.isLike) {
+                    gdt.likeItem(this.data.entityId);
+                    gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+                } else {
+                    gdt.unlikeItem(this.data.entityId);
+                    gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+                }
+            });
+        }).catch(() => {
+            gdt.once('userInfo', () => {
+                this.setData({ isLike: !this.data.isLike }, () => {
+                    if (this.data.isLike) {
+                        gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+                        gdt.likeItem(this.data.entityId);
+                    } else {
+                        gdt.unlikeItem(this.data.entityId);
+                        gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+                    }
+                });
+            });
+        });
 
     },
     onShow: function () {
@@ -122,6 +158,21 @@ Page({
     onReady: function () {
       console.log(9)
         let that = this;
+        gdt.userInfo.then((x) => {
+            this.setData({
+                type: "",
+                type1: 'share',
+                nickName: x.userInfo.nickName
+            });
+        }).catch(() => {
+            this.setData({
+                type: 'getUserInfo',
+                type1: 'getUserInfo'
+            });
+            gdt.once('userInfo', () => {
+                this.setData({ type1: 'share' });
+            });
+        });
         let randomNum =parseInt(Math.random()*60+30);
         gdt.userInfo.then((res) => {
             this.setData({ isModal: false })

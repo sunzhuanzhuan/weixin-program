@@ -1,4 +1,13 @@
 button::after{ border: none; }
+/* 新加的视频的布局 */
+.nowrap{
+    overflow:hidden;
+    width:420rpx;
+    white-space:nowrap;
+    font-size: 28rpx;
+}
+
+/*  */
 .borderNum{
     display: inline-block;
     border:1rpx solid #e6e6e6;

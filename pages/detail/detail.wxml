@@ -29,15 +29,22 @@
     </scroll-view>
     <!-- 纯视频的布局 -->
     <view wx:else>
-        <view>
-            <txv-video vid="{{entity.txvVid}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
+        <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
+            <txv-video vid="{{videoId}}" playerid="video"></txv-video>
         </view>
         <view>
-            <view>相关视频</view>
+            <view style="margin-left:34rpx"> 相关视频</view>
             <view style="height:400px;overflow-y:scroll"> 
-                <view wx:for="{{recommendations}}">
-                    <view style="width:260rpx;height:160rpx;margin-bottom:20rpx;">
-                        <txv-video vid="{{item.txvVid}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
+                <view wx:for="{{recommendations}}" data-videoId="{{item.txvVid}}" bindtap="handleVideo" style="display:flex;flex-direction:rows">
+                    <view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:20rpx;">
+                        <image style="width:260rpx;height:180rpx;" src="{{item.coverUrl}}"/>
+                    </view>
+                    <view style="">
+                        <view class="nowrap">{{item.title}}
+                            <text style='float:left;display:inlie-block'>视频</text>
+                            <text style='float:right;display:inlie-block;border:1px solid #000;padding:2px 4px;font-size:20rpx'>视频</text>
+                        </view>
+                        <view style="font-size:24rpx;color:#999">来源{{item.author}}</view>
                     </view>
                 </view>
             </view >
