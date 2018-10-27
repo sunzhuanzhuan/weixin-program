@@ -225,6 +225,7 @@ Page({
             if (options.id.length > 0) {
 
                 let { id } = options;
+                console.log(id)
                 qPromise = gdt.fetchEntityDetail(id, {
                     scene: scene,
                     keepH5Links: true,
@@ -234,7 +235,7 @@ Page({
                 });
             } else if (Object.keys(gdt.showParam.query).length > 0) {
                 let { query: { id, nickName, ref } } = gdt.showParam;
-
+                console.log(id)
                 qPromise = gdt.fetchEntityDetail(id, {
                     scene: scene,
                     keepH5Links: true,
