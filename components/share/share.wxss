@@ -54,7 +54,7 @@
     text-align: left;
 }
 .bigBox{
-    padding:8rpx 32rpx 0rpx 32rpx;
+    margin-left:32rpx;
    
     
 }

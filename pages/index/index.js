@@ -36,27 +36,24 @@ Page({
     },
     handleLikeButtonTapped: function (e) {
         gdt.userInfo.then(() => {
-            this.setData({ isLike: !this.data.isLike }, () => {
-                if (this.data.isLike) {
-                    gdt.likeItem(this.data.entityId);
-                    gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
-                } else {
-                    gdt.unlikeItem(this.data.entityId);
-                    gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
-                }
-            });
+           
+            if(!e.currentTarget.dataset.liked){
+                gdt.likeItem(e.currentTarget.dataset.id);
+                gdt.track('like-item', { itemId: this.data.entityId,  type: this.data.entity.type });
+            }else{
+                gdt.unlikeItem(e.currentTarget.dataset.id);
+                gdt.track('like-item', { itemId: this.data.entityId,  type: this.data.entity.type });
+            }   
+            
+           
         }).catch(() => {
-            gdt.once('userInfo', () => {
-                this.setData({ isLike: !this.data.isLike }, () => {
-                    if (this.data.isLike) {
-                        gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
-                        gdt.likeItem(this.data.entityId);
-                    } else {
-                        gdt.unlikeItem(this.data.entityId);
-                        gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
-                    }
-                });
-            });
+            if(!e.currentTarget.dataset.liked){
+                gdt.likeItem(e.currentTarget.dataset.id);
+                gdt.track('like-item', { itemId: this.data.entityId, type: this.data.entity.type });
+            }else{
+                gdt.unlikeItem(e.currentTarget.dataset.id);
+                gdt.track('like-item', { itemId: this.data.entityId, type: this.data.entity.type });
+            }
         });
 
     },
@@ -80,6 +77,7 @@ Page({
     },
     //跳转到详情
     handleDetail(e) {
+        console.log(12)
         let that = this;
         wx.navigateTo({
             url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap+'&appName='+this.data.appTitle
@@ -274,6 +272,9 @@ Page({
         // console.log( e.detail.formId)
         // this.setData({
         // formId: e.detail.formId }) 
+    },
+    handleDetail12:function(){
+        console.log(123)
     }
 
 })
