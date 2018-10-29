@@ -672,13 +672,14 @@ module.exports = class GlobalDataContext extends EventEmitter {
         if (Array.isArray(this.entityTypes) && this.entityTypes.length) {
             qParams.types = this.entityTypes.join(',');
         }
-        const queryPromise =
-            this.simpleApiCall(
+        const queryPromise = this.currentUser.then(() => {
+            return this.simpleApiCall(
                 'GET', `/list/${listId}/entities`,
                 {
                     query: _.merge({ page: page, pageSize: pageSize }, qParams, _queryParams || {}),
                     autoLoadingState: true
                 });
+        });
 
         this.__fetchListOps[lockKey] = queryPromise;
         queryPromise.then((x) => {
