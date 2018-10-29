@@ -30,21 +30,27 @@
     <!-- 纯视频的布局 -->
     <view wx:else>
         <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
-            <txv-video vid="{{videoId}}" playerid="video"></txv-video>
+            <txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
+            <view class="nowrapBig" style="margin-top:20rpx">{{entity.title}}</view>
+            <view class="nowrap" style="font-size:32rpx;">
+                <text  style="font-size:20rpx;color:#333;border:1px solid #ccc;">视频</text>
+               <text style="font-size:24rpx;color:#999"> {{entity.author}}</text>
+            </view>
         </view>
         <view>
-            <view style="margin-left:34rpx"> 相关视频</view>
+            <view style="margin-left:34rpx;margin-top:100rpx;font-size:28rpx;color: #333;margin-bottom:20rpx;"> 相关视频</view>
             <view style="height:400px;overflow-y:scroll"> 
-                <view wx:for="{{recommendations}}" data-videoId="{{item.txvVid}}" bindtap="handleVideo" style="display:flex;flex-direction:rows">
+                <view wx:for="{{recommendations}}"  data-id="{{item.id}}" bindtap="handleVideo" style="display:flex;flex-direction:rows">
                     <view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:20rpx;">
                         <image style="width:260rpx;height:180rpx;" src="{{item.coverUrl}}"/>
                     </view>
                     <view style="">
-                        <view class="nowrap">{{item.title}}
-                            <text style='float:left;display:inlie-block'>视频</text>
-                            <text style='float:right;display:inlie-block;border:1px solid #000;padding:2px 4px;font-size:20rpx'>视频</text>
+                        <view class="nowrap">
+                            {{item.title}}
                         </view>
-                        <view style="font-size:24rpx;color:#999">来源{{item.author}}</view>
+                        <view style="font-size:24rpx;color:#999">
+                             <text  style="font-size:20rpx;color:#333;border:1px solid #ccc;display:inline-block;margin-right:10rpx">视频</text>
+                            来源: {{item.author}}</view>
                     </view>
                 </view>
             </view >

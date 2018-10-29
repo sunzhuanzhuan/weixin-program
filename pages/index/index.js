@@ -215,15 +215,15 @@ Page({
                             indexedItem._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
                             indexedItem._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
                             
-                            indexedItem._readTimes = newIndex.readTimes > (indexedItem._readTimes || 10) ? 
-                            newIndex.readTimes : (indexedItem.randomNum + newIndex.readTimes);
+                            indexedItem._likedTimes = newIndex.likedTimes > (indexedItem._likedTimes || 10) ? 
+                            newIndex.likedTimes : (indexedItem.randomNum + newIndex.likedTimes);
 
                         } else {
                             newIndex._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
                             newIndex._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
                             
-                            newIndex._readTimes = newIndex.readTimes > (newIndex._readTimes || 10) ? 
-                            newIndex.readTimes : (newIndex.randomNum + newIndex.readTimes);
+                            newIndex._likedTimes = newIndex.likedTimes > (newIndex._likedTimes || 10) ? 
+                            newIndex.likedTimes : (newIndex.randomNum + newIndex.likedTimes);
                         }
 
                     });

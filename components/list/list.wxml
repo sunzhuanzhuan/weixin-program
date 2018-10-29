@@ -1,120 +1,110 @@
 <template name="list">
     <block wx:if="{{list.length>0}}">
         <view wx:for="{{list}}" class="container" wx:key="{{index}}">
-        <view>
-            <view class="bigBox" ><txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video"></txv-video></view>
-            <view class="nowrapBig"  data-id="{{item.id}}" bindtap="handleDetail" style="margin-top:10px;margin-left:36rpx">{{item.title}}</view>
-            <view style="margin-left:4rpx;">
-                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                    <button form-type="submit" style="background:#ffffff;">
-                            <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%">
+            <view wx:if="{{item.type === 'txvVideo'}}">
+                <view class="bigBox">
+                    <txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video"></txv-video>
+                </view>
+                <view class="nowrapBig" data-id="{{item.id}}" bindtap="handleDetail" style="margin-top:10px;margin-left:36rpx">
+                    {{item.title}}
+                </view>
+                <view style="margin-left:4rpx;">
+                    <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                        <button form-type="submit" style="background:#ffffff;" hover-class="">
+                            <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%; justify-content: right;">
                                 <view style="flex:3;text-align:left;">
-                                    <text style="font-size:20rpx;color:#333;border:1px solid #ccc;">视频</text>
+                                    <text style="font-size:20rpx;color:#FF6156;border:1px solid #FF6156;display:inline-block;line-height:12rpx;padding:0 6rpx 8rpx 6rpx;text-align:center;border-radius:6rpx">
+                                        视频
+                                    </text>
                                 </view>
-                                <button style='flex:2' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:2;position: relative;z-index: 2;">
-                                    <image class="imgBtn" src="{{isLike?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
-                                    <text>1232</text>
+                                <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;text-align:right">
+                                    <image  class="{{item.liked?'imgBtnBig':'imgBtn'}}" src="{{item.liked?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
+                                    <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
+                                        {{item._likedTimes}}
+                                    </text>
                                 </button>
-                                <button style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="background:#ffffff;flex:1;position: relative;z-index: 2;">
+                                <button style='flex:0.5' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="background:#ffffff;flex:0.5;position: relative;z-index: 2;text-align:right">
                                     <image class="imgBtn" src="/images/shareAfter.png"></image>
                                 </button>
                             </view>
-                    </button>
-                </form>
+                        </button>
+                    </form>
+                </view>
             </view>
-        </view>
-        <view wx:if="{{!item.txvVid}}">
-            <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
-                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                    <button form-type="submit" class="btnForm" hover-class='none'>
-                        <view class="bigBox">
-                            <view class="imgBox">
-                                <image class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
-                                <view class="letterBox ">
-                                     <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                        <button form-type="submit" class="btnForm">
-                                            <view class="fixed {{isShow?'show':''}} state1">
-                                                <view class="floatShadow"></view>
-                                                <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%">
-                                                    <view wx:if="{{isEyes}}" class="btnBoxKonw" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}"></view>
-                                                    <button wx:else class="btnBoxKonw" form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}" catchtap="handleJump">
-                                                        <!-- hidden="{{isEyes}}" -->
-                                                        <image class="imgBtnKonw" src="/images/eye.png"></image>
-                                                        <view class="letterKonw">让朋友知道我在读</view>
-                                                    </button>
-                                                    <button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx;':'height:134rpx'}}">
-                                                        <image class="imgBtn" src="{{isLike?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
-                                                        <view class="letter">收藏</view>
-                                                    </button>
-                                                    <button class="btnBox" style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-                                                        <image class="imgBtn" src="{{shareButton}}"></image>
-                                                        <view class="letter">分享</view>
-                                                    </button>
-                                                    <button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster" style="{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-                                                        <image class="imgBtn" src="/images/circle.png"></image>
-                                                        <view class="letter">生成分享海报</view>
-                                                    </button>
-                                                </view>
-                                                <view wx:if="{{isIphoneX}}" class="bol"></view>
-                                                <view wx:else></view>
-                                            </view>
-                                        </button>
-                                    </form>
-                                </view>
-                            </view>
-                        </view>
-                    </button>
-                </form>
-            </view>
-            <view wx:else bindtap="handleDetail" data-id="{{item.id}}">
-                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                    <button form-type="submit" class="btnForm" hover-class='none'>
-                        <view class="bigBox">
-                            <view>
-                                <view class="content">
-                                    <image class="bigImg" mode="aspectFill" src="{{item.coverUrl}}" lazy-load style="{{index==0?'margin-top:0':'margin-top:32rpx'}}"></image>
-                                    <view class="nowrapBig">{{item.title}}</view>
-                                </view>
-                                <view>
-                                    <view class="readResource">
-                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                            <button form-type="submit" class="btnForm">
-                                                <view class="fixed {{isShow?'show':''}} state1">
-                                                    <view class="floatShadow"></view>
-                                                    <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%">
-                                                        <view wx:if="{{isEyes}}" class="btnBoxKonw" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}"></view>
-                                                        <button wx:else class="btnBoxKonw" form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}" catchtap="handleJump">
-                                                            <!-- hidden="{{isEyes}}" -->
-                                                            <image class="imgBtnKonw" src="/images/eye.png"></image>
-                                                            <view class="letterKonw">让朋友知道我在读</view>
-                                                        </button>
-                                                        <button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx;':'height:134rpx'}}">
-                                                            <image class="imgBtn" src="{{isLike?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
-                                                            <view class="letter">收藏</view>
-                                                        </button>
-                                                        <button class="btnBox" style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-                                                            <image class="imgBtn" src="{{shareButton}}"></image>
-                                                            <view class="letter">分享</view>
-                                                        </button>
-                                                        <button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster" style="{{isIphoneX?'height:194rpx':'height:134rpx'}}">
-                                                            <image class="imgBtn" src="/images/circle.png"></image>
-                                                            <view class="letter">生成分享海报</view>
-                                                        </button>
+            <view wx:else>
+                <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" bindtap="handleDetail" data-id="{{item.id}}">
+                    <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                        <button form-type="submit" class="btnForm" hover-class='none'>
+                            <view class="bigBox">
+                                <view class="imgBox">
+                                    <image class="img" mode="aspectFill" src="{{item.coverUrl}}" lazy-load></image>
+                                    <view class="letterBox ">
+                                        <view class="nowrap">{{item.title}}</view>
+                                        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                                            <button form-type="submit" style="background:#ffffff;" hover-class="">
+                                                <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%; justify-content: right;">
+                                                    <view style="flex:3;text-align:left;">
+                                                        <text style="font-size:20rpx;color:#333;border:1px solid #ccc;display:inline-block;line-height:12rpx;padding:0 6rpx 8rpx 6rpx;text-align:center">
+                                                            图文
+                                                        </text>
                                                     </view>
-                                                    <view wx:if="{{isIphoneX}}" class="bol"></view>
-                                                    <view wx:else></view>
+                                                    <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;text-align:right">
+                                                        <image  class="{{item.liked?'imgBtnBig':'imgBtn'}}" s src="{{item.liked?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
+                                                        <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
+                                                            {{item._likedTimes}}
+                                                        </text>
+                                                    </button>
+                                                    <button style='flex:0.5' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="background:#ffffff;flex:0.5;position: relative;z-index: 2;text-align:right">
+                                                        <image class="imgBtn" src="/images/shareAfter.png"></image>
+                                                    </button>
                                                 </view>
                                             </button>
                                         </form>
                                     </view>
                                 </view>
                             </view>
-                        </view>
-                    </button>
-                </form>
+                        </button>
+                    </form>
+                </view>
+                <view wx:else bindtap="handleDetail" data-id="{{item.id}}">
+                    <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                        <button form-type="submit" class="btnForm" hover-class='none'>
+                            <view class="bigBox">
+                                <view>
+                                    <view class="content">
+                                        <image class="bigImg" mode="aspectFill" src="{{item.coverUrl}}" lazy-load style="{{index==0?'margin-top:0':'margin-top:32rpx'}}"></image>
+                                        <view class="nowrapBig">{{item.title}}</view>
+                                    </view>
+                                    <view>
+                                        <view class="readResource">
+                                            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                                                <button form-type="submit" style="background:#ffffff;" hover-class="">
+                                                    <view style="display: flex;flex-direction: row;background: #ffffff;height: 100rpx;width:100%; justify-content: right;">
+                                                        <view style="flex:3;text-align:left;">
+                                                            <text style="font-size:20rpx;color:#333;border:1px solid #ccc;display:inline-block;line-height:12rpx;padding:0 6rpx 8rpx 6rpx;text-align:center">
+                                                                图文
+                                                            </text>
+                                                        </view>
+                                                        <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;text-align:right">
+                                                            <image class="{{item.liked?'imgBtnBig':'imgBtn'}}" src="{{item.liked?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
+                                                            <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
+                                                                {{item._likedTimes}}
+                                                            </text>
+                                                        </button>
+                                                        <button style='flex:0.5' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="background:#ffffff;flex:0.5;position: relative;z-index: 2;text-align:right">
+                                                            <image class="imgBtn" src="/images/shareAfter.png"></image>
+                                                        </button>
+                                                    </view>
+                                                </button>
+                                            </form>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </button>
+                    </form>
+                </view>
             </view>
-        </view>
-            
         </view>
         <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;"></view>
         <view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">

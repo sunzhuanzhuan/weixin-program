@@ -50,11 +50,32 @@ Page({
         fullPicture: {},
         //推荐视频
         recommendations:[],
-        videoId:''
     },
     // 点击切换视频
     handleVideo:function(e){
-        this.setData({videoId:e.currentTarget.dataset.videoid})
+        // this.setData({videoId:e.currentTarget.dataset.videoid,videoTitle:e.currentTarget.dataset.videotitle});
+        let qPromise;
+        const scene = gdt.showParam.scene;
+        qPromise = gdt.fetchEntityDetail(e.currentTarget.dataset.id, {
+            scene: scene,
+            keepH5Links: true,
+            mapSrc: 'data',
+            overrideStyle: 'false',
+            fixWxMagicSize: 'true'
+        });
+        qPromise.then((r) => {
+            if (r.entity) {
+                const currentTitle = r.entity.title;
+                wx.setNavigationBarTitle({
+                    title: currentTitle,
+                });
+            };
+           
+            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+
+            gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
+        })
+        
     },
     onShareAppMessage: function () {
         if (this.data.entityId) {
@@ -284,7 +305,7 @@ Page({
                 });
             };
            
-            this.setData({videoId:r.entity.txvVid,recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })

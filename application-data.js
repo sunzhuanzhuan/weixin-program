@@ -423,7 +423,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     }
 
                     if (!indexedItem.randomNum) {
-                        indexedItem.randomNum = Math.floor(Math.random() * 60 + 30);
+                        indexedItem.randomNum = Math.floor(Math.random() * 40);
                     }
 
                     const r = _.find(targetList, { _id: x._id });
@@ -450,7 +450,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     itemIndex[incoming._id] = indexedItem;
                 }
                 if (!indexedItem.randomNum) {
-                    indexedItem.randomNum = Math.floor(Math.random() * 60 + 30);
+                    indexedItem.randomNum = Math.floor(Math.random() *40);
                 }
                 let curItem = targetList[idx];
                 if (curItem) {

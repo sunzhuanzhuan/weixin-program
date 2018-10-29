@@ -1,10 +1,25 @@
 button::after{ border: none; }
 /* 新加的视频的布局 */
 .nowrap{
-    overflow:hidden;
-    width:420rpx;
-    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    width: 400rpx;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height:1.5;
     font-size: 28rpx;
+    color: #333;
+}
+.nowrapBig{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width:686rpx;
+    line-height:1.0;
+    font-size: 32rpx;
+    color: #333;
+
 }
 
 /*  */
@@ -153,6 +168,12 @@ button{
 .imgBtn {
     width: 40rpx;
     height: 40rpx;
+    margin-bottom: -10rpx;
+    margin-top:-4rpx
+}
+.imgBtnBig{
+    width: 50rpx;
+    height: 50rpx;
     margin-bottom: -10rpx;
     margin-top:-6rpx
 }
