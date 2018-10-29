@@ -174,7 +174,7 @@ button{
 .imgBtnBig{
     width: 50rpx;
     height: 50rpx;
-    margin-bottom: -10rpx;
+    margin-bottom: -16rpx;
     margin-top:-8rpx
 }
 .imgBtnKonw{
