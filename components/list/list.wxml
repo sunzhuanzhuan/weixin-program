@@ -35,18 +35,22 @@
                 <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}">
                     <view class="bigBox">
                         <view>
-                        <view class="imgBox" bindtap="handleDetail" data-id="{{item.id}}">
-                            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                <button form-type="submit" class="btnForm" hover-class='none'>
-                                    <image class="img" mode="aspectFill" src="{{item.coverUrl}}"></image>
-                                </button>
-                            </form>
-                            <view class="letterBox" bindtap="handleDetail" data-id="{{item.id}}">
+                        <view class="imgBox">
+                            <view bindtap="handleDetail" data-id="{{item.id}}">
                                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                     <button form-type="submit" class="btnForm" hover-class='none'>
-                                        <view class="nowrap">{{item.title}}</view>
+                                        <image class="img" mode="aspectFill" src="{{item.coverUrl}}"></image>
                                     </button>
                                 </form>
+                            </view>
+                            <view class="letterBox">
+                                <view bindtap="handleDetail" data-id="{{item.id}}">
+                                    <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                                        <button form-type="submit" class="btnForm" hover-class='none'>
+                                            <view class="nowrap">{{item.title}}</view>
+                                        </button>
+                                    </form>
+                                </view>
                                 <view style="margin-left:4rpx;" data-id="{{item.id}}">
                                     <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button form-type="submit" style="background:#ffffff;width:100%" hover-class="">
