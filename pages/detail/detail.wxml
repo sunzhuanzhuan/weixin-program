@@ -41,7 +41,7 @@
             <view style="margin-left:34rpx;margin-top:100rpx;font-size:28rpx;color: #333;margin-bottom:20rpx;"> 相关视频</view>
             <view style="height:400px;overflow-y:scroll"> 
                 <view wx:for="{{recommendations}}"  data-id="{{item.id}}" bindtap="handleVideo" style="display:flex;flex-direction:rows">
-                    <view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:20rpx;">
+                    <view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:50rpx;">
                         <image style="width:260rpx;height:180rpx;" src="{{item.coverUrl}}"/>
                     </view>
                     <view style="">
