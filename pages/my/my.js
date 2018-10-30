@@ -53,16 +53,16 @@ Page({
           });
           const makeMyLikes = ()=> {
               this.appState.myLikes.forEach((x)=> {
-                  const articleBref = x.article;
-                  if (!articleBref) {
+                  const entity = x.entity;
+                  if (!entity) {
                       return;
                   }
-                  articleBref._sourceWxDisplayName = articleBref.sourceWxNickname || '-'
-                  articleBref.readTimes = articleBref.readTimes || 0;
-                  articleBref._publishedFromNow = util.moment(articleBref.publishedAt).fromNow();
-                  let read = articleBref.readTimes +''
+                  entity._sourceWxDisplayName = entity.sourceWxNickname || '-'
+                  entity.readTimes = entity.readTimes || 0;
+                  entity._publishedFromNow = util.moment(entity.publishedAt).fromNow();
+                  let read = entity.readTimes +''
                     if(read.length === 1){
-                        articleBref.readTimes = parseInt(Math.random()*20+30)
+                        entity.readTimes = parseInt(Math.random()*20+30)
                     }
               });
               this.setData({ myLikes: this.appState.myLikes, myLikesHasMore: this.appState.myLikes.__hasMore !== false });
@@ -120,18 +120,18 @@ Page({
       },
       onShareAppMessage: function({from, target, webViewUrl}) {
           const clip = target.dataset.clip;
-          if (!(clip && clip.article)) {
+          if (!(clip && clip.entity)) {
               return;
           }
   
-          const articleBref = clip.article;
-          gdt.trackShareItem(articleBref._id);
-          gdt.track('share-item', { itemId: clip.articleId, refId: clip._id });
+          const entity = clip.entity;
+          gdt.trackShareItem(entityBref._id);
+          gdt.track('share-item', { itemId: clip.entityId, type: entity.type, refId: clip._id });
         
           return {
-              title: articleBref.title || '默认转发标题',
-              path: `pages/detail/detail?ref=${clip._id}&art=${clip.articleId}&nickName=${this.data.userInfo.nickName}`,
-              imageUrl: articleBref.coverUrl
+              title: entity.title || '默认转发标题',
+              path: `pages/detail/detail?ref=${clip._id}&art=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
+              imageUrl: entity.coverUrl
           }
       },
       getFormID: function (e) {
