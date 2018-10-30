@@ -1,7 +1,7 @@
 <template name="list">
     <block wx:if="{{list.length>0}}">
         <view wx:for="{{list}}" class="container" wx:key="{{index}}" style="overflow:hidden">
-            <view wx:if="{{item.type === 'txvVideo'}}">
+            <!-- <view wx:if="{{item.type === 'txvVideo'}}">
                 <view class="bigBox" style="width:686rpx;height:390rpx;padding-top:30rpx;">
                     <txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video"></txv-video>
                 </view>
@@ -30,8 +30,8 @@
                         </button>
                     </form>
                 </view>
-            </view>
-            <view wx:else>
+            </view> -->
+            <view wx:if="{{item.type === 'wxArticle'}}">
                 <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}">
                     <view class="bigBox">
                         <view>
