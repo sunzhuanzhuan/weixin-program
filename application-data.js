@@ -450,7 +450,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     itemIndex[incoming._id] = indexedItem;
                 }
                 if (!indexedItem.randomNum) {
-                    indexedItem.randomNum = Math.floor(Math.random() *40);
+                    indexedItem.randomNum = Math.floor(Math.random() * 40);
                 }
                 let curItem = targetList[idx];
                 if (curItem) {
@@ -460,6 +460,24 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 targetList[idx] = indexedItem;
                 return;
             });
+        });
+
+        this.on('entityUpdate', (entity) => {
+            const itemIndex = this.localState.itemIndex;
+
+            let indexedItem = itemIndex[entity._id];
+            if (indexedItem) {
+                _.merge(indexedItem, entity);
+            } else {
+                indexedItem = entity;
+                itemIndex[entity._id] = indexedItem;
+            }
+
+            if (!indexedItem.randomNum) {
+                indexedItem.randomNum = Math.floor(Math.random() * 40);
+            }
+
+            return;
         });
 
         this.on('sharedItems', ([start, end], clips) => {
@@ -522,6 +540,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 itemIndex[x._id] = indexedItem;
             }
             this.localState.dashboardAnalytics.shared = (this.localState.dashboardAnalytics.shared + 1) || 1;
+            if (x.entity) {
+                this.emit('entityUpdate', x.entity);
+            }
             const r = _.find(targetList, { _id: x._id });
             if (r) {
                 return;
@@ -590,6 +611,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 itemIndex[x._id] = indexedItem;
             }
             this.localState.dashboardAnalytics.liked = (this.localState.dashboardAnalytics.liked + 1) || 1;
+            if (x.entity) {
+                this.emit('entityUpdate', x.entity);
+            }
             const r = _.find(targetList, { _id: x._id });
             if (r) {
                 return;
@@ -608,7 +632,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 itemIndex[x._id] = indexedItem;
             }
             this.localState.dashboardAnalytics.liked = (this.localState.dashboardAnalytics.liked - 1) || 0;
-
+            if (x.entity) {
+                this.emit('entityUpdate', x.entity);
+            }
             _.remove(targetList, (v) => v._id === x._id);
         });
 
@@ -835,6 +861,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     fetchArticleDetail(articleId, options) {
+        console.warn('GDT: Article API is deprecated ! Use entity API insted !!');
         const qOptions = _.merge({
             mapSrc: 'data',
             overrideStyle: 'false',
@@ -898,6 +925,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     fetchArticleDetailByReferenceId(referenceId, options) {
+        console.warn('GDT: Article API is deprecated ! Use entity API insted !!');
         const qOptions = _.merge({
             mapSrc: 'data',
             overrideStyle: 'false',
@@ -938,7 +966,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/likes', {
                 body: {
-                    article: itemId
+                    entityId: itemId
                 }
             });
 
@@ -957,7 +985,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     action: 'del'
                 },
                 body: {
-                    article: itemId
+                    entityId: itemId
                 }
             });
 
@@ -970,7 +998,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     trackShareItem(itemId, otherOptions) {
-        const queryBody = _.merge({ article: itemId }, otherOptions || {});
+        const queryBody = _.merge({ entityId: itemId }, otherOptions || {});
 
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/shares', {
@@ -986,6 +1014,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     trackScrollActionInViewing(articleId, viewId, tPlus, duration, startPos, endPos) {
+        // Direct tracking is deprecated.
+        console.warn('GDT: Direct scroll tracking is deprecated ! Dont use this any more !!');
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/scrolls', {
                 body: {
@@ -1002,11 +1032,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
 
-    trackLeftViewing(articleId, viewId, duration) {
+    trackLeftViewing(entityId, viewId, duration) {
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/lefts', {
                 body: {
-                    article: articleId,
+                    entityId: entityId,
                     view: viewId,
                     duration: duration
                 }

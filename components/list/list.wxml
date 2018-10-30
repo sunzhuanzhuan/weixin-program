@@ -17,7 +17,7 @@
                                         视频
                                     </text>
                                 </view>
-                                <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;text-align:right">
+                                <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;text-align:right">
                                     <image class="{{item.liked?'imgBtnBig':'imgBtn'}}" src="{{item.liked?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
                                     <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
                                         {{item._likedTimes}}
@@ -60,7 +60,7 @@
                                                         图文
                                                     </text>
                                                 </view>
-                                                <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;">
+                                                <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;">
                                                     <image class="{{item.liked?'imgBtnBig':'imgBtn'}}" src="{{item.liked?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
                                                     <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
                                                         {{item._likedTimes}}
@@ -99,7 +99,7 @@
                                                         图文
                                                     </text>
                                                 </view>
-                                                <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;text-align:right">
+                                                <button style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="background:#ffffff;flex:1;position: relative;z-index: 2;text-align:right">
                                                     <image class="{{item.liked?'imgBtnBig':'imgBtn'}}" src="{{item.liked?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
                                                     <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
                                                         {{item._likedTimes}}

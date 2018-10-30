@@ -35,32 +35,35 @@ Page({
 
     },
     handleLikeButtonTapped: function (e) {
+        const targetEntity = e.currentTarget.dataset.item;
         gdt.userInfo.then(() => {
-           
-            if(!e.currentTarget.dataset.liked){
-                gdt.likeItem(e.currentTarget.dataset.id);
-                gdt.track('like-item', { itemId: this.data.entityId,  type: this.data.entity.type });
-            }else{
-                gdt.unlikeItem(e.currentTarget.dataset.id);
-                gdt.track('like-item', { itemId: this.data.entityId,  type: this.data.entity.type });
-            }   
-            
-           
-        }).catch(() => {
-            if(!e.currentTarget.dataset.liked){
-                gdt.likeItem(e.currentTarget.dataset.id);
-                gdt.track('like-item', { itemId: this.data.entityId, type: this.data.entity.type });
-            }else{
-                gdt.unlikeItem(e.currentTarget.dataset.id);
-                gdt.track('like-item', { itemId: this.data.entityId, type: this.data.entity.type });
+
+            if (!targetEntity.liked) {
+                gdt.likeItem(targetEntity._id);
+                gdt.track('like-item', { itemId: targetEntity._id, type: targetEntity.type });
+            } else {
+                gdt.unlikeItem(targetEntity._id);
+                gdt.track('unlike-item', { itemId: targetEntity._id, type: targetEntity.type });
             }
+
+
+        }, () => {
+            gdt.once('userInfo', () => {
+                if (!targetEntity.liked) {
+                    gdt.likeItem(targetEntity._id);
+                    gdt.track('like-item', { itemId: targetEntity._id, type: targetEntity.type });
+                } else {
+                    gdt.unlikeItem(targetEntity._id);
+                    gdt.track('unlike-item', { itemId: targetEntity._id, type: targetEntity.type });
+                }
+            })
         });
 
     },
     onShow: function () {
         let that = this
         wx.showShareMenu({ withShareTicket: true });
-        
+
         gdt.track('show-index');
     },
 
@@ -80,7 +83,7 @@ Page({
         console.log(12)
         let that = this;
         wx.navigateTo({
-            url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap+'&appName='+this.data.appTitle
+            url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle
         })
     },
     handleTouchEnd(e) {
@@ -139,13 +142,13 @@ Page({
 
     selectMy: function () {
         wx.setStorage({
-            key:"isClickMy",
-            data:true
+            key: "isClickMy",
+            data: true
         })
         wx.navigateTo({
             url: '/pages/my/my'
         });
-        
+
     },
     handleClose: function () {
         this.setData({ isModal: false })
@@ -154,7 +157,6 @@ Page({
     // 分割线
 
     onReady: function () {
-      console.log(9)
         let that = this;
         gdt.userInfo.then((x) => {
             this.setData({
@@ -171,7 +173,7 @@ Page({
                 this.setData({ type1: 'share' });
             });
         });
-        let randomNum =parseInt(Math.random()*60+30);
+        let randomNum = parseInt(Math.random() * 60 + 30);
         gdt.userInfo.then((res) => {
             this.setData({ isModal: false })
         }).catch(() => {
@@ -183,7 +185,7 @@ Page({
             });
         });
         gdt.ready.then((app) => {
-            
+
             this.appState = app;
             if (app.title) {
                 wx.setNavigationBarTitle({
@@ -192,17 +194,17 @@ Page({
             }
             this.setData({
                 lists: app.lists,
-                appTitle:app.title,
-                coverUrl:app.avatarUrl,
+                appTitle: app.title,
+                coverUrl: app.avatarUrl,
                 dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
             });
-           
-            gdt.on("storageSet",(k, v)=>{
+
+            gdt.on("storageSet", (k, v) => {
                 if (k === 'dashboardTipShouldDisplay') {
-                    this.setData({dashboardTipShouldDisplay: v});
+                    this.setData({ dashboardTipShouldDisplay: v });
                 }
             })
-            
+
             gdt.on('listItems', (listId, updateRange, itemList) => {
                 //itemIndex 是老的储存，newIndex是新的
                 if (itemList && itemList.length) {
@@ -212,24 +214,50 @@ Page({
                             const indexedItem = itemIndex[newIndex._id];
                             indexedItem._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
                             indexedItem._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-                            
-                            indexedItem._likedTimes = newIndex.likedTimes > (indexedItem._likedTimes || 10) ? 
-                            newIndex.likedTimes : (indexedItem.randomNum + newIndex.likedTimes);
+
+                            indexedItem._likedTimes = newIndex.likedTimes > (indexedItem._likedTimes || 10) ?
+                                newIndex.likedTimes : (indexedItem.randomNum + newIndex.likedTimes);
 
                         } else {
                             newIndex._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
                             newIndex._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-                            
-                            newIndex._likedTimes = newIndex.likedTimes > (newIndex._likedTimes || 10) ? 
-                            newIndex.likedTimes : (newIndex.randomNum + newIndex.likedTimes);
+
+                            newIndex._likedTimes = newIndex.likedTimes > (newIndex._likedTimes || 10) ?
+                                newIndex.likedTimes : (newIndex.randomNum + newIndex.likedTimes);
                         }
 
                     });
                 }
-                
+
                 this.setData({ lists: app.lists });
+
+
             });
-            
+
+            gdt.on('entityUpdate', (x) => {
+                const itemIndex = this.appState.itemIndex;
+
+                if (itemIndex[x._id]) {
+                    const indexedItem = itemIndex[x._id];
+                    indexedItem._sourceWxDisplayName = x.sourceWxNickname || '-';
+                    indexedItem._publishedFromNow = util.moment(x.publishedAt).fromNow();
+
+                    indexedItem._likedTimes = x.likedTimes > (indexedItem._likedTimes || 10) ?
+                        x.likedTimes : (indexedItem.randomNum + x.likedTimes);
+
+                } else {
+                    x._sourceWxDisplayName = x.sourceWxNickname || '-';
+                    x._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
+
+                    x._likedTimes = x.likedTimes > (x._likedTimes || 10) ?
+                        x.likedTimes : (x.randomNum + x.likedTimes);
+                }
+
+                this.setData({
+                    lists: app.lists
+                });
+            });
+
             if (app.lists.length) {
                 gdt.magicListItemLoadMore(app.lists[0]._id)
             }
@@ -242,7 +270,6 @@ Page({
                 screenHeight: x.screenHeight,
             });
         });
-
     },
     //上拉加载
     onReachBottom: function () {
@@ -272,9 +299,6 @@ Page({
         // console.log( e.detail.formId)
         // this.setData({
         // formId: e.detail.formId }) 
-    },
-    handleDetail12:function(){
-        console.log(123)
     }
 
 })
