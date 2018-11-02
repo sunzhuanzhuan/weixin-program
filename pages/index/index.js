@@ -24,6 +24,14 @@ Page({
         currentTabIndex: 0,
         type: 'getUserInfo',
         type1: 'getUserInfo',
+        isVideo:false,
+        currentindex:undefined
+    },
+    //变成video
+    changeVideo:function(e){
+       
+        const current = e.currentTarget.dataset.currentindex;
+        this.setData({isVideo:true,currentindex:current})
     },
     //授权
     //授权的时候发生的
@@ -70,7 +78,9 @@ Page({
     handleTitleTab(e) {
         this.setData({
             scrollTop: this.data.scrollTop = 0,
-            currentTabIndex: e.currentTarget.dataset.tab
+            currentTabIndex: e.currentTarget.dataset.tab,
+            isVideo:false,
+            currentindex:null
         });
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {
@@ -88,7 +98,7 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        this.setData({ endWidth: e.changedTouches[0].clientX }, () => {
+        this.setData({ endWidth: e.changedTouches[0].clientX ,isVideo:false,currentindex:null}, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
                     that.setData({
