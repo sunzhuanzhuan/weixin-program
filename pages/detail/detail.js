@@ -429,7 +429,7 @@ Page({
             //绘制标题背景
             const ctx = wx.createCanvasContext('shareCanvas');
             ctx.setFillStyle('#ffffff')
-            ctx.fillRect(8, 8, 304 * ratio, 434 * ratio);
+            ctx.fillRect(0, 0, 320 * ratio, 450 * ratio);
 
             // 绘制通话的框
             ctx.moveTo(68 * ratio, 62 * ratio)
