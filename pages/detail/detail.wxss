@@ -19,7 +19,6 @@ button::after{ border: none;padding: 0 }
     line-height:1.0;
     font-size: 32rpx;
     color: #333;
-
 }
 
 /*  */

@@ -53,11 +53,8 @@
     font-size: 24rpx;
     text-align: left;
 }
-.bigBox{
-    margin-left:32rpx;
-   
-    
-}
+
+  
 .btnForm{
     text-align: left;
     background: #ffffff;

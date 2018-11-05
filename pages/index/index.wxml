@@ -24,7 +24,7 @@
         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' >
         <button  form-type="submit" class='btnForm' data-current="{{dataTab.length}}" data-name='{{item.title}}' hover-class='none' 
               data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:60px;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
-            <image src="/images/my.jpg" style="width:60px;height: 88rpx;" data-id="{{dataTab.length}}" ></image>
+            <image src="/images/my.png" style="width:60px;height: 88rpx;" data-id="{{dataTab.length}}" ></image>
         </button>
         </form>
     </view>
