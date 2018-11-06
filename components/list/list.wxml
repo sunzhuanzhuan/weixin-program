@@ -74,7 +74,7 @@
                                         <!-- <view style="position:relative"> -->
                                         <image style="width:690rpx;height:400rpx;display:block" mode="aspectFill" src="{{item.coverUrl}}"></image>
                                         <view class="fontShadow" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff">
-                                            <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;">
+                                            <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left">
                                                 {{item.title}}
                                             </view>
                                         </view>

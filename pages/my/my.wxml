@@ -5,7 +5,7 @@
     <view class="plBottm28">
         <view class="smallBox plTop36 plBottm32">
             <view  style="">
-                 <button style="margin-left:120%;width:200rpx;height:50rpx;font-size:28rpx;line-height:50rpx;border:1px solid #666;border-radius:50rpx;background:#fff" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg'>意见反馈</button>
+                 <button style="margin-left:120%;width:200rpx;height:50rpx;font-size:28rpx;line-height:50rpx;border:1px solid #666;border-radius:50rpx;background:#fff" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg' >意见反馈</button>
             </view>
             <view>
                 <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">

@@ -29,7 +29,7 @@ Page({
     },
     //变成video
     changeVideo:function(e){
-       
+       console.log(1111111)
         const current = e.currentTarget.dataset.currentindex;
         this.setData({isVideo:true,currentindex:current})
     },
@@ -98,7 +98,7 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        this.setData({ endWidth: e.changedTouches[0].clientX ,isVideo:false,currentindex:null}, () => {
+        this.setData({ endWidth: e.changedTouches[0].clientX ,isVideo:false}, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
                     that.setData({
