@@ -47,17 +47,18 @@ button{
 .itemBigBox{
     width: 690rpx;
     height:500rpx;
-    margin: 30rpx
+    margin: 15rpx 30rpx;
     
 }
 .videoTitle{
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
-    width:440rpx;
+    width:410rpx;
     line-height:1.0;
     font-size: 32rpx;
     color: #333;
+    font-size: 34rpx;
 }
 .fontShadow {
     height: 90rpx;
@@ -75,7 +76,8 @@ button{
     
     padding: 50rpx 0;
     padding-right:30rpx;
-    border-bottom: 1px solid #E0E0E0;
+    background:#fff;
+    
    
 }
 .nowrapTwo{
@@ -86,4 +88,11 @@ button{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     line-height:1.5
+}
+.nowrapOne{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 630rpx;
+    font-size: 34rpx;
 }

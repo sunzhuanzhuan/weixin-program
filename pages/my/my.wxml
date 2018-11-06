@@ -4,7 +4,9 @@
 <view>
     <view class="plBottm28">
         <view class="smallBox plTop36 plBottm32">
-
+            <view  style="">
+                 <button style="margin-left:120%;width:200rpx;height:50rpx;font-size:28rpx;line-height:50rpx;border:1px solid #666;border-radius:50rpx;background:#fff" open-type="contact" show-message-card="true" bindcontact="handleContact">意见反馈</button>
+            </view>
             <view>
                 <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
                     <image style="width: 140rpx;height: 140rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
