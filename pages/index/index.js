@@ -29,9 +29,13 @@ Page({
     },
     //变成video
     changeVideo:function(e){
-       console.log(1111111)
         const current = e.currentTarget.dataset.currentindex;
         this.setData({isVideo:true,currentindex:current})
+        const item = e.currentTarget.dataset.item;
+        if (item && item.type === 'txvVideo' && item._id) {
+            gdt.trackVideoPlay(item._id);
+            gdt.track('video-play', { itemId: item._id });
+        }
     },
     //授权
     //授权的时候发生的

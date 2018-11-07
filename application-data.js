@@ -234,7 +234,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                         }
                     }
                     if (simpleMode) {
-                        const filePath = res.tempFilePath || options.filePath;
+                        const filePath = res.tempFilePath || queryOptions.filePath;
 
                         if (res.statusCode !== 200) {
                             return Promise.reject(res);
@@ -1043,6 +1043,20 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: entityId,
                     view: viewId,
                     duration: duration
+                }
+            });
+
+            return queryPromise;
+        });
+    }
+
+    trackVideoPlay(entityId, refId) {
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall('POST', '/my/views', {
+                body: {
+                    entityId: entityId,
+                    scene: this.showParam.scene,
+                    ref: refId
                 }
             });
 

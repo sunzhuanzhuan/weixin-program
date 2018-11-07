@@ -3,10 +3,10 @@
         <view wx:for="{{list}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
             <!-- 视频 -->
             <view wx:if="{{item.type === 'txvVideo'}}" class="itemBigBox">
-                <view wx:if='{{currentindex == index }}' data-currentIndex='{{index}}'>
+                <view wx:if='{{currentindex == index }}' data-item="{{item}}" data-currentIndex='{{index}}'>
                     <txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video" autoplay="{{isVideo}}"></txv-video>
                 </view>
-                <view wx:else data-currentIndex='{{index}}' style="position:relative;" bindtap='changeVideo'>
+                <view wx:else data-currentIndex='{{index}}' data-item="{{item}}"  style="position:relative;" bindtap='changeVideo'>
                     <image src='/images/play.png' style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" />
                     <image style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="http://puui.qpic.cn/vpic/0/{{item.txvVid}}.png/0"></image>
                 </view>
