@@ -51,7 +51,8 @@ Page({
         //推荐视频
         recommendations:[],
         //音频的播放和暂停的开关
-        isPlay:false
+        isPlay:false,
+        isChangeBig:false
     },
     // 点击切换视频
     handleVideo:function(e){
@@ -677,13 +678,20 @@ Page({
         // innerAudioContext.onPlay(()=>{
         //     
         // })
+        this.setData({isPlay:true})
         console.log('开始播放')
-        innerAudioContext.play()
+        innerAudioContext.play();
+        this.setData({isChangeBig:!this.data.isChangeBig})
        
     },
     handlePauseVideo:function(){
-        console.log('暂停')
-        innerAudioContext.pause()
+        console.log('暂停');
         
+        innerAudioContext.pause();
+        this.setData({isPlay:false})
+        this.setData({isChangeBig:!this.data.isChangeBig})
+    },
+    handleShink:function(){
+        this.setData({isChangeBig:!this.data.isChangeBig})
     }
 })

@@ -111,6 +111,14 @@
 
 <!-- 悬浮的音频 -->
 
-<view wx:if="{{entity.type === 'wxArticle'}}" style="position:fixed;bottom:100rpx;right:30rpx;z-index:90">
-    <image src="/images/listen.png" style="width:140rpx;height:140rpx" />
+<view wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="position:fixed;bottom:100rpx;left:30rpx;z-index:90">
+    <image src="/images/listen.png" style="width:140rpx;height:140rpx" bindtap="handlePlayVideo"/>
+</view>
+<view wx:if="{{entity.type === 'wxArticle' && isPlay === true && isChangeBig === false}}" style="position:fixed;bottom:100rpx;left:30rpx;z-index:90">
+    <image src="/images/pause.png" style="width:140rpx;height:140rpx" bindtap="handlePauseVideo"/>
+</view>
+<view wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="position:fixed;bottom:100rpx;right:70rpx;z-index:90;width:440rpx;height:140rpx;background:red">
+    <text style="display:inline-block;width:40rpx;height:140rpx;line-height:140rpx;background:#000" bindtap="handleShink"> > </text>
+    <image wx:if="{{isPlay}}" src="/images/pause.png" style="width:140rpx;height:140rpx;margin-left:50rpx;" bindtap="handlePauseVideo"/>
+    <image wx:else src="/images/listen.png" style="width:140rpx;height:140rpx" bindtap="handlePlayVideo"/>
 </view>
