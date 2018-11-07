@@ -234,7 +234,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                         }
                     }
                     if (simpleMode) {
-                        const filePath = res.tempFilePath || options.filePath;
+                        const filePath = res.tempFilePath || queryOptions.filePath;
 
                         if (res.statusCode !== 200) {
                             return Promise.reject(res);
