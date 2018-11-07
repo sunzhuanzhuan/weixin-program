@@ -25,6 +25,8 @@
                 <text class="line"></text>
             </view>
         </view>
+        <view bindtap="handlePlayVideo">123</view>
+        <view bindtap="handlePauseVideo">456</view>
         <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     </scroll-view>
     <!-- 纯视频的布局 -->
