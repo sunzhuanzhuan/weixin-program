@@ -1,5 +1,5 @@
 <template name="share">
-
+                <view class="box">
                 <view class="bigBox" style="padding:0 32rpx">
                     <view class="imgBox" bindtap="handleDetailIntroduce"  >
                         <image class="img" mode="aspectFill"  src="/images/new.png" ></image>
@@ -34,6 +34,7 @@
                         </view>
 
                     </block>
+                </view>
                 </view>
 
 
