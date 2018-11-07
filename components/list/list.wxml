@@ -41,11 +41,11 @@
                     <view style="width:100%;overflow:hidden;background:#ffffff;">
                         <!-- 小的图片的文章 -->
                         <view class="itemSmall" style="float:right;{{(list[index+1].wxMidVec && list[index+1].wxMidVec[list[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1px solid #E0E0E0;'}}">
-                            <image style="float:right;width:220rpx;height:180rpx;" mode="aspectFill" src="{{item.coverUrl}}"></image>
+                            <image style="float:right;width:220rpx;height:180rpx;" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item.id}}"></image>
                             <view style="float:rigth;width:430rpx;height:180rpx;position:relative;">
-                                <text class='nowrapTwo' style="margin-left:20rpx;display:inline-block">{{item.title}}</text>
+                                <text class='nowrapTwo' style="margin-left:20rpx;display:inline-block" bindtap="handleDetail" data-id="{{item.id}}">{{item.title}}</text>
                                 
-                                    <view style="background:#ffffff;width:430rpx;position:absolute;bottom:0;" hover-class="">
+                                    <view style="background:#ffffff;width:430rpx;position:absolute;bottom:-30rpx;" hover-class="">
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button  form-type="submit" style='float:right;background:#fff;margin-right:-20rpx' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
                                             <image class="imgBtnItem" src="/images/share.png"></image>

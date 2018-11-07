@@ -87,8 +87,8 @@ button{
     width: 430rpx;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-height:1.5;
     font-size: 34rpx;
+    height: 100rpx;
 }
 .nowrapOne{
     overflow: hidden;
