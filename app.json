@@ -5,7 +5,8 @@
     "pages/test/detail",
     "pages/log/detail",
    "pages/detail/detail",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/introduce/intro"
 
   ],
   "window":{

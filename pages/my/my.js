@@ -147,4 +147,13 @@ Page({
             url:'/pages/index/index'
         })
     },
+    handleDetailIntroduce:function(){
+        wx.navigateTo({
+            url:'/pages/introduce/intro'
+        })
+    },
+    handleContact:function(){
+        
+    }
+    
   })

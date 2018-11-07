@@ -29,8 +29,8 @@
 }
 
 .avatarRead{
-    width: 60rpx;
-    height: 60rpx;
+    width: 56rpx;
+    height: 56rpx;
     border-radius: 50%;
     margin-right: 20rpx;
 
@@ -53,11 +53,8 @@
     font-size: 24rpx;
     text-align: left;
 }
-.bigBox{
-    margin-left:32rpx;
-   
-    
-}
+
+  
 .btnForm{
     text-align: left;
     background: #ffffff;

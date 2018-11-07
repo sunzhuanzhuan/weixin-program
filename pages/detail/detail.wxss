@@ -19,7 +19,6 @@ button::after{ border: none;padding: 0 }
     line-height:1.0;
     font-size: 32rpx;
     color: #333;
-
 }
 
 /*  */
@@ -166,8 +165,8 @@ button{
    text-align: center;
 }
 .imgBtn {
-    width: 40rpx;
-    height: 40rpx;
+    width: 32rpx;
+    height: 32rpx;
     margin-bottom: -10rpx;
     margin-top:-4rpx
 }
@@ -178,8 +177,8 @@ button{
     margin-top:-8rpx
 }
 .imgBtnKonw{
-    width: 40rpx;
-    height: 40rpx;
+    width: 32rpx;
+    height: 32rpx;
     margin-left:60rpx;
     margin-top: 14rpx;
 }
