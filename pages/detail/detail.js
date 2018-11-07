@@ -458,7 +458,15 @@ Page({
             const numArtical = res[0].readingMeta.nthRead + '';
             ctx.setFillStyle('#101010');
             ctx.fillText(numArtical, 100 * ratio, 96 * ratio);
-            const bigTitle = ('这是我在' + this.data.appName + '小程序阅读的第')
+            
+            let type =''
+            if(this.data.entity.type == 'wxArticle'){
+                type = '阅读的'
+            }else{
+                type = '观看的'
+            }
+
+            const bigTitle = ('这是我在' + this.data.appName + '小程序'+type+'第')
             ctx.setFontSize(12 * ratio)
             ctx.setFillStyle('#101010');
             ctx.fillText(bigTitle, 100 * ratio, 74 * ratio);
