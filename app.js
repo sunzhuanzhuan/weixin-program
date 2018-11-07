@@ -1,7 +1,7 @@
 const GDT = require('./application-data.js');
 App({
     onLaunch: function(launchParam) {
-        this.globalData.applicationDataContext = new GDT(launchParam);
+        this.globalData.applicationDataContext = new GDT(launchParam, ['wxArticle']);
     },
     onShow: function (showParam) {
         this.globalData.applicationDataContext.onAppShow(showParam);

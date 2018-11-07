@@ -6,7 +6,7 @@ Page({
         appName: '',
         nodes: [],
         isShow: true,
-        shareButton: '../../images/shareAfter.png',
+        shareButton: '../../images/share.png',
 
         src: '',
         isLike: false,

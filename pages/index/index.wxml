@@ -6,7 +6,7 @@
 
     <view style="height:88rpx;background:#ffffff;">
         <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x
-                      style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-60}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
+                      style="position:fixed;z-index:27;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-52}}px);background:#ffffff;white-space:nowrap;overflow: hidden">
            
            <view class="nav">
                 
@@ -23,8 +23,8 @@
         <!-- <view style="height:88rpx;width:50rpx;display:inline-block;background:#ffffff;position:fixed;z-index:25;right:120rpx"></view> -->
         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' >
         <button  form-type="submit" class='btnForm' data-current="{{dataTab.length}}" data-name='{{item.title}}' hover-class='none' 
-              data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:60px;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
-            <image src="/images/my.png" style="width:60px;height: 88rpx;" data-id="{{dataTab.length}}" ></image>
+              data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:55px;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
+            <image src="/images/my.png" style="width:55px;height: 72rpx;" data-id="{{dataTab.length}}" ></image>
         </button>
         </form>
     </view>

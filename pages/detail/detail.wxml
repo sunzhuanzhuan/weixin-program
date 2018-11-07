@@ -1,7 +1,7 @@
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <view>
-    <scroll-view  wx:if="{{entity.type !=='txvVideo'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
+    <scroll-view  scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
         <!-- 播放视频的位置 -->
         <view wx:if="{{videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
             <view>
@@ -30,8 +30,8 @@
         <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     </scroll-view>
     <!-- 纯视频的布局 -->
-    <view wx:else>
-        <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
+     <!-- <view>
+       <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
             <txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
             <view class="nowrapBig" style="margin-top:20rpx">{{entity.title}}</view>
             <view class="nowrap" style="font-size:32rpx;">
@@ -58,7 +58,7 @@
             </view >
             
         </view>
-    </view>
+    </view> -->
     
 
 
@@ -78,7 +78,7 @@
                         <view class="letterKonw">让朋友知道我在读</view>
                     </button>
                     <button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx;':'height:134rpx'}}">
-                        <image class="imgBtn" src="{{isLike?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
+                        <image class="imgBtn" src="{{isLike?('/images/allStar.png'):('/images/star.png')}}"></image>
                         <view class="letter">收藏</view>
                     </button>
                     <button class="btnBox" style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
