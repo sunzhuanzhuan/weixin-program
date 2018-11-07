@@ -24,7 +24,7 @@
             </view>
             <view class="smallBox">
                 <text>{{userInfo ? num.liked : ''}}</text>
-                <text class="readBoxName">喜欢</text>
+                <text class="readBoxName">收藏</text>
             </view>
         </view>
     </view>
@@ -36,7 +36,7 @@
         </view>
         <view bindtap="handleTab" data-name="myLikes">
             <image class="icon" src="{{currentTab === 'myLikes' ? likeBefore : likeAfter}}"></image>
-            <text class="{{currentTab === 'myLikes' ? 'selected' : 'none'}}">我的喜欢</text>
+            <text class="{{currentTab === 'myLikes' ? 'selected' : 'none'}}">我的收藏</text>
         </view>
     </view>
     <view>
