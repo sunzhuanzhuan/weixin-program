@@ -1,4 +1,5 @@
 <template name="share">
+    <block wx:if="{{shareList.length == 0}}" >
                 <view class="box">
                 <view class="bigBox" style="padding:0 32rpx">
                     <view class="imgBox" bindtap="handleDetailIntroduce"  >
@@ -37,7 +38,7 @@
                 </view>
                 </view>
 
-
+</block >
     <block wx:if="{{shareList.length>0}}" >
         <view wx:for="{{shareList}}" class="container"  wx:key="{{index}}">
             <view class="box"  data-id="{{item.id}}"  >
