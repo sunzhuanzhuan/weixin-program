@@ -1050,6 +1050,20 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
 
+    trackVideoPlay(entityId, refId) {
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall('POST', '/my/views', {
+                body: {
+                    entityId: entityId,
+                    scene: this.showParam.scene,
+                    ref: refId
+                }
+            });
+
+            return queryPromise;
+        });
+    }
+
     track(eventName, props) {
 
         return Promise.all([this.systemInfo, this.networkType, this.currentUser]).then((x) => {
