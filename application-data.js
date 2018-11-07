@@ -392,6 +392,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.localState.description = appBaseInfo.description;
             this.localState.avatarUrl = appBaseInfo.avatarUrl;
             this.localState.lists = appBaseInfo.lists;
+            this.localState.pendingAudition = appBaseInfo.pendingAudition;
+            if (this.localState.pendingAudition) {
+                this.entityTypes = ['wxArticle']
+            }
             if (this.localState.lists.length) {
                 this.localState.lists.forEach((x) => {
                     x.items = [];
