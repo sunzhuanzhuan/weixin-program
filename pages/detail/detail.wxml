@@ -76,7 +76,7 @@
                         <view class="letterKonw">让朋友知道我在读</view>
                     </button>
                     <button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx;':'height:134rpx'}}">
-                        <image class="imgBtn" src="{{isLike?('/images/likeAfter.png'):('/images/likeBefore.png')}}"></image>
+                        <image class="imgBtn" src="{{isLike?('/images/allStar.png'):('/images/star.png')}}"></image>
                         <view class="letter">收藏</view>
                     </button>
                     <button class="btnBox" style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
