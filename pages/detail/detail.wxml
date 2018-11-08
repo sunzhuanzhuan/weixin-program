@@ -11,7 +11,7 @@
                 <view bindtap="handleIsMutedFromArtical" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: -2rpx">
                     <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
                 </view>
-                <text style="color: #E6E6E6;display:inline-block;height:40rpx;margin-right: 50rpx;float: right;">
+                <text style="color: #E6E6E6;display:inline-block;height:40rpx;margin-right: 50rpx;float: right;line-height:10px;">
                     |
                 </text>
             </view>
