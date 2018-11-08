@@ -42,12 +42,12 @@
             <block> 
                 <view wx:if="{{currentTabIndex ==0}}" >
                 
-                    <image wx:if="{{dashboardTipShouldDisplay}}" src="/images/new.png" class="bigBox" style="width:91%;height:430rpx"></image>
+                    <image wx:if="{{dashboardTipShouldDisplay}}" src="/images/new.png" class="bigBox" style="width:91%;height:430rpx;margin:30rpx 30rpx -15rpx 30rpx"></image>
                 </view>
                     
                 <view>
                     
-                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening}}"/>
+                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent}}"/>
                 </view>
             </block>
 

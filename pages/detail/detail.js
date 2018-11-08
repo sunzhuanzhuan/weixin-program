@@ -59,6 +59,8 @@ Page({
         currentProgress:0,
         totalProgress:0
     },
+    
+
     // 点击切换视频
     handleVideo:function(e){
         // this.setData({videoId:e.currentTarget.dataset.videoid,videoTitle:e.currentTarget.dataset.videotitle});

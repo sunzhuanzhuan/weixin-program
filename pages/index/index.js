@@ -28,7 +28,7 @@ Page({
         currentindex:undefined,
         //是否正在播放
         listening:false,
-        listenIndexCurrent:undefined
+        listenIndexCurrent:0
     },
 
     //听力
