@@ -50,6 +50,25 @@ Page({
         fullPicture: {},
         //推荐视频
         recommendations:[],
+        videoSource:[],
+        videoId:undefined,
+        selectedCricle:0,
+        isMuted:true
+    },
+
+    //文章里面的视频是否静音
+    handleIsMutedFromArtical:function(){
+        this.setData({
+            isMuted:!this.data.isMuted
+        })
+    },
+    //点击切换文章里面的视频
+    handleVideoTapFromArtical:function(e){
+        let index = e.currentTarget.dataset.videoid;
+        this.setData({
+            videoId:this.data.videoSource[index],
+            selectedCricle:index
+        })
     },
     // 点击切换视频
     handleVideo:function(e){
@@ -305,7 +324,7 @@ Page({
                 });
             };
            
-            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({videoId:r.entity.txvVids[0],videoSource: r.entity.txvVids,recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
