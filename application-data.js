@@ -398,6 +398,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 });
             }
             this.localState.listIndex = _.keyBy(this.localState.lists, '_id');
+            this.localState.listIndex['topScoreds'] = {
+                title: '推荐',
+                items: []
+            };
             this.localState.itemIndex = {};
             this.localStorage.then(() => {
                 this.emit('ready', this.localState);
@@ -677,6 +681,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
     }
 
     fetchListItems(listId, page, pageSize, _queryParams) {
+        const SPECIAL_LISTS = {
+            topScoreds: '/topScoreds'
+        };
         if (!page) {
             page = 1;
         }
@@ -698,9 +705,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         if (Array.isArray(this.entityTypes) && this.entityTypes.length) {
             qParams.types = this.entityTypes.join(',');
         }
+        const qUri = SPECIAL_LISTS[listId] || `/list/${listId}/entities`;
         const queryPromise = this.currentUser.then(() => {
             return this.simpleApiCall(
-                'GET', `/list/${listId}/entities`,
+                'GET', qUri,
                 {
                     query: _.merge({ page: page, pageSize: pageSize }, qParams, _queryParams || {}),
                     autoLoadingState: true
