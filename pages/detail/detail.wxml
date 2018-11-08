@@ -119,6 +119,9 @@
 </view>
 <view wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="position:fixed;bottom:100rpx;right:70rpx;z-index:90;width:440rpx;height:140rpx;background:red">
     <text style="display:inline-block;width:40rpx;height:140rpx;line-height:140rpx;background:#000" bindtap="handleShink"> > </text>
-    <image wx:if="{{isPlay}}" src="/images/pause.png" style="width:140rpx;height:140rpx;margin-left:50rpx;" bindtap="handlePauseVideo"/>
-    <image wx:else src="/images/listen.png" style="width:140rpx;height:140rpx" bindtap="handlePlayVideo"/>
+    <image wx:if="{{isPlay}}" src="/images/pause.png" style="width:140rpx;height:140rpx;margin-left:50rpx;" bindtap="handlePauseVideoNow"/>
+    <image wx:else src="/images/listen.png" style="width:140rpx;height:140rpx" bindtap="handlePlayVideoNow"/>
+
+    <slider max="{{totalTime}}" bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size  ="18" style="margin-top:-150rpx"></slider>
+    <view style="margin-left:140rpx">{{currentProgress}}   {{totalProgress}}</view>
 </view>

@@ -1,5 +1,6 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
+import {formatSeconds} from '../../utils/util'
 const innerAudioContext = wx.createInnerAudioContext()
 Page({
     data: {
@@ -52,7 +53,11 @@ Page({
         recommendations:[],
         //音频的播放和暂停的开关
         isPlay:false,
-        isChangeBig:false
+        isChangeBig:false,
+        currentTime:0,
+        totalTime:0,
+        currentProgress:0,
+        totalProgress:0
     },
     // 点击切换视频
     handleVideo:function(e){
@@ -671,16 +676,29 @@ Page({
         this.setData({ isShowPoster: false });
     },
     handlePlayVideo:function(){
+        let that = this;
         
-        
-        innerAudioContext.autoplay = true
-        innerAudioContext.src = 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E061FF02C31F716658E5C81F5594D561F2E88B854E81CAAB7806D5E4F103E55D33C16F3FAC506D1AB172DE8600B37E43FAD&fromtag=46'
-        // innerAudioContext.onPlay(()=>{
-        //     
-        // })
-        this.setData({isPlay:true})
+        innerAudioContext.autoplay = true;
+        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
         console.log('开始播放')
+       
+        innerAudioContext.onPlay((e)=>{
+           
+        })
+        this.setData({isPlay:true})
+       
         innerAudioContext.play();
+        // 时间的当前的进度;
+        
+        innerAudioContext.onTimeUpdate(()=>{
+            that.setData({
+                currentTime:parseInt(innerAudioContext.currentTime),
+                totalTime:parseInt(innerAudioContext.duration),
+                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+            })
+        })
+        //进度条的隐藏 和显示
         this.setData({isChangeBig:!this.data.isChangeBig})
        
     },
@@ -689,9 +707,38 @@ Page({
         
         innerAudioContext.pause();
         this.setData({isPlay:false})
-        this.setData({isChangeBig:!this.data.isChangeBig})
+        // this.setData({isChangeBig:!this.data.isChangeBig})
     },
     handleShink:function(){
         this.setData({isChangeBig:!this.data.isChangeBig})
+    },
+    handlePauseVideoNow:function(){
+        
+        this.setData({isPlay:false})
+        innerAudioContext.pause();
+    },
+    handlePlayVideoNow:function(){
+
+        this.setData({isPlay:true})
+        innerAudioContext.play();
+    },
+    //拖动过程中的一些处理
+    handleChanging:function(e){
+        let that = this;
+        this.setData({
+            currentTime:e.detail.value,
+            currentProgress:formatSeconds(parseInt(e.detail.value)),
+        })
+        innerAudioContext.seek(e.detail.value);
+        innerAudioContext.onTimeUpdate(()=>{
+            that.setData({
+                currentTime:parseInt(innerAudioContext.currentTime),
+                totalTime:parseInt(innerAudioContext.duration),
+                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+            })
+        })
+       
     }
+
 })
