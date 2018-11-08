@@ -2,7 +2,7 @@ let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 const util = require('../../utils/util');
 const txvContext = requirePlugin("tencentvideo");
-
+const innerAudioContext = app.innerAudioContext
 Page({
     data: {
         appTitle: '',
@@ -25,8 +25,30 @@ Page({
         type: 'getUserInfo',
         type1: 'getUserInfo',
         isVideo:false,
-        currentindex:undefined
+        currentindex:undefined,
+        //是否正在播放
+        listening:false,
+        listenIndexCurrent:undefined
     },
+
+    //听力
+    handleListing:function(e){
+        console.log();
+        
+        this.setData({
+            listening:!this.data.listening,
+            listenIndexCurrent:e.currentTarget.dataset.index
+        })
+        let voiceId = e.currentTarget.dataset.item.wxmpVoiceIds[0]
+        innerAudioContext.autoplay = true;
+        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+        if(this.data.listening){
+            innerAudioContext.play();
+        }else{
+            innerAudioContext.pause();
+        }
+    },
+
     //变成video
     changeVideo:function(e){
        console.log(1111111)

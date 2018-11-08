@@ -18,7 +18,8 @@ App({
         distroId: "",
         appToken: "",
         sessionToken:'',
-        articleId:''
+        articleId:'',
+        innerAudioContext: wx.createInnerAudioContext()
 
     },
     

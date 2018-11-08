@@ -25,16 +25,23 @@ button{
     height: 40rpx;
 }
 .btnStar{
-    width: 60%;
+    width: 20%;
     float: left;
     background:#ffffff;
     height: 100rpx;
 }
 .btnShare{
-    width: 40%;
+    width: 20%;
     float: left;
     background:#ffffff;
     height: 100rpx;
+}
+.btnListen{
+    width: 60%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+    text-align: left;
 }
 
 .imgBtnItem {
