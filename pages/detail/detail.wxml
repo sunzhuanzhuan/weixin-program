@@ -1,9 +1,10 @@
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <view>
-    <scroll-view  wx:if="{{entity.type !=='txvVideo'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
+    <scroll-view  scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
+   
         <!-- 播放视频的位置 -->
-        <view wx:if="{{videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
+        <!-- <view wx:if="{{videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
             <view>
                 <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
             </view>
@@ -24,12 +25,12 @@
                 </view>
                 <text class="line"></text>
             </view>
-        </view>
+        </view> -->
         <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     </scroll-view>
     <!-- 纯视频的布局 -->
-    <view wx:else>
-        <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
+     <!-- <view>
+       <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
             <txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
             <view class="nowrapBig" style="margin-top:20rpx">{{entity.title}}</view>
             <view class="nowrap" style="font-size:32rpx;">
@@ -56,7 +57,7 @@
             </view >
             
         </view>
-    </view>
+    </view> -->
     
 
 
@@ -105,3 +106,32 @@
     <canvas style="width: 640rpx; height: 760rpx;background:#fff;margin-top:160rpx;margin-left:54rpx;border-radius:16rpx;" canvas-id="shareCanvas"></canvas>
     <button bindtap="handleSavePicture" class="btnSavePicture">已保存到相册，记得分享哦</button>
 </view>
+
+
+<!-- 悬浮的音频 后期作品 -->
+
+<!-- <view wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="position:fixed;bottom:100rpx;left:30rpx;z-index:90">
+    <image src="/images/listen.png" style="width:140rpx;height:140rpx" bindtap="handlePlayVideo"/>
+</view>
+<view wx:if="{{entity.type === 'wxArticle' && isPlay === true && isChangeBig === false}}" style="position:fixed;bottom:100rpx;left:30rpx;z-index:90">
+    <image src="/images/pause.png" style="width:140rpx;height:140rpx" bindtap="handlePauseVideo"/>
+</view>
+<view wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="position:fixed;bottom:100rpx;right:70rpx;z-index:90;width:440rpx;height:140rpx;background:red">
+    <text style="display:inline-block;width:40rpx;height:140rpx;line-height:140rpx;background:#000" bindtap="handleShink"> > </text>
+    <image wx:if="{{isPlay}}" src="/images/pause.png" style="width:140rpx;height:140rpx;margin-left:50rpx;" bindtap="handlePauseVideoNow"/>
+    <image wx:else src="/images/listen.png" style="width:140rpx;height:140rpx" bindtap="handlePlayVideoNow"/>
+
+    <slider max="{{totalTime}}" bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size  ="18" style="margin-top:-150rpx"></slider>
+    <view style="margin-left:140rpx">{{currentProgress}}   {{totalProgress}}</view>
+</view> -->
+
+<!-- 先期作品 -->
+<view wx:if="{{entity.type == 'wxArticle' && entity.wxmpVoiceIds.length>0 }}" >
+    <view wx:if="{{ isPlay === false}}" style="position:fixed;bottom:180rpx;right:30rpx;z-index:90">
+        <image src="/images/listen.png" style="width:120rpx;height:120rpx" bindtap="play"/>
+    </view>
+    <view wx:else style="position:fixed;bottom:180rpx;right:30rpx;z-index:90">
+        <image src="/images/pause.png" style="width:120rpx;height:120rpx" bindtap="pause"/>
+    </view>
+</view>
+

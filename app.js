@@ -18,7 +18,8 @@ App({
         distroId: "",
         appToken: "",
         sessionToken:'',
-        articleId:''
+        articleId:'',
+        backgroundAudioManager: wx.getBackgroundAudioManager()
 
     },
     

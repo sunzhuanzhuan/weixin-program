@@ -47,7 +47,7 @@
                     
                 <view>
                     
-                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex}}"/>
+                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex}}"/>
                 </view>
             </block>
 

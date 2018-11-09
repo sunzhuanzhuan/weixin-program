@@ -1,6 +1,7 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
-
+import {formatSeconds} from '../../utils/util'
+const innerAudioContext = app.backgroundAudioManager
 Page({
     data: {
         appName: '',
@@ -53,7 +54,15 @@ Page({
         videoSource:[],
         videoId:undefined,
         selectedCricle:0,
-        isMuted:true
+        isMuted:true,
+         //音频的播放和暂停的开关
+         isPlay:false,
+         isChangeBig:false,
+         currentTime:0,
+         totalTime:0,
+         currentProgress:0,
+         totalProgress:0,
+         clickIndex:0
     },
 
     //文章里面的视频是否静音
@@ -69,7 +78,10 @@ Page({
             videoId:this.data.videoSource[index],
             selectedCricle:index
         })
+       
     },
+    
+
     // 点击切换视频
     handleVideo:function(e){
         // this.setData({videoId:e.currentTarget.dataset.videoid,videoTitle:e.currentTarget.dataset.videotitle});
@@ -182,6 +194,14 @@ Page({
 
     },
     onLoad(options) {
+        console.log(options.listening)
+        if(options.listening == 'false'){
+            this.setData({isPlay:false})
+        }else{
+            this.setData({isPlay:true})
+        }
+       this.setData({clickIndex:options.index})
+       
         gdt.systemInfo.then((x) => {
             this.setData({
                 ratio: x.windowWidth * 2 / 750,
@@ -358,6 +378,15 @@ Page({
                 duration: Date.now() - this.data.enteredAt - this.data.suspendedFor
             });
         }
+        var pages = getCurrentPages();
+        var currPage = pages[pages.length - 1];  //当前选择好友页面
+        var prevPage = pages[pages.length - 2]; //上一个编辑款项页面
+        //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
+        let that = this;
+        prevPage.setData({  
+            listenIndexCurrent: that.data.clickIndex ,
+            listening:that.data.isPlay
+        });
     },
     recordUserscroll: function (event) {
         if (event.detail.scrollTop < 0) {
@@ -477,7 +506,6 @@ Page({
             const numArtical = res[0].readingMeta.nthRead + '';
             ctx.setFillStyle('#101010');
             ctx.fillText(numArtical, 100 * ratio, 96 * ratio);
-
             let type =''
             if(this.data.entity.type == 'wxArticle'){
                 type = '阅读的'
@@ -684,5 +712,85 @@ Page({
     },
     handleSavePicture: function () {
         this.setData({ isShowPoster: false });
+    },
+    //播放
+    play:function(){
+        let that = this;
+        
+        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
+        innerAudioContext.play();
+        this.setData({isPlay:true})
+    },
+    pause:function(){
+        console.log(21)
+        innerAudioContext.pause();
+        this.setData({isPlay:false})
+        console.log(this.data.isPlay)
     }
+    // handlePlayVideo:function(){
+    //     let that = this;
+        
+    //     innerAudioContext.autoplay = true;
+    //     innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
+    //     console.log('开始播放')
+       
+    //     innerAudioContext.onPlay((e)=>{
+           
+    //     })
+    //     this.setData({isPlay:true})
+       
+    //     innerAudioContext.play();
+    //     // 时间的当前的进度;
+        
+    //     innerAudioContext.onTimeUpdate(()=>{
+    //         that.setData({
+    //             currentTime:parseInt(innerAudioContext.currentTime),
+    //             totalTime:parseInt(innerAudioContext.duration),
+    //             currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+    //             totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+    //         })
+    //     })
+    //     //进度条的隐藏 和显示
+    //     this.setData({isChangeBig:!this.data.isChangeBig})
+       
+    // },
+    // handlePauseVideo:function(){
+    //     console.log('暂停');
+        
+    //     innerAudioContext.pause();
+    //     this.setData({isPlay:false})
+    //     // this.setData({isChangeBig:!this.data.isChangeBig})
+    // },
+    // handleShink:function(){
+    //     this.setData({isChangeBig:!this.data.isChangeBig})
+    // },
+    // handlePauseVideoNow:function(){
+        
+    //     this.setData({isPlay:false})
+    //     innerAudioContext.pause();
+    // },
+    // handlePlayVideoNow:function(){
+
+    //     this.setData({isPlay:true})
+    //     innerAudioContext.play();
+    // },
+    // //拖动过程中的一些处理
+    // handleChanging:function(e){
+    //     let that = this;
+    //     this.setData({
+    //         currentTime:e.detail.value,
+    //         currentProgress:formatSeconds(parseInt(e.detail.value)),
+    //     })
+    //     innerAudioContext.seek(e.detail.value);
+    //     innerAudioContext.onTimeUpdate(()=>{
+    //         that.setData({
+    //             currentTime:parseInt(innerAudioContext.currentTime),
+    //             totalTime:parseInt(innerAudioContext.duration),
+    //             currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+    //             totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+    //         })
+    //     })
+       
+    // }
+
 })

@@ -9,6 +9,7 @@
     "pages/introduce/intro"
 
   ],
+  "requiredBackgroundModes": ["audio"],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",

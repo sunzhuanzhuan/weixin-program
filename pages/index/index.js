@@ -2,7 +2,7 @@ let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 const util = require('../../utils/util');
 const txvContext = requirePlugin("tencentvideo");
-
+const innerAudioContext = app.backgroundAudioManager
 Page({
     data: {
         appTitle: '',
@@ -25,8 +25,51 @@ Page({
         type: 'getUserInfo',
         type1: 'getUserInfo',
         isVideo:false,
-        currentindex:undefined
+        currentindex:undefined,
+        //是否正在播放
+        listening:false,
+        listenIndexCurrent:0,
+        listenTablistCurrent:0
     },
+
+    //听力
+    handleListing:function(e){
+        console.log(e.currentTarget.dataset.tablist)
+        let voiceId = e.currentTarget.dataset.item.wxmpVoiceIds[0]
+        this.setData({ listenTablistCurrent:e.currentTarget.dataset.tablist })
+        let that = this;
+        if(e.currentTarget.dataset.index == this.data.listenIndexCurrent){
+            if(this.data.listening){
+                innerAudioContext.pause();
+                this.setData({
+                    listening:false,
+                    listenIndexCurrent:e.currentTarget.dataset.index
+                })
+            }else{
+                innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+                innerAudioContext.title = e.currentTarget.dataset.item.title
+                this.setData({
+                    listening:true,
+                    listenIndexCurrent:e.currentTarget.dataset.index
+                })
+                innerAudioContext.play();
+            }
+       
+        }else{
+            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+             innerAudioContext.title = e.currentTarget.dataset.item.title
+            innerAudioContext.play();
+            this.setData({
+                listening:true,
+                listenIndexCurrent:e.currentTarget.dataset.index
+            })
+        }
+        
+        
+        
+        
+    },
+   
     //变成video
     changeVideo:function(e){
         const current = e.currentTarget.dataset.currentindex;
@@ -73,6 +116,7 @@ Page({
 
     },
     onShow: function () {
+        console.log(this)
         let that = this
         wx.showShareMenu({ withShareTicket: true });
 
@@ -91,17 +135,48 @@ Page({
             gdt.magicListItemFirstLoad(currentListInstance._id);
             gdt.track('index-show-tab', { listId: currentListInstance._id, title: currentListInstance.title });
         }
+        if(this.data.listenTablistCurrent != this.data.currentTabIndex){
+            this.setData({
+                listening:false,
+                listenIndexCurrent:0,
+            })
+        }else{
+            if(this.data.listening){
+               
+                this.setData({
+                    listening:false
+                   
+                })
+            }else{
+                
+                this.setData({
+                    listening:true
+                })
+               
+            } 
+        }
     },
     //跳转到详情
     handleDetail(e) {
-        console.log(12)
-        let that = this;
-        wx.navigateTo({
-            url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle
-        })
+        let everyIndex = e.currentTarget.dataset.everyindex;
+        if(everyIndex == this.data.listenIndexCurrent){
+             let that = this;
+            wx.navigateTo({
+                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle +'&listening='+this.data.listening+'&index='+everyIndex
+            })
+        }else{
+            let that = this;
+            wx.navigateTo({
+                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle +'&listening=false&index='+everyIndex
+            })
+        }
+        // console.log( data-everyIndex="{{index}}");
+        console.log()
+       
     },
     handleTouchEnd(e) {
         let that = this;
+        
         this.setData({ endWidth: e.changedTouches[0].clientX ,isVideo:false}, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
@@ -123,6 +198,26 @@ Page({
                         });
                         wx.hideLoading();
                     }
+                    if(that.data.listenTablistCurrent != that.data.currentTabIndex){
+                        this.setData({
+                            listening:false,
+                            listenIndexCurrent:0,
+                        })
+                    }else{
+                        if(that.data.listening){
+                           
+                            that.setData({
+                                listening:false
+                               
+                            })
+                        }else{
+                            
+                            that.setData({
+                                listening:true
+                            })
+                           
+                        } 
+                    }
                 }
             } else {
                 if (that.data.endWidth - that.data.startsWidth >= that.data.screenWidth / 4) {
@@ -143,7 +238,26 @@ Page({
                             gdt.magicListItemFirstLoad(currentListInstance._id);
                         }
                     })
-
+                    if(that.data.listenTablistCurrent != that.data.currentTabIndex){
+                        this.setData({
+                            listening:false,
+                            listenIndexCurrent:0,
+                        })
+                    }else{
+                        if(that.data.listening){
+                           
+                            that.setData({
+                                listening:false
+                               
+                            })
+                        }else{
+                            
+                            that.setData({
+                                listening:true
+                            })
+                           
+                        } 
+                    }
                 }
             }
         })

@@ -15,37 +15,52 @@
                         {{item.title}}
                     </view>
                     <view data-id="{{item.id}}" style="float:right;width:250rpx">
-                        <!-- <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'> -->
-                            <!-- <button form-type="submit" style="background:#ffffff" hover-class=""> -->
-                                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                    <button  form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                        <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
-                                        <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
-                                            {{item._likedTimes}}
-                                        </text>
-                                    </button>
-                                </form>
-                                <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                    <button  form-type="submit" class='btnShare' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
-                                        <image class="imgBtnItem" src="/images/share.png"></image>
-                                    </button>
-                                </form> 
-                            <!-- </button> -->
-                        <!-- </form> -->
+                        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                            <button  form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
+                                <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
+                                    {{item._likedTimes}}
+                                </text>
+                            </button>
+                        </form>
+                        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                            <button  form-type="submit" class='btnShare' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
+                                <image class="imgBtnItem" src="/images/share.png"></image>
+                            </button>
+                        </form> 
                     </view>
                 </view>
-            </view>
-            <view wx:else>
+            </view> 
+            <view  wx:if="{{item.type === 'wxArticle'}}">
                 <!-- 文章 -->
                 <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list[index-1].wxMidVec && list[index-1].wxMidVec[list[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list[index+1].wxMidVec && list[index+1].wxMidVec[list[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">
                     <view style="width:100%;overflow:hidden;background:#ffffff;">
                         <!-- 小的图片的文章 -->
                         <view class="itemSmall" style="float:right;{{(list[index+1].wxMidVec && list[index+1].wxMidVec[list[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1px solid #E0E0E0;'}}">
-                            <image style="float:right;width:220rpx;height:180rpx;" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item.id}}"></image>
+                            <image style="float:right;width:220rpx;height:180rpx;" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item.id}}"  data-everyIndex="{{index}}"></image>
                             <view style="float:rigth;width:430rpx;height:180rpx;position:relative;">
-                                <text class='nowrapTwo' style="margin-left:20rpx;display:inline-block" bindtap="handleDetail" data-id="{{item.id}}">{{item.title}}</text>
+                                <text class='nowrapTwo' style="margin-left:20rpx;display:inline-block" bindtap="handleDetail" data-id="{{item.id}}" data-everyIndex="{{index}}">{{item.title}}</text>
                                 
                                     <view style="background:#ffffff;width:430rpx;position:absolute;bottom:-30rpx;" hover-class="">
+                                        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                                            <button  wx:if="{{item.wxmpVoiceIds.length>0}}"  style='float:left;background:#fff;margin-right:-20rpx' form-type="submit" class='btnListen'  data-tabList="{{currentTabIndex}}" 
+                                            form-type="submit" bindtap="handleListing"  data-id="{{item.id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                                    <image class="imgBtnItem" src="{{listenIndexCurrent==index && listening?'/images/pausing.png':'/images/playing.png'}}"></image>
+                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                                        暂停
+                                                    </text>
+                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                                        听文章
+                                                    </text>
+                                                </button>
+                                           
+
+                                            
+                                            <button wx:else class='btnListen' style='float:left;background:#fff;margin-right:-20rpx' form-type="submit" class='btnListen' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                                   
+                                                </button>
+                                           
+                                        </form>
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button  form-type="submit" style='float:right;background:#fff;margin-right:-20rpx' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
                                             <image class="imgBtnItem" src="/images/share.png"></image>
@@ -68,7 +83,7 @@
                     <view class="itemBigBox">
                         <!-- 大的图片的文章 -->
                         <view>
-                            <view bindtap="handleDetail" data-id="{{item.id}}">
+                            <view bindtap="handleDetail" data-id="{{item.id}}" data-everyIndex="{{index}}">
                                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                     <button form-type="submit" hover-class='none' style="position:relative;padding:0;height:400rpx;border-radius:8rpx 8rpx 0 0">
                                         <!-- <view style="position:relative"> -->
@@ -83,10 +98,32 @@
                                 </form>
                             </view>
                             <view style="background:#ffffff;height:100rpx;width:690rpx;">
-                                <view class="videoTitle" data-id="{{item.id}}" style="display:inline-block;line-height:88rpx;"></view>
-                                <view data-id="{{item.id}}" style="float:right;width:250rpx">
+                                <view class="videoTitle" data-id="{{item.id}}"></view>
+                                <view data-id="{{item.id}}" style="">
                                     <!-- <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'> -->
                                         <!-- <button style="background:#ffffff;" hover-class=""> -->
+                                        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+                                            <button wx:if="{{item.wxmpVoiceIds.length>0}}" form-type="submit" class='btnListen'
+                                            form-type="submit" bindtap="handleListing"  data-id="{{item.id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"  data-tabList="{{currentTabIndex}}" >
+                                                    <image class="imgBtnItem" src="{{listenIndexCurrent==index && listening?'/images/pausing.png':'/images/playing.png'}}"></image>
+                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                                        暂停
+                                                    </text>
+                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                                        听文章
+                                                    </text>
+                                                </button>
+                                           
+
+                                            
+                                            <button wx:else form-type="submit" class='btnListen' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                                    <!-- <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
+                                                    <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
+                                                        没有文章听
+                                                    </text> -->
+                                                </button>
+                                           
+                                        </form>
                                            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                             <button form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
                                                     <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>

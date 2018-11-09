@@ -17,7 +17,45 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+function formatSeconds(value) {
+
+  var second = parseInt(value);// 秒
+
+  var mini = 0;// 分
+
+  if(second > 60) {
+
+      mini = parseInt(second/60);
+      if(mini < 10){
+        mini= '0'+mini
+      }else{
+        mini=mini
+      }
+      second = parseInt(second%60);
+      if(second < 10){
+        second='0' +second
+      }else{
+        second=second
+        
+      }
+      return mini+':'+second
+  }else{
+    if(second < 10){
+      return '00:0'+second
+    }else{
+      return '00:'+second
+    }
+    
+  }
+
+    
+
+ 
+
+}
+
 module.exports = {
   formatTime: formatTime,
-  moment:moment
+  moment:moment,
+  formatSeconds:formatSeconds
 }
