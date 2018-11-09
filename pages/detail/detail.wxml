@@ -2,7 +2,7 @@
 <!-- detail.wxml -->
 <view>
     <scroll-view  scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
-   {{ isPlay == false  }}
+   
         <!-- 播放视频的位置 -->
         <!-- <view wx:if="{{videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
             <view>
@@ -126,7 +126,7 @@
 </view> -->
 
 <!-- 先期作品 -->
-<view wx:if="{{entity.type == 'wxArticle'}}" >
+<view wx:if="{{entity.type == 'wxArticle' && entity.wxmpVoiceIds.length>0 }}" >
     <view wx:if="{{ isPlay === false}}" style="position:fixed;bottom:180rpx;right:30rpx;z-index:90">
         <image src="/images/listen.png" style="width:120rpx;height:120rpx" bindtap="play"/>
     </view>

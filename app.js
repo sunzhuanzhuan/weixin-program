@@ -19,7 +19,7 @@ App({
         appToken: "",
         sessionToken:'',
         articleId:'',
-        innerAudioContext: wx.createInnerAudioContext()
+        innerAudioContext: wx.getBackgroundAudioManager()
 
     },
     
