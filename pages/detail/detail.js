@@ -84,6 +84,7 @@ Page({
 
     // 点击切换视频
     handleVideo:function(e){
+        console.log(1111111)
         // this.setData({videoId:e.currentTarget.dataset.videoid,videoTitle:e.currentTarget.dataset.videotitle});
         let qPromise;
         const scene = gdt.showParam.scene;
@@ -343,8 +344,10 @@ Page({
                     title: currentTitle,
                 });
             };
-           
-            this.setData({videoId:r.entity.txvVids[0],videoSource: r.entity.txvVids,recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+           if(r.entity.type=='wxArticle'){
+                this.setData({videoId:r.entity.txvVids[0],videoSource: r.entity.txvVids})
+           }
+            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })

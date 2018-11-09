@@ -1,10 +1,10 @@
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <view>
-    <scroll-view  scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
+    <scroll-view  wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
    
         <!-- 播放视频的位置 -->
-        <!-- <view wx:if="{{videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
+        <view wx:if="{{ videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
             <view>
                 <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
             </view>
@@ -25,11 +25,11 @@
                 </view>
                 <text class="line"></text>
             </view>
-        </view> -->
+        </view>
         <rich-text class="_root" nodes="{{nodes}}"></rich-text>
     </scroll-view>
     <!-- 纯视频的布局 -->
-     <!-- <view>
+     <view wx:if="{{entity.type == 'txvVideo'}}">
        <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
             <txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
             <view class="nowrapBig" style="margin-top:20rpx">{{entity.title}}</view>
@@ -57,7 +57,7 @@
             </view >
             
         </view>
-    </view> -->
+    </view>
     
 
 
