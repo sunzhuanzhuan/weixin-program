@@ -36,6 +36,18 @@ button{
     background:#ffffff;
     height: 100rpx;
 }
+.btnStarVideo{
+    width: 60%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+}
+.btnShareVideo{
+    width: 40%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+}
 .btnListen{
     width: 60%;
     float: left;
