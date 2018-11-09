@@ -1,7 +1,7 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 import {formatSeconds} from '../../utils/util'
-const innerAudioContext = app.innerAudioContext
+const innerAudioContext = app.backgroundAudioManager
 Page({
     data: {
         appName: '',
@@ -697,7 +697,7 @@ Page({
     //播放
     play:function(){
         let that = this;
-        innerAudioContext.autoplay = true;
+        
         innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
         innerAudioContext.play();
         this.setData({isPlay:true})

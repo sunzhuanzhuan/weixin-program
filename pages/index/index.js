@@ -2,7 +2,7 @@ let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 const util = require('../../utils/util');
 const txvContext = requirePlugin("tencentvideo");
-const innerAudioContext = app.innerAudioContext
+const innerAudioContext = app.backgroundAudioManager
 Page({
     data: {
         appTitle: '',
@@ -34,8 +34,8 @@ Page({
     //听力
     handleListing:function(e){
         let voiceId = e.currentTarget.dataset.item.wxmpVoiceIds[0]
-        innerAudioContext.autoplay = true;
-        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+        
+        
         let that = this;
         if(e.currentTarget.dataset.index == this.data.listenIndexCurrent){
             if(this.data.listening){
@@ -45,6 +45,8 @@ Page({
                     listenIndexCurrent:e.currentTarget.dataset.index
                 })
             }else{
+                innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+                innerAudioContext.title = e.currentTarget.dataset.item.title
                 this.setData({
                     listening:true,
                     listenIndexCurrent:e.currentTarget.dataset.index
@@ -53,6 +55,8 @@ Page({
             }
        
         }else{
+            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+             innerAudioContext.title = e.currentTarget.dataset.item.title
             innerAudioContext.play();
             this.setData({
                 listening:true,
