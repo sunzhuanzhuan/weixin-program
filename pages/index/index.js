@@ -28,14 +28,15 @@ Page({
         currentindex:undefined,
         //是否正在播放
         listening:false,
-        listenIndexCurrent:0
+        listenIndexCurrent:0,
+        listenTablistCurrent:0
     },
 
     //听力
     handleListing:function(e){
+        console.log(e.currentTarget.dataset.tablist)
         let voiceId = e.currentTarget.dataset.item.wxmpVoiceIds[0]
-        
-        
+        this.setData({ listenTablistCurrent:e.currentTarget.dataset.tablist })
         let that = this;
         if(e.currentTarget.dataset.index == this.data.listenIndexCurrent){
             if(this.data.listening){
@@ -71,7 +72,6 @@ Page({
    
     //变成video
     changeVideo:function(e){
-       console.log(1111111)
         const current = e.currentTarget.dataset.currentindex;
         this.setData({isVideo:true,currentindex:current})
     },
@@ -130,6 +130,26 @@ Page({
             gdt.magicListItemFirstLoad(currentListInstance._id);
             gdt.track('index-show-tab', { listId: currentListInstance._id, title: currentListInstance.title });
         }
+        if(this.data.listenTablistCurrent != this.data.currentTabIndex){
+            this.setData({
+                listening:false,
+                listenIndexCurrent:0,
+            })
+        }else{
+            if(this.data.listening){
+               
+                this.setData({
+                    listening:false
+                   
+                })
+            }else{
+                
+                this.setData({
+                    listening:true
+                })
+               
+            } 
+        }
     },
     //跳转到详情
     handleDetail(e) {
@@ -151,6 +171,7 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
+        
         this.setData({ endWidth: e.changedTouches[0].clientX ,isVideo:false}, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
@@ -172,6 +193,26 @@ Page({
                         });
                         wx.hideLoading();
                     }
+                    if(that.data.listenTablistCurrent != that.data.currentTabIndex){
+                        this.setData({
+                            listening:false,
+                            listenIndexCurrent:0,
+                        })
+                    }else{
+                        if(that.data.listening){
+                           
+                            that.setData({
+                                listening:false
+                               
+                            })
+                        }else{
+                            
+                            that.setData({
+                                listening:true
+                            })
+                           
+                        } 
+                    }
                 }
             } else {
                 if (that.data.endWidth - that.data.startsWidth >= that.data.screenWidth / 4) {
@@ -192,7 +233,26 @@ Page({
                             gdt.magicListItemFirstLoad(currentListInstance._id);
                         }
                     })
-
+                    if(that.data.listenTablistCurrent != that.data.currentTabIndex){
+                        this.setData({
+                            listening:false,
+                            listenIndexCurrent:0,
+                        })
+                    }else{
+                        if(that.data.listening){
+                           
+                            that.setData({
+                                listening:false
+                               
+                            })
+                        }else{
+                            
+                            that.setData({
+                                listening:true
+                            })
+                           
+                        } 
+                    }
                 }
             }
         })
