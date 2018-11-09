@@ -57,7 +57,8 @@ Page({
         currentTime:0,
         totalTime:0,
         currentProgress:0,
-        totalProgress:0
+        totalProgress:0,
+        clickIndex:0
     },
     
 
@@ -173,6 +174,13 @@ Page({
 
     },
     onLoad(options) {
+        console.log(options.listening)
+        if(options.listening == 'false'){
+            this.setData({isPlay:false})
+        }else{
+            this.setData({isPlay:true})
+        }
+       this.setData({clickIndex:options.index})
        
         gdt.systemInfo.then((x) => {
             this.setData({
@@ -350,6 +358,15 @@ Page({
                 duration: Date.now() - this.data.enteredAt - this.data.suspendedFor
             });
         }
+        var pages = getCurrentPages();
+        var currPage = pages[pages.length - 1];  //当前选择好友页面
+        var prevPage = pages[pages.length - 2]; //上一个编辑款项页面
+        //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
+        let that = this;
+        prevPage.setData({  
+            listenIndexCurrent: that.data.clickIndex ,
+            listening:that.data.isPlay
+        });
     },
     recordUserscroll: function (event) {
         if (event.detail.scrollTop < 0) {
@@ -686,8 +703,10 @@ Page({
         this.setData({isPlay:true})
     },
     pause:function(){
+        console.log(21)
         innerAudioContext.pause();
         this.setData({isPlay:false})
+        console.log(this.data.isPlay)
     }
     // handlePlayVideo:function(){
     //     let that = this;

@@ -33,22 +33,38 @@ Page({
 
     //听力
     handleListing:function(e){
-        console.log();
-        
-        this.setData({
-            listening:!this.data.listening,
-            listenIndexCurrent:e.currentTarget.dataset.index
-        })
         let voiceId = e.currentTarget.dataset.item.wxmpVoiceIds[0]
         innerAudioContext.autoplay = true;
         innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
-        if(this.data.listening){
-            innerAudioContext.play();
+        let that = this;
+        if(e.currentTarget.dataset.index == this.data.listenIndexCurrent){
+            if(this.data.listening){
+                innerAudioContext.pause();
+                this.setData({
+                    listening:false,
+                    listenIndexCurrent:e.currentTarget.dataset.index
+                })
+            }else{
+                this.setData({
+                    listening:true,
+                    listenIndexCurrent:e.currentTarget.dataset.index
+                })
+                innerAudioContext.play();
+            }
+       
         }else{
-            innerAudioContext.pause();
+            innerAudioContext.play();
+            this.setData({
+                listening:true,
+                listenIndexCurrent:e.currentTarget.dataset.index
+            })
         }
+        
+        
+        
+        
     },
-
+   
     //变成video
     changeVideo:function(e){
        console.log(1111111)
@@ -91,6 +107,7 @@ Page({
 
     },
     onShow: function () {
+        console.log(this)
         let that = this
         wx.showShareMenu({ withShareTicket: true });
 
@@ -112,11 +129,21 @@ Page({
     },
     //跳转到详情
     handleDetail(e) {
-        console.log(12)
-        let that = this;
-        wx.navigateTo({
-            url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle
-        })
+        let everyIndex = e.currentTarget.dataset.everyindex;
+        if(everyIndex == this.data.listenIndexCurrent){
+             let that = this;
+            wx.navigateTo({
+                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle +'&listening='+this.data.listening+'&index='+everyIndex
+            })
+        }else{
+            let that = this;
+            wx.navigateTo({
+                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle +'&listening=false&index='+everyIndex
+            })
+        }
+        // console.log( data-everyIndex="{{index}}");
+        console.log()
+       
     },
     handleTouchEnd(e) {
         let that = this;
