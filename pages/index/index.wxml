@@ -37,8 +37,7 @@
     </block>
 
     <scroll-view scroll-y="true" class="contentListBox" scroll-top="{{scrollTop}}" >
-        <view bind:touchstart="handleTouchStart"
-            bind:touchend="handleTouchEnd">
+        <view>
             <block> 
                 <view wx:if="{{currentTabIndex ==0}}" >
                 
@@ -47,7 +46,7 @@
                     
                 <view>
                     
-                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex}}"/>
+                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls}}"/>
                 </view>
             </block>
 
