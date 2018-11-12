@@ -31,11 +31,7 @@ Page({
         listenIndexCurrent:0,
         listenTablistCurrent:0,
         //推荐的top 
-        imgUrls: [
-            'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-            'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-            'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-        ],
+        imgUrls: [],
         indicatorDots: false,
         autoplay: false,
         interval: 5000,
@@ -432,15 +428,15 @@ Page({
             //     gdt.magicListItemLoadMore(app.lists[0]._id);
             // }
             gdt.magicListItemLoadMore('topScoreds').then((res)=>{
-               
-                   app.lists.unshift({
-                    id:'recommend',
-                    title:'推荐',
-                    items:res
-                })
+                    let oldRes = JSON.parse(JSON.stringify(res));
+                    let arr = res.splice(0,3);
+                   app.lists.unshift(app.listIndex['topScoreds']);
+                console.log(app.lists)
                 this.setData({
-                    lists: app.lists
+                    lists: app.lists,
+                    imgUrls:arr
                 })
+               
             });
         });
         gdt.systemInfo.then((x) => {
@@ -454,11 +450,19 @@ Page({
     },
     //上拉加载
     onReachBottom: function () {
-        const currentListInstance = this.data.lists[this.data.currentTabIndex]
+        const currentListInstance = this.data.lists[this.data.currentTabIndex];
+        
         if (currentListInstance) {
-            gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
+            if(currentListInstance._id === 'topScoreds'){
+                gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
+                    gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.oldRes.length });
+                    });
+            }else{
+                gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
                 gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
-            });
+                });
+            }
+            
         }
     },
     //下拉刷新

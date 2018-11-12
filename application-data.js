@@ -404,6 +404,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.localState.listIndex = _.keyBy(this.localState.lists, '_id');
             this.localState.listIndex['topScoreds'] = {
                 title: '推荐',
+                _id: 'topScoreds',
+                id: 'topScoreds',
                 items: []
             };
             this.localState.itemIndex = {};

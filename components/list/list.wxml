@@ -1,37 +1,22 @@
 <template name="list">
     <block wx:if="{{list.items.length>0}}">
+
         <!-- 推荐页的文章 -->
-        <block wx:if="{{list.id==='recommend'}}" >
+        <block wx:if="{{list.id==='topScoreds'}}" >
             <swiper current="1" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
                 <swiper-item class="swiperItem">
-                    <image class="{{swiperActiveZero}}" style="{{swiperActiveZero}};width:600rpx;border-radius:6rpx" src="{{imgUrls[0]}}" width="600rpx" height=""/>
+                    <image class="{{swiperActiveZero}}" mode="aspectFill" style="{{swiperActiveZero}};width:600rpx;border-radius:6rpx" src="{{imgUrls[1].coverUrl}}" width="600rpx" height=""/>
                 </swiper-item>
                 <swiper-item class="swiperItem">
-                    <image class="{{swiperActiveOne}}" style="{{swiperActiveZero}};width:600rpx;border-radius:6rpx" src="{{imgUrls[1]}}" width="600rpx" height=""/>
+                    <image class="{{swiperActiveOne}}" mode="aspectFill" style="{{swiperActiveZero}};width:600rpx;border-radius:6rpx" src="{{imgUrls[0].coverUrl}}" width="600rpx" height=""/>
                 </swiper-item>
                 <swiper-item  class="swiperItem">
-                    <image  class="{{swiperActiveTwo}}" style="{{swiperActiveZero}};width:600rpx;border-radius:6rpx" src="{{imgUrls[2]}}" width="600rpx" height=""/>
+                    <image  class="{{swiperActiveTwo}}" mode="aspectFill" style="{{swiperActiveZero}};width:600rpx;border-radius:6rpx" src="{{imgUrls[2].coverUrl}}" width="600rpx" height=""/>
                 </swiper-item>
                 
             </swiper>
 
         </block>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <view bind:touchstart="handleTouchStart"
