@@ -357,8 +357,13 @@ Page({
                     title: app.title,
                 });
             }
-            this.setData({
-                lists: app.lists,
+        //    app.lists.unshift({
+        //     id:'123',
+        //     title:'推荐',
+        //     items:[1,2]
+        //    })
+       
+        this.setData({
                 appTitle: app.title,
                 coverUrl: app.avatarUrl,
                 dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
@@ -423,9 +428,20 @@ Page({
                 });
             });
 
-            if (app.lists.length) {
-                gdt.magicListItemLoadMore(app.lists[0]._id)
-            }
+            // if (app.lists.length) {
+            //     gdt.magicListItemLoadMore(app.lists[0]._id);
+            // }
+            gdt.magicListItemLoadMore('topScoreds').then((res)=>{
+               
+                   app.lists.unshift({
+                    id:'recommend',
+                    title:'推荐',
+                    items:res
+                })
+                this.setData({
+                    lists: app.lists
+                })
+            });
         });
         gdt.systemInfo.then((x) => {
             this.setData({

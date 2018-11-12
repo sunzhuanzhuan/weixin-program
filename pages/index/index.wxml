@@ -46,7 +46,7 @@
                     
                 <view>
                     
-                    <template is="list" data="{{list:lists[currentTabIndex].items,heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo}}"/>
+                    <template is="list" data="{{list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo}}"/>
                 </view>
             </block>
 
