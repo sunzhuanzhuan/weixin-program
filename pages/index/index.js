@@ -39,9 +39,36 @@ Page({
         indicatorDots: false,
         autoplay: false,
         interval: 5000,
-        duration: 1000
+        duration: 1000,
+        swiperActiveZero: 'noActive',
+        swiperActiveOne:'',
+        swiperActiveTwo: 'noActive',
     },
 
+    //切换轮播图的时候
+    handleChangeSwiper:function(e){
+        console.log(e.detail.current);
+        if(e.detail.current == 2){
+            this.setData({
+                swiperActiveZero: 'noActive',
+                swiperActiveOne:'noActive',
+                swiperActiveTwo: '',
+            })
+            
+        }else if(e.detail.current == 0){
+            this.setData({
+                swiperActiveZero: '',
+                swiperActiveOne:'noActive',
+                swiperActiveTwo: 'noActive',
+            })
+        }else if(e.detail.current == 1){
+            this.setData({
+                swiperActiveZero: 'noActive',
+                swiperActiveOne:'',
+                swiperActiveTwo: 'noActive',
+            })
+        }
+    },
     //听力
     handleListing:function(e){
         console.log(e.currentTarget.dataset.tablist)
