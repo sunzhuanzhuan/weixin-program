@@ -156,9 +156,10 @@ Page({
         
     },
     //收藏和浏览足迹
-    handleTapHistoryOrArticalOrVideo:function(){
+    handleTapHistoryOrArticalOrVideo:function(e){
+        console.log(e.currentTarget.dataset.name )
         wx.navigateTo({
-            url:'/pages/history/history'
+            url:'/pages/history/history?type='+e.currentTarget.dataset.name
         })
     }
     

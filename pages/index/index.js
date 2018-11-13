@@ -203,8 +203,7 @@ Page({
                 url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle +'&listening=false&index='+everyIndex
             })
         }
-        // console.log( data-everyIndex="{{index}}");
-        console.log()
+       
        
     },
     handleTouchEnd(e) {
