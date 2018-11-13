@@ -729,71 +729,71 @@ Page({
         innerAudioContext.pause();
         this.setData({isPlay:false})
         console.log(this.data.isPlay)
-    }
-    // handlePlayVideo:function(){
-    //     let that = this;
+    },
+    handlePlayVideo:function(){
+        let that = this;
         
-    //     innerAudioContext.autoplay = true;
-    //     innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
-    //     console.log('开始播放')
+        innerAudioContext.autoplay = true;
+        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
+        console.log('开始播放')
        
-    //     innerAudioContext.onPlay((e)=>{
+        innerAudioContext.onPlay((e)=>{
            
-    //     })
-    //     this.setData({isPlay:true})
+        })
+        this.setData({isPlay:true})
        
-    //     innerAudioContext.play();
-    //     // 时间的当前的进度;
+        innerAudioContext.play();
+        // 时间的当前的进度;
         
-    //     innerAudioContext.onTimeUpdate(()=>{
-    //         that.setData({
-    //             currentTime:parseInt(innerAudioContext.currentTime),
-    //             totalTime:parseInt(innerAudioContext.duration),
-    //             currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
-    //             totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
-    //         })
-    //     })
-    //     //进度条的隐藏 和显示
-    //     this.setData({isChangeBig:!this.data.isChangeBig})
+        innerAudioContext.onTimeUpdate(()=>{
+            that.setData({
+                currentTime:parseInt(innerAudioContext.currentTime),
+                totalTime:parseInt(innerAudioContext.duration),
+                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+            })
+        })
+        //进度条的隐藏 和显示
+        this.setData({isChangeBig:!this.data.isChangeBig})
        
-    // },
-    // handlePauseVideo:function(){
-    //     console.log('暂停');
+    },
+    handlePauseVideo:function(){
+        console.log('暂停');
         
-    //     innerAudioContext.pause();
-    //     this.setData({isPlay:false})
-    //     // this.setData({isChangeBig:!this.data.isChangeBig})
-    // },
-    // handleShink:function(){
-    //     this.setData({isChangeBig:!this.data.isChangeBig})
-    // },
-    // handlePauseVideoNow:function(){
+        innerAudioContext.pause();
+        this.setData({isPlay:false})
+        // this.setData({isChangeBig:!this.data.isChangeBig})
+    },
+    handleShink:function(){
+        this.setData({isChangeBig:!this.data.isChangeBig})
+    },
+    handlePauseVideoNow:function(){
         
-    //     this.setData({isPlay:false})
-    //     innerAudioContext.pause();
-    // },
-    // handlePlayVideoNow:function(){
+        this.setData({isPlay:false})
+        innerAudioContext.pause();
+    },
+    handlePlayVideoNow:function(){
 
-    //     this.setData({isPlay:true})
-    //     innerAudioContext.play();
-    // },
-    // //拖动过程中的一些处理
-    // handleChanging:function(e){
-    //     let that = this;
-    //     this.setData({
-    //         currentTime:e.detail.value,
-    //         currentProgress:formatSeconds(parseInt(e.detail.value)),
-    //     })
-    //     innerAudioContext.seek(e.detail.value);
-    //     innerAudioContext.onTimeUpdate(()=>{
-    //         that.setData({
-    //             currentTime:parseInt(innerAudioContext.currentTime),
-    //             totalTime:parseInt(innerAudioContext.duration),
-    //             currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
-    //             totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
-    //         })
-    //     })
+        this.setData({isPlay:true})
+        innerAudioContext.play();
+    },
+    //拖动过程中的一些处理
+    handleChanging:function(e){
+        let that = this;
+        this.setData({
+            currentTime:e.detail.value,
+            currentProgress:formatSeconds(parseInt(e.detail.value)),
+        })
+        innerAudioContext.seek(e.detail.value);
+        innerAudioContext.onTimeUpdate(()=>{
+            that.setData({
+                currentTime:parseInt(innerAudioContext.currentTime),
+                totalTime:parseInt(innerAudioContext.duration),
+                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+            })
+        })
        
-    // }
+    }
 
 })
