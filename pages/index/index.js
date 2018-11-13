@@ -36,9 +36,9 @@ Page({
         autoplay: false,
         interval: 5000,
         duration: 1000,
-        swiperActiveZero: 'noActive',
-        swiperActiveOne:'',
-        swiperActiveTwo: 'noActive',
+        swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+        swiperActiveOne:['','activeLetter'],
+        swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
     },
 
     //切换轮播图的时候
@@ -46,22 +46,22 @@ Page({
         console.log(e.detail.current);
         if(e.detail.current == 2){
             this.setData({
-                swiperActiveZero: 'noActive',
-                swiperActiveOne:'noActive',
-                swiperActiveTwo: '',
+                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+                swiperActiveOne:['noActive','noActiveLetter','margin30'],
+                swiperActiveTwo: ['','activeLetter'],
             })
             
         }else if(e.detail.current == 0){
             this.setData({
-                swiperActiveZero: '',
-                swiperActiveOne:'noActive',
-                swiperActiveTwo: 'noActive',
+                swiperActiveZero: ['','activeLetter'],
+                swiperActiveOne:['noActive','noActiveLetter','margin30'],
+                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
             })
         }else if(e.detail.current == 1){
             this.setData({
-                swiperActiveZero: 'noActive',
-                swiperActiveOne:'',
-                swiperActiveTwo: 'noActive',
+                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+                swiperActiveOne:['','activeLetter'],
+                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
             })
         }
     },

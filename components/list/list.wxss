@@ -120,8 +120,34 @@ button{
     text-align:center;
     width:600rpx;
     border-radius:6rpx;
+    position: relative;
 }
 .noActive{
     margin:30rpx 0;
     height:280rpx;
+}
+.noActiveLetter{
+    top:60rpx;
+    width:70rpx;
+    height:34rpx;
+   
+}
+.activeLetter{
+    top:30rpx;
+    width:80rpx;
+    height:40rpx;
+}
+.noActiveShdow{
+    top:60rpx;
+    width:70rpx;
+    height:34rpx;
+   
+}
+.activeShdow{
+    top:30rpx;
+    width:80rpx;
+    height:40rpx;
+}
+.margin30{
+    margin-bottom: 30rpx
 }

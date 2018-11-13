@@ -9,7 +9,7 @@ const __FAILSAFE_DEMO_EXTCONFIG = {
     "distroId": "5b63fb56b106d81d9b74972a",
     "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
     "appName": "",
-    "baseUri": "https://yijoin-d.weiboyi.com/v1/distribution"
+    "baseUri": "https://www.xiaoyujuhe.com/v1/distribution"
 };
 
 module.exports = class GlobalDataContext extends EventEmitter {
