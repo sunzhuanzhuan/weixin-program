@@ -40,21 +40,23 @@
     </block> 
 
     <block wx:if="{{shareList.length>0}}" >
-        <view wx:for="{{shareList}}" class="container"  wx:key="{{index}}">
-            <view class="box"  data-id="{{item.id}}"  >
-                <view class="bigBox" style="padding:0 32rpx">
-                    <view class="imgBox" bindtap="handleDetail" data-id="{{item.article.id}}" >
-                        <image class="img" mode="aspectFill"  src="{{item.article.coverUrl}}" lazy-load></image>
-                        <view class="letterBox">
-                            <view class="nowrap">{{item.article.title}}</view>
-                            <text class="letterArtical">查看阅读文章>>></text>
+        <view wx:for="{{shareList}}" class="container"  wx:key="{{index}}" style="background:#fff;border-bottom:1px solid #E0E0E0">
+            <view data-id="{{item.id}}"  >
+                <view>
+                    <view style="overflow:hidden">
+                        <text style="font-size:20rpx;float:left;width:100rpx"> {{item.type=="txvVideo"?'视频':'文章'}} </text>
+                        <view bindtap="handleDetail" data-id="{{item.article.id}}" style="float:left;margin-left:100rpx;height:80rpx" >
+                            
+                            <view class="letterBox">
+                                <view class="nowrapBig">{{item.article.title}}</view>
+                                
+                            </view>
                         </view>
                     </view>
-                    <view class="bottomLine"></view>
-                    <block wx:if="{{item.referencers.length>0}}">
+                    <block wx:if="{{item.referencers.length>0}}" style="margin-left:100rpx">
                         <view style="margin-top: 24rpx">
                             <view class="readNum">已有<text>{{item.referencers.length}}</text>位好友阅读</view>
-                            <view style="margin-top: 24rpx" class="{{shinIndex ==index?heightFlag?'avatarBox':'noHeightAvatarBox':'avatarBox'}}">
+                            <scroll-view style="margin-top: 24rpx" scroll-x="true">
                                 <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block" >
                                     <view wx:if="{{item.avatarUrl}}">
                                         <image class="avatarRead" src="{{item.avatarUrl}}"></image>
@@ -63,18 +65,15 @@
                                         <image class="avatarReadS" src="/images/shenmi.png"></image>
                                     </view>
                                 </view>
-                            </view>
+                            </scroll-view>
 
                         </view>
-                        <view bindtap="handleShrink" class="shrinkContent" data-id="{{index}}">
-                            <image class="arrow" src="{{shinIndex ==index?heightFlag?('../../images/arrowUp.png'):('../../images/arrowDown.png'):('../../images/arrowUp.png')}}"></image>
-                            <text>{{shinIndex ==index?heightFlag?'展开':'收起':'展开'}}</text>
-                        </view>
+                        
 
                     </block>
                     <block wx:else>
                         <button  open-type="share"  class="readNum" style="padding-bottom: 20rpx;background: #ffffff;border:none;padding-left: 0;margin-top: 24rpx">
-                            <view>好友还没有阅读，快去问问他吧</view>
+                            <view class="readNum" style="float:left">已有0位好友阅读</view><view style="float:left;color:#FFDB3D;border:1px solid #FFDB3D;font-size:24rpx;">问问Ta</view>
                         </button>
                     </block>
                 </view>

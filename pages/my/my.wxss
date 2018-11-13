@@ -27,8 +27,8 @@ button::after{ border: none; }
 }
 .avatar{
   border-radius: 50%;
-  width:140rpx ;
-  height:140rpx;
+  /* width:140rpx ;*/
+  height:140rpx; 
   /*background:#f6f6f6 ;*/
   text-align: center;
 

@@ -6,3 +6,6 @@
 button{
   padding:0;
 }
+page{
+  background:#f7f7f7;
+}

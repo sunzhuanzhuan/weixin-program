@@ -2,52 +2,60 @@
 <import src="/components/like/like.wxml" />
 <import src="/components/share/share.wxml" />
 <view>
-    <view class="plBottm28">
-        <view class="smallBox plTop36 plBottm32">
-            <view  style="">
-                 <button style="margin-left:120%;width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1px solid #666;border-radius:50rpx;background:#fff" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg' >意见反馈</button>
-            </view>
-            <view>
-                <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-                    <image style="width: 140rpx;height: 140rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
-                    <view  class="avatar">{{userInfo.nickName?userInfo.nickName:'我要登录'}}</view></button></view>
-
-        </view>
-        <view class="readBox">
-            <view class="smallBox">
-                <text>{{userInfo ? num.read : ''}}</text>
-                <text class="readBoxName">阅读</text>
-            </view>
-            <view class="smallBox">
-                <text>{{userInfo ? num.shared : ''}}</text>
-                <text class="readBoxName">分享</text>
-            </view>
-            <view class="smallBox">
-                <text>{{userInfo ? num.liked : ''}}</text>
-                <text class="readBoxName">收藏</text>
-            </view>
-        </view>
-    </view>
-    <view class="line"></view>
-    <view class="shareBox">
-        <view bindtap="handleTab" data-name="myShares">
-            <image class="icon" src="{{currentTab === 'myShares' ? shareAfter : shareBefore}}"></image>
-            <text class="{{currentTab === 'myShares' ? 'selected' : 'none'}}">我的分享</text>
-        </view>
-        <view bindtap="handleTab" data-name="myLikes">
-            <image class="icon" src="{{currentTab === 'myLikes' ? likeBefore : likeAfter}}"></image>
-            <text class="{{currentTab === 'myLikes' ? 'selected' : 'none'}}">我的收藏</text>
-        </view>
-    </view>
-    <view>
-        <scroll-view  hidden="{{currentTab !== 'myShares'}}" enable-back-to-top="true">
+    <view style="width:100%;height:420rpx;background:#fff;position:relative">
         
-            <template is="share" data="{{imgCry:imgCry,shareList:userInfo ? myShares : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: MySharesHasMore}}"/>
+            
+            <view >
+                <view style="display:inline-block;width:50%;height:420rpx;float:left">
+                    <button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                        <image style="width: 200rpx;height: 200rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:'../../images/noAvator.png'}}"></image>
+                        <view  class="avatar" style="text-aligin:center">{{userInfo.nickName?userInfo.nickName:'我要登录'}}</view></button>
+                </view>
+                <view style="display:inline-block;width:50%;height:420rpx;float:right">
+                
+                    <view >
+                        
+                        <view>阅读</view>
+                        <view>{{userInfo ? num.read : ''}}</view>
+                    </view>
+                    <view>
+                        
+                        <view>分享</view>
+                        <view>{{userInfo ? num.shared : ''}}</view>
+                    </view>
+                    <view>
+                        <button style="width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1px solid #666;border-radius:50rpx;background:#fff" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg' >意见反馈</button>
+                    </view>
+                    
+                </view>
+             </view>
 
+            <view style="margin:0 28rpx;width:698rpx;height:160rpx;overflow:hidden;clear:both;box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;;position:absolute;bottom:-100rpx">
+                <view bindtap="handleTapHistoryOrArticalOrVideo" style="display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center;">
+                    <image src="/images/history.png"  style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
+                    <view style="font-size:24rpx;color:#333">浏览历史</view>
+                </view>
+                <text style="border-left:1px solid #E6E6E6;height:50rpx;display:inline-block;"></text>
+                <view bindtap="handleTapHistoryOrArticalOrVideo"  style="display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center">
+                    <image src="/images/artical.png" style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
+                    <view style="font-size:24rpx;color:#333">收藏的文章</view>
+                </view>
+                <text style="border-right:1px solid #E6E6E6;display:inline-block;height:50rpx;"></text>
+                <view bindtap="handleTapHistoryOrArticalOrVideo"  style="display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center">
+                    <image src="/images/video.png"  style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
+                    <view style="font-size:24rpx;color:#333">收藏的视频</view>
+                </view>
+            </view>
+        
+        
+    </view>
+    <view  style="margin-top:140rpx;margin-left:30rpx;color:#333;font-size:36rpx;">我的分享</view>
+    
+    <view style="margin-top:20rpx">
+        <scroll-view  enable-back-to-top="true">
+            <template is="share" data="{{imgCry:imgCry,shareList:userInfo ? myShares : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: MySharesHasMore}}"/>
         </scroll-view>
-        <view  hidden="{{currentTab !== 'myLikes'}}" enable-back-to-top="true">
-            <template is="like"  data="{{imgCry:imgCry,likeList:userInfo ? myLikes : [],heightFlag:heightFlag,shinIndex:shinIndex,isMore: myLikesHasMore}}"/>
-        </view>
+        
     </view>
 </view>
 

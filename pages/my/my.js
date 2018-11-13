@@ -154,6 +154,13 @@ Page({
     },
     handleContact:function(){
         
+    },
+    //收藏和浏览足迹
+    handleTapHistoryOrArticalOrVideo:function(){
+        wx.navigateTo({
+            url:'/pages/history/history'
+        })
     }
     
+
   })
