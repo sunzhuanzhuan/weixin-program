@@ -5,18 +5,16 @@ const gdt = app.applicationDataContext;
 const util = require('../../utils/util');
 Page({
     data:{
-        myData:[]
+        name:'',
+        myCollectArtical:[],
+        myCollectVideo:[],
+        myViews:[]
+
     },
     onLoad:function(options){
-       
+       this.setData({name:options.type})
         this.appState = gdt.localState;
-        console.log(this.appState.myCollectArtical);
-
-        this.setData({ 
-            makeMyCollectArtical: this.appState.myCollectArtical,
-            makeMyCollectVideo: this.appState.MyCollectVideo,
-            myViews: this.appState.myViews, 
-        });
+        
         const makeMyCollectArtical = ()=> {
             this.appState.myCollectArtical.forEach((x)=> {
                 const entity = x.entity;
@@ -31,7 +29,8 @@ Page({
                       entity.readTimes = parseInt(Math.random()*20+30)
                   }
             });
-            this.setData({ makeMyCollectArtical: this.appState.MyCollectArtical });
+            this.setData({ myCollectArtical: this.appState.myCollectArtical });
+            
            
         };
         const makeMyCollectVideo = ()=> {
@@ -49,42 +48,45 @@ Page({
                   }
             });
             
-            this.setData({ makeMyCollectVideo: this.appState.MyCollectVideo},()=>{
-                
+            this.setData({ myCollectVideo: this.appState.myCollectVideo});
+            
+        };
+        const makeMyViews = ()=> {
+            this.appState.myViews.forEach((x)=> {
+                const entity = x.entity;
+                if (!entity) {
+                    return;
+                }
+                entity._sourceWxDisplayName = entity.sourceWxNickname || '-'
+                entity.readTimes = entity.readTimes || 0;
+                entity._publishedFromNow = util.moment(entity.publishedAt).fromNow();
+                let read = entity.readTimes +''
+                  if(read.length === 1){
+                      entity.readTimes = parseInt(Math.random()*20+30)
+                  }
             });
+            
+            this.setData({ myViews: this.appState.myViews});
            
         };
-        gdt.on('collectVideoItems', ()=> {
-             this.setData({ makeMyCollectArtical: res });
-            
-        });
-        gdt.on('collectArticalItems', ()=> {
-            this.setData({ makeMyCollectArtical: res });
-            
-        });
-        gdt.on('viewsItems', ()=> {
-            this.setData({ myViews: this.appState.myViews });
-            
-        });
+        gdt.on('collectVideoItems',makeMyCollectVideo);
+        gdt.on('collectArticalItems',makeMyCollectArtical);
+        gdt.on('viewsItems',makeMyViews);
         
         gdt.fetchDashboardAnalytics();
        
-        
-        console.log(this.data)
+        let that = this
+       
         if(options.type === 'history'){
-            gdt.magicMyViewsFirstLoad().then((res)=>{
-                this.setData({ myData: res});
-            })
+            gdt.magicMyViewsFirstLoad();
+           
         }else if(options.type === 'artical'){
-            gdt.magicMyCollectArticalFirstLoad().then((res)=>{
-                this.setData({ myData: res });
-            });
+            gdt.magicMyCollectArticalFirstLoad();
+           
         }else{
-            gdt.magicMyCollectVideoFirstLoad().then((res)=>{
-                this.setData({ myData: res });
-            });
+            gdt.magicMyCollectVideoFirstLoad();
+            
         }
-        
         
         
         

@@ -63,7 +63,7 @@
                     <view data-id="{{item._id}}" style="float:right;width:250rpx">
                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                             <button  form-type="submit" class='btnStarVideo' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                <image class="imgBtnItem" src="{{item.liked?'/images/mini_star.gif':'/images/star.png'}}"></image>
+                                <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
                                 <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
                                     {{item._likedTimes}}
                                 </text>
@@ -71,7 +71,7 @@
                         </form>
                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                             <button  form-type="submit" class='btnShareVideo' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
-                                <image class="imgBtnItem" src="/images/mini_share.gif"></image>
+                                <image class="imgBtnItem" src="/images/share.png"></image>
                             </button>
                         </form> 
                     </view>
@@ -109,12 +109,12 @@
                                         </form>
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button  form-type="submit" style='float:right;background:#fff;margin-right:-20rpx' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
-                                            <image class="imgBtnItem" src="/images/mini_share.gif"></image>
+                                            <image class="imgBtnItem" src="/images/share.png"></image>
                                         </button>
                                         </form>
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button form-type="submit" style='float:right;background:#fff' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                            <image class="imgBtnItem" src="{{item.liked?'/images/mini_star.gif':'/images/star.png'}}"></image>
+                                            <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
                                             <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
                                                 {{item._likedTimes}}
                                             </text>
@@ -150,7 +150,7 @@
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                             <button wx:if="{{item.wxmpVoiceIds.length>0}}" form-type="submit" class='btnListen'
                                             form-type="submit" bindtap="handleListing"  data-id="{{item._id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"  data-tabList="{{currentTabIndex}}" >
-                                                    <image class="imgBtnItem" src="{{listenIndexCurrent==index && listening?'/images/mini.gif':'/images/playing.png'}}"></image>
+                                                    <image class="imgBtnItem" src="{{listenIndexCurrent==index && listening?'/images/mini.png':'/images/playing.png'}}"></image>
                                                     <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
                                                         暂停
                                                     </text>
@@ -171,7 +171,7 @@
                                         </form>
                                            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                             <button form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                                    <image class="imgBtnItem" src="{{item.liked?'/images/mini_star.gif':'/images/star.png'}}"></image>
+                                                    <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
                                                     <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
                                                         {{item._likedTimes}}
                                                     </text>
@@ -179,7 +179,7 @@
                                             </form>
                                             <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                                 <button form-type="submit" class='btnShare' data-item="share" open-type="{{type1}}" form-type="submit" bindgetuserinfo="handleAuthor">
-                                                    <image class="imgBtnItem" src="/images/mini_share.gif"></image>
+                                                    <image class="imgBtnItem" src="/images/share.png"></image>
                                                 </button>
                                             </form>
                                 </view>

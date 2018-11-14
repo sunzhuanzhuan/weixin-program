@@ -9,7 +9,7 @@ const __FAILSAFE_DEMO_EXTCONFIG = {
     "distroId": "5b63fb56b106d81d9b74972a",
     "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
     "appName": "",
-    "baseUri": "https://www.xiaoyujuhe.com/v1/distribution"
+    "baseUri": "https://dev.xiaoyujuhe.com/v1/distribution"
 };
 
 module.exports = class GlobalDataContext extends EventEmitter {
@@ -438,8 +438,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     if (!indexedItem.randomNum) {
                         indexedItem.randomNum = Math.floor(Math.random() * 40);
                     }
-                    if(indexedItem.type == "txvVideo"){
-                        indexedItem.wxMidVec ='1234#1'
+                    if (indexedItem.type == "txvVideo") {
+                        indexedItem.wxMidVec = '1234#1'
                     }
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
@@ -467,10 +467,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 if (!indexedItem.randomNum) {
                     indexedItem.randomNum = Math.floor(Math.random() * 40);
                 }
-                if(indexedItem.type == "txvVideo"){
-                    indexedItem.wxMidVec ='1234#1'
+                if (indexedItem.type == "txvVideo") {
+                    indexedItem.wxMidVec = '1234#1'
                 }
-                
+
                 let curItem = targetList[idx];
                 if (curItem) {
                     return;
@@ -495,8 +495,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (!indexedItem.randomNum) {
                 indexedItem.randomNum = Math.floor(Math.random() * 40);
             }
-            if(indexedItem.type == "txvVideo"){
-                indexedItem.wxMidVec ='1234#1'
+            if (indexedItem.type == "txvVideo") {
+                indexedItem.wxMidVec = '1234#1'
             }
             return;
         });
@@ -977,7 +977,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         }
         return Promise.resolve();
     }
-    
+
     //浏览足迹
     magicMyViewsLoadMore() {
         const myViews = this.localState.myViews;
@@ -996,7 +996,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         return Promise.resolve();
     }
     //收藏的文章
-    fetchMyCollectArticalItems(type,page, pageSize) {
+    fetchMyCollectArticalItems(type, page, pageSize) {
         if (!page) {
             page = 1;
         }
@@ -1029,7 +1029,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
     }
     //收藏的视频
-    fetchMyCollectVideoItems(type,page, pageSize) {
+    fetchMyCollectVideoItems(type, page, pageSize) {
         if (!page) {
             page = 1;
         }
@@ -1101,13 +1101,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
         }
         const currentLength = myCollectArtical.length;
         const nextPage = Math.floor(currentLength / PAGESIZE) + 1;
-        return this.fetchMyCollectArticalItems('wxArticle',nextPage, PAGESIZE);
+        return this.fetchMyCollectArticalItems('wxArticle', nextPage, PAGESIZE);
     }
 
     magicMyCollectArticalFirstLoad() {
         const myCollectArtical = this.localState.myCollectArtical;
         if (!myCollectArtical.length) {
-            return this.fetchMyCollectArticalItems('wxArticle',1, PAGESIZE);
+            return this.fetchMyCollectArticalItems('wxArticle', 1, PAGESIZE);
         }
         return Promise.resolve();
     }
@@ -1119,13 +1119,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
         }
         const currentLength = myCollectVideo.length;
         const nextPage = Math.floor(currentLength / PAGESIZE) + 1;
-        return this.fetchMyCollectVideoItems('txvVideo' ,nextPage, PAGESIZE);
+        return this.fetchMyCollectVideoItems('txvVideo', nextPage, PAGESIZE);
     }
 
     magicMyCollectVideoFirstLoad() {
         const myCollectVideo = this.localState.myCollectVideo;
         if (!myCollectVideo.length) {
-            return this.fetchMyCollectVideoItems('txvVideo',1, PAGESIZE);
+            return this.fetchMyCollectVideoItems('txvVideo', 1, PAGESIZE);
         }
         return Promise.resolve();
     }

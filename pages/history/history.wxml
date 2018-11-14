@@ -1,7 +1,7 @@
 
 
 <view>
-    <view wx:for="{{myData}}" style="background:#fff;border-bottom:1px solid #CCCCCC;overflow:hidden;padding:40rpx 0">
+    <view wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}" style="background:#fff;border-bottom:1px solid #CCCCCC;overflow:hidden;padding:40rpx 0">
     
         <view style="display:inline-block;width:15%;height:120rpx;float:left;overflow:hiden">
             <view style="margin:0 26rpx">
