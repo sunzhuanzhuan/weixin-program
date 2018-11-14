@@ -50,7 +50,7 @@
                                                         暂停
                                                     </text>
                                                     <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
-                                                        听文章
+                                                        听一听
                                                     </text>
                                                 </button>
                                            
@@ -110,7 +110,7 @@
                                                         暂停
                                                     </text>
                                                     <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
-                                                        听文章
+                                                        听一听
                                                     </text>
                                                 </button>
                                            
