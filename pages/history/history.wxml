@@ -1,26 +1,26 @@
 
 
 <view>
-    <view wx:for="{{myData}}" style="background:#fff;border-bottom:1px solid #000;overflow:hidden">
+    <view wx:for="{{myData}}" style="background:#fff;border-bottom:1px solid #CCCCCC;overflow:hidden;padding:40rpx 0">
     
-        <view style="display:inline-block;width:15%;height:200rpx;float:left;overflow:hiden">
+        <view style="display:inline-block;width:15%;height:120rpx;float:left;overflow:hiden">
             <view style="margin:0 26rpx">
-                <view style="font-size:20rpx;color:#999;border:1px solid #000;padding:0 6rpx;border-radius:20rpx;"> 
+                <view style="font-size:20rpx;color:#999;border:1px solid #CCCCCC;padding:0 6rpx;border-radius:20rpx;"> 
                     {{item.type ==='txvVideo'?'视频':'文章'}}
                 </view>
             </view>
         </view>
-        <view style="display:inline-block;width:55%;height:200rpx;float:left;overflow:hidden;position:relative">
-           <view class="nowrap" style="font-size:32rpx;color:#333;width: 90%;" bindtap="handleDetail" data-id="{{item.entity._id}}"> {{item.entity.title}}</view>
-            <view style="position:absolute;bottom:0;width:100%">
+        <view style="display:inline-block;width:55%;height:120rpx;float:left;overflow:hidden;position:relative">
+           <view class="nowrap" style="font-size:30rpx;color:#333;width: 90%;" bindtap="handleDetail" data-id="{{item.entity._id}}"> {{item.entity.title}}</view>
+            <view style="position:absolute;bottom:-20rpx;width:100%;height:52rpx;">
                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                    <button  form-type="submit" style='float:right;background:#fff;width:100rpx;' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
-                        <image class="imgBtnItem" src="/images/mini_share.gif"></image>
+                    <button  form-type="submit" style='float:right;background:#fff;width:100rpx;;height:40rpx;line-height:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
+                        <image class="imgBtnItem" src="/images/share.png"></image>
                     </button>
                 </form>
                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                    <button form-type="submit" style='float:right;background:#fff;width:100rpx;' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                        <image class="imgBtnItem" src="{{item.liked?'/images/mini_star.gif':'/images/star.png'}}"></image>
+                    <button form-type="submit" style='float:right;background:#fff;width:100rpx;line-height:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                        <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
                         <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
                             {{item._likedTimes}}
                         </text>
@@ -28,9 +28,9 @@
                 </form>
             </view>
         </view>
-        <view style="display:inline-block;width:30%;height:200rpx;float:left;overflow:hidden;position:relative" data-id="{{item.entity._id}}" bindtap="handleDetail">
-            <image src=" {{item.entity.coverUrl}}"  mode="aspectFill" style="width:340rpx;height:180rpx;" />
-            <image wx:if="{{item.type ==='txvVideo'}}" src="/images/play.png" style="width:100rpx;height:100rpx;position:absolute;top:50%;left:50%;margin-top:-50rpx;margin-left:-50rpx;" />
+        <view style="display:inline-block;width:30%;height:120rpx;float:left;overflow:hidden;position:relative" data-id="{{item.entity._id}}" bindtap="handleDetail">
+            <image src=" {{item.entity.coverUrl}}"  mode="aspectFill" style="width:160rpx;height:120rpx;" />
+            <image wx:if="{{item.type ==='txvVideo'}}" src="/images/play.png" style="width:52rpx;height:52rpx;position:absolute;top:50%;left:50%;margin-top:-26rpx;margin-left:-60rpx;" />
         </view>
     </view>
      

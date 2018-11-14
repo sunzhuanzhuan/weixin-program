@@ -1,11 +1,12 @@
 {
   "pages":[
+    "pages/history/history",
     "pages/my/my",
     "pages/index/index",
     "pages/test/detail",
     "pages/log/detail",
     "pages/detail/detail",
-   "pages/history/history",
+   
    
     "pages/introduce/intro"
 
