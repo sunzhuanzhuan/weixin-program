@@ -44,8 +44,8 @@
             <view data-id="{{item.id}}"  >
                 <view>
                     <view style="overflow:hidden">
-                        <text style="font-size:20rpx;float:left;width:100rpx"> {{item.type=="txvVideo"?'视频':'文章'}} </text>
-                        <view bindtap="handleDetail" data-id="{{item.article.id}}" style="float:left;margin-left:100rpx;height:80rpx" >
+                        <text style="font-size:20rpx;float:left;padding:0 10rpx;margin-left:30rpx;border:1px solid #979797;border-radius:20rpx;margin-top:20rpx"> {{item.type=="txvVideo"?'视频':'文章'}} </text>
+                        <view bindtap="handleDetail" data-id="{{item.article.id}}" style="float:left;height:80rpx" >
                             
                             <view class="letterBox">
                                 <view class="nowrapBig">{{item.article.title}}</view>
@@ -54,10 +54,10 @@
                         </view>
                     </view>
                     <block wx:if="{{item.referencers.length>0}}" style="margin-left:100rpx">
-                        <view style="margin-top: 24rpx">
-                            <view class="readNum">已有<text>{{item.referencers.length}}</text>位好友阅读</view>
-                            <scroll-view style="margin-top: 24rpx" scroll-x="true">
-                                <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block" >
+                        <view style="margin-left:30rpx;">
+                            <view class="readNum" style="float:left;color:#999999;margin-left:100rpx">已有<text> {{item.referencers.length}} </text>位好友阅读</view>
+                            <scroll-view style="height:150rpx;margin-left:100rpx" scroll-x="true">
+                                <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block;margin-top:10rpx" >
                                     <view wx:if="{{item.avatarUrl}}">
                                         <image class="avatarRead" src="{{item.avatarUrl}}"></image>
                                     </view>
@@ -72,8 +72,9 @@
 
                     </block>
                     <block wx:else>
-                        <button  open-type="share"  class="readNum" style="padding-bottom: 20rpx;background: #ffffff;border:none;padding-left: 0;margin-top: 24rpx">
-                            <view class="readNum" style="float:left">已有0位好友阅读</view><view style="float:left;color:#FFDB3D;border:1px solid #FFDB3D;font-size:24rpx;">问问Ta</view>
+                        <button  open-type="share"  class="readNum" style="background: #ffffff;padding-bottom:40rpx;">
+                            <view class="readNum" style="float:left;color:#999999">已有 0 位好友阅读</view>
+                            <view style="float:left;color:#FFDB3D;border:1px solid #FFDB3D;font-size:24rpx;margin-left:30rpx;width:80rpx;height:40rpx;line-height:40rpx;padding:2rpx 6rpx;">问问Ta</view>
                         </button>
                     </block>
                 </view>

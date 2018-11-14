@@ -15,16 +15,16 @@
                 
                     <view >
                         
-                        <view>阅读</view>
-                        <view>{{userInfo ? num.read : ''}}</view>
+                        <view style="font-size:24rpx;color:#999999">阅读</view>
+                        <view style="font-size:44rpx;color:#333">{{userInfo ? num.read : ''}}</view>
                     </view>
-                    <view>
+                    <view style="margin-top:20rpx">
                         
-                        <view>分享</view>
-                        <view>{{userInfo ? num.shared : ''}}</view>
+                        <view style="font-size:24rpx;color:#999999">分享</view>
+                        <view style="font-size:44rpx;color:#333">{{userInfo ? num.shared : ''}}</view>
                     </view>
-                    <view>
-                        <button style="width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1px solid #666;border-radius:50rpx;background:#fff" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg' >意见反馈</button>
+                    <view style="margin-top:20rpx">
+                        <button style="width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1px solid #666;border-radius:50rpx;background:#fff;margin-top:20rpx;float:left;" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg' >意见反馈</button>
                     </view>
                     
                 </view>
