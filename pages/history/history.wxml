@@ -20,9 +20,9 @@
                 </form>
                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                     <button form-type="submit" style='float:right;background:#fff;width:100rpx;line-height:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                        <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
+                        <image class="imgBtnItem" src="{{item.entity.liked?'/images/allStar.png':'/images/star.png'}}"></image>
                         <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;">
-                            {{item._likedTimes}}
+                            {{item.entity._likedTimes}}
                         </text>
                     </button>
                 </form>
@@ -32,6 +32,16 @@
             <image src=" {{item.entity.coverUrl}}"  mode="aspectFill" style="width:160rpx;height:120rpx;" />
             <image wx:if="{{item.type ==='txvVideo'}}" src="/images/play.png" style="width:52rpx;height:52rpx;position:absolute;top:50%;left:50%;margin-top:-26rpx;margin-left:-60rpx;" />
         </view>
+        
     </view>
+    <view wx:if="{{name === 'history' ? myViewsHasMore : name === 'artical'? myCollectArticalHasMore :myCollectVideoHasMore }}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;"></view>
+        <view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
+            <view style='height:50rpx;'>
+                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>
+                由小鱼聚合平台提供技术支持
+            </view>
+            <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view>
+        </view>
+    
      
 </view>

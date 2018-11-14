@@ -40,7 +40,7 @@ Page({
           this.setData({
               num: this.appState.dashboardAnalytics,
               myShares: this.appState.myShares,
-              myLikes: this.appState.myLikes,
+              myLikes: this.appState.myCollect,
           });
           gdt.userInfo.then((x)=> {
               this.setData({userInfo: x.userInfo});
@@ -52,7 +52,7 @@ Page({
               this.setData({num: this.appState.dashboardAnalytics});
           });
           const makeMyLikes = ()=> {
-              this.appState.myLikes.forEach((x)=> {
+              this.appState.myCollect.forEach((x)=> {
                   const entity = x.entity;
                   if (!entity) {
                       return;
@@ -65,7 +65,7 @@ Page({
                         entity.readTimes = parseInt(Math.random()*20+30)
                     }
               });
-              this.setData({ myLikes: this.appState.myLikes, myLikesHasMore: this.appState.myLikes.__hasMore !== false });
+              this.setData({ myLikes: this.appState.myCollect, myLikesHasMore: this.appState.myCollect.__hasMore !== false });
           };
           gdt.on('sharedItems', ()=> {
               this.setData({ myShares: this.appState.myShares, mySharesHasMore: this.appState.myShares.__hasMore !== false });
@@ -95,7 +95,7 @@ Page({
               gdt.magicMySharedFirstLoad().then(()=> this.setData({ myShares: this.appState.myShares }));
               gdt.track('my-dashboard-show-share');
             } else {
-              gdt.magicMyLikedFirstLoad().then(()=> this.setData({ myLikes: this.appState.myLikes }));
+              gdt.magicMyLikedFirstLoad().then(()=> this.setData({ myLikes: this.appState.myCollect }));
               gdt.track('my-dashboard-show-like');
             }
           this.setData({currentTab: e.currentTarget.dataset.name});

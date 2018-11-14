@@ -39,6 +39,7 @@ Page({
         swiperActiveZero: ['noActive','noActiveLetter','margin30'],
         swiperActiveOne:['','activeLetter'],
         swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+        
     },
 
     //切换轮播图的时候
@@ -369,31 +370,7 @@ Page({
                     this.setData({ dashboardTipShouldDisplay: v });
                 }
             })
-
             gdt.on('listItems', (listId, updateRange, itemList) => {
-                //itemIndex 是老的储存，newIndex是新的
-                if (itemList && itemList.length) {
-                    const itemIndex = this.appState.itemIndex;
-                    itemList.forEach((newIndex) => {
-                        if (itemIndex[newIndex._id]) {
-                            const indexedItem = itemIndex[newIndex._id];
-                            indexedItem._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
-                            indexedItem._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-
-                            indexedItem._likedTimes = newIndex.likedTimes > (indexedItem._likedTimes || 10) ?
-                                newIndex.likedTimes : (indexedItem.randomNum + newIndex.likedTimes);
-
-                        } else {
-                            newIndex._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
-                            newIndex._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-
-                            newIndex._likedTimes = newIndex.likedTimes > (newIndex._likedTimes || 10) ?
-                                newIndex.likedTimes : (newIndex.randomNum + newIndex.likedTimes);
-                        }
-
-                    });
-                }
-
                 this.setData({ lists: app.lists });
 
 
@@ -401,22 +378,6 @@ Page({
 
             gdt.on('entityUpdate', (x) => {
                 const itemIndex = this.appState.itemIndex;
-
-                if (itemIndex[x._id]) {
-                    const indexedItem = itemIndex[x._id];
-                    indexedItem._sourceWxDisplayName = x.sourceWxNickname || '-';
-                    indexedItem._publishedFromNow = util.moment(x.publishedAt).fromNow();
-
-                    indexedItem._likedTimes = x.likedTimes > (indexedItem._likedTimes || 10) ?
-                        x.likedTimes : (indexedItem.randomNum + x.likedTimes);
-
-                } else {
-                    x._sourceWxDisplayName = x.sourceWxNickname || '-';
-                    x._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-
-                    x._likedTimes = x.likedTimes > (x._likedTimes || 10) ?
-                        x.likedTimes : (x.randomNum + x.likedTimes);
-                }
 
                 this.setData({
                     lists: app.lists
@@ -437,6 +398,7 @@ Page({
                 })
                
             });
+            console.log(this.appState)
         });
         gdt.systemInfo.then((x) => {
             this.setData({

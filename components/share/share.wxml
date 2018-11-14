@@ -36,10 +36,10 @@
                 <view>
                     <view style="overflow:hidden">
                         <text style="font-size:20rpx;float:left;padding:0 10rpx;margin-left:30rpx;border:1px solid #979797;border-radius:20rpx;margin-top:20rpx"> {{item.type=="txvVideo"?'视频':'文章'}} </text>
-                        <view bindtap="handleDetail" data-id="{{item.article.id}}" style="float:left;height:80rpx" >
+                        <view bindtap="handleDetail" data-id="{{item.entity.id}}" style="float:left;height:80rpx" >
                             
                             <view class="letterBox">
-                                <view class="nowrapBig">{{item.article.title}}</view>
+                                <view class="nowrapBig">{{item.entity.title}}</view>
                                 
                             </view>
                         </view>

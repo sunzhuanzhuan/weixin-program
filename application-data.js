@@ -2,6 +2,7 @@ const _ = require('./utils/lodash.custom.min.js');
 const EventEmitter = require("./utils/EventEmitter.min.js");
 const request = require("./utils/request.js").request;
 const download = require("./utils/request.js").download;
+const util = require("./utils/util.js")
 
 const PAGESIZE = 20;
 
@@ -438,6 +439,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     if (!indexedItem.randomNum) {
                         indexedItem.randomNum = Math.floor(Math.random() * 40);
                     }
+                    indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+                    indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
+
+                    indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+                        indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
                     if (indexedItem.type == "txvVideo") {
                         indexedItem.wxMidVec = '1234#1'
                     }
@@ -467,6 +473,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 if (!indexedItem.randomNum) {
                     indexedItem.randomNum = Math.floor(Math.random() * 40);
                 }
+                indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+                indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
+
+                indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+                    indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
                 if (indexedItem.type == "txvVideo") {
                     indexedItem.wxMidVec = '1234#1'
                 }
@@ -495,9 +506,15 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (!indexedItem.randomNum) {
                 indexedItem.randomNum = Math.floor(Math.random() * 40);
             }
+            indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+            indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
+
+            indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+                indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
             if (indexedItem.type == "txvVideo") {
                 indexedItem.wxMidVec = '1234#1'
             }
+
             return;
         });
 
@@ -552,7 +569,14 @@ module.exports = class GlobalDataContext extends EventEmitter {
         //浏览足迹
         this.on('viewsItems', ([start, end], clips) => {
             const targetList = this.localState.myViews;
-            const itemIndex = this.localState.clipIndex;;
+            const itemIndex = this.localState.clipIndex;
+
+            clips.forEach((x) => {
+                if (x.entity) {
+                    this.emit('entityUpdate', x.entity);
+                }
+            });
+
             if ((clips && clips.length < (end - start))) {
                 targetList.__hasMore = false;
             }
@@ -621,6 +645,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
 
         this.on('likedItems', ([start, end], clips) => {
+            console.log(clips)
             const targetList = this.localState.myCollect;
             const itemIndex = this.localState.clipIndex;
             if ((clips && clips.length < (end - start))) {
@@ -671,6 +696,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('collectArticalItems', ([start, end], clips) => {
             const targetList = this.localState.myCollectArtical;
             const itemIndex = this.localState.clipIndex;
+
+            clips.forEach((x) => {
+                if (x.entity) {
+                    this.emit('entityUpdate', x.entity);
+                }
+            });
+
             if ((clips && clips.length < (end - start))) {
                 targetList.__hasMore = false;
             }
@@ -719,6 +751,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('collectVideoItems', ([start, end], clips) => {
             const targetList = this.localState.myCollectVideo;
             const itemIndex = this.localState.clipIndex;
+
+            clips.forEach((x) => {
+                if (x.entity) {
+                    this.emit('entityUpdate', x.entity);
+                }
+            });
+
             if ((clips && clips.length < (end - start))) {
                 targetList.__hasMore = false;
             }
@@ -1239,7 +1278,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: itemId
                 }
             });
-
+            this.emit('entityUpdate', { _id: itemId, liked: true });
             queryPromise.then((x) => {
                 this.emit('liked', x);
             });
@@ -1258,7 +1297,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: itemId
                 }
             });
-
+            this.emit('entityUpdate', { _id: itemId, liked: false });
             queryPromise.then((x) => {
                 this.emit('unliked', x);
             });
