@@ -62,7 +62,9 @@ Page({
          totalTime:0,
          currentProgress:0,
          totalProgress:0,
-         clickIndex:0
+         clickIndex:0,
+         audioName:'',
+         isShowListen:true
     },
 
     //文章里面的视频是否静音
@@ -398,7 +400,7 @@ Page({
         let num1 = event.detail.scrollTop;
         const scene = gdt.showParam.scene;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false });
+            this.setData({ isShow: false,isChangeBig:false ,isShowListen:false});
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: false });
             }
@@ -407,7 +409,7 @@ Page({
             // }
 
         } else {
-            this.setData({ isShow: true });
+            this.setData({ isShow: true,isChangeBig:false ,isShowListen:true});
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: true });
             }
@@ -731,16 +733,17 @@ Page({
         console.log(this.data.isPlay)
     },
     handlePlayVideo:function(){
+       
         let that = this;
         
         innerAudioContext.autoplay = true;
         innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
-        console.log('开始播放')
+        console.log(innerAudioContext)
        
         innerAudioContext.onPlay((e)=>{
            
         })
-        this.setData({isPlay:true})
+        this.setData({isPlay:true ,audioName:innerAudioContext.title})
        
         innerAudioContext.play();
         // 时间的当前的进度;
