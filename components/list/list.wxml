@@ -24,7 +24,7 @@
                             </button>
                         </form>
                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                            <button  form-type="submit" class='btnShareVideo' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
+                            <button  form-type="submit" class='btnShareVideo' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
                                 <image class="imgBtnItem" src="/images/share.png"></image>
                             </button>
                         </form> 
@@ -62,7 +62,7 @@
                                            
                                         </form>
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                        <button  form-type="submit" style='float:right;background:#fff;margin-right:-20rpx' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
+                                        <button  form-type="submit" style='float:right;background:#fff;margin-right:-20rpx' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
                                             <image class="imgBtnItem" src="/images/share.png"></image>
                                         </button>
                                         </form>
@@ -133,7 +133,7 @@
                                                 </button>
                                             </form>
                                             <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                                <button form-type="submit" class='btnShare' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
+                                                <button form-type="submit" class='btnShare' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
                                                     <image class="imgBtnItem" src="/images/share.png"></image>
                                                 </button>
                                             </form>
