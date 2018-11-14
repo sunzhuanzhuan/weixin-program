@@ -1,8 +1,8 @@
 <template name="share">
     <block wx:if="{{shareList.length==0}}" >
-            <view style="overflow:hidden">
+            <view style="overflow:hidden" bindtap="handleDetailIntroduce">
                         <text style="font-size:20rpx;float:left;padding:0 10rpx;margin-left:30rpx;border:1px solid #979797;border-radius:20rpx;margin-top:20rpx"> {{item.type=="txvVideo"?'视频':'文章'}} </text>
-                        <view bindtap="handleDetail" data-id="{{item.article.id}}" style="float:left;height:80rpx" >
+                        <view style="float:left;height:80rpx" >
                             
                             <view class="letterBox">
                                 <view class="nowrapBig">功能介绍：终于知道分享的内容被谁读了</view>
