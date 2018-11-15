@@ -63,7 +63,8 @@ Page({
          totalTime:0,
          currentProgress:0,
          totalProgress:0,
-         clickIndex:0
+         clickIndex:0,
+         isPause:false
     },
 
     //文章里面的视频是否静音
@@ -714,8 +715,12 @@ Page({
     //播放
     play:function(){
         let that = this;
-        const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
-        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+       
+        if(!this.data.isPause){
+            const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
+            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+        }
+        
         innerAudioContext.play();
         this.setData({isPlay:true});
         gdt.track('play-article-voice-on-detail-page', {
@@ -725,7 +730,7 @@ Page({
     },
     pause:function(){
         innerAudioContext.pause();
-        this.setData({isPlay:false});
+        this.setData({isPlay:false,isPause:true});
         gdt.track('pause-article-voice-on-detail-page', {
             voiceId: voiceId,
             playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0,
