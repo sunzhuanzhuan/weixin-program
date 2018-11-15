@@ -19,8 +19,8 @@
                 <text style="margin-left: 100rpx">{{month}}</text>
                 <text style="margin-left: 155rpx">{{day}}</text>
             </view>
-            <view class="nameTitle">{{name}}</view>
-            <view class="name">已经知道你阅读过该文章啦</view>
+            <view class="nameTitle">{{name || '您的好友'}}</view>
+            <view class="name">已经知道您阅读过这篇文章啦</view>
             <button class="btn" bindtap="handleClose">知道啦</button>
         </view>
     </view>
