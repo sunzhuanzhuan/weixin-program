@@ -444,6 +444,7 @@ Page({
 
 
             const numArtical = res[0].readingMeta.nthRead + '';
+            // const numArtical = 672+ '';
             ctx.setFillStyle('#101010');
             ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
             let type =''
@@ -472,35 +473,89 @@ Page({
             ctx.setFillStyle('#101010');
 
             const numFriend = res[0].readingMeta.referencers + '';
+            // const numFriend = 280+ '';
             if (numArtical.length === 1) {
                 ctx.fillText(friend, 164 * ratio, 96 * ratio);
                 ctx.fillText(my, 238 * ratio, 96 * ratio);
+                ctx.save();
+                ctx.font = 'normal bold 18px sans-serif';
+                if (numFriend.length === 1) {
+
+                    ctx.fillText(numFriend, 225 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2 ) {
+
+                    ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+                } else if (numFriend.length === 3) {
+
+                    ctx.fillText(numFriend, 233 * ratio, 96 * ratio);
+                }
+                ctx.restore()
             } else if (numArtical.length === 2) {
                 ctx.fillText(friend, 174 * ratio, 96 * ratio);
                 ctx.fillText(my, 248 * ratio, 96 * ratio);
+                ctx.save();
+                ctx.font = 'normal bold 18px sans-serif';
+                if (numFriend.length === 1) {
+
+                    ctx.fillText(numFriend, 225 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2 ) {
+
+                    ctx.fillText(numFriend, 230 * ratio, 96 * ratio);
+                } else if (numFriend.length === 3) {
+
+                    ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
+                }
+                ctx.restore()
             } else if (numArtical.length === 3) {
                 ctx.fillText(friend, 184 * ratio, 96 * ratio);
                 ctx.fillText(my, 255 * ratio, 96 * ratio);
+                ctx.save();
+                ctx.font = 'normal bold 18px sans-serif';
+                if (numFriend.length === 1) {
+
+                    ctx.fillText(numFriend, 235 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2 ) {
+
+                    ctx.fillText(numFriend, 238 * ratio, 96 * ratio);
+                } else if (numFriend.length === 3) {
+
+                    ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+                }
+                ctx.restore()
             } else if (numArtical.length === 4) {
                 ctx.fillText(friend, 194 * ratio, 96 * ratio);
                 ctx.fillText(my, 268 * ratio, 96 * ratio);
+                ctx.save();
+                ctx.font = 'normal bold 18px sans-serif';
+                if (numFriend.length === 1) {
+    
+                    ctx.fillText(numFriend, 250 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2 ) {
+    
+                    ctx.fillText(numFriend, 258 * ratio, 96 * ratio);
+                } else if (numFriend.length === 3) {
+    
+                    ctx.fillText(numFriend, 265 * ratio, 96 * ratio);
+                }
+                ctx.restore()
             } else if (numArtical.length === 5) {
                 ctx.fillText(friend, 204 * ratio, 96 * ratio);
                 ctx.fillText(my, 278 * ratio, 96 * ratio);
+                ctx.save();
+                ctx.font = 'normal bold 18px sans-serif';
+                if (numFriend.length === 1) {
+    
+                    ctx.fillText(numFriend, 264 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2 ) {
+    
+                    ctx.fillText(numFriend, 270* ratio, 96 * ratio);
+                } else if (numFriend.length === 3) {
+    
+                    ctx.fillText(numFriend, 276 * ratio, 96 * ratio);
+                }
+                ctx.restore()
             }
-            ctx.save();
-            ctx.font = 'normal bold 18px sans-serif';
-            if (numFriend.length === 1) {
-
-                ctx.fillText(numFriend, 225 * ratio, 96 * ratio);
-            } else if (numFriend.length === 2 ) {
-
-                ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
-            } else if (numFriend.length === 3) {
-
-                ctx.fillText(numFriend, 233 * ratio, 96 * ratio);
-            }
-            ctx.restore()
+            
 
             
 
@@ -642,6 +697,7 @@ Page({
             }, 2000);
         })
     },
+
 
     handlePoster: function () {
         gdt.userInfo.then(() => {
