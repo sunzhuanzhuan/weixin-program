@@ -41,12 +41,14 @@ Page({
         listening: false,
         listenIndexCurrent:undefined,
         listenTablistCurrent: 0,
-        voiceId:undefined
+        voiceId:undefined,
+        currentSwiper:1
     },
 
     //切换轮播图的时候
     handleChangeSwiper:function(e){
-        console.log(e.detail.current);
+        console.log();
+        this.setData({currentSwiper :e.detail.current})
         if(e.detail.current == 2){
             this.setData({
                 swiperActiveZero: ['noActive','noActiveLetter','margin30'],

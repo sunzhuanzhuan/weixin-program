@@ -3,7 +3,7 @@
 
         <!-- 推荐页的文章 -->
         <block wx:if="{{list._id==='topScoreds'}}" >
-            <swiper current="1" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
+            <swiper current="{{currentSwiper}}" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
                     <image class="{{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[1].coverUrl}}" width="600rpx" height=""/>
                     <view class="fontShadow {{swiperActiveZero[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
@@ -11,8 +11,8 @@
                             {{imgUrls[1].title}}
                         </view>
                     </view>
-                   <view class="{{swiperActiveZero[1]}}" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#9321ff;line-height:40rpx">
-                        NO 3
+                   <view class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
+                        NO <text style="font-size:34rpx;">3</text>
                     </view>
                    
                 </swiper-item>
@@ -24,7 +24,7 @@
                         </view>
                     </view>
                     <view class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx">
-                        NO 1
+                        NO <text style="font-size:34rpx;">1</text>
                     </view>
                 </swiper-item>
                 <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
@@ -34,8 +34,8 @@
                             {{imgUrls[2].title}}
                         </view>
                     </view>
-                    <view class="{{swiperActiveTwo[1]}}" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ff8d64;line-height:40rpx">
-                        NO 2
+                    <view class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
+                        NO <text style="font-size:34rpx;">2</text>
                     </view>
                 </swiper-item>
                 

@@ -37,8 +37,7 @@
     </block>
 
     <view  class="contentListBox">
-        <view bind:touchstart="handleTouchStart"
-            bind:touchend="handleTouchEnd">
+        <view>
             <block> 
                 <view wx:if="{{currentTabIndex ==0}}" >
                 
@@ -47,7 +46,7 @@
                     
                 <view>
                     
-                    <template is="list" data="{{list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo}}"/>
+                    <template is="list" data="{{list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listening:listening,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo,currentSwiper:currentSwiper}}"/>
                 </view>
             </block>
 

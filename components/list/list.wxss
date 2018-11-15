@@ -129,7 +129,7 @@ button{
 .noActiveLetter{
     top:60rpx;
     width:70rpx;
-    height:34rpx;
+    height:40rpx;
    
 }
 .activeLetter{
@@ -150,4 +150,16 @@ button{
 }
 .margin30{
     margin-bottom: 30rpx
+}
+.bg3{
+    background: -webkit-linear-gradient(left, #AA52ED , #6760FF); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #AA52ED , #6760FF); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #AA52ED , #6760FF); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #AA52ED , #6760FF); /* 标准的语法（必须放在*/
+}
+.bg2{
+      background: -webkit-linear-gradient(left, #FA6450 , #FF9072); /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(right,  #FA6450 , #FF9072); /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(right,  #FA6450 , #FF9072); /* Firefox 3.6 - 15 */
+      background: linear-gradient(to right, #FA6450 , #FF9072); /* 标准的语法（必须放在*/
 }
