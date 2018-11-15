@@ -306,6 +306,7 @@ Page({
             wx.setNavigationBarTitle({
                 title: x,
             });
+            thid.data.appTitle = x;
         });
         gdt.ready.then((app) => {
 
@@ -393,6 +394,11 @@ Page({
                 screenHeight: x.screenHeight,
             });
         });
+        gdt.currentUser.then((u)=> {
+            this.data.uid = u._id;
+            this.data.nickName = this.data.nickName || u.nickName;
+        });
+
     },
     //上拉加载
     onReachBottom: function () {
@@ -433,7 +439,7 @@ Page({
                 gdt.track('share-item', { itemId: entity._id, title: entity.title, type: entity.type });
                 return {
                     title: entity.title || '默认转发标题',
-                    path: 'pages/detail/detail?id=' + entity._id,
+                    path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
                     imageUrl: entity.coverUrl
                 }
             }

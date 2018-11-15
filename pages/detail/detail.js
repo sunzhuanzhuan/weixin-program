@@ -9,6 +9,8 @@ Page({
         isShow: true,
         shareButton: '../../images/share.png',
 
+        isRoot: false,
+
         src: '',
         isLike: false,
         isEyes: true,
@@ -22,7 +24,6 @@ Page({
         type: '',
         type1: '',
         num: 0,
-        isShare: false,
         // --- For view tracking ---
 
         viewId: '',
@@ -174,7 +175,6 @@ Page({
 
     },
     onLoad(options) {
-        console.log(options.listening)
         if(options.listening == 'false'){
             this.setData({isPlay:false})
         }else{
@@ -193,7 +193,6 @@ Page({
                 });
             }
         });
-        let that = this;
 
         gdt.userInfo.then((x) => {
             this.setData({
@@ -211,111 +210,48 @@ Page({
             });
         });
         const scene = gdt.showParam.scene;
+        if (getCurrentPages()[0] === this) {
+            this.setData({ isRoot: true });
+        }
         let qPromise;
-        if ((scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049) && Object.keys(gdt.showParam.query).length > 0) {
-            let { query: { id, nickName, ref, appName } } = gdt.showParam;
-            const entityId = id;
-
-            this.setData({ art: entityId, shareName: nickName, entityId: entityId, appName: appName });
-            if (getCurrentPages()[0].route === 'pages/detail/detail') {
-                this.setData({ isShare: true });
-            }
-            gdt.userInfo.then((x) => {
-                this.setData({
-                    isEyes: true
-                });
-            }).catch(() => {
-                this.setData({
-                    isEyes: false
-                });
+        let { id, nickName, ref, appName, refee } = options;
+        const entityId = id;
+        this.setData({ art: entityId, shareName: nickName, entityId: entityId, appName: appName });
+        if (getCurrentPages()[0] === this) {
+            this.setData({ isRoot: true });
+        }
+        gdt.userInfo.then((x) => {
+            this.setData({
+                isEyes: true
             });
+        }).catch(() => {
+            this.setData({
+                isEyes: false
+            });
+        });
+        if (id) {
             qPromise = gdt.fetchEntityDetail(entityId, {
                 scene: scene,
                 keepH5Links: true,
                 mapSrc: 'data',
                 overrideStyle: 'false',
                 fixWxMagicSize: 'true',
-                ref: ref
+                ref: ref,
+                refee: refee
             });
-        }
-        //  else if (scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
-        //     let { query:{id ,nickName,ref}} = gdt.showParam;
-        //     const articleId = id;
-        //     this.setData({ isEyes: true,  isShare: true,appName:options.appName });
-        //     // fetchArticleDetailByReferenceId(referenceId, {...options})
-        //     qPromise = gdt.fetchArticleDetail(id, {
-        //         scene: scene,
-        //         keepH5Links: true,
-        //         mapSrc: 'data',
-        //         overrideStyle: 'false',
-        //         fixWxMagicSize: 'true'
-        //     });
-        // } else if (scene == 1048 || scene == 1047 || scene == 1049) {
-        //     const referencers = (options.scene)
-        //     gdt.ready.then((r)=> {
-        //         this.setData({ isEyes: true,  isShare: true ,appName:r.title});
-        //     });
-
-        //     qPromise = gdt.fetchArticleDetailByReferenceId(referencers, {
-        //         scene: scene,
-        //         keepH5Links: true,
-        //         mapSrc: 'data',
-        //         overrideStyle: 'false',
-        //         fixWxMagicSize: 'true'
-        //     });
-        // }
-        else {
-            if (getCurrentPages()[0].route === 'pages/detail/detail') {
-                this.setData({ isShare: true });
-            }
-
-            if (options.id.length > 0) {
-
-                let { id } = options;
-                console.log(id)
-                qPromise = gdt.fetchEntityDetail(id, {
-                    scene: scene,
-                    keepH5Links: true,
-                    mapSrc: 'data',
-                    overrideStyle: 'false',
-                    fixWxMagicSize: 'true'
-                });
-            } else if (Object.keys(gdt.showParam.query).length > 0) {
-                let { query: { id, nickName, ref } } = gdt.showParam;
-                console.log(id)
-                qPromise = gdt.fetchEntityDetail(id, {
-                    scene: scene,
-                    keepH5Links: true,
-                    mapSrc: 'data',
-                    overrideStyle: 'false',
-                    fixWxMagicSize: 'true'
-                });
-            } else {
-                let referencers = (options.scene);
-                gdt.ready.then((r) => {
-                    this.setData({ isEyes: true, isShare: true, appName: r.title });
-                });
-                qPromise = gdt.fetchEntityDetailByReferenceId(referencers, {
-                    scene: scene,
-                    keepH5Links: true,
-                    mapSrc: 'data',
-                    overrideStyle: 'false',
-                    fixWxMagicSize: 'true'
-                });
-            }
-            gdt.ready.then((r) => {
-                this.setData({ isEyes: true, appName: r.title });
+        } else if (options.scene) {
+            let referencers = (options.scene);
+            qPromise = gdt.fetchEntityDetailByReferenceId(referencers, {
+                scene: scene,
+                keepH5Links: true,
+                mapSrc: 'data',
+                overrideStyle: 'false',
+                fixWxMagicSize: 'true'
             });
-            // this.setData({ isEyes: true, articleId: id, ,appName: options.appName })
-            // qPromise = gdt.fetchArticleDetail(id, {
-            //     scene: scene,
-            //     keepH5Links: true,
-            //     mapSrc: 'data',
-            //     overrideStyle: 'false',
-            //     fixWxMagicSize: 'true'
-            // });
+        } else {
+            throw new Error('No idea what to load');
         }
-
+        
         qPromise.then((r) => {
             if (r.entity) {
                 const currentTitle = r.entity.title;
@@ -324,7 +260,7 @@ Page({
                 });
             };
            
-            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({recommendations:r.recommendations || [], fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
