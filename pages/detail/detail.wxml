@@ -96,14 +96,14 @@
     </form>
 </view>
 <!-- 悬浮回到首页 -->
-<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' wx:if="{{isShare}}">
+<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' wx:if="{{isRoot}}">
     <button form-type="submit" class="btnForm">
-        <image src="/images/goHome.png" class="{{isShare?'goHomeStyle':'goHomeStyle1'}} state1" bindtap="handleBack"></image>
+        <image src="/images/goHome.png" class="{{isRoot?'goHomeStyle':'goHomeStyle1'}} state1" bindtap="handleBack"></image>
     </button>
 </form>
 <!-- 生成海报 -->
 <view wx:if="{{isShowPoster}}" style="position:fixed;bottom:0;left:0;right:0;top:0;background:rgba(0,0,0,0.65);z-index:90">
-    <canvas style="width: 640rpx; height: 760rpx;background:#fff;margin-top:160rpx;margin-left:54rpx;border-radius:16rpx;" canvas-id="shareCanvas"></canvas>
+    <canvas style="width: 640rpx; height: 760rpx;background:#fff;margin-top:160rpx;margin-left:54rpx;" canvas-id="shareCanvas"></canvas>
     <button bindtap="handleSavePicture" class="btnSavePicture">已保存到相册，记得分享哦</button>
 </view>
 

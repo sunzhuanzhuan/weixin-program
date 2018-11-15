@@ -24,12 +24,10 @@ Page({
         currentTabIndex: 0,
         type: 'getUserInfo',
         type1: 'getUserInfo',
-        isVideo:false,
-        currentindex:undefined,
-        //是否正在播放
-        listening:false,
-        listenIndexCurrent:0,
-        listenTablistCurrent:0,
+        isVideo: false,
+        currentindex: undefined,
+        
+        
         //推荐的top 
         imgUrls: [],
         indicatorDots: false,
@@ -39,7 +37,11 @@ Page({
         swiperActiveZero: ['noActive','noActiveLetter','margin30'],
         swiperActiveOne:['','activeLetter'],
         swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
-        
+        //是否正在播放
+        listening: false,
+        listenIndexCurrent:undefined,
+        listenTablistCurrent: 0,
+        voiceId:undefined
     },
 
     //切换轮播图的时候
@@ -67,47 +69,65 @@ Page({
         }
     },
     //听力
-    handleListing:function(e){
-        console.log(e.currentTarget.dataset.tablist)
-        let voiceId = e.currentTarget.dataset.item.wxmpVoiceIds[0]
-        this.setData({ listenTablistCurrent:e.currentTarget.dataset.tablist })
-        let that = this;
-        if(e.currentTarget.dataset.index == this.data.listenIndexCurrent){
-            if(this.data.listening){
+    handleListing: function (e) {
+        const entity = e.currentTarget.dataset.item;
+        let voiceId = entity.wxmpVoiceIds[0];
+        this.setData({ listenTablistCurrent: e.currentTarget.dataset.tablist });
+        if (e.currentTarget.dataset.index == this.data.listenIndexCurrent) {
+            if (this.data.listening) {
                 innerAudioContext.pause();
                 this.setData({
-                    listening:false,
-                    listenIndexCurrent:e.currentTarget.dataset.index
+                    listening: false,
+                    listenIndexCurrent: e.currentTarget.dataset.index,
+                    voiceId:voiceId
                 })
-            }else{
-                innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
-                innerAudioContext.title = e.currentTarget.dataset.item.title
+                gdt.track('pause-article-voice-on-index-page', {
+                    voiceId: voiceId,
+                    itemId: entity._id, title: entity.title,
+                    playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0
+                });
+            } else {
+                if(voiceId !=  this.data.voiceId){
+                    innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
+                    innerAudioContext.title = e.currentTarget.dataset.item.title
+                }
+                
                 this.setData({
-                    listening:true,
-                    listenIndexCurrent:e.currentTarget.dataset.index
+                    listening: true,
+                    listenIndexCurrent: e.currentTarget.dataset.index,
+                    voiceId:voiceId
                 })
                 innerAudioContext.play();
+                gdt.track('play-article-voice-on-index-page', {
+                    voiceId: voiceId,
+                    itemId: entity._id, title: entity.title
+                });
             }
-       
-        }else{
-            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
-             innerAudioContext.title = e.currentTarget.dataset.item.title
+
+        } else {
+            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
+            innerAudioContext.title = e.currentTarget.dataset.item.title
             innerAudioContext.play();
             this.setData({
-                listening:true,
-                listenIndexCurrent:e.currentTarget.dataset.index
+                listening: true,
+                listenIndexCurrent: e.currentTarget.dataset.index,
+                voiceId:voiceId
             })
+            gdt.track('play-article-voice-on-index-page', {
+                voiceId: voiceId,
+                itemId: entity._id, title: entity.title
+            });
         }
-        
-        
-        
-        
+
+
+
+
     },
-   
+
     //变成video
-    changeVideo:function(e){
+    changeVideo: function (e) {
         const current = e.currentTarget.dataset.currentindex;
-        this.setData({isVideo:true,currentindex:current})
+        this.setData({ isVideo: true, currentindex: current })
         const item = e.currentTarget.dataset.item;
         if (item && item.type === 'txvVideo' && item._id) {
             gdt.trackVideoPlay(item._id);
@@ -129,10 +149,10 @@ Page({
 
             if (!targetEntity.liked) {
                 gdt.likeItem(targetEntity._id);
-                gdt.track('like-item', { itemId: targetEntity._id, type: targetEntity.type });
+                gdt.track('like-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
             } else {
                 gdt.unlikeItem(targetEntity._id);
-                gdt.track('unlike-item', { itemId: targetEntity._id, type: targetEntity.type });
+                gdt.track('unlike-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
             }
 
 
@@ -140,10 +160,10 @@ Page({
             gdt.once('userInfo', () => {
                 if (!targetEntity.liked) {
                     gdt.likeItem(targetEntity._id);
-                    gdt.track('like-item', { itemId: targetEntity._id, type: targetEntity.type });
+                    gdt.track('like-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
                 } else {
                     gdt.unlikeItem(targetEntity._id);
-                    gdt.track('unlike-item', { itemId: targetEntity._id, type: targetEntity.type });
+                    gdt.track('unlike-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
                 }
             })
         });
@@ -161,47 +181,46 @@ Page({
         this.setData({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab,
-            isVideo:false,
-            currentindex:null
+            isVideo: false,
+            currentindex: null
         });
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {
             gdt.magicListItemFirstLoad(currentListInstance._id);
             gdt.track('index-show-tab', { listId: currentListInstance._id, title: currentListInstance.title });
         }
-        if(this.data.listenTablistCurrent != this.data.currentTabIndex){
+        if (this.data.listenTablistCurrent != this.data.currentTabIndex) {
             this.setData({
-                listening:false,
-                listenIndexCurrent:0,
-            })
-        }else{
-            if(this.data.listening){
-               
+                listening: false,
+                listenIndexCurrent: undefined,
+            });
+        } else {
+            if (this.data.listening) {
                 this.setData({
-                    listening:false
-                   
+                    listening: false
+
                 })
-            }else{
-                
+            } else {
+
                 this.setData({
-                    listening:true
+                    listening: true
                 })
-               
-            } 
+
+            }
         }
     },
     //跳转到详情
     handleDetail(e) {
         let everyIndex = e.currentTarget.dataset.everyindex;
-        if(everyIndex == this.data.listenIndexCurrent){
-             let that = this;
-            wx.navigateTo({
-                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle +'&listening='+this.data.listening+'&index='+everyIndex
-            })
-        }else{
+        if (everyIndex == this.data.listenIndexCurrent) {
             let that = this;
             wx.navigateTo({
-                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle +'&listening=false&index='+everyIndex
+                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=' + this.data.listening + '&index=' + everyIndex
+            })
+        } else {
+            let that = this;
+            wx.navigateTo({
+                url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
             })
         }
        
@@ -209,8 +228,8 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        
-        this.setData({ endWidth: e.changedTouches[0].clientX ,isVideo:false}, () => {
+
+        this.setData({ endWidth: e.changedTouches[0].clientX, isVideo: false }, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
                     that.setData({
@@ -231,25 +250,25 @@ Page({
                         });
                         wx.hideLoading();
                     }
-                    if(that.data.listenTablistCurrent != that.data.currentTabIndex){
+                    if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
                         this.setData({
-                            listening:false,
-                            listenIndexCurrent:0,
+                            listening: false,
+                            listenIndexCurrent: undefined,
                         })
-                    }else{
-                        if(that.data.listening){
-                           
+                    } else {
+                        if (that.data.listening) {
+
                             that.setData({
-                                listening:false
-                               
+                                listening: false
+
                             })
-                        }else{
-                            
+                        } else {
+
                             that.setData({
-                                listening:true
+                                listening: true
                             })
-                           
-                        } 
+
+                        }
                     }
                 }
             } else {
@@ -271,25 +290,25 @@ Page({
                             gdt.magicListItemFirstLoad(currentListInstance._id);
                         }
                     })
-                    if(that.data.listenTablistCurrent != that.data.currentTabIndex){
+                    if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
                         this.setData({
-                            listening:false,
-                            listenIndexCurrent:0,
+                            listening: false,
+                            listenIndexCurrent: undefined,
                         })
-                    }else{
-                        if(that.data.listening){
-                           
+                    } else {
+                        if (that.data.listening) {
+
                             that.setData({
-                                listening:false
-                               
+                                listening: false
+
                             })
-                        }else{
-                            
+                        } else {
+
                             that.setData({
-                                listening:true
+                                listening: true
                             })
-                           
-                        } 
+
+                        }
                     }
                 }
             }
@@ -344,6 +363,7 @@ Page({
             wx.setNavigationBarTitle({
                 title: x,
             });
+            this.data.appTitle = x;
         });
         gdt.ready.then((app) => {
 
@@ -408,6 +428,11 @@ Page({
                 screenHeight: x.screenHeight,
             });
         });
+        gdt.currentUser.then((u)=> {
+            this.data.uid = u._id;
+            this.data.nickName = this.data.nickName || u.nickName;
+        });
+
     },
     //上拉加载
     onReachBottom: function () {
@@ -445,6 +470,23 @@ Page({
         // console.log( e.detail.formId)
         // this.setData({
         // formId: e.detail.formId }) 
+    },
+
+    onShareAppMessage: function (event) {
+        const target = event.target;
+        if (target) {
+            const entity = target.dataset.item;
+            if (entity) {
+                gdt.trackShareItem(entity._id);
+                gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });
+                return {
+                    title: entity.title || '默认转发标题',
+                    path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
+                    imageUrl: entity.coverUrl
+                }
+            }
+        }
+        return {};
     }
 
 })

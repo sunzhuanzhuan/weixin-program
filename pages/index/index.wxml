@@ -36,8 +36,9 @@
         <!--<view wx:else></view>-->
     </block>
 
-    <scroll-view scroll-y="true" class="contentListBox" scroll-top="{{scrollTop}}" >
-        <view>
+    <view  class="contentListBox">
+        <view bind:touchstart="handleTouchStart"
+            bind:touchend="handleTouchEnd">
             <block> 
                 <view wx:if="{{currentTabIndex ==0}}" >
                 
@@ -53,7 +54,7 @@
 
         </view>
 
-    </scroll-view>
+    </view>
     <!--</view>-->
 </view>
 <view>
