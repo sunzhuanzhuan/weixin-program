@@ -59,7 +59,8 @@ Page({
         totalTime:0,
         currentProgress:0,
         totalProgress:0,
-        clickIndex:0
+        clickIndex:0,
+        isPause:false
     },
     
 
@@ -691,9 +692,13 @@ Page({
     play:function(){
         let that = this;
         const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
-        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+        if(!this.data.isPause){
+            const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
+            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+        }
+
         innerAudioContext.play();
-        this.setData({isPlay:true});
+        this.setData({isPlay:true,isPause:false});
         gdt.track('play-article-voice-on-detail-page', {
             voiceId: voiceId,
             itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId
@@ -701,7 +706,7 @@ Page({
     },
     pause:function(){
         innerAudioContext.pause();
-        this.setData({isPlay:false});
+        this.setData({isPlay:false,isPause:true});
         gdt.track('pause-article-voice-on-detail-page', {
             voiceId: voiceId,
             playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0,

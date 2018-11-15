@@ -28,7 +28,7 @@ Page({
         currentindex: undefined,
         //是否正在播放
         listening: false,
-        listenIndexCurrent: 0,
+        listenIndexCurrent: undefined,
         listenTablistCurrent: 0
     },
 
@@ -43,7 +43,8 @@ Page({
                 innerAudioContext.pause();
                 this.setData({
                     listening: false,
-                    listenIndexCurrent: e.currentTarget.dataset.index
+                    listenIndexCurrent: e.currentTarget.dataset.index,
+                    voiceId:voiceId
                 })
                 gdt.track('pause-article-voice-on-index-page', {
                     voiceId: voiceId,
@@ -51,11 +52,15 @@ Page({
                     playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0
                 });
             } else {
-                innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
-                innerAudioContext.title = e.currentTarget.dataset.item.title
+                if(voiceId !=  this.data.voiceId){
+                    innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
+                    innerAudioContext.title = e.currentTarget.dataset.item.title
+                }
+
                 this.setData({
                     listening: true,
-                    listenIndexCurrent: e.currentTarget.dataset.index
+                    listenIndexCurrent: e.currentTarget.dataset.index,
+                    voiceId:voiceId
                 })
                 innerAudioContext.play();
                 gdt.track('play-article-voice-on-index-page', {
@@ -70,7 +75,8 @@ Page({
             innerAudioContext.play();
             this.setData({
                 listening: true,
-                listenIndexCurrent: e.currentTarget.dataset.index
+                listenIndexCurrent: e.currentTarget.dataset.index,
+                voiceId:voiceId
             })
             gdt.track('play-article-voice-on-index-page', {
                 voiceId: voiceId,
@@ -146,7 +152,7 @@ Page({
         if (this.data.listenTablistCurrent != this.data.currentTabIndex) {
             this.setData({
                 listening: false,
-                listenIndexCurrent: 0,
+                listenIndexCurrent: undefined,
             });
         } else {
             if (this.data.listening) {
@@ -209,7 +215,7 @@ Page({
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
                         this.setData({
                             listening: false,
-                            listenIndexCurrent: 0,
+                            listenIndexCurrent: undefined,
                         })
                     } else {
                         if (that.data.listening) {
@@ -249,7 +255,7 @@ Page({
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
                         this.setData({
                             listening: false,
-                            listenIndexCurrent: 0,
+                            listenIndexCurrent: undefined,
                         })
                     } else {
                         if (that.data.listening) {
