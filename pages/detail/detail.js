@@ -633,16 +633,23 @@ Page({
     //播放
     play:function(){
         let that = this;
-        
-        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
+        const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
+        innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
         innerAudioContext.play();
-        this.setData({isPlay:true})
+        this.setData({isPlay:true});
+        gdt.track('play-article-voice-on-detail-page', {
+            voiceId: voiceId,
+            itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId
+        });
     },
     pause:function(){
-        console.log(21)
         innerAudioContext.pause();
-        this.setData({isPlay:false})
-        console.log(this.data.isPlay)
+        this.setData({isPlay:false});
+        gdt.track('pause-article-voice-on-detail-page', {
+            voiceId: voiceId,
+            playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0,
+            itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId
+        });
     }
     // handlePlayVideo:function(){
     //     let that = this;

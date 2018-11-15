@@ -2,6 +2,12 @@ const GDT = require('./application-data.js');
 App({
     onLaunch: function(launchParam) {
         this.globalData.applicationDataContext = new GDT(launchParam, ['wxArticle']);
+        const gdt = this.globalData.applicationDataContext;
+        gdt.userInfo.catch(()=> {
+            gdt.once('userInfo', (info)=> {
+                gdt.track('newly-authorized-user-info');
+            });
+        });
     },
     onShow: function (showParam) {
         this.globalData.applicationDataContext.onAppShow(showParam);

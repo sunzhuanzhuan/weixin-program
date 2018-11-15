@@ -35,9 +35,9 @@ Page({
     //听力
     handleListing: function (e) {
         console.log(e.currentTarget.dataset.tablist)
-        let voiceId = e.currentTarget.dataset.item.wxmpVoiceIds[0]
-        this.setData({ listenTablistCurrent: e.currentTarget.dataset.tablist })
-        let that = this;
+        const entity = e.currentTarget.dataset.item;
+        let voiceId = entity.wxmpVoiceIds[0];
+        this.setData({ listenTablistCurrent: e.currentTarget.dataset.tablist });
         if (e.currentTarget.dataset.index == this.data.listenIndexCurrent) {
             if (this.data.listening) {
                 innerAudioContext.pause();
@@ -45,6 +45,11 @@ Page({
                     listening: false,
                     listenIndexCurrent: e.currentTarget.dataset.index
                 })
+                gdt.track('pause-article-voice-on-index-page', {
+                    voiceId: voiceId,
+                    itemId: entity._id, title: entity.title,
+                    playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0
+                });
             } else {
                 innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
                 innerAudioContext.title = e.currentTarget.dataset.item.title
@@ -53,6 +58,10 @@ Page({
                     listenIndexCurrent: e.currentTarget.dataset.index
                 })
                 innerAudioContext.play();
+                gdt.track('play-article-voice-on-index-page', {
+                    voiceId: voiceId,
+                    itemId: entity._id, title: entity.title
+                });
             }
 
         } else {
@@ -63,6 +72,10 @@ Page({
                 listening: true,
                 listenIndexCurrent: e.currentTarget.dataset.index
             })
+            gdt.track('play-article-voice-on-index-page', {
+                voiceId: voiceId,
+                itemId: entity._id, title: entity.title
+            });
         }
 
 
@@ -90,10 +103,10 @@ Page({
 
             if (!targetEntity.liked) {
                 gdt.likeItem(targetEntity._id);
-                gdt.track('like-item', { itemId: targetEntity._id, type: targetEntity.type });
+                gdt.track('like-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
             } else {
                 gdt.unlikeItem(targetEntity._id);
-                gdt.track('unlike-item', { itemId: targetEntity._id, type: targetEntity.type });
+                gdt.track('unlike-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
             }
 
 
@@ -101,10 +114,10 @@ Page({
             gdt.once('userInfo', () => {
                 if (!targetEntity.liked) {
                     gdt.likeItem(targetEntity._id);
-                    gdt.track('like-item', { itemId: targetEntity._id, type: targetEntity.type });
+                    gdt.track('like-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
                 } else {
                     gdt.unlikeItem(targetEntity._id);
-                    gdt.track('unlike-item', { itemId: targetEntity._id, type: targetEntity.type });
+                    gdt.track('unlike-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
                 }
             })
         });
@@ -134,7 +147,7 @@ Page({
             this.setData({
                 listening: false,
                 listenIndexCurrent: 0,
-            })
+            });
         } else {
             if (this.data.listening) {
 
@@ -436,7 +449,7 @@ Page({
             const entity = target.dataset.item;
             if (entity) {
                 gdt.trackShareItem(entity._id);
-                gdt.track('share-item', { itemId: entity._id, title: entity.title, type: entity.type });
+                gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });
                 return {
                     title: entity.title || '默认转发标题',
                     path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
