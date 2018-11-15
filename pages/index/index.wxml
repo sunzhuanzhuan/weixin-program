@@ -36,7 +36,7 @@
         <!--<view wx:else></view>-->
     </block>
 
-    <view  class="contentListBox"  >
+    <view  class="contentListBox">
         <view bind:touchstart="handleTouchStart"
             bind:touchend="handleTouchEnd">
             <block> 

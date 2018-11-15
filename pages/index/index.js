@@ -324,7 +324,7 @@ Page({
             wx.setNavigationBarTitle({
                 title: x,
             });
-            thid.data.appTitle = x;
+            this.data.appTitle = x;
         });
         gdt.ready.then((app) => {
 
