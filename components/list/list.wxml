@@ -68,7 +68,7 @@
                                         </form>
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button form-type="submit"  class='btnStar' style='background:#fff;width:130rpx' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                            <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}" style="float:left;margin-top:30rpx"></image>
+                                            <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}" style="float:left;margin-top:26rpx"></image>
                                             <text style="color:#999;font-size:24rpx;margin-left:10rpx;display:inline-block;line-height:20rpx;height: 100rpx;float:left">
 
                                                 {{item._likedTimes}}
