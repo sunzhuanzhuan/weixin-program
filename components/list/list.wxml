@@ -17,7 +17,7 @@
                     <view data-id="{{item.id}}" style="float:right;width:250rpx">
                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                             <button  form-type="submit" class='btnStarVideo' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                <image class="imgBtnItem" style="float:left;margin-top:32rpx" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
+                                <image class="imgBtnItem" style="float:left;margin-top:28rpx" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
                                 <text style="color:#999;font-size:24rpx;display:inline-block;line-height:12rpx;height: 100rpx;float:left;margin-top:32rpx;padding-left:10rpx;">
                                     {{item._likedTimes}}
                                 </text>
@@ -68,7 +68,7 @@
                                         </form>
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button form-type="submit"  class='btnStar' style='background:#fff;width:130rpx' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                            <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}" style="float:left;margin-top:30rpx"></image>
+                                            <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}" style="float:left;margin-top:26rpx"></image>
                                             <text style="color:#999;font-size:24rpx;margin-left:10rpx;display:inline-block;line-height:32rpx;height: 100rpx;float:left">
                                                 {{item._likedTimes}}
                                             </text>
