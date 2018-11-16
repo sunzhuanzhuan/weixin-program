@@ -714,27 +714,7 @@ Page({
     handleSavePicture: function () {
         this.setData({ isShowPoster: false });
     },
-    //播放
-    play:function(){
-        let that = this;
-       
-        if(!this.data.isPause){
-            const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
-            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
-        }
-        
-        innerAudioContext.play();
-        this.setData({isPlay:true});
-        gdt.track('play-article-voice-on-detail-page', {
-            voiceId: voiceId,
-            itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId
-        });
-    },
-    pause:function(){
-        innerAudioContext.pause();
-        this.setData({isPlay:false})
-        console.log(this.data.isPlay)
-    },
+    
     handlePlayVideo:function(){
        
         let that = this;
@@ -744,7 +724,7 @@ Page({
             innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
         }
         this.setData({isPlay:true ,audioName:innerAudioContext.title})
-       
+        
         innerAudioContext.play();
         // 时间的当前的进度;
         
@@ -764,7 +744,8 @@ Page({
         console.log('暂停');
         
         innerAudioContext.pause();
-        this.setData({isPlay:false})
+       
+        this.setData({isPlay:false,isPause:true})
         // this.setData({isChangeBig:!this.data.isChangeBig})
     },
     handleShink:function(){
@@ -772,12 +753,12 @@ Page({
     },
     handlePauseVideoNow:function(){
         
-        this.setData({isPlay:false})
+        this.setData({isPlay:false,isPause:true})
         innerAudioContext.pause();
     },
     handlePlayVideoNow:function(){
 
-        this.setData({isPlay:true})
+        this.setData({isPlay:true,isPause:true})
         innerAudioContext.play();
     },
     //拖动过程中的一些处理
