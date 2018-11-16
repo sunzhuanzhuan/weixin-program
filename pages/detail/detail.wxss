@@ -125,7 +125,7 @@ button{
 
 .fixed {
     position: fixed;
-    bottom: -200rpx;
+    bottom: -500rpx;
     width: 100%;
     line-height: 94rpx;
     border-top:none;
