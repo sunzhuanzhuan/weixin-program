@@ -117,7 +117,7 @@
         <image src="/images/pause.png" style="width:140rpx;height:140rpx" bindtap="handlePauseVideo"/>
     </view>
     <view wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="position:fixed;bottom:160rpx;z-index:90;width:100%;height:140rpx;background:#262626;opacity:0.8;line-height:140rpx;border-radius:8rpx 8rpx 0 0">
-        <view style="display:inline-block;width:20%;height:140rpx;line-height:140rpx;background:#000;overflow:hidden;font-size:24rpx;color:#fff;vertical-align:top" bindtap="handleShink">
+        <view style="display:inline-block;width:20%;height:140rpx;line-height:140rpx;background:#000;overflow:hidden;font-size:24rpx;color:#fff;vertical-align:top;border-radius:16rpx 0 0 0;" bindtap="handleShink">
         <text style="border-right:1px solid #fff;padding:0 14rpx">收起 </text> 
         </view>
         
@@ -134,7 +134,7 @@
             
         </view>
         
-        <view style="display:inline-block;width:20%;height:140rpx;line-height:140rpx;background:#000;vertical-align:top" >
+        <view style="display:inline-block;width:20%;height:140rpx;line-height:140rpx;background:#000;vertical-align:top;;border-radius:0 16rpx 0 0;" >
             <image wx:if="{{isPlay}}" src="/images/pauseLine.png" style="width:24rpx;height:34rpx;margin-left:40rpx" bindtap="handlePauseVideoNow"/>
             <image wx:else src="/images/playing.png" style="width:24rpx;height:34rpx;margin-left:40rpx;display:block;overflow:hidden;margin-top:34rpx" bindtap="handlePlayVideoNow"/>
              <view style="display:inline-block;font-size:24rpx;color:#fff;width:100%;height:80rpx;line-height:50rpx;overflow:hidden;margin-left:20rpx;" bindtap="handlePlayVideoNow">听一听 </view> 
