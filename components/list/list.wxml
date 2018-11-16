@@ -47,6 +47,7 @@
             bind:touchend="handleTouchEnd">
 
         <view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
+         
             <!-- 视频 -->
             <view wx:if="{{item.type === 'txvVideo'}}" class="itemBigBox">
                 <view wx:if='{{currentindex == index }}' data-item="{{item}}" data-currentIndex='{{index}}'>
@@ -79,10 +80,10 @@
             </view> 
             <view  wx:if="{{item.type === 'wxArticle'}}">
                 <!-- 小图 -->
-                <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list[index-1].wxMidVec && list[index-1].wxMidVec[list[index-1].wxMidVec.length-1] == '1'?'':'margin-top:15rpx'}};{{(list[index+1].wxMidVec && list[index+1].wxMidVec[list[index+1].wxMidVec.length-1] == '1')?'':'margin-bottom:15rpx'}}">
+                <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list.items[index-1].wxMidVec && list.items[index-1].wxMidVec[list.items[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">
                     <view style="width:100%;overflow:hidden;background:#ffffff;">
                         
-                        <view class="itemSmall" style="float:right;{{(list[index+1].wxMidVec && list[index+1].wxMidVec[list[index+1].wxMidVec.length-1] == '1')?'border-bottom: 1px solid #E0E0E0;':''}}">
+                        <view class="itemSmall" style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1px solid #E0E0E0;'}}">
                             <image style="float:right;width:220rpx;height:180rpx;border-radius:8rpx" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}"  data-everyIndex="{{index}}"></image>
                             <view style="float:rigth;width:430rpx;height:180rpx;position:relative;">
                                 <text class='nowrapTwo' style="margin-left:20rpx;display:inline-block" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">{{item.title}}</text>

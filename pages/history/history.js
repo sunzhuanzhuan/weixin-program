@@ -14,11 +14,24 @@ Page({
         myCollectVideoHasMore: undefined,
 
         myViewsHasMore: undefined,
+        type1:'getUserInfo'
 
     },
     onLoad:function(options){
        this.setData({name:options.type})
         this.appState = gdt.localState;
+        gdt.userInfo.then((x) => {
+            this.setData({
+                type1: 'share'
+            });
+        }).catch(() => {
+            this.setData({
+                type1: 'getUserInfo'
+            });
+            gdt.once('userInfo', () => {
+                this.setData({ type1: 'share' });
+            });
+        });
         
         const makeMyCollectArtical = ()=> {
             this.appState.myCollectArtical.forEach((x)=> {
@@ -196,5 +209,28 @@ Page({
             gdt.magicMyCollectVideoFirstLoad();
             
         }
+    },
+    onShareAppMessage: function (event) {
+        const target = event.target;
+        if (target) {
+            const entity = target.dataset.item;
+            if (entity) {
+                gdt.trackShareItem(entity._id);
+                gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });
+                return {
+                    title: entity.title || '默认转发标题',
+                    path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
+                    imageUrl: entity.coverUrl
+                }
+            }
+        }
+        return {};
+    },
+    handleAuthor: function (e) {
+
+        if (e.detail && e.detail.userInfo) {
+            gdt.emit('userInfo', e.detail);
+        }
+
     },
 })
