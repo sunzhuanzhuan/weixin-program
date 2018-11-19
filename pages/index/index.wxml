@@ -13,7 +13,7 @@
                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'  wx:for="{{lists}}" class='tag-box' wx:key="id" style="display: inline-block">
                      
                     <button form-type="submit" hover-class='none' class="btnForm taga-item {{currentTabIndex==index?'bold':''}}"
-                    style="font-size:32rpx;{{currentTabIndex==index?'color:#000':'color:#999'}}"
+                    style="height:80rpx;line-height:80rpx;{{currentTabIndex==index?'color:#333':'color:#333'}}"
                           data-tab="{{index}}" data-name='{{item.title}}'
                           data-tabid="{{item.id}}" bindtap="handleTitleTab">{{item.title}}</button>
                 </form>

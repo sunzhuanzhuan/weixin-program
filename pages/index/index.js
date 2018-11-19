@@ -184,7 +184,9 @@ Page({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab,
             isVideo: false,
-            currentindex: null
+            currentindex: null,
+            listenIndexCurrent:undefined,
+            
         });
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {

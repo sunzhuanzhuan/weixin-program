@@ -24,6 +24,9 @@ Page({
         isHome:false
     },
       onLoad: function() {
+        wx.setNavigationBarTitle({
+            title: '我的',
+        });
           gdt.userInfo.then(()=> {
             gdt.setLocalStorage('dashboardTipShouldDisplay', false);
           }, ()=> {
@@ -161,6 +164,22 @@ Page({
         wx.navigateTo({
             url:'/pages/history/history?type='+e.currentTarget.dataset.name
         })
+    },
+    onShareAppMessage: function (event) {
+        const target = event.target;
+        if (target) {
+            const entity = target.dataset.item;
+            if (entity) {
+                gdt.trackShareItem(entity._id);
+                gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });
+                return {
+                    title: entity.title || '默认转发标题',
+                    path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
+                    imageUrl: entity.coverUrl
+                }
+            }
+        }
+        return {};
     }
     
 

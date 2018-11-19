@@ -82,10 +82,10 @@ button{
 .fontShadow {
     height: 90rpx;
     width:690rpx;
-    background: -webkit-linear-gradient(180deg,rgba(0,0,0,0.69),rgba(0,0,0,0.69));/* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(180deg,rgba(0,0,0,0.69),rgba(0,0,0,0.69)); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(180deg,rgba(0,0,0,0.69),rgba(0,0,0,0.69)); /* Firefox 3.6 - 15 */
-    background: linear-gradient(180deg,rgba(0,0,0,0.69),rgba(0,0,0,0.69));
+    background: -webkit-linear-gradient(180deg,rgba(0,0,0,0,0),rgba(0,0,0,0.69));/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(180deg,rgba(0,0,0,0,0),rgba(0,0,0,0.69)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.69)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.69));
 }
 
 .itemSmall{

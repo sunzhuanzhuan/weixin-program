@@ -3,7 +3,6 @@
 @import "/components/list/list.wxss";
 @import "/pages/detail/detail.wxss";
 
-
 page{
   width:100%;
   height: 100%;
@@ -24,10 +23,22 @@ page{
 
 .bold {
   font-weight: 600;
-  border-bottom: 3px solid #FFDB3D;
+  /* border-bottom: 3px solid #FFDB3D; */
+  font-size: 44rpx;
   box-sizing: border-box;
 }
 
+.bold:after {
+  content: '';
+  position: absolute;
+  left: 25%;
+  top: 70rpx;
+  bottom: 0;
+  right: auto;
+  height: 10px;
+  width: 100rpx;
+  background-color: #FFDB3D;
+}
 .tag-box {
   position: relative;
   padding:0 25rpx;

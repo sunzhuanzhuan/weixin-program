@@ -2,7 +2,7 @@
 
 <view>
     <view wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}" style="width:100%;overflow:hidden;background:#fff;">
-    <view style="background:#fff;border-bottom:1px solid #CCCCCC;width:96%;float:right;padding:40rpx 0">
+    <view style="{{index==0?'border-top:1px solid #CCCCCC':''}};background:#fff;border-bottom:1px solid #CCCCCC;width:96%;float:right;padding:40rpx 0">
         <view style="display:inline-block;width:15%;height:120rpx;float:left;overflow:hiden">
             <view style="margin:0 26rpx">
                 <view style="font-size:20rpx;color:#999;border:1px solid #CCCCCC;padding:0 6rpx;border-radius:20rpx;"> 
@@ -40,7 +40,7 @@
                 <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>
                 由小鱼聚合平台提供技术支持
             </view>
-            <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view>
+            <!-- <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view> -->
         </view>
     
      

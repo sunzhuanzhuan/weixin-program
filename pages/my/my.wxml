@@ -24,24 +24,24 @@
                         <view style="font-size:44rpx;color:#333">{{userInfo ? num.shared : ''}}</view>
                     </view>
                     <view style="margin-top:20rpx">
-                        <button style="width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1px solid #333333;border-radius:50rpx;background:#fff;margin-top:20rpx;float:left;color:#333333" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg' >意见反馈</button>
+                        <button style="width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1rpx solid #333333;border-radius:50rpx;background:#fff;margin-top:20rpx;float:left;color:#333333" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg' >意见反馈</button>
                     </view>
                     
                 </view>
              </view>
 
-            <view style="margin:0 28rpx;width:698rpx;height:160rpx;overflow:hidden;clear:both;box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;;position:absolute;bottom:-100rpx">
-                <view bindtap="handleTapHistoryOrArticalOrVideo" data-name="history" style="display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center;">
+            <view style="margin:0 28rpx;width:698rpx;height:160rpx;overflow:hidden;clear:both;box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;position:absolute;bottom:-100rpx;border-radius:10rpx;background:#fff;">
+                <view bindtap="handleTapHistoryOrArticalOrVideo" data-name="history" style="display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center">
                     <image src="/images/history.png"  style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
                     <view style="font-size:24rpx;color:#333">浏览历史</view>
                 </view>
-                <text style="border-left:1px solid #E6E6E6;height:50rpx;display:inline-block;"></text>
-                <view bindtap="handleTapHistoryOrArticalOrVideo"  data-name="artical"  style="display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center">
+                <text class="leftBorder" style="background:#fff;height:60rpx;border-right:1rpx solid #E6E6E6;display:inline-block;"></text>
+                <view bindtap="handleTapHistoryOrArticalOrVideo"  data-name="artical"  style="display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center;">
                     <image src="/images/artical.png" style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
                     <view style="font-size:24rpx;color:#333">收藏的文章</view>
                 </view>
-                <text style="border-right:1px solid #E6E6E6;display:inline-block;height:50rpx;"></text>
-                <view bindtap="handleTapHistoryOrArticalOrVideo"   data-name="video"  style="display:inline-block;width:234rpx;height:160rpx;background:#fff;text-align:center">
+                <text style="background:#fff;display:inline-block;height:60rpx;border-right:1rpx solid #E6E6E6;"></text>
+                <view bindtap="handleTapHistoryOrArticalOrVideo"   data-name="video"  style="display:inline-block;width:234rpx;height:160rpx;background:#fff;text-align:center;">
                     <image src="/images/video.png"  style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
                     <view style="font-size:24rpx;color:#333">收藏的视频</view>
                 </view>

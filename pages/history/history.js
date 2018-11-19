@@ -126,12 +126,21 @@ Page({
        
         if(options.type === 'history'){
             gdt.magicMyViewsFirstLoad();
+            wx.setNavigationBarTitle({
+                title: '浏览历史',
+            });
            
         }else if(options.type === 'artical'){
             gdt.magicMyCollectArticalFirstLoad();
+            wx.setNavigationBarTitle({
+                title: '收藏的文章',
+            });
            
         }else{
             gdt.magicMyCollectVideoFirstLoad();
+            wx.setNavigationBarTitle({
+                title: '收藏的视频',
+            });
             
         }
         this.setData({ 
