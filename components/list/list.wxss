@@ -104,7 +104,7 @@ button{
     white-space: nowrap;
     width: 630rpx;
     font-size: 34rpx;
-    color: #CCCCCC;
+    color: #fff;
 }
 .readVideoTitle{
     overflow:hidden;

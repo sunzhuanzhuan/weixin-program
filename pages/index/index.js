@@ -184,7 +184,7 @@ Page({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab,
             isVideo: false,
-            currentindex: null,
+            currentindex: undefined,
             listenIndexCurrent:undefined,
             
         });

@@ -52,10 +52,10 @@ button::after{ border: none;padding: 0 }
 .line{
     border-right: 1px solid #E6E6E6;
     display: inline-block;
-    height: 50rpx;
+    height: 46rpx;
     margin-top: 50rpx;
     width: 4rpx;
-    line-height: 50rpx;
+    line-height: 46rpx;
     margin-right:40rpx;
     float: right;
 }

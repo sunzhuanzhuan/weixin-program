@@ -207,15 +207,18 @@ Page({
     //下拉刷新
     onPullDownRefresh: function () {
         if(this.data.name === 'history'){
-            console.log(123)
-            gdt.magicMyViewsFirstLoad();
+            
+            gdt.magicMyViewsLoadLatest();
+            gdt.track('item-list-view-load-first')
            
         }else if(this.data.name === 'artical'){
-            console.log(1234)
-            gdt.magicMyCollectArticalFirstLoad();
+            
+            gdt.magicMyCollectArticalLoadLatest();
+            gdt.track('item-list-liked-wxArticle-load-first')
            
         }else{
-            gdt.magicMyCollectVideoFirstLoad();
+            gdt.magicMyCollectVideoLoadLatest();
+            gdt.track('item-list-liked-txvVideo-load-first')
             
         }
     },

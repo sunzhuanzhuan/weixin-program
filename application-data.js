@@ -1016,7 +1016,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         }
         return Promise.resolve();
     }
-
+    magicMySharedLoadLatest() {
+        return this.fetchMySharedItems(1, PAGESIZE);
+        
+    }
     //浏览足迹
     magicMyViewsLoadMore() {
         const myViews = this.localState.myViews;
@@ -1033,6 +1036,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
             return this.fetchMyViewsItems(1, PAGESIZE);
         }
         return Promise.resolve();
+    }
+    magicMyViewsLoadLatest() {
+        return this.fetchMyViewsItems(1, PAGESIZE);
+        
     }
     //收藏的文章
     fetchMyCollectArticalItems(type, page, pageSize) {
@@ -1150,6 +1157,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         }
         return Promise.resolve();
     }
+    magicMyCollectArticalLoadLatest() {
+        return this.fetchMyCollectArticalItems('wxArticle',1, PAGESIZE);
+        
+    }
     //我收藏的视频
     magicMyCollectVideoLoadMore() {
         const myCollectVideo = this.localState.myCollectVideo;
@@ -1168,7 +1179,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         }
         return Promise.resolve();
     }
-
+    magicMyCollectVideoLoadLatest() {
+        return this.fetchMyCollectVideoItems('txvVideo',1, PAGESIZE);
+        
+    }
     fetchArticleDetail(articleId, options) {
         console.warn('GDT: Article API is deprecated ! Use entity API insted !!');
         const qOptions = _.merge({

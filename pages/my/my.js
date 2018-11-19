@@ -115,25 +115,24 @@ Page({
           });
       },
       onReachBottom: function () {
-          if (this.data.currentTab === 'myShares') {
-              gdt.magicMySharedLoadMore();
-          } else {
-              gdt.magicMyLikedLoadMore();
-          }
+        
+        gdt.magicMySharedLoadMore();
+        gdt.track('item-list-share-load-more')
       },
       onShareAppMessage: function({from, target, webViewUrl}) {
-          const clip = target.dataset.clip;
+          const clip = target.dataset.item;
+          
           if (!(clip && clip.entity)) {
               return;
           }
   
           const entity = clip.entity;
-          gdt.trackShareItem(entityBref._id);
+          gdt.trackShareItem(entity._id);
           gdt.track('share-item', { itemId: clip.entityId, type: entity.type, refId: clip._id });
         
           return {
               title: entity.title || '默认转发标题',
-              path: `pages/detail/detail?ref=${clip._id}&art=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
+              path: `pages/detail/detail?ref=${clip._id}&id=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
               imageUrl: entity.coverUrl
           }
       },
@@ -165,22 +164,11 @@ Page({
             url:'/pages/history/history?type='+e.currentTarget.dataset.name
         })
     },
-    onShareAppMessage: function (event) {
-        const target = event.target;
-        if (target) {
-            const entity = target.dataset.item;
-            if (entity) {
-                gdt.trackShareItem(entity._id);
-                gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });
-                return {
-                    title: entity.title || '默认转发标题',
-                    path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
-                    imageUrl: entity.coverUrl
-                }
-            }
-        }
-        return {};
-    }
+    //下拉刷新
+    onPullDownRefresh: function () {
+        gdt.magicMySharedLoadLatest();
+        gdt.track('item-list-share-load-first')
+    },
     
 
   })

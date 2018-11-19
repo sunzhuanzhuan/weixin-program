@@ -22,7 +22,8 @@ page{
 }
 
 .bold {
-  font-weight: 600;
+  font-weight: bold;
+
   /* border-bottom: 3px solid #FFDB3D; */
   font-size: 44rpx;
   box-sizing: border-box;

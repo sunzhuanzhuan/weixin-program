@@ -2,16 +2,17 @@
 
 <view>
     <view wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}" style="width:100%;overflow:hidden;background:#fff;">
-    <view style="{{index==0?'border-top:1px solid #CCCCCC':''}};background:#fff;border-bottom:1px solid #CCCCCC;width:96%;float:right;padding:40rpx 0">
-        <view style="display:inline-block;width:15%;height:120rpx;float:left;overflow:hiden">
-            <view style="margin:0 26rpx">
-                <view style="font-size:20rpx;color:#999;border:1px solid #CCCCCC;padding:0 6rpx;border-radius:20rpx;"> 
+    <view style="{{index==0?'border-top: 1rpx solid #E6E6E6;':''}};background:#fff;border-bottom: 1rpx solid #E6E6E6;width:96%;float:right;padding:40rpx 0">
+        <view style="display:inline-block;width:11%;height:120rpx;float:left;overflow:hiden">
+            <view style="width:60rpx;height:40rpx;">
+
+                <view style="font-size:20rpx;color:#999;border:1rpx solid #CCCCCC;padding:0 6rpx;border-radius:20rpx;"> 
                     {{item.type ==='txvVideo'?'视频':'文章'}}
                 </view>
             </view>
         </view>
-        <view style="display:inline-block;width:55%;height:120rpx;float:left;overflow:hidden;position:relative">
-           <view class="nowrap" style="font-size:30rpx;color:#333;width: 90%;" bindtap="handleDetail" data-id="{{item.entity._id}}"> {{item.entity.title}}</view>
+        <view style="display:inline-block;width:59%;height:120rpx;float:left;overflow:hidden;position:relative">
+           <view class="nowrap" style="font-size:30rpx;color:#333;width: 97%;" bindtap="handleDetail" data-id="{{item.entity._id}}"> {{item.entity.title}}</view>
             <view style="position:absolute;bottom:0;width:100%;height:34rpx;">
                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                     <button  form-type="submit" style='float:right;background:#fff;width:100rpx;height:40rpx;line-height:1' open-type="{{type1}}" data-item="{{item.entity}}" form-type="submit" bindgetuserinfo="handleAuthor">
@@ -29,7 +30,7 @@
             </view>
         </view>
             <view style="margin:0 7% 0% 3%;border-radius:8rpx;display:inline-block;width:20%;height:120rpx;float:left;overflow:hidden;position:relative" data-id="{{item.entity._id}}" bindtap="handleDetail">
-                <image src=" {{item.entity.coverUrl}}"  mode="aspectFill" style="width:160rpx;height:120rpx;" />
+                <image src=" {{item.entity.coverUrl}}"  mode="aspectFit" style="width:160rpx;height:120rpx;" />
                 <image wx:if="{{item.type ==='txvVideo'}}" src="/images/play.png" style="width:52rpx;height:52rpx;position:absolute;top:50%;left:50%;margin-top:-26rpx;margin-left:-30rpx;" />
             </view>
         </view>
@@ -37,8 +38,8 @@
     <view wx:if="{{name === 'history' ? myViewsHasMore : name === 'artical'? myCollectArticalHasMore :myCollectVideoHasMore }}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;"></view>
         <view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
             <view style='height:50rpx;'>
-                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>
-                由小鱼聚合平台提供技术支持
+                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx;float:left;margin-top:82rpx;padding-left:210rpx;"></image>
+                <text style="color:#ccc;font-size:20rpx;float:left"> 由小鱼聚合平台提供技术支持</text>
             </view>
             <!-- <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view> -->
         </view>
