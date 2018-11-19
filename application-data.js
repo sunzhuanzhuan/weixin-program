@@ -447,6 +447,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     if (indexedItem.type == "txvVideo") {
                         indexedItem.wxMidVec = '1234#1'
                     }
+                    indexedItem.isShow=false
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
                         return;
@@ -481,7 +482,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 if (indexedItem.type == "txvVideo") {
                     indexedItem.wxMidVec = '1234#1'
                 }
-
+                indexedItem.isShow=false
                 let curItem = targetList[idx];
                 if (curItem) {
                     return;
@@ -514,7 +515,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (indexedItem.type == "txvVideo") {
                 indexedItem.wxMidVec = '1234#1'
             }
-
+            indexedItem.isShow=false
             return;
         });
 
@@ -570,9 +571,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('viewsItems', ([start, end], clips) => {
             const targetList = this.localState.myViews;
             const itemIndex = this.localState.clipIndex;
-
+            
             clips.forEach((x) => {
                 if (x.entity) {
+                    x.isShow=false;
                     this.emit('entityUpdate', x.entity);
                 }
             });
@@ -696,9 +698,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('collectArticalItems', ([start, end], clips) => {
             const targetList = this.localState.myCollectArtical;
             const itemIndex = this.localState.clipIndex;
-
+            
             clips.forEach((x) => {
                 if (x.entity) {
+                    x.isShow=false;
                     this.emit('entityUpdate', x.entity);
                 }
             });
@@ -751,9 +754,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
         this.on('collectVideoItems', ([start, end], clips) => {
             const targetList = this.localState.myCollectVideo;
             const itemIndex = this.localState.clipIndex;
-
+            
             clips.forEach((x) => {
                 if (x.entity) {
+                    x.isShow=false;
                     this.emit('entityUpdate', x.entity);
                 }
             });
@@ -764,6 +768,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (start === 0) {
                 clips.reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
+                    
                     if (indexedItem) {
                         _.merge(indexedItem, x);
                     } else {

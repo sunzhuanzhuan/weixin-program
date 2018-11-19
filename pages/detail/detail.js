@@ -66,12 +66,15 @@ Page({
          clickIndex:0,
          audioName:'',
          isShowListen:true,
-         isPause:false
+         isPause:false,
+        // 视频为图片
+        isPlayVideo:false
     },
 
     //文章里面的视频是否静音
     handleIsMutedFromArtical:function(){
         this.setData({
+            isPlayVideo:true,
             isMuted:!this.data.isMuted
         })
     },
@@ -79,12 +82,19 @@ Page({
     handleVideoTapFromArtical:function(e){
         let index = e.currentTarget.dataset.videoid;
         this.setData({
+            isPlayVideo:true,
             videoId:this.data.videoSource[index],
             selectedCricle:index
         })
        
     },
-    
+    handleChangeTypeVideo:function(){
+        this.setData({
+            isPlayVideo:true,
+            videoId:this.data.videoSource[0],
+        })
+       
+    },
 
     // 点击切换视频
     handleVideo:function(e){

@@ -1,8 +1,8 @@
 
 
 <view>
-    <view wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}" style="width:100%;overflow:hidden;background:#fff;">
-    <view style="{{index==0?'border-top: 1rpx solid #E6E6E6;':''}};background:#fff;border-bottom: 1rpx solid #E6E6E6;width:96%;float:right;padding:40rpx 0">
+    <view class="item item-{{index}}" wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}" style="width:100%;overflow:hidden;background:#fff;">
+  <view style="{{index==0?'border-top: 1rpx solid #E6E6E6;':''}};background:#fff;border-bottom: 1rpx solid #E6E6E6;width:96%;float:right;padding:40rpx 0">
         <view style="display:inline-block;width:11%;height:120rpx;float:left;overflow:hiden">
             <view style="width:60rpx;height:40rpx;">
 
@@ -30,7 +30,7 @@
             </view>
         </view>
             <view style="margin:0 7% 0% 3%;border-radius:8rpx;display:inline-block;width:20%;height:120rpx;float:left;overflow:hidden;position:relative" data-id="{{item.entity._id}}" bindtap="handleDetail">
-                <image src=" {{item.entity.coverUrl}}"  mode="aspectFit" style="width:160rpx;height:120rpx;" />
+                <image src=" {{item.isShow?item.entity.coverUrl:'/images/lazyThree.png'}}"  mode="aspectFit" style="width:160rpx;height:120rpx;" />
                 <image wx:if="{{item.type ==='txvVideo'}}" src="/images/play.png" style="width:52rpx;height:52rpx;position:absolute;top:50%;left:50%;margin-top:-26rpx;margin-left:-30rpx;" />
             </view>
         </view>
