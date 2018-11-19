@@ -49,7 +49,7 @@
         
         
     </view>
-    <view  style="margin-top:140rpx;margin-left:30rpx;color:#333;font-size:36rpx;">我的分享</view>
+    <view  style="margin-top:140rpx;margin-left:30rpx;color:#333;font-size:36rpx;font-weight:600;">我的分享</view>
     
     <view style="margin-top:20rpx">
         <scroll-view  enable-back-to-top="true">

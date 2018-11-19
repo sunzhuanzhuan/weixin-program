@@ -36,7 +36,7 @@ page{
   bottom: 0;
   right: auto;
   height: 10px;
-  width: 100rpx;
+  width: 100%;
   background-color: #FFDB3D;
 }
 .tag-box {

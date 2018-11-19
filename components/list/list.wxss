@@ -98,6 +98,35 @@ button{
     
    
 }
+.readNowrapOne{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 630rpx;
+    font-size: 34rpx;
+    color: #CCCCCC;
+}
+.readVideoTitle{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width:410rpx;
+    line-height:1.0;
+    font-size: 32rpx;
+    color: #CCCCCC;
+    font-size: 34rpx;
+}
+.readNowrapTwo{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    width: 430rpx;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 34rpx;
+    height: 100rpx;
+    color: #CCCCCC;
+}
 .nowrapTwo{
     overflow: hidden;
     text-overflow: ellipsis;

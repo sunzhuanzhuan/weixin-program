@@ -4,11 +4,11 @@
     <scroll-view  wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
    
         <!-- 播放视频的位置 -->
-        <view wx:if="{{ videoSource.length>0}}" style="heigh:200rpx;margin:0 24rpx;{{videoTop}}">
+        <view wx:if="{{ videoSource.length>0}}" style="heigh:200rpx;padding:0 24rpx;{{videoTop}};background:#fff">
             <view>
                 <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
             </view>
-            <view wx:if="{{videoSource.length==1}}" style=" height:80rpx;margin: 30rpx 0;">
+            <view wx:if="{{videoSource.length==1}}" style=" height:80rpx;padding: 30rpx 0;background:#fff">
                 <view bindtap="handleIsMutedFromArtical" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: -2rpx">
                     <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
                 </view>
@@ -69,22 +69,22 @@
         <button form-type="submit" class="btnForm">
             <view class="fixed {{isShow?'show':''}} state1">
                 <view class="floatShadow"></view>
-                <view style="display: flex;flex-direction: row;background: #ffffff;{{isIphoneX?'height:194rpx':'height:134rpx'}};width:100%">
+                <view style="display: flex;flex-direction: row;background: #fff;overflow:hidden;{{isIphoneX?'height:100rpx':'height:100rpx'}};width:100%">
                     <view wx:if="{{isEyes}}" class="btnBoxKonw" style="flex:4;"></view>
-                    <button wx:else class="btnBoxKonw" form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:4;{{isIphoneX?'margin-top:26rpx;height:194rpx':'height:134rpx'}}" catchtap="handleJump">
+                    <button wx:else class="btnBoxKonw" form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:4;{{isIphoneX?'height:100rpx':'height:100rpx'}}" catchtap="handleJump">
                         <!-- hidden="{{isEyes}}" -->
                         <image class="imgBtnKonw" src="/images/eye.png"></image>
                         <view class="letterKonw">让朋友知道我在读</view>
                     </button>
-                    <button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx;':'height:134rpx'}}">
+                    <button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="overflow:hidden;text-align:center;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:100rpx;':'height:100rpx'}}">
                         <image class="imgBtn" src="{{isLike?('/images/allStar.png'):('/images/star.png')}}"></image>
                         <view class="letter">收藏</view>
                     </button>
-                    <button class="btnBox" style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                    <button class="btnBox" style='flex:1' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor" style="overflow:hidden;text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:0.5;position: relative;z-index: 2;{{isIphoneX?'height:100rpx':'height:100rpx'}}">
                         <image class="imgBtn" src="{{shareButton}}"></image>
                         <view class="letter">分享</view>
                     </button>
-                    <button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster" style="{{isIphoneX?'height:194rpx':'height:134rpx'}}">
+                    <button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster" style="{{isIphoneX?'height:100rpx':'height:100rpx'}};">
                         <image class="imgBtn" src="/images/circle.png"></image>
                         <view class="letter">生成分享海报</view>
                     </button>
@@ -111,22 +111,22 @@
 <!-- 悬浮的音频 后期作品 -->
 <view  wx:if="{{entity.type == 'wxArticle' && entity.wxmpVoiceIds.length>0  && isShowListen}}" style="border-radius:8rpx 8rpx 0 0;overflow:hidden">
     <view wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="position:fixed;{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}};right:30rpx;z-index:90">
-        <image src="/images/listen.png" style="width:140rpx;height:140rpx" bindtap="handlePlayVideo"/>
+        <image src="/images/listen.png" style="width:88rpx;height:88rpx" bindtap="handlePlayVideo"/>
     </view>
     <view wx:if="{{entity.type === 'wxArticle' && isPlay === true && isChangeBig === false}}" style="position:fixed;{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}};right:30rpx;z-index:90">
-        <image src="/images/pause.png" style="width:140rpx;height:140rpx" bindtap="handlePauseVideo"/>
+        <image src="/images/pause.png" style="width:88rpx;height:88rpx" bindtap="handlePauseVideo"/>
     </view>
-    <view wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="position:fixed;{{isIphoneX?'bottom:230rpx':'bottom:160rpx'}};z-index:90;width:100%;height:140rpx;background:#262626;opacity:0.8;line-height:140rpx;border-radius:8rpx 8rpx 0 0">
-        <view style="display:inline-block;width:20%;height:140rpx;line-height:140rpx;background:#000;overflow:hidden;font-size:24rpx;color:#fff;vertical-align:top;border-radius:20rpx 0 0 0;" bindtap="handleShink">
-        <text style="border-right:1px solid #fff;padding:0 14rpx">收起 </text> 
+    <view wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="overflow:hidden;font-weight:lighter;position:fixed;{{isIphoneX?'bottom:230rpx':'bottom:140rpx'}};z-index:90;width:100%;height:100rpx;background:#262626;opacity:0.8;line-height:100rpx;border-radius:8rpx 8rpx 0 0">
+        <view style="display:inline-block;width:12%;height:100rpx;line-height:100rpx;background:#000;overflow:hidden;font-size:24rpx;color:#fff;vertical-align:top;border-radius:20rpx 0 0 0;" bindtap="handleShink">
+        <text style="border-right:1px solid #666666;padding:4rpx 14rpx">收起 </text> 
         </view>
         
-        <view style="display:inline-block;width:60%;height:140rpx;line-height:140rpx;background:#000;overflow:hidden;vertical-align:top"  >
-            <view style="font-size:24rpx;color:#fff;height:40rpx;width:100%;line-height:66rpx;margin-left:50rpx">{{entity.title}}</view>
-            <view style="height:20rpx">
-                <slider max="{{totalTime}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700" bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size="18" style=""></slider>
+        <view style="display:inline-block;padding-left:4%;width:64%;height:100rpx;line-height:100rpx;background:#000;overflow:hidden;vertical-align:top"  >
+            <view style="font-size:24rpx;color:#fff;height:40rpx;width:100%;line-height:56rpx;">{{entity.title}}</view>
+            <view>
+                <slider style="margin:0" max="{{totalTime}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700" bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size="18"></slider>
             </view>
-            <view style="height:30rpx;font-size:20rpx;color:#fff;line-height:60rpx">
+            <view style="height:30rpx;font-size:20rpx;color:#fff;line-height:16rpx;margin-left:-50rpx;">
                 <text style="float:left;margin-left:50rpx">{{currentProgress}}  </text>
                 <text style="float:right;margin-right:50rpx">{{totalProgress}}  </text>
             </view>
@@ -134,9 +134,10 @@
             
         </view>
         
-        <view style="display:inline-block;width:20%;height:140rpx;line-height:140rpx;background:#000;vertical-align:top;;border-radius:0 20rpx 0 0;" >
+        <view style="display:inline-block;width:18%;height:100rpx;line-height:100rpx;background:#000;vertical-align:top;;border-radius:0 20rpx 0 0;padding-left:2%;" >
+
             <image wx:if="{{isPlay}}" src="/images/pauseLine.png" style="width:24rpx;height:34rpx;margin-left:40rpx" bindtap="handlePauseVideoNow"/>
-            <image wx:else src="/images/playing.png" style="width:24rpx;height:34rpx;margin-left:40rpx;display:block;overflow:hidden;margin-top:34rpx" bindtap="handlePlayVideoNow"/>
+            <image wx:else src="/images/playing.png" style="width:24rpx;height:34rpx;margin-left:40rpx;display:block;overflow:hidden;margin-top:18rpx" bindtap="handlePlayVideoNow"/>
              <view style="display:inline-block;font-size:24rpx;color:#fff;width:100%;height:80rpx;line-height:50rpx;overflow:hidden;margin-left:20rpx;" bindtap="handlePlayVideoNow">听一听 </view> 
         </view>
     </view>

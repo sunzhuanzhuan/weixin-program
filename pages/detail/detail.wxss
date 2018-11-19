@@ -1,5 +1,6 @@
 button::after{ border: none;padding: 0 }
 /* 新加的视频的布局 */
+
 .nowrap{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -167,8 +168,7 @@ button{
 .imgBtn {
     width: 32rpx;
     height: 32rpx;
-    margin-bottom: -10rpx;
-    margin-top:-4rpx
+    margin-bottom: -46rpx;
 }
 .imgBtnBig{
     width: 50rpx;
@@ -180,7 +180,7 @@ button{
     width: 32rpx;
     height: 32rpx;
     margin-left:60rpx;
-    margin-top: 14rpx;
+    margin-top: 24rpx;
 }
 .btnBox{
     display: flex;
@@ -197,12 +197,17 @@ button{
 .letter{
     font-size: 20rpx;
     color:#666;
-    margin:10rpx 0;
+    margin-top:46rpx;
+    margin-bottom:-29rpx;
+
 }
 .letterKonw{
     font-size: 20rpx;
     color:#666;
     text-align: left;
+    height:30rpx;
+    line-height:50rpx;
+    
     
 }
 
