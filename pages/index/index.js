@@ -30,9 +30,48 @@ Page({
         listening: false,
         listenIndexCurrent:undefined,
         listenTablistCurrent: 0,
-        voiceId:undefined
+        voiceId:undefined,
+        listenIndexCurrent:0,
+        listenTablistCurrent:0,
+        //推荐的top 
+        imgUrls: [
+            'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+            'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+            'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+        ],
+        indicatorDots: false,
+        autoplay: false,
+        interval: 5000,
+        duration: 1000,
+        swiperActiveZero: 'noActive',
+        swiperActiveOne:'',
+        swiperActiveTwo: 'noActive',
     },
 
+    //切换轮播图的时候
+    handleChangeSwiper:function(e){
+        console.log(e.detail.current);
+        if(e.detail.current == 2){
+            this.setData({
+                swiperActiveZero: 'noActive',
+                swiperActiveOne:'noActive',
+                swiperActiveTwo: '',
+            })
+            
+        }else if(e.detail.current == 0){
+            this.setData({
+                swiperActiveZero: '',
+                swiperActiveOne:'noActive',
+                swiperActiveTwo: 'noActive',
+            })
+        }else if(e.detail.current == 1){
+            this.setData({
+                swiperActiveZero: 'noActive',
+                swiperActiveOne:'',
+                swiperActiveTwo: 'noActive',
+            })
+        }
+    },
     //听力
     handleListing: function (e) {
         const entity = e.currentTarget.dataset.item;
@@ -339,8 +378,13 @@ Page({
                     title: app.title,
                 });
             }
-            this.setData({
-                lists: app.lists,
+        //    app.lists.unshift({
+        //     id:'123',
+        //     title:'推荐',
+        //     items:[1,2]
+        //    })
+       
+        this.setData({
                 appTitle: app.title,
                 coverUrl: app.avatarUrl,
                 dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
@@ -405,9 +449,20 @@ Page({
                 });
             });
 
-            if (app.lists.length) {
-                gdt.magicListItemLoadMore(app.lists[0]._id)
-            }
+            // if (app.lists.length) {
+            //     gdt.magicListItemLoadMore(app.lists[0]._id);
+            // }
+            gdt.magicListItemLoadMore('topScoreds').then((res)=>{
+               
+                   app.lists.unshift({
+                    id:'recommend',
+                    title:'推荐',
+                    items:res
+                })
+                this.setData({
+                    lists: app.lists
+                })
+            });
         });
         gdt.systemInfo.then((x) => {
             this.setData({

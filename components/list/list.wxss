@@ -116,3 +116,12 @@ button{
     width: 630rpx;
     font-size: 34rpx;
 }
+.swiperItem{
+    text-align:center;
+    width:600rpx;
+    border-radius:6rpx;
+}
+.noActive{
+    margin:30rpx 0;
+    height:280rpx;
+}
