@@ -193,7 +193,7 @@ Page({
                     if (ret.intersectionRatio > 0){
                         list[i].isShow =  true 
                     }
-                    this.setData({ // 更新数据
+                    that.setData({ // 更新数据
                         lists:that.data.lists
                     })
                 })
