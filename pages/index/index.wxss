@@ -7,6 +7,21 @@ page{
   width:100%;
   height: 100%;
 }
+/* 径向渐变 */
+.circle {
+  height: 260rpx;
+  width: 260rpx;
+  position: absolute;
+  right:-10rpx;
+  top:-170rpx;
+  z-index: 26;
+  opacity: 0.4;
+  background: -webkit-radial-gradient(circle, #B8B8B8, #fff); /* Safari 5.1 - 6.0 */
+  background: -o-radial-gradient(circle, #B8B8B8, #fff); /* Opera 11.6 - 12.0 */
+  background: -moz-radial-gradient(circle, #B8B8B8, #fff); /* Firefox 3.6 - 15 */
+  background: radial-gradient(circle, #B8B8B8, #fff); /* 标准的语法（必须放在最后） */
+}
+
 .nav {
   width: 100%;
   height: 88rpx;

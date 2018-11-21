@@ -29,7 +29,7 @@
                 </form>
             </view>
         </view>
-            <view style="margin:0 7% 0% 3%;border-radius:8rpx;display:inline-block;width:20%;height:120rpx;float:left;overflow:hidden;position:relative" data-id="{{item.entity._id}}" bindtap="handleDetail">
+            <view style="margin:0 2% 0% 2%;border-radius:8rpx;display:inline-block;width:26%;height:120rpx;float:left;overflow:hidden;position:relative" data-id="{{item.entity._id}}" bindtap="handleDetail">
                 <image src=" {{item.isShow?item.entity.coverUrl:'/images/lazyThree.png'}}"  mode="aspectFit" style="width:160rpx;height:120rpx;" />
                 <image wx:if="{{item.type ==='txvVideo'}}" src="/images/play.png" style="width:52rpx;height:52rpx;position:absolute;top:50%;left:50%;margin-top:-26rpx;margin-left:-30rpx;" />
             </view>

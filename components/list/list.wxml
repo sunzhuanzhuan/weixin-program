@@ -11,9 +11,10 @@
                             {{imgUrls[1].title}}
                         </view>
                     </view>
-                   <view class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
+                   <!-- <view class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
                         NO <text style="font-size:34rpx;">3</text>
-                    </view>
+                    </view> -->
+                    <image src="/images/no1.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
                    
                 </swiper-item>
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[0]._id}}">
@@ -23,9 +24,10 @@
                             {{imgUrls[0].title}}
                         </view>
                     </view>
-                    <view class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx">
+                    <!-- <view class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx">
                         NO <text style="font-size:34rpx;">1</text>
-                    </view>
+                    </view> -->
+                    <image src="/images/no2.png"  class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
                 </swiper-item>
                 <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
                     <image  class="{{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[2].coverUrl}}" width="600rpx" height=""/>
@@ -34,9 +36,10 @@
                             {{imgUrls[2].title}}
                         </view>
                     </view>
-                    <view class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
+                    <!-- <view class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
                         NO <text style="font-size:34rpx;">2</text>
-                    </view>
+                    </view> -->
+                    <image src="/images/no3.png"  class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx"/>
                 </swiper-item>
                 
             </swiper>
@@ -151,11 +154,11 @@
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                             <button wx:if="{{item.wxmpVoiceIds.length>0}}" form-type="submit" class='btnListen'
                                             form-type="submit" bindtap="handleListing"  data-id="{{item._id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"  data-tabList="{{currentTabIndex}}" >
-                                                    <image class="imgBtnItem" style="margin-top:30rpx" src="{{listenIndexCurrent==index && listening?'/images/mini.gif':'/images/playing.png'}}"></image>
-                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height:28rpx">
+                                                    <image class="imgBtnItem" style="margin-top:30rpx;float:left" src="{{listenIndexCurrent==index && listening?'/images/mini.gif':'/images/playing.png'}}"></image>
+                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
                                                         暂停
                                                     </text>
-                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#333;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height:28rpx">
+                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#333;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
                                                         听一听
                                                     </text>
                                                 </button>

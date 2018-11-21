@@ -37,7 +37,7 @@
 }
 .letterBox{
     margin-top: 32rpx;
-    margin-left:32rpx;
+    margin-left:14rpx;
     font-size: 32rpx;
     width:390rpx;
     height: 180rpx;

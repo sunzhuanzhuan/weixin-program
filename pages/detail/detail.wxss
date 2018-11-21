@@ -195,7 +195,7 @@ button{
     background: #fff;
 }
 .letter{
-    font-size: 20rpx;
+    font-size: 24rpx;
     color:#666;
     margin-top:46rpx;
     margin-bottom:-29rpx;

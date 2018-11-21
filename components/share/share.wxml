@@ -46,7 +46,7 @@
                     </view>
                     <block wx:if="{{item.referencers.length>0}}" style="">
                         <view style="margin-left:30rpx;">
-                            <view class="readNum" style="float:left;color:#999999;margin-left:68rpx">已有<text style="color:#333"> {{item.referencers.length}} </text>位好友阅读</view>
+                            <view class="readNum" style="float:left;color:#999999;margin-left:68rpx">已有<text style="color:#333;font-weight:bolder"> {{item.referencers.length}} </text>位好友阅读</view>
                             <scroll-view style="height:150rpx;margin-left:68rpx" scroll-x="true">
                                 <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block;margin-top:10rpx" >
                                     <view wx:if="{{item.avatarUrl}}">
@@ -64,7 +64,7 @@
                     </block>
                     <block wx:else>
                         <button  open-type="share" data-item="{{item}}" class="readNum" style="background: #ffffff;padding-bottom:40rpx;">
-                            <view class="readNum" style="float:left;color:#999999">已有<text style="color:#333"> 0 </text> 位好友阅读</view>
+                            <view class="readNum" style="float:left;color:#999999">已有<text style="color:#333;font-weight:bolder"> 0 </text> 位好友阅读</view>
                             <view style="float:left;color:#FFDB3D;border:2rpx solid #FFDB3D;font-size:24rpx;margin-left:30rpx;width:80rpx;height:36rpx;line-height:40rpx;padding:2rpx 6rpx;display:inline-block;margin-top:10rpx;">问问Ta</view>
                         </button>
                     </block>
