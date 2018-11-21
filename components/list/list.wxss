@@ -50,13 +50,26 @@ button{
     height: 100rpx;
 }
 .btnListen{
-    width: 60%;
+    width: 30%;
     float: left;
     background:#ffffff;
     height: 100rpx;
     text-align: left;
 }
-
+.btnListenSmall{
+    width: 44%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+    text-align: left;
+}
+.btnListenSmallL{
+    width: 15%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+    text-align: left;
+}
 .imgBtnItem {
     width: 32rpx;
     height: 32rpx;

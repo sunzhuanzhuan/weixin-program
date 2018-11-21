@@ -336,10 +336,13 @@ Page({
         var prevPage = pages[pages.length - 2]; //上一个编辑款项页面
         //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
         let that = this;
-        prevPage.setData({  
-            listenIndexCurrent: that.data.clickIndex ,
-            listening:that.data.isPlay
-        });
+        if(this.data.isPlay){
+            prevPage.setData({  
+                listenIndexCurrent: that.data.clickIndex ,
+                listening:that.data.isPlay
+            });
+        }
+        
     },
     recordUserscroll: function (event) {
         if (event.detail.scrollTop < 0) {
