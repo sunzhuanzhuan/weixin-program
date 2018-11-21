@@ -177,7 +177,9 @@ Page({
       
        
         let that = this
-        wx.showShareMenu({ withShareTicket: true });
+        wx.showShareMenu({ 
+            withShareTicket: true
+         });
 
         gdt.track('show-index');
     },

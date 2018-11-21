@@ -24,6 +24,9 @@ Page({
         isHome:false
     },
       onLoad: function() {
+        if (getCurrentPages()[0] === this) {
+            this.setData({ isHome: true });
+        }
         wx.setNavigationBarTitle({
             title: '我的',
         });
@@ -89,6 +92,11 @@ Page({
             num: this.appState.dashboardAnalytics
         });
         gdt.track('show-my-dashboard');
+        wx.showShareMenu({ 
+            withShareTicket: true,
+         });
+
+       
       },
       handleShrink: function(e) {
           this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})

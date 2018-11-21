@@ -84,7 +84,7 @@
                     <view style="width:100%;overflow:hidden;background:#ffffff;">
                         
                         <view class="itemSmall" style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1rpx solid #E6E6E6;'}}">
-                            <image style="float:right;width:220rpx;height:180rpx;border-radius:8rpx" mode="aspectFill" src="{{ item.isShow?item.coverUrl:'/images/lazyBig.png'}}" bindtap="handleDetail" data-id="{{item._id}}"  data-everyIndex="{{index}}"></image>
+                            <image style="float:right;width:240rpx;height:180rpx;border-radius:8rpx" mode="aspectFill" src="{{ item.isShow?item.coverUrl:'/images/lazyBig.png'}}" bindtap="handleDetail" data-id="{{item._id}}"  data-everyIndex="{{index}}"></image>
                             <view style="float:rigth;width:430rpx;height:180rpx;position:relative;">
                                 <text class="{{item.viewed?'readNowrapTwo':'nowrapTwo'}}" style="display:inline-block" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">{{item.title}}</text>
                                 

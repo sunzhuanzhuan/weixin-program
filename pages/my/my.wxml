@@ -61,7 +61,7 @@
 </view>
 
 <!-- 悬浮回到首页 -->
-<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'wx:if="{{isHome}}">
+<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' wx:if="{{isHome}}">
     <button form-type="submit" class="btnForm">
         <image src="/images/goHome.png" class="goHomeStyle" bindtap="handleBack"></image>
     </button>
