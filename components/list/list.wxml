@@ -156,10 +156,10 @@
                                             <button wx:if="{{item.wxmpVoiceIds.length>0}}" form-type="submit" class='btnListen'
                                             form-type="submit" bindtap="handleListing"  data-id="{{item._id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"  data-tabList="{{currentTabIndex}}" >
                                                     <image class="imgBtnItem" style="margin-top:30rpx;float:left" src="{{listenIndexCurrent==index && listening?'/images/mini.gif':'/images/playing.png'}}"></image>
-                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
+                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};vertical-align:middle;font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
                                                         暂停
                                                     </text>
-                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#333;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
+                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#333;background:#ffe000;'}};vertical-align:middle;font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
                                                         听一听
                                                     </text>
                                                 </button>
