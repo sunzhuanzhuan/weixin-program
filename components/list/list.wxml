@@ -58,7 +58,7 @@
                 </view>
                 <view wx:else data-currentIndex='{{index}}' data-item="{{item}}"  style="position:relative;" bindtap='changeVideo'>
                     <image src='/images/play.png' style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" />
-                    <image style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="{{ item.isShow?'http://puui.qpic.cn/vpic/0/'+item.txvVid +'.png/0':'/images/lazyBig.png'}}"></image>
+                    <image style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="{{ 'http://puui.qpic.cn/vpic/0/'+item.txvVid +'.png/0'}}"></image>
                 </view>
                 <view style="background:#ffffff;height:100rpx;width:690rpx;">
                     <view class="{{item.viewed?'readVideoTitle':'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail" style="display:inline-block;line-height:88rpx;padding-left:30rpx;font-weight:bold">
@@ -87,7 +87,7 @@
                     <view style="width:100%;overflow:hidden;background:#ffffff;">
                         
                         <view class="itemSmall" style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1rpx solid #E6E6E6;'}}">
-                            <image style="float:right;width:240rpx;height:180rpx;border-radius:8rpx" mode="aspectFill" src="{{ item.isShow?item.coverUrl:'/images/lazyBig.png'}}" bindtap="handleDetail" data-id="{{item._id}}"  data-everyIndex="{{index}}"></image>
+                            <image style="float:right;width:240rpx;height:180rpx;border-radius:8rpx" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}"  data-everyIndex="{{index}}"></image>
                             <view style="float:rigth;width:430rpx;height:180rpx;position:relative;">
                                 <text class="{{item.viewed?'readNowrapTwo':'nowrapTwo'}}" style="display:inline-block" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">{{item.title}}</text>
                                 
@@ -138,7 +138,7 @@
                                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                     <button form-type="submit" hover-class='none' style="position:relative;padding:0;height:400rpx;border-radius:8rpx 8rpx 0 0">
                                         
-                                        <image style="width:690rpx;height:400rpx;display:block" mode="aspectFill" src="{{ item.isShow?item.coverUrl:'/images/lazyBig.png'}}"></image>
+                                        <image style="width:690rpx;height:400rpx;display:block" mode="aspectFill" src="{{item.coverUrl}}"></image>
                                         <view class="fontShadow" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff">
                                             <view class="{{item.viewed?'readNowrapOne':'nowrapOne'}}" style="margin-left:20rpx;line-height:100rpx;text-align:left;font-weight:bold">
                                                 {{item.title}}
