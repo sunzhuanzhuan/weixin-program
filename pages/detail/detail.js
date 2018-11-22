@@ -681,8 +681,8 @@ Page({
                 wx.canvasToTempFilePath({
                     x: 0,
                     y: 0,
-                    width: 320,
-                    height: 370,
+                    width: 320 * ratio,
+                    height: 370 * ratio,
                     destWidth: 1280,
                     destHeight: 1480,
                     fileType: 'jpg',
