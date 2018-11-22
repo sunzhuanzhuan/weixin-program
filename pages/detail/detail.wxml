@@ -1,10 +1,11 @@
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <view>
-    <scroll-view  wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
+    
+    <scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
    
         <!-- 播放视频的位置 -->
-        <view wx:if="{{ videoSource.length>0}}" style="heigh:200rpx;padding:4rpx 24rpx;{{videoTop}};background:#fff">
+        <!-- <view wx:if="{{ videoSource.length>0}}" style="heigh:200rpx;padding:4rpx 24rpx;{{videoTop}};background:#fff">
             <view wx:if="{{isPlayVideo}}">
                 <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
             </view>
@@ -30,8 +31,25 @@
                 </view>
                 <text class="line"></text>
             </view>
+        </view> -->
+
+        <view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
+            <!-- <txv-video wx:if="{{node.type == 'txvVideo'}}" vid="{{node.vid}}" playerid="video{{node.vid}}" muted="{{isMuted}}"></txv-video> -->
+
+            <view  wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
+                <view wx:if="{{isPlayVideo}}">
+                    <txv-video vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
+                </view>
+                <view  wx:else style="height:400rpx;width:700rpx;position:relative ">
+                    <image style="height:400rpx;width:700rpx;" bindtap="handleChangeTypeVideo" src="{{'http://puui.qpic.cn/vpic/0/'+videoId +'.png/0'}}"/>
+                    <image style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" bindtap="handleChangeTypeVideo" src="/images/play.png"/>
+            
+                </view>
+            </view>
+            <rich-text class="_root" wx:if="{{nodes.type === undefined}}"  nodes="{{[node]}}"></rich-text>
         </view>
-        <rich-text class="_root" nodes="{{nodes}}"></rich-text>
+         
+       
     </scroll-view>
     <!-- 纯视频的布局 -->
      <view wx:if="{{entity.type == 'txvVideo'}}">

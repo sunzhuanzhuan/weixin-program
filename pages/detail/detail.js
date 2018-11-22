@@ -72,27 +72,10 @@ Page({
         isFirst:0
     },
 
-    //文章里面的视频是否静音
-    handleIsMutedFromArtical:function(){
-        this.setData({
-            isPlayVideo:true,
-            isMuted:!this.data.isMuted
-        })
-    },
-    //点击切换文章里面的视频
-    handleVideoTapFromArtical:function(e){
-        let index = e.currentTarget.dataset.videoid;
-        this.setData({
-            isPlayVideo:true,
-            videoId:this.data.videoSource[index],
-            selectedCricle:index
-        })
-       
-    },
     handleChangeTypeVideo:function(){
         this.setData({
-            isPlayVideo:true,
-            videoId:this.data.videoSource[0],
+            isPlayVideo:true
+            
         })
        
     },
@@ -118,7 +101,7 @@ Page({
                 });
             };
            
-            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
@@ -272,7 +255,8 @@ Page({
                 overrideStyle: 'false',
                 fixWxMagicSize: 'true',
                 ref: ref,
-                refee: refee
+                refee: refee,
+                mode: 'flow'
             });
         } else if (options.scene) {
             let referencers = (options.scene);
@@ -281,7 +265,8 @@ Page({
                 keepH5Links: true,
                 mapSrc: 'data',
                 overrideStyle: 'false',
-                fixWxMagicSize: 'true'
+                fixWxMagicSize: 'true',
+                mode: 'flow'
             });
         } else {
             throw new Error('No idea what to load');
@@ -297,8 +282,9 @@ Page({
            if(r.entity.type=='wxArticle'){
                 this.setData({videoId:r.entity.txvVids[0],videoSource: r.entity.txvVids})
            }
-
-            this.setData({recommendations:r.recommendations || [], fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+           console.log(r.node)
+          
+            this.setData({recommendations:r.recommendations || [], nodes: r.nodes,fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
