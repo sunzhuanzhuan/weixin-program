@@ -1231,6 +1231,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
             );
             queryPromise.then((x) => {
                 this.emit('entityDetail', x);
+                if (x.entity) {
+                    x.entity.viewed = true;
+                    this.emit('entityUpdate', x.entity);
+                }
             });
 
             return queryPromise;
@@ -1251,6 +1255,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
             );
             queryPromise.then((x) => {
                 this.emit('entityDetail', x);
+                if (x.entity) {
+                    x.entity.viewed = true;
+                    this.emit('entityUpdate', x.entity);
+                }
             });
 
             return queryPromise;
