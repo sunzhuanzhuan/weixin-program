@@ -300,37 +300,37 @@ Page({
         }
 
     },
-    onPageScroll() { 
-        util.debounce(this.showImg())
-      },
+    // onPageScroll() { 
+    //     util.debounce(this.showImg())
+    //   },
     
-    showImg(){  // 判断高度是否需要加载
+    // showImg(){  // 判断高度是否需要加载
         
-        let that = this;
-        wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
-            // const group = that.data.lists[that.data.currentTabIndex].items
-            const height = that.data.screenHeight
-            ret.forEach((item, index) => {
-                if (item.top < height) {
+    //     let that = this;
+    //     wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
+    //         // const group = that.data.lists[that.data.currentTabIndex].items
+    //         const height = that.data.screenHeight
+    //         ret.forEach((item, index) => {
+    //             if (item.top < height) {
                     
-                    if(that.data.name === 'history'){
+    //                 if(that.data.name === 'history'){
             
-                        that.data.myViews[index].isShow = true;
+    //                     that.data.myViews[index].isShow = true;
                        
-                    }else if(that.data.name === 'artical'){
+    //                 }else if(that.data.name === 'artical'){
                         
-                        that.data.myCollectArtical[index].isShow = true;
+    //                     that.data.myCollectArtical[index].isShow = true;
                        
-                    }else{
-                        that.data.myCollectVideo[index].isShow = true;
-                    }
-                }
-            })
-            that.setData({ 
-                myViews: that.data.myViews, 
-                myCollectArtical: that.data.myCollectArtical,
-                myCollectVideo: that.data.myCollectVideo
-            });
-        }).exec()
-    }
+    //                 }else{
+    //                     that.data.myCollectVideo[index].isShow = true;
+    //                 }
+    //             }
+    //         })
+    //         that.setData({ 
+    //             myViews: that.data.myViews, 
+    //             myCollectArtical: that.data.myCollectArtical,
+    //             myCollectVideo: that.data.myCollectVideo
+    //         });
+    //     }).exec()
+    // }
 })

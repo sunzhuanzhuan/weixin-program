@@ -447,7 +447,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     if (indexedItem.type == "txvVideo") {
                         indexedItem.wxMidVec = '1234#1'
                     }
-                    indexedItem.isShow=false
+                    // indexedItem.isShow=false
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
                         return;
@@ -482,7 +482,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 if (indexedItem.type == "txvVideo") {
                     indexedItem.wxMidVec = '1234#1'
                 }
-                indexedItem.isShow=false
+                // indexedItem.isShow=false
                 let curItem = targetList[idx];
                 if (curItem) {
                     return;
@@ -515,11 +515,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (indexedItem.type == "txvVideo") {
                 indexedItem.wxMidVec = '1234#1'
             }
-            if(indexedItem.isShow){
-                indexedItem.isShow=true
-            }else{
-                indexedItem.isShow=false
-            }
+            // if(indexedItem.isShow){
+            //     indexedItem.isShow=true
+            // }else{
+            //     indexedItem.isShow=false
+            // }
             
             return;
         });
@@ -579,7 +579,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             
             clips.forEach((x) => {
                 if (x.entity) {
-                    x.isShow=false;
+                    // x.isShow=false;
                     this.emit('entityUpdate', x.entity);
                 }
             });
@@ -706,7 +706,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             
             clips.forEach((x) => {
                 if (x.entity) {
-                    x.isShow=false;
+                    // x.isShow=false;
                     this.emit('entityUpdate', x.entity);
                 }
             });
@@ -762,7 +762,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             
             clips.forEach((x) => {
                 if (x.entity) {
-                    x.isShow=false;
+                    // x.isShow=false;
                     this.emit('entityUpdate', x.entity);
                 }
             });

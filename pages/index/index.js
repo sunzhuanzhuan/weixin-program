@@ -185,22 +185,22 @@ Page({
     },
 
     handleTitleTab(e) {
-        let list= this.data.lists[this.data.currentTabIndex].items;
-        console.log(list)
-        if(list.length>0){
-            for (let i in list){
-                let that = this  // 
-                wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-                    console.log(ret.intersectionRatio)
-                    if (ret.intersectionRatio > 0){
-                        list[i].isShow =  true 
-                    }
-                    that.setData({ // 更新数据
-                        lists:that.data.lists
-                    })
-                })
-            }
-        }
+        // let list= this.data.lists[this.data.currentTabIndex].items;
+        // console.log(list)
+        // if(list.length>0){
+        //     for (let i in list){
+        //         let that = this  // 
+        //         wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
+        //             console.log(ret.intersectionRatio)
+        //             if (ret.intersectionRatio > 0){
+        //                 list[i].isShow =  true 
+        //             }
+        //             that.setData({ // 更新数据
+        //                 lists:that.data.lists
+        //             })
+        //         })
+        //     }
+        // }
         this.setData({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab,
@@ -253,22 +253,22 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        let list= this.data.lists[this.data.currentTabIndex].items;
+        // let list= this.data.lists[this.data.currentTabIndex].items;
                
-        if(list.length>0){
-             for (let i in list){
-                 let that = this  // 
-                 wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-                     console.log(ret.intersectionRatio)
-                     if (ret.intersectionRatio > 0){
-                         list[i].isShow =  true 
-                     }
-                     this.setData({ // 更新数据
-                      lists:that.data.lists
-                     })
-                 })
-             }
-        }
+        // if(list.length>0){
+        //      for (let i in list){
+        //          let that = this  // 
+        //          wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
+        //              console.log(ret.intersectionRatio)
+        //              if (ret.intersectionRatio > 0){
+        //                  list[i].isShow =  true 
+        //              }
+        //              this.setData({ // 更新数据
+        //               lists:that.data.lists
+        //              })
+        //          })
+        //      }
+        // }
         this.setData({ endWidth: e.changedTouches[0].clientX, isVideo: false }, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
@@ -456,23 +456,23 @@ Page({
                     lists: app.lists,
                     imgUrls:arr
                 })
-                 //懒加载
-                let list= this.data.lists[this.data.currentTabIndex].items;
+                //  //懒加载
+                // let list= this.data.lists[this.data.currentTabIndex].items;
                
-                   if(list.length>0){
-                        for (let i in list){
-                            let that = this  // 
-                            wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-                                console.log(ret.intersectionRatio)
-                                if (ret.intersectionRatio > 0){
-                                    list[i].isShow =  true 
-                                }
-                                this.setData({ // 更新数据
-                                 lists:that.data.lists
-                                })
-                            })
-                        }
-                   }
+                //    if(list.length>0){
+                //         for (let i in list){
+                //             let that = this  // 
+                //             wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
+                //                 console.log(ret.intersectionRatio)
+                //                 if (ret.intersectionRatio > 0){
+                //                     list[i].isShow =  true 
+                //                 }
+                //                 this.setData({ // 更新数据
+                //                  lists:that.data.lists
+                //                 })
+                //             })
+                //         }
+                //    }
             });
             console.log(this.appState)
         });
@@ -545,24 +545,24 @@ Page({
         }
         return {};
     },
-    onPageScroll() { 
-        util.debounce(this.showImg())
-      },
+    // onPageScroll() { 
+    //     util.debounce(this.showImg())
+    //   },
     
-    showImg(){  // 判断高度是否需要加载
-        let that = this;
-        wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
-            // const group = that.data.lists[that.data.currentTabIndex].items
-            const height = that.data.screenHeight
-            ret.forEach((item, index) => {
-                if (item.top < height) {
-                    that.data.lists[that.data.currentTabIndex].items[index].isShow = true
-                }
-            })
-            that.setData({
-                lists:that.data.lists
-            })
-        }).exec()
-    }
+    // showImg(){  // 判断高度是否需要加载
+    //     let that = this;
+    //     wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
+    //         // const group = that.data.lists[that.data.currentTabIndex].items
+    //         const height = that.data.screenHeight
+    //         ret.forEach((item, index) => {
+    //             if (item.top < height) {
+    //                 that.data.lists[that.data.currentTabIndex].items[index].isShow = true
+    //             }
+    //         })
+    //         that.setData({
+    //             lists:that.data.lists
+    //         })
+    //     }).exec()
+    // }
 
 })
