@@ -43,7 +43,7 @@ Page({
         listenTablistCurrent: 0,
         voiceId:undefined,
         currentSwiper:1,
-        
+        letter:false
         
     },
 
@@ -81,6 +81,7 @@ Page({
             if (this.data.listening) {
                 innerAudioContext.pause();
                 this.setData({
+                    letter:false,
                     listening: false,
                     listenIndexCurrent: e.currentTarget.dataset.index,
                     voiceId:voiceId
@@ -97,6 +98,7 @@ Page({
                 }
                 
                 this.setData({
+                    letter:true,
                     listening: true,
                     listenIndexCurrent: e.currentTarget.dataset.index,
                     voiceId:voiceId
@@ -113,6 +115,7 @@ Page({
             innerAudioContext.title = e.currentTarget.dataset.item.title
             innerAudioContext.play();
             this.setData({
+                letter:true,
                 listening: true,
                 listenIndexCurrent: e.currentTarget.dataset.index,
                 voiceId:voiceId
@@ -216,19 +219,19 @@ Page({
         }
         if (this.data.listenTablistCurrent != this.data.currentTabIndex) {
             this.setData({
-                listening: false,
+                letter: false,
                 listenIndexCurrent: undefined,
             });
         } else {
             if (this.data.listening) {
                 this.setData({
-                    listening: false
+                    letter: true
 
                 })
             } else {
 
                 this.setData({
-                    listening: true
+                    letter: false
                 })
 
             }
@@ -292,20 +295,20 @@ Page({
                     }
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
                         this.setData({
-                            listening: false,
+                            letter: false,
                             listenIndexCurrent: undefined,
                         })
                     } else {
                         if (that.data.listening) {
 
                             that.setData({
-                                listening: false
+                                letter: false
 
                             })
                         } else {
 
                             that.setData({
-                                listening: true
+                                letter: true
                             })
 
                         }
@@ -332,20 +335,20 @@ Page({
                     })
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
                         this.setData({
-                            listening: false,
+                            letter: false,
                             listenIndexCurrent: undefined,
                         })
                     } else {
                         if (that.data.listening) {
 
                             that.setData({
-                                listening: false
+                                letter: false
 
                             })
                         } else {
 
                             that.setData({
-                                listening: true
+                                letter: true
                             })
 
                         }

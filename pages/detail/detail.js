@@ -68,7 +68,8 @@ Page({
          isShowListen:true,
          isPause:false,
         // 视频为图片
-        isPlayVideo:false
+        isPlayVideo:false,
+        isFirst:0
     },
 
     //文章里面的视频是否静音
@@ -335,12 +336,15 @@ Page({
         var currPage = pages[pages.length - 1];  //当前选择好友页面
         var prevPage = pages[pages.length - 2]; //上一个编辑款项页面
         //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
-        
-        prevPage.setData({  
-            listenIndexCurrent: this.data.clickIndex ,
-            listening:this.data.isPlay
-        });
-        
+        if(this.data.isFirst !=0 ){
+            prevPage.setData({  
+                listenIndexCurrent: this.data.clickIndex ,
+                listening:this.data.isPlay,
+                letter:this.data.isPlay,
+            });
+            
+        }
+       
     },
     recordUserscroll: function (event) {
         if (event.detail.scrollTop < 0) {
@@ -741,6 +745,7 @@ Page({
         
         innerAudioContext.onTimeUpdate(()=>{
             that.setData({
+                isFirst:1,
                 currentTime:parseInt(innerAudioContext.currentTime),
                 totalTime:parseInt(innerAudioContext.duration),
                 currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
@@ -756,7 +761,7 @@ Page({
         
         innerAudioContext.pause();
        
-        this.setData({isPlay:false,isPause:true})
+        this.setData({isPlay:false,isPause:true,isFirst:1,})
         // this.setData({isChangeBig:!this.data.isChangeBig})
     },
     handleShink:function(){
@@ -764,12 +769,12 @@ Page({
     },
     handlePauseVideoNow:function(){
         
-        this.setData({isPlay:false,isPause:true})
+        this.setData({isFirst:1,isPlay:false,isPause:true})
         innerAudioContext.pause();
     },
     handlePlayVideoNow:function(){
 
-        this.setData({isPlay:true,isPause:true})
+        this.setData({isFirst:1,isPlay:true,isPause:true})
         innerAudioContext.play();
     },
     //拖动过程中的一些处理
