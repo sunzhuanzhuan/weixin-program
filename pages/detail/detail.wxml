@@ -4,34 +4,7 @@
     
     <scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
    
-        <!-- 播放视频的位置 -->
-        <!-- <view wx:if="{{ videoSource.length>0}}" style="heigh:200rpx;padding:4rpx 24rpx;{{videoTop}};background:#fff">
-            <view wx:if="{{isPlayVideo}}">
-                <txv-video vid="{{videoId}}" playerid="video" autoplay="{{true}}" muted="{{isMuted}}"></txv-video>
-            </view>
-            <view  wx:else style="height:400rpx;width:700rpx;position:relative ">
-                <image style="height:400rpx;width:700rpx;" bindtap="handleChangeTypeVideo" src="{{'http://puui.qpic.cn/vpic/0/'+videoId +'.png/0'}}"/>
-                <image style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" bindtap="handleChangeTypeVideo" src="/images/play.png"/>
-           
-           </view>
-           <view wx:if="{{videoSource.length==1}}" style=" height:80rpx;padding: 30rpx 0;background:#fff">
-                <view bindtap="handleIsMutedFromArtical" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: -2rpx">
-                    <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
-                </view>
-                <text style="color: #E6E6E6;display:inline-block;height:40rpx;margin-right: 50rpx;float: right;line-height:10px;">
-                    |
-                </text>
-            </view>
-            <view wx:else style="text-align: center;">
-                <view wx:for="{{videoSource}}" data-videoId="{{index}}" bindtap="handleVideoTapFromArtical" class="{{selectedCricle == index?'borderCircle':'borderNum'}}">
-                    <text style="font-size: 24rpx">视频{{index+1}}</text>
-                </view>
-                <view bindtap="handleIsMutedFromArtical" style="width:100rpx; height: 70rpx;line-height:70rpx;float: right;text-align: center;margin-right: 30rpx;margin-top: 46rpx">
-                    <image style="width:40rpx; height: 40rpx;" src="{{isMuted?'/images/mute.png':'/images/noMute.png'}}"></image>
-                </view>
-                <text class="line"></text>
-            </view>
-        </view> -->
+      
 
         <view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
             <!-- <txv-video wx:if="{{node.type == 'txvVideo'}}" vid="{{node.vid}}" playerid="video{{node.vid}}" muted="{{isMuted}}"></txv-video> -->

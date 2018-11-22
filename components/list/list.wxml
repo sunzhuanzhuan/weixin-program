@@ -11,9 +11,7 @@
                             {{imgUrls[1].title}}
                         </view>
                     </view>
-                   <!-- <view class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
-                        NO <text style="font-size:34rpx;">3</text>
-                    </view> -->
+                   
                     <image src="/images/no3.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
                    
                 </swiper-item>
@@ -24,9 +22,7 @@
                             {{imgUrls[0].title}}
                         </view>
                     </view>
-                    <!-- <view class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx">
-                        NO <text style="font-size:34rpx;">1</text>
-                    </view> -->
+                    
                     <image src="/images/no1.png"  class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
                 </swiper-item>
                 <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
@@ -36,9 +32,7 @@
                             {{imgUrls[2].title}}
                         </view>
                     </view>
-                    <!-- <view class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
-                        NO <text style="font-size:34rpx;">2</text>
-                    </view> -->
+                    
                     <image src="/images/no2.png"  class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx"/>
                 </swiper-item>
                 
@@ -167,10 +161,7 @@
 
                                             
                                             <button wx:else form-type="submit" class='btnListen' form-type="submit" data-liked="{{item.liked}}" data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                                    <!-- <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
-                                                    <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
-                                                        没有文章听
-                                                    </text> -->
+                                                  
                                                 </button>
                                              <button  class='btnListen'> </button>
                                                
