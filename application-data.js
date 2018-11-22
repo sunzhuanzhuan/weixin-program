@@ -515,7 +515,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (indexedItem.type == "txvVideo") {
                 indexedItem.wxMidVec = '1234#1'
             }
-            indexedItem.isShow=false
+            if(indexedItem.isShow){
+                indexedItem.isShow=true
+            }else{
+                indexedItem.isShow=false
+            }
+            
             return;
         });
 
