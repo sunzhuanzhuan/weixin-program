@@ -229,7 +229,7 @@ button{
 
 ._elm{
    margin:0;
-   padding:0
+   padding:0;
 }
 .radius_avatar {
     display:inline-block;

@@ -453,8 +453,10 @@ Page({
             gdt.magicListItemLoadMore('topScoreds').then((res)=>{
                     let oldRes = JSON.parse(JSON.stringify(res));
                     let arr = res.splice(0,3);
-                   app.lists.unshift(app.listIndex['topScoreds']);
-                
+                    if (app.lists[0] !== app.listIndex['topScoreds']) {
+                        app.lists.unshift(app.listIndex['topScoreds']);
+                    }
+                   
                 this.setData({
                     lists: app.lists,
                     imgUrls:arr
