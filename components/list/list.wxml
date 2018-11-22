@@ -14,7 +14,7 @@
                    <!-- <view class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
                         NO <text style="font-size:34rpx;">3</text>
                     </view> -->
-                    <image src="/images/no1.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
+                    <image src="/images/no3.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
                    
                 </swiper-item>
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[0]._id}}">
@@ -27,7 +27,7 @@
                     <!-- <view class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx">
                         NO <text style="font-size:34rpx;">1</text>
                     </view> -->
-                    <image src="/images/no2.png"  class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
+                    <image src="/images/no1.png"  class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
                 </swiper-item>
                 <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
                     <image  class="{{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[2].coverUrl}}" width="600rpx" height=""/>
@@ -39,7 +39,7 @@
                     <!-- <view class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx">
                         NO <text style="font-size:34rpx;">2</text>
                     </view> -->
-                    <image src="/images/no3.png"  class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx"/>
+                    <image src="/images/no2.png"  class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx"/>
                 </swiper-item>
                 
             </swiper>
