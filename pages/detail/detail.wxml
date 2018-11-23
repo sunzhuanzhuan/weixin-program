@@ -10,12 +10,12 @@
             <!-- <txv-video wx:if="{{node.type == 'txvVideo'}}" vid="{{node.vid}}" playerid="video{{node.vid}}" muted="{{isMuted}}"></txv-video> -->
 
             <view  wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
-                <view wx:if="{{isPlayVideo}}">
-                    <txv-video vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
+                <view wx:if="{{isPlayVideo && index == videoCurrent}}">
+                    <txv-video  vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
                 </view>
                 <view  wx:else style="height:400rpx;width:700rpx;position:relative ">
                     <image style="height:400rpx;width:700rpx;" bindtap="handleChangeTypeVideo" src="{{'http://puui.qpic.cn/vpic/0/'+videoId +'.png/0'}}"/>
-                    <image style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" bindtap="handleChangeTypeVideo" src="/images/play.png"/>
+                    <image data-index="{{index}}" style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" bindtap="handleChangeTypeVideo" src="/images/play.png"/>
             
                 </view>
             </view>

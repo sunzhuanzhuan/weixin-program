@@ -69,12 +69,14 @@ Page({
          isPause:false,
         // 视频为图片
         isPlayVideo:false,
-        isFirst:0
+        isFirst:0,
+        videoCurrent:0
     },
 
-    handleChangeTypeVideo:function(){
+    handleChangeTypeVideo:function(e){
         this.setData({
-            isPlayVideo:true
+            isPlayVideo:true,
+            videoCurrent:e.currentTarget.dataset.index
             
         })
        
