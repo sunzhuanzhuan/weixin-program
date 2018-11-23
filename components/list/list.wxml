@@ -5,35 +5,35 @@
         <block wx:if="{{list._id==='topScoreds'}}" >
             <swiper current="{{currentSwiper}}" duration="600" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
-                    <image class="{{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[1].coverUrl}}" width="600rpx" height=""/>
-                    <view class="fontShadow {{swiperActiveZero[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
-                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                    <image class="swiperImage {{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[1].coverUrl}}"/>
+                    <view class="fontShadow {{swiperActiveZero[2]}}">
+                        <view class='nowrapOne swiperCommon'>
                             {{imgUrls[1].title}}
                         </view>
                     </view>
                    
-                    <image src="/images/no3.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
+                    <image src="/images/no3.png" class="swiperNo {{swiperActiveZero[1]}}" />
                    
                 </swiper-item>
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[0]._id}}">
-                    <image class="{{swiperActiveOne[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[0].coverUrl}}" width="600rpx" height=""/>
-                     <view class="fontShadow {{swiperActiveOne[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
-                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                    <image class="swiperImage {{swiperActiveOne[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[0].coverUrl}}"/>
+                     <view class="fontShadow {{swiperActiveOne[2]}}">
+                        <view class='nowrapOne swiperCommon'>
                             {{imgUrls[0].title}}
                         </view>
                     </view>
                     
-                    <image src="/images/no1.png"  class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
+                    <image src="/images/no1.png"  class="swiperNo {{swiperActiveOne[1]}}" style="color:#333333;width:80rpx;height:40rpx;background:#ffe000;" />
                 </swiper-item>
                 <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
-                    <image  class="{{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[2].coverUrl}}" width="600rpx" height=""/>
-                     <view class="fontShadow {{swiperActiveTwo[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
-                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                    <image  class="swiperImage {{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};" src="{{imgUrls[2].coverUrl}}"/>
+                     <view class="fontShadow {{swiperActiveTwo[2]}}">
+                        <view class='nowrapOne swiperCommon'>
                             {{imgUrls[2].title}}
                         </view>
                     </view>
                     
-                    <image src="/images/no2.png"  class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx"/>
+                    <image src="/images/no2.png"  class="swiperNo {{swiperActiveTwo[1]}}"/>
                 </swiper-item>
                 
             </swiper>
