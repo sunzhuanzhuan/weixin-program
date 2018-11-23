@@ -26,15 +26,54 @@ Page({
         type1: 'getUserInfo',
         isVideo: false,
         currentindex: undefined,
+        
+        
+        //推荐的top 
+        imgUrls: [],
+        indicatorDots: false,
+        autoplay: false,
+        interval: 5000,
+        duration: 1000,
+        swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+        swiperActiveOne:['','activeLetter'],
+        swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
         //是否正在播放
         listening: false,
-        listenIndexCurrent: undefined,
-        listenTablistCurrent: 0
+        listenIndexCurrent:undefined,
+        listenTablistCurrent: 0,
+        voiceId:undefined,
+        currentSwiper:1,
+        letter:false
+        
     },
 
+    //切换轮播图的时候
+    handleChangeSwiper:function(e){
+        console.log();
+        this.setData({currentSwiper :e.detail.current})
+        if(e.detail.current == 2){
+            this.setData({
+                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+                swiperActiveOne:['noActive','noActiveLetter','margin30'],
+                swiperActiveTwo: ['','activeLetter'],
+            })
+            
+        }else if(e.detail.current == 0){
+            this.setData({
+                swiperActiveZero: ['','activeLetter'],
+                swiperActiveOne:['noActive','noActiveLetter','margin30'],
+                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+            })
+        }else if(e.detail.current == 1){
+            this.setData({
+                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+                swiperActiveOne:['','activeLetter'],
+                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+            })
+        }
+    },
     //听力
     handleListing: function (e) {
-        console.log(e.currentTarget.dataset.tablist)
         const entity = e.currentTarget.dataset.item;
         let voiceId = entity.wxmpVoiceIds[0];
         this.setData({ listenTablistCurrent: e.currentTarget.dataset.tablist });
@@ -42,6 +81,7 @@ Page({
             if (this.data.listening) {
                 innerAudioContext.pause();
                 this.setData({
+                    letter:false,
                     listening: false,
                     listenIndexCurrent: e.currentTarget.dataset.index,
                     voiceId:voiceId
@@ -56,8 +96,17 @@ Page({
                     innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
                     innerAudioContext.title = e.currentTarget.dataset.item.title
                 }
-
+                innerAudioContext.onEnded(()=>{
+                    this.setData({
+                        letter:false,
+                        listening: false,
+                        listenIndexCurrent: e.currentTarget.dataset.index,
+                        voiceId:voiceId
+                    })
+                })
+                
                 this.setData({
+                    letter:true,
                     listening: true,
                     listenIndexCurrent: e.currentTarget.dataset.index,
                     voiceId:voiceId
@@ -74,6 +123,7 @@ Page({
             innerAudioContext.title = e.currentTarget.dataset.item.title
             innerAudioContext.play();
             this.setData({
+                letter:true,
                 listening: true,
                 listenIndexCurrent: e.currentTarget.dataset.index,
                 voiceId:voiceId
@@ -93,6 +143,11 @@ Page({
     changeVideo: function (e) {
         const current = e.currentTarget.dataset.currentindex;
         this.setData({ isVideo: true, currentindex: current })
+        const item = e.currentTarget.dataset.item;
+        if (item && item.type === 'txvVideo' && item._id) {
+            gdt.trackVideoPlay(item._id);
+            gdt.track('video-play', { itemId: item._id });
+        }
     },
     //授权
     //授权的时候发生的
@@ -130,19 +185,40 @@ Page({
 
     },
     onShow: function () {
-        console.log(this)
+      
+       
         let that = this
-        wx.showShareMenu({ withShareTicket: true });
+        wx.showShareMenu({ 
+            withShareTicket: true
+         });
 
         gdt.track('show-index');
     },
 
     handleTitleTab(e) {
+        // let list= this.data.lists[this.data.currentTabIndex].items;
+        // console.log(list)
+        // if(list.length>0){
+        //     for (let i in list){
+        //         let that = this  // 
+        //         wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
+        //             console.log(ret.intersectionRatio)
+        //             if (ret.intersectionRatio > 0){
+        //                 list[i].isShow =  true 
+        //             }
+        //             that.setData({ // 更新数据
+        //                 lists:that.data.lists
+        //             })
+        //         })
+        //     }
+        // }
         this.setData({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab,
             isVideo: false,
-            currentindex: null
+            currentindex: undefined,
+            listenIndexCurrent:undefined,
+            
         });
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {
@@ -151,20 +227,19 @@ Page({
         }
         if (this.data.listenTablistCurrent != this.data.currentTabIndex) {
             this.setData({
-                listening: false,
+                letter: false,
                 listenIndexCurrent: undefined,
             });
         } else {
             if (this.data.listening) {
-
                 this.setData({
-                    listening: false
+                    letter: true
 
                 })
             } else {
 
                 this.setData({
-                    listening: true
+                    letter: false
                 })
 
             }
@@ -184,13 +259,27 @@ Page({
                 url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
             })
         }
-        // console.log( data-everyIndex="{{index}}");
-        console.log()
-
+       
+       
     },
     handleTouchEnd(e) {
         let that = this;
-
+        // let list= this.data.lists[this.data.currentTabIndex].items;
+               
+        // if(list.length>0){
+        //      for (let i in list){
+        //          let that = this  // 
+        //          wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
+        //              console.log(ret.intersectionRatio)
+        //              if (ret.intersectionRatio > 0){
+        //                  list[i].isShow =  true 
+        //              }
+        //              this.setData({ // 更新数据
+        //               lists:that.data.lists
+        //              })
+        //          })
+        //      }
+        // }
         this.setData({ endWidth: e.changedTouches[0].clientX, isVideo: false }, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
@@ -213,23 +302,22 @@ Page({
                         wx.hideLoading();
                     }
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
-                        this.setData({
-                            listening: false,
+                        that.setData({
+                            letter: false,
                             listenIndexCurrent: undefined,
-                        })
+                        });
                     } else {
                         if (that.data.listening) {
-
                             that.setData({
-                                listening: false
-
+                                letter: true
+            
                             })
                         } else {
-
+            
                             that.setData({
-                                listening: true
+                                letter: false
                             })
-
+            
                         }
                     }
                 }
@@ -253,23 +341,22 @@ Page({
                         }
                     })
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
-                        this.setData({
-                            listening: false,
+                        that.setData({
+                            letter: false,
                             listenIndexCurrent: undefined,
-                        })
+                        });
                     } else {
                         if (that.data.listening) {
-
                             that.setData({
-                                listening: false
-
+                                letter: true
+            
                             })
                         } else {
-
+            
                             that.setData({
-                                listening: true
+                                letter: false
                             })
-
+            
                         }
                     }
                 }
@@ -335,8 +422,13 @@ Page({
                     title: app.title,
                 });
             }
-            this.setData({
-                lists: app.lists,
+        //    app.lists.unshift({
+        //     id:'123',
+        //     title:'推荐',
+        //     items:[1,2]
+        //    })
+       
+        this.setData({
                 appTitle: app.title,
                 coverUrl: app.avatarUrl,
                 dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
@@ -347,31 +439,7 @@ Page({
                     this.setData({ dashboardTipShouldDisplay: v });
                 }
             })
-
             gdt.on('listItems', (listId, updateRange, itemList) => {
-                //itemIndex 是老的储存，newIndex是新的
-                if (itemList && itemList.length) {
-                    const itemIndex = this.appState.itemIndex;
-                    itemList.forEach((newIndex) => {
-                        if (itemIndex[newIndex._id]) {
-                            const indexedItem = itemIndex[newIndex._id];
-                            indexedItem._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
-                            indexedItem._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-
-                            indexedItem._likedTimes = newIndex.likedTimes > (indexedItem._likedTimes || 10) ?
-                                newIndex.likedTimes : (indexedItem.randomNum + newIndex.likedTimes);
-
-                        } else {
-                            newIndex._sourceWxDisplayName = newIndex.sourceWxNickname || '-';
-                            newIndex._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-
-                            newIndex._likedTimes = newIndex.likedTimes > (newIndex._likedTimes || 10) ?
-                                newIndex.likedTimes : (newIndex.randomNum + newIndex.likedTimes);
-                        }
-
-                    });
-                }
-
                 this.setData({ lists: app.lists });
 
 
@@ -380,30 +448,44 @@ Page({
             gdt.on('entityUpdate', (x) => {
                 const itemIndex = this.appState.itemIndex;
 
-                if (itemIndex[x._id]) {
-                    const indexedItem = itemIndex[x._id];
-                    indexedItem._sourceWxDisplayName = x.sourceWxNickname || '-';
-                    indexedItem._publishedFromNow = util.moment(x.publishedAt).fromNow();
-
-                    indexedItem._likedTimes = x.likedTimes > (indexedItem._likedTimes || 10) ?
-                        x.likedTimes : (indexedItem.randomNum + x.likedTimes);
-
-                } else {
-                    x._sourceWxDisplayName = x.sourceWxNickname || '-';
-                    x._publishedFromNow = util.moment(newIndex.publishedAt).fromNow();
-
-                    x._likedTimes = x.likedTimes > (x._likedTimes || 10) ?
-                        x.likedTimes : (x.randomNum + x.likedTimes);
-                }
-
                 this.setData({
                     lists: app.lists
                 });
             });
 
-            if (app.lists.length) {
-                gdt.magicListItemLoadMore(app.lists[0]._id)
-            }
+            // if (app.lists.length) {
+            //     gdt.magicListItemLoadMore(app.lists[0]._id);
+            // }
+            gdt.magicListItemLoadMore('topScoreds').then((res)=>{
+                    let oldRes = JSON.parse(JSON.stringify(res));
+                    let arr = res.splice(0,3);
+                    if (app.lists[0] !== app.listIndex['topScoreds']) {
+                        app.lists.unshift(app.listIndex['topScoreds']);
+                    }
+                   
+                this.setData({
+                    lists: app.lists,
+                    imgUrls:arr
+                })
+                //  //懒加载
+                // let list= this.data.lists[this.data.currentTabIndex].items;
+               
+                //    if(list.length>0){
+                //         for (let i in list){
+                //             let that = this  // 
+                //             wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
+                //                 console.log(ret.intersectionRatio)
+                //                 if (ret.intersectionRatio > 0){
+                //                     list[i].isShow =  true 
+                //                 }
+                //                 this.setData({ // 更新数据
+                //                  lists:that.data.lists
+                //                 })
+                //             })
+                //         }
+                //    }
+            });
+            console.log(this.appState)
         });
         gdt.systemInfo.then((x) => {
             this.setData({
@@ -417,15 +499,24 @@ Page({
             this.data.uid = u._id;
             this.data.nickName = this.data.nickName || u.nickName;
         });
-
+        
+        
     },
     //上拉加载
     onReachBottom: function () {
-        const currentListInstance = this.data.lists[this.data.currentTabIndex]
+        const currentListInstance = this.data.lists[this.data.currentTabIndex];
+        
         if (currentListInstance) {
-            gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
+            if(currentListInstance._id === 'topScoreds'){
+                gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
+                    gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.oldRes.length });
+                    });
+            }else{
+                gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
                 gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
-            });
+                });
+            }
+            
         }
     },
     //下拉刷新
@@ -464,6 +555,25 @@ Page({
             }
         }
         return {};
-    }
+    },
+    // onPageScroll() { 
+    //     util.debounce(this.showImg())
+    //   },
+    
+    // showImg(){  // 判断高度是否需要加载
+    //     let that = this;
+    //     wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
+    //         // const group = that.data.lists[that.data.currentTabIndex].items
+    //         const height = that.data.screenHeight
+    //         ret.forEach((item, index) => {
+    //             if (item.top < height) {
+    //                 that.data.lists[that.data.currentTabIndex].items[index].isShow = true
+    //             }
+    //         })
+    //         that.setData({
+    //             lists:that.data.lists
+    //         })
+    //     }).exec()
+    // }
 
 })

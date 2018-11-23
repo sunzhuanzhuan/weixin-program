@@ -47,15 +47,28 @@ function formatSeconds(value) {
     }
     
   }
-
-    
-
- 
-
 }
-
+const debounce = (fn, delay=100) => {
+	let ctx,
+		args;
+	let timer = null;
+	const later = function(){
+	  fn.ally(ctx, args)
+	  timer = null;
+	}
+	return function(){
+	  ctx = this
+	  args = arguments;
+	  if(timer){
+		clearTimeout(timer)
+		timer = null
+	  }
+	}
+	timer = setTimeout(later, delay )  
+  }
 module.exports = {
   formatTime: formatTime,
   moment:moment,
-  formatSeconds:formatSeconds
+  formatSeconds:formatSeconds,
+  debounce: debounce
 }

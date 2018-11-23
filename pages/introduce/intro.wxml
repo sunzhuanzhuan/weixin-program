@@ -17,7 +17,7 @@
       快去试试吧 ~ ~ ~
     </view>
 
-    <image src="/images/shareIntro.jpeg" style='width:92%;height:510rpx;margin-left:30rpx;margin-top:80rpx;margin-right:30rpx;border:1px solid #333'/>
+    <image src="/images/shareIntro.jpeg" style='width:85%;height:200rpx;margin-left:60rpx;margin-top:80rpx;margin-right:30rpx;border:1px solid #333'/>
 
     <view style="font-size:26rpx;color:#666;margin-top:50rpx;text-align:center">
         有任何产品意见反馈，欢迎添加小鱼聚合小助手官方微信

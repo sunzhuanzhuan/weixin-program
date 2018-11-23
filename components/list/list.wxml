@@ -1,64 +1,109 @@
 <template name="list">
-    <block wx:if="{{list.length>0}}">
-        <view wx:for="{{list}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
+    <block wx:if="{{list.items.length>0}}">
+
+        <!-- 推荐页的文章 -->
+        <block wx:if="{{list._id==='topScoreds'}}" >
+            <swiper current="{{currentSwiper}}" duration="600" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
+                <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
+                    <image class="{{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[1].coverUrl}}" width="600rpx" height=""/>
+                    <view class="fontShadow {{swiperActiveZero[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
+                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                            {{imgUrls[1].title}}
+                        </view>
+                    </view>
+                   
+                    <image src="/images/no3.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
+                   
+                </swiper-item>
+                <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[0]._id}}">
+                    <image class="{{swiperActiveOne[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[0].coverUrl}}" width="600rpx" height=""/>
+                     <view class="fontShadow {{swiperActiveOne[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
+                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                            {{imgUrls[0].title}}
+                        </view>
+                    </view>
+                    
+                    <image src="/images/no1.png"  class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
+                </swiper-item>
+                <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
+                    <image  class="{{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[2].coverUrl}}" width="600rpx" height=""/>
+                     <view class="fontShadow {{swiperActiveTwo[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
+                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                            {{imgUrls[2].title}}
+                        </view>
+                    </view>
+                    
+                    <image src="/images/no2.png"  class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx"/>
+                </swiper-item>
+                
+            </swiper>
+
+        </block>
+
+    <view bind:touchstart="handleTouchStart"
+            bind:touchend="handleTouchEnd">
+
+        <view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
+         
             <!-- 视频 -->
-            <!-- <view wx:if="{{item.type === 'txvVideo'}}" class="itemBigBox">
-                <view wx:if='{{currentindex == index }}' data-currentIndex='{{index}}'>
+            <!-- <view wx:if="{{item.type === 'txvVideo'}}" class="item  item-{{index}} itemBigBox">
+                <view wx:if='{{currentindex == index }}' data-item="{{item}}" data-currentIndex='{{index}}'>
                     <txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video" autoplay="{{isVideo}}"></txv-video>
                 </view>
-                <view wx:else data-currentIndex='{{index}}' style="position:relative;" bindtap='changeVideo'>
+                <view wx:else data-currentIndex='{{index}}' data-item="{{item}}"  style="position:relative;" bindtap='changeVideo'>
                     <image src='/images/play.png' style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" />
-                    <image style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="http://puui.qpic.cn/vpic/0/{{item.txvVid}}.png/0"></image>
+                    <image mode="aspectFill" style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="{{ 'http://puui.qpic.cn/vpic/0/'+item.txvVid +'.png/0'}}"></image>
                 </view>
                 <view style="background:#ffffff;height:100rpx;width:690rpx;">
-                    <view class="videoTitle" data-id="{{item.id}}" bindtap="handleDetail" style="display:inline-block;line-height:88rpx;padding-left:30rpx">
+                    <view class="{{item.viewed?'readVideoTitle':'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail" style="display:inline-block;line-height:88rpx;padding-left:30rpx;font-weight:bold">
                         {{item.title}}
                     </view>
-                    <view data-id="{{item.id}}" style="float:right;width:250rpx">
+                    <view data-id="{{item._id}}" style="float:right;width:250rpx">
                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                            <button  form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
-                                <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
+                            <button  form-type="submit" class='btnStarVideo' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                <image class="imgBtnItem" style="float:left;margin-top:28rpx" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
+                                <text style="color:#999;font-size:24rpx;display:inline-block;line-height:12rpx;height: 100rpx;float:left;margin-top:32rpx;padding-left:10rpx;">
                                     {{item._likedTimes}}
                                 </text>
                             </button>
                         </form>
                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                            <button  form-type="submit" class='btnShare' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor">
+                            <button  form-type="submit" class='btnShareVideo' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
                                 <image class="imgBtnItem" src="/images/share.png"></image>
                             </button>
                         </form> 
                     </view>
                 </view>
-            </view> -->
+            </view>  -->
             <view  wx:if="{{item.type === 'wxArticle'}}">
-                <!-- 文章 -->
-                <view wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list[index-1].wxMidVec && list[index-1].wxMidVec[list[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list[index+1].wxMidVec && list[index+1].wxMidVec[list[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">
+                <!-- 小图 -->
+                <view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list.items[index-1].wxMidVec && list.items[index-1].wxMidVec[list.items[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">
                     <view style="width:100%;overflow:hidden;background:#ffffff;">
-                        <!-- 小的图片的文章 -->
-                        <view class="itemSmall" style="float:right;{{(list[index+1].wxMidVec && list[index+1].wxMidVec[list[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1px solid #E0E0E0;'}}">
-                            <image style="float:right;width:220rpx;height:180rpx;" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item.id}}"  data-everyIndex="{{index}}"></image>
+                        
+                        <view class="itemSmall" style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1rpx solid #E6E6E6;'}}">
+                            <image style="float:right;width:240rpx;height:180rpx;border-radius:8rpx" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}"  data-everyIndex="{{index}}"></image>
                             <view style="float:rigth;width:430rpx;height:180rpx;position:relative;">
-                                <text class='nowrapTwo' style="margin-left:20rpx;display:inline-block" bindtap="handleDetail" data-id="{{item.id}}" data-everyIndex="{{index}}">{{item.title}}</text>
+                                <text class="{{item.viewed?'readNowrapTwo':'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">{{item.title}}</text>
                                 
                                     <view style="background:#ffffff;width:430rpx;position:absolute;bottom:-30rpx;" hover-class="">
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                            <button  wx:if="{{item.wxmpVoiceIds.length>0}}"  style='float:left;background:#fff;margin-right:-20rpx' form-type="submit" class='btnListen'  data-tabList="{{currentTabIndex}}" 
-                                            form-type="submit" bindtap="handleListing"  data-id="{{item.id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                                    <image class="imgBtnItem" src="{{listenIndexCurrent==index && listening?'/images/pausing.png':'/images/playing.png'}}"></image>
-                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                            <button  wx:if="{{item.wxmpVoiceIds.length>0}}"  style='float:left;background:#fff;margin-right:-20rpx;line-height:85rpx' form-type="submit" class='btnListenSmall'  data-tabList="{{currentTabIndex}}" 
+                                            form-type="submit" bindtap="handleListing"  data-id="{{item._id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                                    <image class="imgBtnItem" src="{{listenIndexCurrent==index && letter?'/images/mini.gif':'/images/playing.png'}}"></image>
+                                                    <text wx:if="{{listenIndexCurrent==index && letter}}" style="{{listenIndexCurrent==index && letter?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
                                                         暂停
                                                     </text>
-                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                                    <text wx:else style="{{listenIndexCurrent==index && letter?'color:#fff;background:#333;':'color:#333;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
                                                         听一听
                                                     </text>
                                                 </button>
                                            
-
-                                            
-                                            <button wx:else class='btnListen' style='float:left;background:#fff;margin-right:-20rpx' form-type="submit" class='btnListen' form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                            <button wx:else class='btnListenSmall' style='float:left;background:#fff;margin-right:-20rpx' form-type="submit" form-type="submit" data-liked="{{item.liked}}" data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
                                                    
                                                 </button>
+
+                                                <button  class='btnListenSmallL'> </button>
+                                            
                                            
                                         </form>
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
@@ -69,8 +114,7 @@
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                         <button form-type="submit"  class='btnStar' style='background:#fff;width:130rpx' catchtap="handleLikeButtonTapped" form-type="submit" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
                                             <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}" style="float:left;margin-top:26rpx"></image>
-                                            <text style="color:#999;font-size:24rpx;margin-left:10rpx;display:inline-block;line-height:20rpx;height: 100rpx;float:left">
-
+                                            <text style="vertical-align:top;color:#999;font-size:24rpx;margin-left:10rpx;display:inline-block;line-height:30rpx;height: 100rpx;float:left">
                                                 {{item._likedTimes}}
                                             </text>
                                         </button>
@@ -81,65 +125,61 @@
                     </view>
                 </view>
                 <view wx:else>
-                    <view class="itemBigBox">
-                        <!-- 大的图片的文章 -->
+                    <view class="item  item-{{index}} itemBigBox">
+                        <!-- 大图 -->
                         <view>
-                            <view bindtap="handleDetail" data-id="{{item.id}}" data-everyIndex="{{index}}">
+                            <view bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
                                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                     <button form-type="submit" hover-class='none' style="position:relative;padding:0;height:400rpx;border-radius:8rpx 8rpx 0 0">
-                                        <!-- <view style="position:relative"> -->
+                                        
                                         <image style="width:690rpx;height:400rpx;display:block" mode="aspectFill" src="{{item.coverUrl}}"></image>
                                         <view class="fontShadow" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff">
-                                            <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left">
+                                            <view class="{{item.viewed?'readNowrapOne':'nowrapOne'}}" style="margin-left:20rpx;line-height:100rpx;text-align:left;font-weight:bold">
                                                 {{item.title}}
                                             </view>
                                         </view>
-                                        <!-- </view> -->
+                                        
                                     </button>
                                 </form>
                             </view>
                             <view style="background:#ffffff;height:100rpx;width:690rpx;">
-                                <view class="videoTitle" data-id="{{item.id}}"></view>
-                                <view data-id="{{item.id}}" style="">
-                                    <!-- <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'> -->
-                                        <!-- <button style="background:#ffffff;" hover-class=""> -->
+                                <view class="videoTitle" data-id="{{item._id}}"></view>
+                                <view data-id="{{item._id}}" style="">
+                                   
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                             <button wx:if="{{item.wxmpVoiceIds.length>0}}" form-type="submit" class='btnListen'
-                                            form-type="submit" bindtap="handleListing"  data-id="{{item.id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"  data-tabList="{{currentTabIndex}}" >
-                                                    <image class="imgBtnItem" src="{{listenIndexCurrent==index && listening?'/images/pausing.png':'/images/playing.png'}}"></image>
-                                                    <text wx:if="{{listenIndexCurrent==index && listening}}" style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                            form-type="submit" bindtap="handleListing"  data-id="{{item._id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"  data-tabList="{{currentTabIndex}}" >
+                                                    <image class="imgBtnItem" style="margin-top:30rpx;float:left" src="{{listenIndexCurrent==index && letter?'/images/mini.gif':'/images/playing.png'}}"></image>
+                                                    <text wx:if="{{listenIndexCurrent==index && letter}}" style="{{listenIndexCurrent==index && letter?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}};vertical-align:top;margin-top:30rpx;font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
                                                         暂停
                                                     </text>
-                                                    <text wx:else style="{{listenIndexCurrent==index && listening?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}}font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:12rpx;height: 100rpx;height:30rpx">
+                                                    <text wx:else style="{{listenIndexCurrent==index && letter?'color:#fff;background:#333;':'color:#333;background:#ffe000;'}};vertical-align:top;margin-top:30rpx;font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx">
                                                         听一听
                                                     </text>
                                                 </button>
                                            
 
                                             
-                                            <button wx:else form-type="submit" class='btnListen' form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                                    <!-- <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
-                                                    <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
-                                                        没有文章听
-                                                    </text> -->
+                                            <button wx:else form-type="submit" class='btnListen' form-type="submit" data-liked="{{item.liked}}" data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                                  
                                                 </button>
+                                             <button  class='btnListen'> </button>
+                                               
                                            
                                         </form>
                                            <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                                            <button form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                                    <image class="imgBtnItem" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
-                                                    <text style="color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:12rpx;height: 100rpx;">
+                                            <button form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+                                                    <image class="imgBtnItem" style="margin-top:32rpx" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
+                                                    <text style="vertical-align:top;color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:34rpx;height: 100rpx;">
                                                         {{item._likedTimes}}
                                                     </text>
                                                 </button>
                                             </form>
                                             <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
                                                 <button form-type="submit" class='btnShare' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
-                                                    <image class="imgBtnItem" src="/images/share.png"></image>
+                                                    <image class="imgBtnItem" src="/images/share.png" style="margin-top:32rpx"></image>
                                                 </button>
                                             </form>
-                                        <!-- </button> -->
-                                    <!-- </form> -->
                                 </view>
                             </view>
                         </view>
@@ -147,24 +187,24 @@
                 </view>
             </view>
         </view>
-        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;"></view>
-        <view wx:else style="width:100%; height:260rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
-            <view style='height:50rpx;'>
-                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>
-                由小鱼聚合平台提供技术支持
+        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;position: fixed;bottom: -800rpx"></view>
+        <view wx:else style="width:100%; height:260rpx;font-size: 28rpx;text-align: center;line-height: 120rpx">
+           <view style='height:50rpx;'>
+                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx;float:left;margin-top:50rpx;padding-left:210rpx;"></image>
+                <text style="color:#ccc;font-size:20rpx;float:left"> 由小鱼聚合平台提供技术支持</text>
             </view>
-            <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view>
+            <!-- <view style="text-align:center;dispaly:block;">产品意见反馈请添加微信：13264256564</view> -->
+        </view>
         </view>
     </block>
     <block wx:else>
-        <view style="width: 100%;height: 1000rpx;"></view>
         <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;position: fixed;bottom: -800rpx"></view>
-        <view wx:else style="width:100%; height:260rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
-            <view style='height:50rpx;'>
-                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx"></image>
-                由小鱼聚合平台提供技术支持
+        <view wx:else style="width:100%; height:260rpx;font-size: 28rpx;text-align: center;line-height: 120rpx">
+           <view style='height:50rpx;'>
+                <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx;float:left;margin-top:50rpx;padding-left:210rpx;"></image>
+                <text style="color:#ccc;font-size:20rpx;float:left"> 由小鱼聚合平台提供技术支持</text>
             </view>
-            <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view>
+            <!-- <view style="text-align:center;dispaly:block;">产品意见反馈请添加微信：13264256564</view> -->
         </view>
     </block>
 </template>

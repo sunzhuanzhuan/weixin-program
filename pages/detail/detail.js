@@ -52,20 +52,37 @@ Page({
         fullPicture: {},
         //推荐视频
         recommendations:[],
-        //音频的播放和暂停的开关
-        isPlay:false,
-        isChangeBig:false,
-        currentTime:0,
-        totalTime:0,
-        currentProgress:0,
-        totalProgress:0,
-        clickIndex:0,
-        isPause:false
+        videoSource:[],
+        videoId:undefined,
+        selectedCricle:0,
+        isMuted:true,
+         //音频的播放和暂停的开关
+         isPlay:false,
+         isChangeBig:false,
+         currentTime:0,
+         totalTime:0,
+         currentProgress:0,
+         totalProgress:0,
+         clickIndex:0,
+         audioName:'',
+         isShowListen:true,
+         isPause:false,
+        // 视频为图片
+        isPlayVideo:false,
+        isFirst:0
     },
-    
+
+    handleChangeTypeVideo:function(){
+        this.setData({
+            isPlayVideo:true
+            
+        })
+       
+    },
 
     // 点击切换视频
     handleVideo:function(e){
+        console.log(1111111)
         // this.setData({videoId:e.currentTarget.dataset.videoid,videoTitle:e.currentTarget.dataset.videotitle});
         let qPromise;
         const scene = gdt.showParam.scene;
@@ -84,7 +101,7 @@ Page({
                 });
             };
            
-            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
@@ -176,7 +193,10 @@ Page({
 
     },
     onLoad(options) {
+        console.log(options)
         if(options.listening == 'false'){
+            this.setData({isPlay:false})
+        }else if(options.listening == undefined){
             this.setData({isPlay:false})
         }else{
             this.setData({isPlay:true})
@@ -238,7 +258,8 @@ Page({
                 overrideStyle: 'false',
                 fixWxMagicSize: 'true',
                 ref: ref,
-                refee: refee
+                refee: refee,
+                mode: 'flow'
             });
         } else if (options.scene) {
             let referencers = (options.scene);
@@ -247,7 +268,8 @@ Page({
                 keepH5Links: true,
                 mapSrc: 'data',
                 overrideStyle: 'false',
-                fixWxMagicSize: 'true'
+                fixWxMagicSize: 'true',
+                mode: 'flow'
             });
         } else {
             throw new Error('No idea what to load');
@@ -260,8 +282,12 @@ Page({
                     title: currentTitle,
                 });
             };
-           
-            this.setData({recommendations:r.recommendations || [], fullPicture: r, entityId: r.entity.id, entity: r.entity, nodes: [r.node], shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+           if(r.entity.type=='wxArticle'){
+                this.setData({videoId:r.entity.txvVids[0],videoSource: r.entity.txvVids})
+           }
+           console.log(r.node)
+          
+            this.setData({recommendations:r.recommendations || [], nodes: r.nodes,fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
         })
@@ -299,11 +325,15 @@ Page({
         var currPage = pages[pages.length - 1];  //当前选择好友页面
         var prevPage = pages[pages.length - 2]; //上一个编辑款项页面
         //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
-        let that = this;
-        prevPage.setData({  
-            listenIndexCurrent: that.data.clickIndex ,
-            listening:that.data.isPlay
-        });
+        if(this.data.isFirst !=0 ){
+            prevPage.setData({  
+                listenIndexCurrent: this.data.clickIndex ,
+                listening:this.data.isPlay,
+                letter:this.data.isPlay,
+            });
+            
+        }
+       
     },
     recordUserscroll: function (event) {
         if (event.detail.scrollTop < 0) {
@@ -312,7 +342,7 @@ Page({
         let num1 = event.detail.scrollTop;
         const scene = gdt.showParam.scene;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false });
+            this.setData({ isShow: false,isChangeBig:false ,isShowListen:false});
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: false });
             }
@@ -321,7 +351,7 @@ Page({
             // }
 
         } else {
-            this.setData({ isShow: true });
+            this.setData({ isShow: true,isChangeBig:false ,isShowListen:true});
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: true });
             }
@@ -407,13 +437,13 @@ Page({
             // 绘制接口的文章数量和分享和背景
             ctx.rect(75 * ratio, 46 * ratio, 236 * ratio, 80 * ratio)
             const grd = ctx.createLinearGradient(75 * ratio, 60 * ratio, 236 * ratio, 80 * ratio)
-            grd.addColorStop(0, '#e9ecfa')
-            grd.addColorStop(0.2, '#e9ecfa')
-            grd.addColorStop(0.4, '#e9ecfa')
-            grd.addColorStop(0.5, '#e9ecfa')
-            grd.addColorStop(0.66, '#F1E8ED')
-            grd.addColorStop(0.83, '#F1E8ED')
-            grd.addColorStop(1, '#F1E8ED')
+            grd.addColorStop(0, '#545454')
+            grd.addColorStop(0.2, '#505050')
+            grd.addColorStop(0.4, '#4a4a4a')
+            grd.addColorStop(0.5, '#474747')
+            grd.addColorStop(0.66, '#434343')
+            grd.addColorStop(0.83, '#3c3c3c')
+            grd.addColorStop(1, '#383838')
             ctx.setFillStyle(grd)
             ctx.fill();
             // 绘制数字
@@ -422,7 +452,7 @@ Page({
 
             const numArtical = res[0].readingMeta.nthRead + '';
             // const numArtical = 672+ '';
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
             let type =''
             if(this.data.entity.type == 'wxArticle'){
@@ -433,21 +463,21 @@ Page({
 
             const bigTitle = ('这是我在' + this.data.appName + '小程序')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText(bigTitle, 100 * ratio, 74 * ratio);
 
             const bigTitleType = (type+'第')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText(bigTitleType, 100 * ratio, 96 * ratio);
 
             const friend = ('篇已经有')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
 
             const my = (' 个好友阅')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
 
             const numFriend = res[0].readingMeta.referencers + '';
             // const numFriend = 280+ '';
@@ -537,7 +567,7 @@ Page({
             
 
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText('读了我的分享', 100 * ratio, 116 * ratio);
             // 绘制双引号
             let yinHao = this.data.yinHao;
@@ -642,8 +672,8 @@ Page({
                 wx.canvasToTempFilePath({
                     x: 0,
                     y: 0,
-                    width: 320,
-                    height: 370,
+                    width: 320 * ratio,
+                    height: 370 * ratio,
                     destWidth: 1280,
                     destHeight: 1480,
                     fileType: 'jpg',
@@ -688,95 +718,80 @@ Page({
     handleSavePicture: function () {
         this.setData({ isShowPoster: false });
     },
-    //播放
-    play:function(){
+    
+    handlePlayVideo:function(){
+       
         let that = this;
-        const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
+        
         if(!this.data.isPause){
             const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
             innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
         }
-
+        this.setData({isPlay:true ,audioName:innerAudioContext.title})
+        
         innerAudioContext.play();
-        this.setData({isPlay:true,isPause:false});
-        gdt.track('play-article-voice-on-detail-page', {
-            voiceId: voiceId,
-            itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId
-        });
+        innerAudioContext.onEnded(()=>{
+            console.log('end')
+            this.setData({isPlay:false ,audioName:innerAudioContext.title})
+        })
+        // 时间的当前的进度;
+        
+        innerAudioContext.onTimeUpdate(()=>{
+            that.setData({
+                isFirst:1,
+                currentTime:parseInt(innerAudioContext.currentTime),
+                totalTime:parseInt(innerAudioContext.duration),
+                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+            })
+        })
+        //进度条的隐藏 和显示
+        this.setData({isChangeBig:!this.data.isChangeBig})
+       
     },
-    pause:function(){
+    handlePauseVideo:function(){
+        console.log('暂停');
+        
         innerAudioContext.pause();
-        this.setData({isPlay:false,isPause:true});
-        gdt.track('pause-article-voice-on-detail-page', {
-            voiceId: voiceId,
-            playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0,
-            itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId
-        });
-    }
-    // handlePlayVideo:function(){
-    //     let that = this;
-        
-    //     innerAudioContext.autoplay = true;
-    //     innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+this.data.entity.wxmpVoiceIds[0];
-    //     console.log('开始播放')
        
-    //     innerAudioContext.onPlay((e)=>{
-           
-    //     })
-    //     this.setData({isPlay:true})
-       
-    //     innerAudioContext.play();
-    //     // 时间的当前的进度;
+        this.setData({isPlay:false,isPause:true,isFirst:1,})
+        // this.setData({isChangeBig:!this.data.isChangeBig})
+    },
+    handleShink:function(){
+        this.setData({isChangeBig:!this.data.isChangeBig})
+    },
+    handlePauseVideoNow:function(){
         
-    //     innerAudioContext.onTimeUpdate(()=>{
-    //         that.setData({
-    //             currentTime:parseInt(innerAudioContext.currentTime),
-    //             totalTime:parseInt(innerAudioContext.duration),
-    //             currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
-    //             totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
-    //         })
-    //     })
-    //     //进度条的隐藏 和显示
-    //     this.setData({isChangeBig:!this.data.isChangeBig})
-       
-    // },
-    // handlePauseVideo:function(){
-    //     console.log('暂停');
-        
-    //     innerAudioContext.pause();
-    //     this.setData({isPlay:false})
-    //     // this.setData({isChangeBig:!this.data.isChangeBig})
-    // },
-    // handleShink:function(){
-    //     this.setData({isChangeBig:!this.data.isChangeBig})
-    // },
-    // handlePauseVideoNow:function(){
-        
-    //     this.setData({isPlay:false})
-    //     innerAudioContext.pause();
-    // },
-    // handlePlayVideoNow:function(){
+        this.setData({isFirst:1,isPlay:false,isPause:true})
+        innerAudioContext.pause();
+    },
+    handlePlayVideoNow:function(){
 
-    //     this.setData({isPlay:true})
-    //     innerAudioContext.play();
-    // },
-    // //拖动过程中的一些处理
-    // handleChanging:function(e){
-    //     let that = this;
-    //     this.setData({
-    //         currentTime:e.detail.value,
-    //         currentProgress:formatSeconds(parseInt(e.detail.value)),
-    //     })
-    //     innerAudioContext.seek(e.detail.value);
-    //     innerAudioContext.onTimeUpdate(()=>{
-    //         that.setData({
-    //             currentTime:parseInt(innerAudioContext.currentTime),
-    //             totalTime:parseInt(innerAudioContext.duration),
-    //             currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
-    //             totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
-    //         })
-    //     })
+        this.setData({isFirst:1,isPlay:true,isPause:true})
+        innerAudioContext.play();
+        console.log('end111')
+        innerAudioContext.onEnded(()=>{
+            console.log('end')
+            this.setData({isFirst:1,isPlay:false,isPause:true})
+        })
+    },
+    //拖动过程中的一些处理
+    handleChanging:function(e){
+        let that = this;
+        this.setData({
+            currentTime:e.detail.value,
+            currentProgress:formatSeconds(parseInt(e.detail.value)),
+        })
+        innerAudioContext.seek(e.detail.value);
+        innerAudioContext.onTimeUpdate(()=>{
+            that.setData({
+                currentTime:parseInt(innerAudioContext.currentTime),
+                totalTime:parseInt(innerAudioContext.duration),
+                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+            })
+        })
        
-    // }
+    }
 
 })

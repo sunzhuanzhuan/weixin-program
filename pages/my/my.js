@@ -24,6 +24,12 @@ Page({
         isHome:false
     },
       onLoad: function() {
+        if (getCurrentPages()[0] === this) {
+            this.setData({ isHome: true });
+        }
+        wx.setNavigationBarTitle({
+            title: '我的',
+        });
           gdt.userInfo.then(()=> {
             gdt.setLocalStorage('dashboardTipShouldDisplay', false);
           }, ()=> {
@@ -40,7 +46,7 @@ Page({
           this.setData({
               num: this.appState.dashboardAnalytics,
               myShares: this.appState.myShares,
-              myLikes: this.appState.myLikes,
+              myLikes: this.appState.myCollect,
           });
           gdt.userInfo.then((x)=> {
               this.setData({userInfo: x.userInfo});
@@ -52,7 +58,7 @@ Page({
               this.setData({num: this.appState.dashboardAnalytics});
           });
           const makeMyLikes = ()=> {
-              this.appState.myLikes.forEach((x)=> {
+              this.appState.myCollect.forEach((x)=> {
                   const entity = x.entity;
                   if (!entity) {
                       return;
@@ -65,7 +71,7 @@ Page({
                         entity.readTimes = parseInt(Math.random()*20+30)
                     }
               });
-              this.setData({ myLikes: this.appState.myLikes, myLikesHasMore: this.appState.myLikes.__hasMore !== false });
+              this.setData({ myLikes: this.appState.myCollect, myLikesHasMore: this.appState.myCollect.__hasMore !== false });
           };
           gdt.on('sharedItems', ()=> {
               this.setData({ myShares: this.appState.myShares, mySharesHasMore: this.appState.myShares.__hasMore !== false });
@@ -86,6 +92,11 @@ Page({
             num: this.appState.dashboardAnalytics
         });
         gdt.track('show-my-dashboard');
+        wx.showShareMenu({ 
+            withShareTicket: true,
+         });
+
+       
       },
       handleShrink: function(e) {
           this.setData({shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag})
@@ -95,7 +106,7 @@ Page({
               gdt.magicMySharedFirstLoad().then(()=> this.setData({ myShares: this.appState.myShares }));
               gdt.track('my-dashboard-show-share');
             } else {
-              gdt.magicMyLikedFirstLoad().then(()=> this.setData({ myLikes: this.appState.myLikes }));
+              gdt.magicMyLikedFirstLoad().then(()=> this.setData({ myLikes: this.appState.myCollect }));
               gdt.track('my-dashboard-show-like');
             }
           this.setData({currentTab: e.currentTarget.dataset.name});
@@ -112,25 +123,24 @@ Page({
           });
       },
       onReachBottom: function () {
-          if (this.data.currentTab === 'myShares') {
-              gdt.magicMySharedLoadMore();
-          } else {
-              gdt.magicMyLikedLoadMore();
-          }
+        
+        gdt.magicMySharedLoadMore();
+        gdt.track('item-list-share-load-more')
       },
       onShareAppMessage: function({from, target, webViewUrl}) {
-          const clip = target.dataset.clip;
+          const clip = target.dataset.item;
+          
           if (!(clip && clip.entity)) {
               return;
           }
   
           const entity = clip.entity;
-          gdt.trackShareItem(entityBref._id);
+          gdt.trackShareItem(entity._id);
           gdt.track('share-item', { itemId: clip.entityId, type: entity.type, refId: clip._id });
         
           return {
               title: entity.title || '默认转发标题',
-              path: `pages/detail/detail?ref=${clip._id}&art=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
+              path: `pages/detail/detail?ref=${clip._id}&id=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
               imageUrl: entity.coverUrl
           }
       },
@@ -154,6 +164,19 @@ Page({
     },
     handleContact:function(){
         
-    }
+    },
+    //收藏和浏览足迹
+    handleTapHistoryOrArticalOrVideo:function(e){
+        console.log(e.currentTarget.dataset.name )
+        wx.navigateTo({
+            url:'/pages/history/history?type='+e.currentTarget.dataset.name
+        })
+    },
+    //下拉刷新
+    onPullDownRefresh: function () {
+        gdt.magicMySharedLoadLatest();
+        gdt.track('item-list-share-load-first')
+    },
     
+
   })

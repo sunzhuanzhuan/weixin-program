@@ -1,5 +1,6 @@
 button::after{ border: none;padding: 0 }
 /* 新加的视频的布局 */
+
 .nowrap{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -51,10 +52,10 @@ button::after{ border: none;padding: 0 }
 .line{
     border-right: 1px solid #E6E6E6;
     display: inline-block;
-    height: 50rpx;
+    height: 46rpx;
     margin-top: 50rpx;
     width: 4rpx;
-    line-height: 50rpx;
+    line-height: 46rpx;
     margin-right:40rpx;
     float: right;
 }
@@ -125,7 +126,7 @@ button{
 
 .fixed {
     position: fixed;
-    bottom: -200rpx;
+    bottom: -500rpx;
     width: 100%;
     line-height: 94rpx;
     border-top:none;
@@ -167,8 +168,7 @@ button{
 .imgBtn {
     width: 32rpx;
     height: 32rpx;
-    margin-bottom: -10rpx;
-    margin-top:-4rpx
+    margin-bottom: -46rpx;
 }
 .imgBtnBig{
     width: 50rpx;
@@ -180,7 +180,7 @@ button{
     width: 32rpx;
     height: 32rpx;
     margin-left:60rpx;
-    margin-top: 14rpx;
+    margin-top: 24rpx;
 }
 .btnBox{
     display: flex;
@@ -195,14 +195,19 @@ button{
     background: #fff;
 }
 .letter{
-    font-size: 20rpx;
+    font-size: 24rpx;
     color:#666;
-    margin:10rpx 0;
+    margin-top:46rpx;
+    margin-bottom:-29rpx;
+
 }
 .letterKonw{
     font-size: 20rpx;
     color:#666;
     text-align: left;
+    height:30rpx;
+    line-height:50rpx;
+    
     
 }
 
@@ -214,6 +219,7 @@ button{
 .bol {
     height: 68rpx !important;
     background: #ffffff;
+   
 }
 
 
@@ -224,7 +230,7 @@ button{
 
 ._elm{
    margin:0;
-   padding:0
+   padding:0;
 }
 .radius_avatar {
     display:inline-block;

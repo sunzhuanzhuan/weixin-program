@@ -3,6 +3,15 @@ button{
     padding:0;
 }
 
+.nowrap{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height:1.5
+}
 /* .bigImg{
     width:686rpx ;
     height:360rpx ;
@@ -36,19 +45,45 @@ button{
     background:#ffffff;
     height: 100rpx;
 }
-.btnListen{
+.btnStarVideo{
     width: 60%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+}
+.btnShareVideo{
+    width: 40%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+}
+.btnListen{
+    width: 30%;
     float: left;
     background:#ffffff;
     height: 100rpx;
     text-align: left;
 }
-
+.btnListenSmall{
+    width: 44%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+    text-align: left;
+}
+.btnListenSmallL{
+    width: 15%;
+    float: left;
+    background:#ffffff;
+    height: 100rpx;
+    text-align: left;
+}
 .imgBtnItem {
     width: 32rpx;
     height: 32rpx;
     display: inline-block;
     background: #fff;
+    
 }
 
 .itemBigBox{
@@ -70,11 +105,10 @@ button{
 .fontShadow {
     height: 90rpx;
     width:690rpx;
-    opacity: 0.6;
-    background: -webkit-linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,1));/* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,1)); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,1)); /* Firefox 3.6 - 15 */
-    background: linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,1));
+    background: -webkit-linear-gradient(180deg,rgba(0,0,0,0,0),rgba(0,0,0,0.69));/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(180deg,rgba(0,0,0,0,0),rgba(0,0,0,0.69)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.69)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.69));
 }
 
 .itemSmall{
@@ -87,7 +121,25 @@ button{
     
    
 }
-.nowrapTwo{
+.readNowrapOne{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 630rpx;
+    font-size: 34rpx;
+    color: #fff;
+}
+.readVideoTitle{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    width:410rpx;
+    line-height:1.0;
+    font-size: 32rpx;
+    color: #CCCCCC;
+    font-size: 34rpx;
+}
+.readNowrapTwo{
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -95,7 +147,18 @@ button{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     font-size: 34rpx;
-    height: 100rpx;
+    line-height:1.5;
+    color: #CCCCCC;
+}
+.nowrapTwo{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    width: 430rpx;
+    -webkit-line-clamp: 2;
+    line-height:1.5;
+    -webkit-box-orient: vertical;
+    font-size: 34rpx;
 }
 .nowrapOne{
     overflow: hidden;
@@ -103,4 +166,51 @@ button{
     white-space: nowrap;
     width: 630rpx;
     font-size: 34rpx;
+}
+.swiperItem{
+    text-align:center;
+    width:600rpx;
+    border-radius:6rpx;
+    position: relative;
+}
+.noActive{
+    margin:30rpx 0;
+    height:280rpx;
+}
+.noActiveLetter{
+    top:60rpx;
+    width:60rpx;
+    height:28rpx;
+   
+}
+.activeLetter{
+    top:30rpx;
+    width:80rpx;
+    height:40rpx;
+}
+.noActiveShdow{
+    top:60rpx;
+    width:70rpx;
+    height:34rpx;
+   
+}
+.activeShdow{
+    top:30rpx;
+    width:80rpx;
+    height:40rpx;
+}
+.margin30{
+    margin-bottom: 30rpx
+}
+.bg3{
+    background: -webkit-linear-gradient(left, #AA52ED , #6760FF); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #AA52ED , #6760FF); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #AA52ED , #6760FF); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #AA52ED , #6760FF); /* 标准的语法（必须放在*/
+}
+.bg2{
+      background: -webkit-linear-gradient(left, #FA6450 , #FF9072); /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(right,  #FA6450 , #FF9072); /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(right,  #FA6450 , #FF9072); /* Firefox 3.6 - 15 */
+      background: linear-gradient(to right, #FA6450 , #FF9072); /* 标准的语法（必须放在*/
 }

@@ -2,6 +2,7 @@ const _ = require('./utils/lodash.custom.min.js');
 const EventEmitter = require("./utils/EventEmitter.min.js");
 const request = require("./utils/request.js").request;
 const download = require("./utils/request.js").download;
+const util = require("./utils/util.js")
 
 const PAGESIZE = 20;
 
@@ -345,8 +346,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
 
         this.localState.lists = [];
-        this.localState.myLikes = [];
+        this.localState.myCollect = [];
+        this.localState.myCollectArtical = [];
+        this.localState.myCollectVideo = [];
         this.localState.myShares = [];
+        this.localState.myViews = [];
         this.localState.pendingRequests = 0;
         this.localState.autoLoadingState = true;
         this.localState.dashboardAnalytics = {};
@@ -392,6 +396,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.localState.description = appBaseInfo.description;
             this.localState.avatarUrl = appBaseInfo.avatarUrl;
             this.localState.lists = appBaseInfo.lists;
+            this.localState.pendingAudition = appBaseInfo.pendingAudition;
+            if (this.localState.pendingAudition) {
+                this.entityTypes = ['wxArticle']
+            }
             if (this.localState.lists.length) {
                 this.localState.lists.forEach((x) => {
                     x.items = [];
@@ -400,6 +408,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.localState.listIndex = _.keyBy(this.localState.lists, '_id');
             this.localState.listIndex['topScoreds'] = {
                 title: '推荐',
+                _id: 'topScoreds',
+                id: 'topScoreds',
                 items: []
             };
             this.localState.itemIndex = {};
@@ -429,7 +439,15 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     if (!indexedItem.randomNum) {
                         indexedItem.randomNum = Math.floor(Math.random() * 40);
                     }
+                    indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+                    indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
 
+                    indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+                        indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
+                    if (indexedItem.type == "txvVideo") {
+                        indexedItem.wxMidVec = '1234#1'
+                    }
+                    // indexedItem.isShow=false
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
                         return;
@@ -456,6 +474,15 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 if (!indexedItem.randomNum) {
                     indexedItem.randomNum = Math.floor(Math.random() * 40);
                 }
+                indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+                indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
+
+                indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+                    indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
+                if (indexedItem.type == "txvVideo") {
+                    indexedItem.wxMidVec = '1234#1'
+                }
+                // indexedItem.isShow=false
                 let curItem = targetList[idx];
                 if (curItem) {
                     return;
@@ -480,7 +507,20 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (!indexedItem.randomNum) {
                 indexedItem.randomNum = Math.floor(Math.random() * 40);
             }
+            indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+            indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
 
+            indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+                indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
+            if (indexedItem.type == "txvVideo") {
+                indexedItem.wxMidVec = '1234#1'
+            }
+            // if(indexedItem.isShow){
+            //     indexedItem.isShow=true
+            // }else{
+            //     indexedItem.isShow=false
+            // }
+            
             return;
         });
 
@@ -532,7 +572,66 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 return;
             });
         });
+        //浏览足迹
+        this.on('viewsItems', ([start, end], clips) => {
+            const targetList = this.localState.myViews;
+            const itemIndex = this.localState.clipIndex;
+            
+            clips.forEach((x) => {
+                if (x.entity) {
+                    // x.isShow=false;
+                    this.emit('entityUpdate', x.entity);
+                }
+            });
 
+            if ((clips && clips.length < (end - start))) {
+                targetList.__hasMore = false;
+            }
+            if (start === 0) {
+                clips.reverse().forEach((x) => {
+                    let indexedItem = itemIndex[x._id];
+                    if (indexedItem) {
+                        _.merge(indexedItem, x);
+                    } else {
+                        indexedItem = x;
+                        itemIndex[x._id] = indexedItem;
+                    }
+                    if (!indexedItem.randomNum) {
+                        indexedItem.randomNum = Math.floor(Math.random() * 40);
+                    }
+
+                    const r = _.find(targetList, { _id: x._id });
+                    if (r) {
+                        _.remove(targetList, r);
+                    }
+                    targetList.unshift(indexedItem);
+                    return;
+                });
+
+                return;
+            }
+
+            _.range(start, end, 1).map((idx, incomingIdx) => {
+                const incoming = clips[incomingIdx];
+                if (!incoming) {
+                    return;
+                }
+                let indexedItem = itemIndex[incoming._id];
+                if (indexedItem) {
+                    _.merge(indexedItem, incoming);
+                } else {
+                    indexedItem = incoming;
+                    itemIndex[incoming._id] = indexedItem;
+                }
+                let curItem = targetList[idx];
+                if (curItem) {
+                    return;
+                }
+
+                targetList[idx] = indexedItem;
+                return;
+            });
+        });
         this.on('shared', (x) => {
             const targetList = this.localState.myShares;
             const itemIndex = this.localState.clipIndex;
@@ -556,7 +655,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
         });
 
         this.on('likedItems', ([start, end], clips) => {
-            const targetList = this.localState.myLikes;
+            console.log(clips)
+            const targetList = this.localState.myCollect;
             const itemIndex = this.localState.clipIndex;
             if ((clips && clips.length < (end - start))) {
                 targetList.__hasMore = false;
@@ -603,9 +703,121 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 return;
             });
         });
+        this.on('collectArticalItems', ([start, end], clips) => {
+            const targetList = this.localState.myCollectArtical;
+            const itemIndex = this.localState.clipIndex;
+            
+            clips.forEach((x) => {
+                if (x.entity) {
+                    // x.isShow=false;
+                    this.emit('entityUpdate', x.entity);
+                }
+            });
 
+            if ((clips && clips.length < (end - start))) {
+                targetList.__hasMore = false;
+            }
+            if (start === 0) {
+                clips.reverse().forEach((x) => {
+                    let indexedItem = itemIndex[x._id];
+                    if (indexedItem) {
+                        _.merge(indexedItem, x);
+                    } else {
+                        indexedItem = x;
+                        itemIndex[x._id] = indexedItem;
+                    }
+                    
+                    const r = _.find(targetList, { _id: x._id });
+                    if (r) {
+                        return;
+                    }
+                    targetList.unshift(indexedItem);
+                    return;
+                });
+
+                return;
+            }
+
+            _.range(start, end, 1).map((idx, incomingIdx) => {
+                const incoming = clips[incomingIdx];
+                if (!incoming) {
+                    return;
+                }
+                let indexedItem = itemIndex[incoming._id];
+                if (indexedItem) {
+                    _.merge(indexedItem, incoming);
+                } else {
+                    indexedItem = incoming;
+                    itemIndex[incoming._id] = indexedItem;
+                }
+                let curItem = targetList[idx];
+                if (curItem) {
+                    return;
+                }
+
+                targetList[idx] = indexedItem;
+                return;
+            });
+        });
+        this.on('collectVideoItems', ([start, end], clips) => {
+            const targetList = this.localState.myCollectVideo;
+            const itemIndex = this.localState.clipIndex;
+            
+            clips.forEach((x) => {
+                if (x.entity) {
+                    // x.isShow=false;
+                    this.emit('entityUpdate', x.entity);
+                }
+            });
+
+            if ((clips && clips.length < (end - start))) {
+                targetList.__hasMore = false;
+            }
+            if (start === 0) {
+                clips.reverse().forEach((x) => {
+                    let indexedItem = itemIndex[x._id];
+                    
+                    if (indexedItem) {
+                        _.merge(indexedItem, x);
+                    } else {
+                        indexedItem = x;
+                        itemIndex[x._id] = indexedItem;
+                    }
+
+                    const r = _.find(targetList, { _id: x._id });
+                    if (r) {
+                        return;
+                    }
+                    targetList.unshift(indexedItem);
+                    return;
+                });
+
+                return;
+            }
+
+            _.range(start, end, 1).map((idx, incomingIdx) => {
+                const incoming = clips[incomingIdx];
+                if (!incoming) {
+                    return;
+                }
+                let indexedItem = itemIndex[incoming._id];
+                if (indexedItem) {
+                    _.merge(indexedItem, incoming);
+                } else {
+                    indexedItem = incoming;
+                    itemIndex[incoming._id] = indexedItem;
+                }
+                let curItem = targetList[idx];
+                if (curItem) {
+                    return;
+                }
+
+                targetList[idx] = indexedItem;
+                return;
+            });
+        });
         this.on('liked', (x) => {
-            const targetList = this.localState.myLikes;
+            const targetList = this.localState.myCollect;
             const itemIndex = this.localState.clipIndex;
             let indexedItem = itemIndex[x._id];
             if (indexedItem) {
@@ -626,7 +838,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             targetList.unshift(indexedItem);
         });
         this.on('unliked', (x) => {
-            const targetList = this.localState.myLikes;
+            const targetList = this.localState.myCollect;
             const itemIndex = this.localState.clipIndex;
             let indexedItem = itemIndex[x._id];
             if (indexedItem) {
@@ -799,7 +1011,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             return queryPromise;
         });
     }
-
+    //我收藏的视频
     magicMySharedLoadMore() {
         const myShares = this.localState.myShares;
         if (myShares.__hasMore === false) {
@@ -817,57 +1029,173 @@ module.exports = class GlobalDataContext extends EventEmitter {
         }
         return Promise.resolve();
     }
-
-    fetchMyLikedItems(page, pageSize) {
+    magicMySharedLoadLatest() {
+        return this.fetchMySharedItems(1, PAGESIZE);
+        
+    }
+    //浏览足迹
+    magicMyViewsLoadMore() {
+        const myViews = this.localState.myViews;
+        if (myViews.__hasMore === false) {
+            return Promise.resolve();
+        }
+        const currentLength = myViews.length;
+        const nextPage = Math.floor(currentLength / PAGESIZE) + 1;
+        return this.fetchMyViewsItems(nextPage, PAGESIZE);
+    }
+    magicMyViewsFirstLoad() {
+        const myViews = this.localState.myViews;
+        if (!myViews.length) {
+            return this.fetchMyViewsItems(1, PAGESIZE);
+        }
+        return Promise.resolve();
+    }
+    magicMyViewsLoadLatest() {
+        return this.fetchMyViewsItems(1, PAGESIZE);
+        
+    }
+    //收藏的文章
+    fetchMyCollectArticalItems(type, page, pageSize) {
         if (!page) {
             page = 1;
         }
         if (!pageSize) {
             pageSize = 20;
         }
-        if (this.localState.__currentFetchMyLikesOp) {
-            return this.localState.__currentFetchMyLikesOp;
+        if (this.localState.__currentFetchMyCollectArticalOp) {
+            return this.localState.__currentFetchMyCollectArticalOp;
         }
         return this.currentUser.then((u) => {
             const queryPromise = this.simpleApiCall('GET', '/my/likes', {
+                query: {
+                    page: page,
+                    pageSize: pageSize,
+                    types: type
+                },
+                autoLoadingState: true
+            });
+            this.localState.__currentFetchMyCollectArticalOp = queryPromise;
+            queryPromise.then((x) => {
+                this.localState.__currentFetchMyCollectArticalOp = null;
+                const startIndex = pageSize * (page - 1);
+                const endIndex = startIndex + pageSize;
+                this.emit('collectArticalItems', [startIndex, endIndex], x);
+            }, (err) => {
+                this.localState.__currentFetchMyCollectArticalOp = null;
+                return Promise.reject(err);
+            });
+            return queryPromise;
+        });
+    }
+    //收藏的视频
+    fetchMyCollectVideoItems(type, page, pageSize) {
+        if (!page) {
+            page = 1;
+        }
+        if (!pageSize) {
+            pageSize = 20;
+        }
+        if (this.localState.__currentFetchMyCollectVideoOp) {
+            return this.localState.__currentFetchMyCollectVideoOp;
+        }
+        return this.currentUser.then((u) => {
+            const queryPromise = this.simpleApiCall('GET', '/my/likes', {
+                query: {
+                    page: page,
+                    pageSize: pageSize,
+                    types: type
+                },
+                autoLoadingState: true
+            });
+            this.localState.__currentFetchMyCollectVideoOp = queryPromise;
+            queryPromise.then((x) => {
+                this.localState.__currentFetchMyCollectVideoOp = null;
+                const startIndex = pageSize * (page - 1);
+                const endIndex = startIndex + pageSize;
+                this.emit('collectVideoItems', [startIndex, endIndex], x);
+            }, (err) => {
+                this.localState.__currentFetchMyCollectVideoOp = null;
+                return Promise.reject(err);
+            });
+            return queryPromise;
+        });
+    }
+    //浏览足迹
+    fetchMyViewsItems(page, pageSize) {
+        if (!page) {
+            page = 1;
+        }
+        if (!pageSize) {
+            pageSize = 20;
+        }
+        if (this.localState.__currentFetchMyViewsOp) {
+            return this.localState.__currentFetchMyViewsOp;
+        }
+        return this.currentUser.then((u) => {
+            const queryPromise = this.simpleApiCall('GET', '/my/views', {
                 query: {
                     page: page,
                     pageSize: pageSize
                 },
                 autoLoadingState: true
             });
-            this.localState.__currentFetchMyLikesOp = queryPromise;
+            this.localState.__currentFetchMyViewsOp = queryPromise;
             queryPromise.then((x) => {
-                this.localState.__currentFetchMyLikesOp = null;
+                this.localState.__currentFetchMyViewsOp = null;
                 const startIndex = pageSize * (page - 1);
                 const endIndex = startIndex + pageSize;
-                this.emit('likedItems', [startIndex, endIndex], x);
+                this.emit('viewsItems', [startIndex, endIndex], x);
             }, (err) => {
-                this.localState.__currentFetchMyLikesOp = null;
+                this.localState.__currentFetchMyViewsOp = null;
                 return Promise.reject(err);
             });
             return queryPromise;
         });
     }
-
-    magicMyLikedLoadMore() {
-        const myLikes = this.localState.myLikes;
-        if (myLikes.__hasMore === false) {
+    //我收藏的文章
+    magicMyCollectArticalLoadMore() {
+        const myCollectArtical = this.localState.myCollectArtical;
+        if (myCollectArtical.__hasMore === false) {
             return Promise.resolve();
         }
-        const currentLength = myLikes.length;
+        const currentLength = myCollectArtical.length;
         const nextPage = Math.floor(currentLength / PAGESIZE) + 1;
-        return this.fetchMyLikedItems(nextPage, PAGESIZE);
+        return this.fetchMyCollectArticalItems('wxArticle', nextPage, PAGESIZE);
     }
 
-    magicMyLikedFirstLoad() {
-        const myLikes = this.localState.myLikes;
-        if (!myLikes.length) {
-            return this.fetchMyLikedItems(1, PAGESIZE);
+    magicMyCollectArticalFirstLoad() {
+        const myCollectArtical = this.localState.myCollectArtical;
+        if (!myCollectArtical.length) {
+            return this.fetchMyCollectArticalItems('wxArticle', 1, PAGESIZE);
         }
         return Promise.resolve();
     }
+    magicMyCollectArticalLoadLatest() {
+        return this.fetchMyCollectArticalItems('wxArticle',1, PAGESIZE);
+        
+    }
+    //我收藏的视频
+    magicMyCollectVideoLoadMore() {
+        const myCollectVideo = this.localState.myCollectVideo;
+        if (myCollectVideo.__hasMore === false) {
+            return Promise.resolve();
+        }
+        const currentLength = myCollectVideo.length;
+        const nextPage = Math.floor(currentLength / PAGESIZE) + 1;
+        return this.fetchMyCollectVideoItems('txvVideo', nextPage, PAGESIZE);
+    }
 
+    magicMyCollectVideoFirstLoad() {
+        const myCollectVideo = this.localState.myCollectVideo;
+        if (!myCollectVideo.length) {
+            return this.fetchMyCollectVideoItems('txvVideo', 1, PAGESIZE);
+        }
+        return Promise.resolve();
+    }
+    magicMyCollectVideoLoadLatest() {
+        return this.fetchMyCollectVideoItems('txvVideo',1, PAGESIZE);
+        
+    }
     fetchArticleDetail(articleId, options) {
         console.warn('GDT: Article API is deprecated ! Use entity API insted !!');
         const qOptions = _.merge({
@@ -906,6 +1234,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
             );
             queryPromise.then((x) => {
                 this.emit('entityDetail', x);
+                if (x.entity) {
+                    x.entity.viewed = true;
+                    this.emit('entityUpdate', x.entity);
+                }
             });
 
             return queryPromise;
@@ -926,6 +1258,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
             );
             queryPromise.then((x) => {
                 this.emit('entityDetail', x);
+                if (x.entity) {
+                    x.entity.viewed = true;
+                    this.emit('entityUpdate', x.entity);
+                }
             });
 
             return queryPromise;
@@ -977,7 +1313,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: itemId
                 }
             });
-
+            this.emit('entityUpdate', { _id: itemId, liked: true });
             queryPromise.then((x) => {
                 this.emit('liked', x);
             });
@@ -996,7 +1332,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: itemId
                 }
             });
-
+            this.emit('entityUpdate', { _id: itemId, liked: false });
             queryPromise.then((x) => {
                 this.emit('unliked', x);
             });
@@ -1047,6 +1383,20 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: entityId,
                     view: viewId,
                     duration: duration
+                }
+            });
+
+            return queryPromise;
+        });
+    }
+
+    trackVideoPlay(entityId, refId) {
+        return this.currentUser.then(() => {
+            const queryPromise = this.simpleApiCall('POST', '/my/views', {
+                body: {
+                    entityId: entityId,
+                    scene: this.showParam.scene,
+                    ref: refId
                 }
             });
 
