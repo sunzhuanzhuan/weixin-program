@@ -12,7 +12,8 @@
        
     </scroll-view>
     
-</view> 
+</view>
+<view>  
     <!-- 悬浮部分 -->
     <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
         <button form-type="submit" class="btnForm">
@@ -21,7 +22,7 @@
                 <view style="display: flex;flex-direction: row;background: #fff;overflow:hidden;{{isIphoneX?'height:100rpx':'height:100rpx'}};width:100%">
                     <view wx:if="{{isEyes}}" class="btnBoxKonw" style="flex:4;"></view>
                     <button wx:else class="btnBoxKonw" form-type="submit" data-item="know" bindgetuserinfo="handleAuthor" open-type="{{type}}" style="flex:4;{{isIphoneX?'height:100rpx':'height:100rpx'}}" catchtap="handleJump">
-                        <!-- hidden="{{isEyes}}" -->
+                        
                         <image class="imgBtnKonw" src="/images/eye.png"></image>
                         <view class="letterKonw">让朋友知道我在读</view>
                     </button>
