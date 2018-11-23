@@ -437,13 +437,13 @@ Page({
             // 绘制接口的文章数量和分享和背景
             ctx.rect(75 * ratio, 46 * ratio, 236 * ratio, 80 * ratio)
             const grd = ctx.createLinearGradient(75 * ratio, 60 * ratio, 236 * ratio, 80 * ratio)
-            grd.addColorStop(0, '#e9ecfa')
-            grd.addColorStop(0.2, '#e9ecfa')
-            grd.addColorStop(0.4, '#e9ecfa')
-            grd.addColorStop(0.5, '#e9ecfa')
-            grd.addColorStop(0.66, '#F1E8ED')
-            grd.addColorStop(0.83, '#F1E8ED')
-            grd.addColorStop(1, '#F1E8ED')
+            grd.addColorStop(0, '#545454')
+            grd.addColorStop(0.2, '#505050')
+            grd.addColorStop(0.4, '#4a4a4a')
+            grd.addColorStop(0.5, '#474747')
+            grd.addColorStop(0.66, '#434343')
+            grd.addColorStop(0.83, '#3c3c3c')
+            grd.addColorStop(1, '#383838')
             ctx.setFillStyle(grd)
             ctx.fill();
             // 绘制数字
@@ -452,7 +452,7 @@ Page({
 
             const numArtical = res[0].readingMeta.nthRead + '';
             // const numArtical = 672+ '';
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
             let type =''
             if(this.data.entity.type == 'wxArticle'){
@@ -463,21 +463,21 @@ Page({
 
             const bigTitle = ('这是我在' + this.data.appName + '小程序')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText(bigTitle, 100 * ratio, 74 * ratio);
 
             const bigTitleType = (type+'第')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText(bigTitleType, 100 * ratio, 96 * ratio);
 
             const friend = ('篇已经有')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
 
             const my = (' 个好友阅')
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
 
             const numFriend = res[0].readingMeta.referencers + '';
             // const numFriend = 280+ '';
@@ -567,7 +567,7 @@ Page({
             
 
             ctx.setFontSize(12 * ratio)
-            ctx.setFillStyle('#101010');
+            ctx.setFillStyle('#fff');
             ctx.fillText('读了我的分享', 100 * ratio, 116 * ratio);
             // 绘制双引号
             let yinHao = this.data.yinHao;

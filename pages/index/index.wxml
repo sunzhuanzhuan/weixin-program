@@ -4,7 +4,9 @@
 <import src="/components/list/list.wxml" />
 <view class="containerBig" style="height: {{winHeight}}px;">
 
-    <view style="height:88rpx;background:#ffffff;">
+    <view style="height:88rpx;background:#ffffff;position:relative;z-index:22;">
+
+
         <scroll-view  scroll-left="{{scrollLeft}}"  scroll-x
                       style="position:fixed;z-index:25;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-52}}px);background:#fff;white-space:nowrap;overflow: hidden">
            
