@@ -3,6 +3,7 @@
     height: 32rpx;
     display: inline-block;
     background: #fff;
+    
 }
 
 .nowrap{

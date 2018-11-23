@@ -46,8 +46,8 @@
                     </view>
                     <block wx:if="{{item.referencers.length>0}}" style="">
                         <view style="margin-left:30rpx;">
-                            <view class="readNum" style="float:left;color:#999999;margin-left:50rpx">已有<text style="color:#333;font-weight:bolder"> {{item.referencers.length}} </text>位好友阅读</view>
-                            <scroll-view style="height:150rpx;margin-left:50rpx" scroll-x="true">
+                            <view class="readNum" style="float:left;color:#999999;margin-left:48rpx">已有<text style="color:#333;font-weight:bolder"> {{item.referencers.length}} </text>位好友阅读</view>
+                            <scroll-view style="height:150rpx;margin-left:48rpx" scroll-x="true">
                                 <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block;margin-top:10rpx" >
                                     <view wx:if="{{item.avatarUrl}}">
                                         <image class="avatarRead" src="{{item.avatarUrl}}"></image>
@@ -65,9 +65,9 @@
                     <block wx:else>
                          <view class="readNum" style="float:left;color:#999999;margin-top:12rpx;">已有<text style="color:#333;font-weight:bolder"> 0 </text> 位好友阅读</view>
 
-                        <button  open-type="share" data-item="{{item}}" class="readNum" style="height:64rpx;margin-bottom:20rpx;width:140rpx;background: #ffffff;padding-bottom:40rpx;">
+                        <button  open-type="share" data-item="{{item}}" class="readNum" style="height:64rpx;margin-bottom:20rpx;width:144rpx;background: #ffffff;padding-bottom:40rpx;">
 
-                            <view style="float:left;color:#FFDB3D;border:2rpx solid #FFDB3D;font-size:24rpx;margin-left:30rpx;height:36rpx;line-height:40rpx;padding:2rpx 6rpx;display:inline-block;margin-top:10rpx;">问问Ta</view>
+                            <view style="float:left;color:#FFDB3D;border:2rpx solid #FFDB3D;font-size:24rpx;margin-left:30rpx;height:36rpx;line-height:40rpx;padding:2rpx 6rpx;display:inline-block;margin-top:10rpx;">再次分享</view>
                         </button>
                     </block>
                 </view>
