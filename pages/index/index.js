@@ -96,6 +96,14 @@ Page({
                     innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
                     innerAudioContext.title = e.currentTarget.dataset.item.title
                 }
+                innerAudioContext.onEnded(()=>{
+                    this.setData({
+                        letter:false,
+                        listening: false,
+                        listenIndexCurrent: e.currentTarget.dataset.index,
+                        voiceId:voiceId
+                    })
+                })
                 
                 this.setData({
                     letter:true,
@@ -294,23 +302,22 @@ Page({
                         wx.hideLoading();
                     }
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
-                        this.setData({
+                        that.setData({
                             letter: false,
                             listenIndexCurrent: undefined,
-                        })
+                        });
                     } else {
                         if (that.data.listening) {
-
-                            that.setData({
-                                letter: false
-
-                            })
-                        } else {
-
                             that.setData({
                                 letter: true
+            
                             })
-
+                        } else {
+            
+                            that.setData({
+                                letter: false
+                            })
+            
                         }
                     }
                 }
@@ -334,23 +341,22 @@ Page({
                         }
                     })
                     if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
-                        this.setData({
+                        that.setData({
                             letter: false,
                             listenIndexCurrent: undefined,
-                        })
+                        });
                     } else {
                         if (that.data.listening) {
-
-                            that.setData({
-                                letter: false
-
-                            })
-                        } else {
-
                             that.setData({
                                 letter: true
+            
                             })
-
+                        } else {
+            
+                            that.setData({
+                                letter: false
+                            })
+            
                         }
                     }
                 }

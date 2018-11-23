@@ -41,11 +41,14 @@
                     <view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:50rpx;">
                         <image style="width:260rpx;height:180rpx;" src="{{item.coverUrl}}"/>
                     </view>
-                    <view style="">
+                    <view style="position:relative;height:180rpx;">
+
+
                         <view class="nowrap">
                             {{item.title}}
                         </view>
-                        <view style="font-size:24rpx;color:#999">
+                        <view style="font-size:24rpx;color:#999;position:absolute;bottom:0">
+
                              <text  style="font-size:20rpx;color:#FF6156;border:1px solid #FF6156;display:inline-block;margin-right:10rpx;padding:0 6rpx;border-radius:6rpx">视频</text>
                             来源: {{item.author}}</view>
                     </view>
@@ -121,7 +124,7 @@
         </view>
         
         <view style="display:inline-block;padding-left:4%;width:470rpx;height:100rpx;line-height:100rpx;background:#000;overflow:hidden;vertical-align:top"  >
-            <view style="font-size:24rpx;color:#fff;height:40rpx;width:100%;line-height:56rpx;">{{entity.title}}</view>
+            <view style="font-size:24rpx;color:#fff;height:40rpx;width:100%;line-height:56rpx;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{entity.title}}</view>
             <view>
                 <slider style="margin:0" blockSize="12" max="{{totalTime}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700" bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size="18"></slider>
             </view>

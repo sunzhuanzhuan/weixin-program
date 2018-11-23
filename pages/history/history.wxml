@@ -3,15 +3,16 @@
 <view>
     <view class="item item-{{index}}" wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}" style="width:100%;overflow:hidden;background:#fff;">
   <view style="{{index==0?'border-top: 1rpx solid #E6E6E6;':''}};background:#fff;border-bottom: 1rpx solid #E6E6E6;width:96%;float:right;padding:40rpx 0">
-        <view style="display:inline-block;width:11%;height:120rpx;float:left;overflow:hiden">
+        <view style="display:inline-block;width:11%;height:120rpx;float:left;overflow:hiden;vertical-align:top">
             <view style="width:60rpx;height:40rpx;">
 
-                <view style="font-size:20rpx;color:#999;border:1rpx solid #CCCCCC;padding:0 6rpx;border-radius:20rpx;"> 
+                <view style="height:26rpx;line-height:26rpx;font-size:20rpx;color:#999;border:1rpx solid #CCCCCC;padding:0 6rpx;border-radius:20rpx;vertical-align:top;">
+ 
                     {{item.type ==='txvVideo'?'视频':'文章'}}
                 </view>
             </view>
         </view>
-        <view style="display:inline-block;width:59%;height:120rpx;float:left;overflow:hidden;position:relative">
+        <view style="display:inline-block;width:59%;height:120rpx;float:left;overflow:hidden;position:relative;vertical-align:top;vertical-align:top">
            <view class="nowrap" style="font-size:30rpx;color:#333;width: 97%;" bindtap="handleDetail" data-id="{{item.entity._id}}"> {{item.entity.title}}</view>
             <view style="position:absolute;bottom:0;width:100%;height:34rpx;">
                 <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
@@ -29,7 +30,7 @@
                 </form>
             </view>
         </view>
-            <view style="margin:0 2% 0% 2%;border-radius:8rpx;display:inline-block;width:26%;height:120rpx;float:left;overflow:hidden;position:relative" data-id="{{item.entity._id}}" bindtap="handleDetail">
+            <view style="vertical-align:top;margin:0 2% 0% 2%;border-radius:8rpx;display:inline-block;width:26%;height:120rpx;float:left;overflow:hidden;position:relative;vertical-align:top;" data-id="{{item.entity._id}}" bindtap="handleDetail">
                 <image src=" {{item.entity.coverUrl}}"  mode="aspectFit" style="width:160rpx;height:120rpx;" />
                 <image wx:if="{{item.type ==='txvVideo'}}" src="/images/play.png" style="width:52rpx;height:52rpx;position:absolute;top:50%;left:50%;margin-top:-26rpx;margin-left:-30rpx;" />
             </view>

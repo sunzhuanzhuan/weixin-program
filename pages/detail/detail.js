@@ -193,7 +193,10 @@ Page({
 
     },
     onLoad(options) {
+        console.log(options)
         if(options.listening == 'false'){
+            this.setData({isPlay:false})
+        }else if(options.listening == undefined){
             this.setData({isPlay:false})
         }else{
             this.setData({isPlay:true})
@@ -727,6 +730,10 @@ Page({
         this.setData({isPlay:true ,audioName:innerAudioContext.title})
         
         innerAudioContext.play();
+        innerAudioContext.onEnded(()=>{
+            console.log('end')
+            this.setData({isPlay:false ,audioName:innerAudioContext.title})
+        })
         // 时间的当前的进度;
         
         innerAudioContext.onTimeUpdate(()=>{
@@ -762,6 +769,11 @@ Page({
 
         this.setData({isFirst:1,isPlay:true,isPause:true})
         innerAudioContext.play();
+        console.log('end111')
+        innerAudioContext.onEnded(()=>{
+            console.log('end')
+            this.setData({isFirst:1,isPlay:false,isPause:true})
+        })
     },
     //拖动过程中的一些处理
     handleChanging:function(e){

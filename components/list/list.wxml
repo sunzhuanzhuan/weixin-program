@@ -3,7 +3,7 @@
 
         <!-- 推荐页的文章 -->
         <block wx:if="{{list._id==='topScoreds'}}" >
-            <swiper current="{{currentSwiper}}" duration="1000" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
+            <swiper current="{{currentSwiper}}" duration="600" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
                     <image class="{{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[1].coverUrl}}" width="600rpx" height=""/>
                     <view class="fontShadow {{swiperActiveZero[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
@@ -52,7 +52,7 @@
                 </view>
                 <view wx:else data-currentIndex='{{index}}' data-item="{{item}}"  style="position:relative;" bindtap='changeVideo'>
                     <image src='/images/play.png' style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" />
-                    <image style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="{{ 'http://puui.qpic.cn/vpic/0/'+item.txvVid +'.png/0'}}"></image>
+                    <image mode="aspectFill" style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="{{ 'http://puui.qpic.cn/vpic/0/'+item.txvVid +'.png/0'}}"></image>
                 </view>
                 <view style="background:#ffffff;height:100rpx;width:690rpx;">
                     <view class="{{item.viewed?'readVideoTitle':'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail" style="display:inline-block;line-height:88rpx;padding-left:30rpx;font-weight:bold">
@@ -83,7 +83,7 @@
                         <view class="itemSmall" style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'':'border-bottom: 1rpx solid #E6E6E6;'}}">
                             <image style="float:right;width:240rpx;height:180rpx;border-radius:8rpx" mode="aspectFill" src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}"  data-everyIndex="{{index}}"></image>
                             <view style="float:rigth;width:430rpx;height:180rpx;position:relative;">
-                                <text class="{{item.viewed?'readNowrapTwo':'nowrapTwo'}}" style="display:inline-block" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">{{item.title}}</text>
+                                <text class="{{item.viewed?'readNowrapTwo':'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">{{item.title}}</text>
                                 
                                     <view style="background:#ffffff;width:430rpx;position:absolute;bottom:-30rpx;" hover-class="">
                                         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>

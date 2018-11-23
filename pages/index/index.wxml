@@ -61,17 +61,17 @@
 </view>
 <view wx:if="{{isModal}}" style="position: fixed;top:0;bottom:0;right: 0;left:0;z-index: 30;background-color: #242424;">
         <image src="/images/1.png" style="width:550rpx;height:348rpx;margin-left: 70rpx "></image>
-        <view style="font-size: 24rpx;color: #333333;background: #dedede;width:600rpx;margin-left: 80rpx;text-align: center;margin-top: 40rpx">
+        <view style="font-size: 24rpx;color: #333333;background: #dedede;width:600rpx;margin-left: 80rpx;text-align: center;margin-top: 12rpx">
             <view style="height: 70rpx;line-height: 70rpx;color:#999">转发</view>
             <view style="height: 70rpx;line-height: 70rpx;border-bottom: 1px solid #999;border-top: 1px solid #999">添加到我的小程序</view>
             <view style="height: 70rpx;line-height: 70rpx;color:#999">关于{{appTitle}}</view>
         </view>
         <view style="position: relative">
-            <image src="/images/2.png" style="width:600rpx;height:180rpx;margin-left: 70rpx;margin-top: 40rpx  "></image>
-            <text style="color: #ffffff;font-size: 24rpx;position: absolute;top:48rpx;left:400rpx;">{{appTitle}}</text>
+            <image src="/images/2.png" style="width:600rpx;height:180rpx;margin-left: 70rpx;margin-top: 20rpx  "></image>
+            <text style="color: #ffffff;font-size: 24rpx;position: absolute;top:28rpx;left:400rpx;">{{appTitle}}</text>
         </view>
         <view style="font-size: 24rpx;color: #888888;width:500rpx;margin-left: 120rpx;">我的小程序 > </view>
-        <image src="{{coverUrl}}" style="width: 60rpx;height: 60rpx;border-radius: 50%;margin-left: 120rpx;margin-top: 20rpx"></image>
+        <image src="{{coverUrl}}" style="width: 60rpx;height: 60rpx;border-radius: 50%;margin-left: 120rpx;"></image>
          <image src="/images/3.png" style="width:600rpx;height:90rpx;margin-left: 70rpx;"></image>
         <view style="text-align: center">
             <button style="background: #ffffff;width: 300rpx;height: 80rpx;line-height:80rpx;border-radius: 40rpx;text-align: center;margin-top:20rpx" bindtap="handleClose">

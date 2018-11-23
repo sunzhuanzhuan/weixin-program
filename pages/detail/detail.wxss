@@ -219,6 +219,7 @@ button{
 .bol {
     height: 68rpx !important;
     background: #ffffff;
+   
 }
 
 
