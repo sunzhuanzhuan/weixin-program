@@ -4,65 +4,15 @@
     
     <scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll" enable-back-to-top="true">
    
-      
-
         <view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
-            <!-- <txv-video wx:if="{{node.type == 'txvVideo'}}" vid="{{node.vid}}" playerid="video{{node.vid}}" muted="{{isMuted}}"></txv-video> -->
-
-            <!-- <view  wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
-                <view wx:if="{{isPlayVideo}}">
-                    <txv-video vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
-                </view>
-                <view  wx:else style="height:400rpx;width:700rpx;position:relative ">
-                    <image style="height:400rpx;width:700rpx;" bindtap="handleChangeTypeVideo" src="{{'http://puui.qpic.cn/vpic/0/'+videoId +'.png/0'}}"/>
-                    <image style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" bindtap="handleChangeTypeVideo" src="/images/play.png"/>
-            
-                </view>
-            </view> -->
+           
             <rich-text class="_root" wx:if="{{nodes.type === undefined}}"  nodes="{{nodes}}"></rich-text>
         </view>
          
        
     </scroll-view>
-    <!-- 纯视频的布局 -->
-     <view wx:if="{{entity.type == 'txvVideo'}}">
-       <!-- <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
-            <txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
-            <view class="nowrapBig" style="margin-top:20rpx">{{entity.title}}</view>
-            <view class="nowrap" style="font-size:32rpx;">
-                <text  style="font-size:20rpx;color:#FF6156;border:1px solid #FF6156;padding:0 6rpx;border-radius:6rpx">视频</text>
-               <text style="font-size:24rpx;color:#999"> {{entity.author}}</text>
-            </view>
-        </view>
-        <view>
-            <view style="margin-left:34rpx;margin-top:100rpx;font-size:28rpx;color: #333;margin-bottom:20rpx;"> 相关视频</view>
-            <view style="height:400px;overflow-y:scroll"> 
-                <view wx:for="{{recommendations}}"  data-id="{{item.id}}" bindtap="handleVideo" style="display:flex;flex-direction:rows">
-                    <view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:50rpx;">
-                        <image style="width:260rpx;height:180rpx;" src="{{item.coverUrl}}"/>
-                    </view>
-                    <view style="position:relative;height:180rpx;">
-
-
-                        <view class="nowrap">
-                            {{item.title}}
-                        </view>
-                        <view style="font-size:24rpx;color:#999;position:absolute;bottom:0">
-
-                             <text  style="font-size:20rpx;color:#FF6156;border:1px solid #FF6156;display:inline-block;margin-right:10rpx;padding:0 6rpx;border-radius:6rpx">视频</text>
-                            来源: {{item.author}}</view>
-                    </view>
-                </view>
-            </view >
-            
-        </view>-->
-    </view> 
     
-
-
-
-
-
+</view> 
     <!-- 悬浮部分 -->
     <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
         <button form-type="submit" class="btnForm">

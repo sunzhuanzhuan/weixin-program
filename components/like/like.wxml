@@ -25,7 +25,7 @@
                 <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx;float:left;margin-top:50rpx;padding-left:210rpx;"></image>
                 <text style="color:#ccc;font-size:20rpx;float:left"> 由小鱼聚合平台提供技术支持</text>
             </view>
-            <!-- <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view> -->
+            
         </view>
     </block>
     <block>
