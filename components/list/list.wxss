@@ -178,8 +178,8 @@ button{
 }
 .noActiveLetter{
     top:60rpx;
-    width:70rpx;
-    height:40rpx;
+    width:60rpx;
+    height:28rpx;
    
 }
 .activeLetter{
