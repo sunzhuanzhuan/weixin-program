@@ -276,7 +276,17 @@ Page({
         } else {
             throw new Error('No idea what to load');
         }
-        
+        if (options.scene || ref || refee) {
+            gdt.userInfo.then((x) => {
+                this.setData({
+                    isEyes: true
+                });
+            }).catch(() => {
+                this.setData({
+                    isEyes: false
+                });
+            });
+        }
         qPromise.then((r) => {
             if (r.entity) {
                 const currentTitle = r.entity.title;
