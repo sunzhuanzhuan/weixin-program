@@ -6,7 +6,7 @@
             <swiper current="{{currentSwiper}}" duration="600" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
                     <image class="swiperImage {{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[1].coverUrl}}"/>
-                    <view class="fontShadow {{swiperActiveZero[2]}}">
+                    <view class="fontShadow {{swiperActiveZero[2]}}" style="width:600rpx">
                         <view class='nowrapOne swiperCommon'>
                             {{imgUrls[1].title}}
                         </view>
@@ -17,7 +17,7 @@
                 </swiper-item>
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[0]._id}}">
                     <image class="swiperImage {{swiperActiveOne[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[0].coverUrl}}"/>
-                     <view class="fontShadow {{swiperActiveOne[2]}}">
+                     <view class="fontShadow {{swiperActiveOne[2]}}" style="width:600rpx">
                         <view class='nowrapOne swiperCommon'>
                             {{imgUrls[0].title}}
                         </view>
@@ -27,7 +27,7 @@
                 </swiper-item>
                 <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
                     <image  class="swiperImage {{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};" src="{{imgUrls[2].coverUrl}}"/>
-                     <view class="fontShadow {{swiperActiveTwo[2]}}">
+                     <view class="fontShadow {{swiperActiveTwo[2]}}" style="width:600rpx">
                         <view class='nowrapOne swiperCommon'>
                             {{imgUrls[2].title}}
                         </view>
