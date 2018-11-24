@@ -5,35 +5,35 @@
         <block wx:if="{{list._id==='topScoreds'}}" >
             <swiper current="{{currentSwiper}}" duration="600" circular="true" previous-margin="60rpx" next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
-                    <image class="{{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[1].coverUrl}}" width="600rpx" height=""/>
-                    <view class="fontShadow {{swiperActiveZero[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
-                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                    <image class="swiperImage {{swiperActiveZero[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[1].coverUrl}}"/>
+                    <view class="fontShadow {{swiperActiveZero[2]}}">
+                        <view class='nowrapOne swiperCommon'>
                             {{imgUrls[1].title}}
                         </view>
                     </view>
                    
-                    <image src="/images/no3.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
+                    <image src="/images/no3.png" class="swiperNo {{swiperActiveZero[1]}}" />
                    
                 </swiper-item>
                 <swiper-item class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[0]._id}}">
-                    <image class="{{swiperActiveOne[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[0].coverUrl}}" width="600rpx" height=""/>
-                     <view class="fontShadow {{swiperActiveOne[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
-                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                    <image class="swiperImage {{swiperActiveOne[0]}}" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[0].coverUrl}}"/>
+                     <view class="fontShadow {{swiperActiveOne[2]}}">
+                        <view class='nowrapOne swiperCommon'>
                             {{imgUrls[0].title}}
                         </view>
                     </view>
                     
-                    <image src="/images/no1.png"  class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
+                    <image src="/images/no1.png"  class="swiperNo {{swiperActiveOne[1]}}" style="color:#333333;width:80rpx;height:40rpx;background:#ffe000;" />
                 </swiper-item>
                 <swiper-item  class="swiperItem"  bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
-                    <image  class="{{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[2].coverUrl}}" width="600rpx" height=""/>
-                     <view class="fontShadow {{swiperActiveTwo[2]}}" style="position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx">
-                        <view class='nowrapOne' style="margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;">
+                    <image  class="swiperImage {{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};" src="{{imgUrls[2].coverUrl}}"/>
+                     <view class="fontShadow {{swiperActiveTwo[2]}}">
+                        <view class='nowrapOne swiperCommon'>
                             {{imgUrls[2].title}}
                         </view>
                     </view>
                     
-                    <image src="/images/no2.png"  class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx"/>
+                    <image src="/images/no2.png"  class="swiperNo {{swiperActiveTwo[1]}}"/>
                 </swiper-item>
                 
             </swiper>
@@ -44,37 +44,6 @@
             bind:touchend="handleTouchEnd">
 
         <view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
-         
-            <!-- 视频 -->
-            <!-- <view wx:if="{{item.type === 'txvVideo'}}" class="item  item-{{index}} itemBigBox">
-                <view wx:if='{{currentindex == index }}' data-item="{{item}}" data-currentIndex='{{index}}'>
-                    <txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video" autoplay="{{isVideo}}"></txv-video>
-                </view>
-                <view wx:else data-currentIndex='{{index}}' data-item="{{item}}"  style="position:relative;" bindtap='changeVideo'>
-                    <image src='/images/play.png' style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" />
-                    <image mode="aspectFill" style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="{{ 'http://puui.qpic.cn/vpic/0/'+item.txvVid +'.png/0'}}"></image>
-                </view>
-                <view style="background:#ffffff;height:100rpx;width:690rpx;">
-                    <view class="{{item.viewed?'readVideoTitle':'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail" style="display:inline-block;line-height:88rpx;padding-left:30rpx;font-weight:bold">
-                        {{item.title}}
-                    </view>
-                    <view data-id="{{item._id}}" style="float:right;width:250rpx">
-                        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                            <button  form-type="submit" class='btnStarVideo' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}" data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-                                <image class="imgBtnItem" style="float:left;margin-top:28rpx" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
-                                <text style="color:#999;font-size:24rpx;display:inline-block;line-height:12rpx;height: 100rpx;float:left;margin-top:32rpx;padding-left:10rpx;">
-                                    {{item._likedTimes}}
-                                </text>
-                            </button>
-                        </form>
-                        <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
-                            <button  form-type="submit" class='btnShareVideo' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
-                                <image class="imgBtnItem" src="/images/share.png"></image>
-                            </button>
-                        </form> 
-                    </view>
-                </view>
-            </view>  -->
             <view  wx:if="{{item.type === 'wxArticle'}}">
                 <!-- 小图 -->
                 <view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list.items[index-1].wxMidVec && list.items[index-1].wxMidVec[list.items[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">

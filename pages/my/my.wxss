@@ -131,11 +131,6 @@ button::after{ border: none; }
   background:#ffffff;
   max-width: 324rpx;
 }
-/*button{*/
-/*position: absolute;*/
-/*top:100%;*/
-/*left:40%;*/
-/*}*/
 .readBoxName{
   color: #898989;
   font-size: 28rpx;

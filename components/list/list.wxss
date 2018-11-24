@@ -102,7 +102,17 @@ button{
     color: #333;
     font-size: 34rpx;
 }
+.swiperImage{
+    width:600rpx;border-radius:6rpx;display:block;
+}
+.swiperNo{
+    position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx;
+}
+.swiperCommon{
+    margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;
+}
 .fontShadow {
+    position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx;
     height: 90rpx;
     width:690rpx;
     background: -webkit-linear-gradient(180deg,rgba(0,0,0,0,0),rgba(0,0,0,0.69));/* Safari 5.1 - 6.0 */
@@ -214,3 +224,6 @@ button{
       background: -moz-linear-gradient(right,  #FA6450 , #FF9072); /* Firefox 3.6 - 15 */
       background: linear-gradient(to right, #FA6450 , #FF9072); /* 标准的语法（必须放在*/
 }
+
+
+/*                                       新的代码样式 */
