@@ -41,9 +41,9 @@
     <view  class="contentListBox">
         <view>
             <block> 
-                <view wx:if="{{currentTabIndex ==0}}" >
+                <view wx:if="{{currentTabIndex ==0}}" style="text-align:center">
                 
-                    <image wx:if="{{dashboardTipShouldDisplay}}" src="/images/new.png" class="bigBox" style="width:91%;height:430rpx;margin:30rpx 30rpx -15rpx 30rpx"></image>
+                    <image wx:if="{{dashboardTipShouldDisplay}}" src="/images/new.png" class="bigBox" style="width:690rpx;height:430rpx;margin-top:30rpx"></image>
                 </view>
                     
                 <view>
