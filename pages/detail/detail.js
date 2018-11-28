@@ -437,8 +437,8 @@ Page({
             ctx.setStrokeStyle('#ffffff')
             ctx.stroke()
             // 绘制接口的文章数量和分享和背景
-            ctx.rect(75 * ratio, 46 * ratio, 236 * ratio, 80 * ratio)
-            const grd = ctx.createLinearGradient(75 * ratio, 60 * ratio, 236 * ratio, 80 * ratio)
+            ctx.rect(75 * ratio, 46 * ratio, 226 * ratio, 80 * ratio)
+            const grd = ctx.createLinearGradient(75 * ratio, 60 * ratio, 226 * ratio, 80 * ratio)
             grd.addColorStop(0, '#545454')
             grd.addColorStop(0.2, '#505050')
             grd.addColorStop(0.4, '#4a4a4a')
@@ -477,7 +477,7 @@ Page({
             ctx.setFontSize(12 * ratio)
             ctx.setFillStyle('#fff');
 
-            const my = (' 个好友阅')
+            const my = (' 个好友')
             ctx.setFontSize(12 * ratio)
             ctx.setFillStyle('#fff');
 
@@ -570,7 +570,7 @@ Page({
 
             ctx.setFontSize(12 * ratio)
             ctx.setFillStyle('#fff');
-            ctx.fillText('读了我的分享', 100 * ratio, 116 * ratio);
+            ctx.fillText('阅读了我的分享', 100 * ratio, 116 * ratio);
             // 绘制双引号
             let yinHao = this.data.yinHao;
             ctx.drawImage(yinHao, 80 * ratio, 56 * ratio, 14 * ratio, 14 * ratio)
@@ -596,9 +596,11 @@ Page({
             }
             yOffset = 40 * ratio;
             goodsTitleArray.forEach(function (value) {
-                ctx.setFontSize(14 * ratio);
+                
                 ctx.setFillStyle('#666666');
                 ctx.fillText(value, 80 * ratio, yOffset);
+                ctx.font = 'normal normal 18px sans-serif';
+                ctx.setFontSize(14 * ratio);
                 yOffset += 25 * ratio;
             });
             // 绘制文章的标题和描述
