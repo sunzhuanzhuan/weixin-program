@@ -72,7 +72,7 @@ button{
     text-align: left;
 }
 .btnListenSmallL{
-    width: 15%;
+    width: 12%;
     float: left;
     background:#ffffff;
     height: 100rpx;
