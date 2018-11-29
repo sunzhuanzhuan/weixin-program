@@ -1,6 +1,6 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
-import {formatSeconds} from '../../utils/util'
+import { formatSeconds } from '../../utils/util'
 const innerAudioContext = app.backgroundAudioManager
 Page({
     data: {
@@ -51,37 +51,40 @@ Page({
         entity: {},
         fullPicture: {},
         //推荐视频
-        recommendations:[],
-        videoSource:[],
-        videoId:undefined,
-        selectedCricle:0,
-        isMuted:true,
-         //音频的播放和暂停的开关
-         isPlay:false,
-         isChangeBig:false,
-         currentTime:0,
-         totalTime:0,
-         currentProgress:0,
-         totalProgress:0,
-         clickIndex:0,
-         audioName:'',
-         isShowListen:true,
-         isPause:false,
+        recommendations: [],
+        videoSource: [],
+        videoId: undefined,
+        selectedCricle: 0,
+        isMuted: true,
+        //音频的播放和暂停的开关
+        isPlay: false,
+        isChangeBig: false,
+        currentTime: 0,
+        totalTime: 0,
+        currentProgress: 0,
+        totalProgress: 0,
+        clickIndex: 0,
+        audioName: '',
+        isShowListen: true,
+        isPause: false,
         // 视频为图片
-        isPlayVideo:false,
-        isFirst:0
+        isPlayVideo: false,
+        isFirst: 0,
+        videoCurrent: 0,
+        saveToCamera:'openSetting'
     },
 
-    handleChangeTypeVideo:function(){
+    handleChangeTypeVideo: function (e) {
         this.setData({
-            isPlayVideo:true
-            
+            isPlayVideo: true,
+            videoCurrent: e.currentTarget.dataset.index
+
         })
-       
+
     },
 
     // 点击切换视频
-    handleVideo:function(e){
+    handleVideo: function (e) {
         console.log(1111111)
         // this.setData({videoId:e.currentTarget.dataset.videoid,videoTitle:e.currentTarget.dataset.videotitle});
         let qPromise;
@@ -100,12 +103,12 @@ Page({
                     title: currentTitle,
                 });
             };
-           
-            this.setData({recommendations:r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
-            gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
+            this.setData({ recommendations: r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+
+            gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
         })
-        
+
     },
     onShareAppMessage: function () {
         if (this.data.entityId) {
@@ -124,11 +127,7 @@ Page({
     },
 
     onShow: function () {
-        gdt.userInfo.then(() => {
-            if (this.data.isEyes === false) {
-                this.setData({ isEyes: true })
-            }
-        })
+        
         const now = Date.now();
         const lastSuspendAt = this.data.lastSuspendAt;
         if (lastSuspendAt) {
@@ -194,15 +193,15 @@ Page({
     },
     onLoad(options) {
         console.log(options)
-        if(options.listening == 'false'){
-            this.setData({isPlay:false})
-        }else if(options.listening == undefined){
-            this.setData({isPlay:false})
-        }else{
-            this.setData({isPlay:true})
+        if (options.listening == 'false') {
+            this.setData({ isPlay: false })
+        } else if (options.listening == undefined) {
+            this.setData({ isPlay: false })
+        } else {
+            this.setData({ isPlay: true })
         }
-       this.setData({clickIndex:options.index})
-       
+        this.setData({ clickIndex: options.index })
+
         gdt.systemInfo.then((x) => {
             this.setData({
                 ratio: x.windowWidth * 2 / 750,
@@ -284,14 +283,14 @@ Page({
                     title: currentTitle,
                 });
             };
-           if(r.entity.type=='wxArticle'){
-                this.setData({videoId:r.entity.txvVids[0],videoSource: r.entity.txvVids})
-           }
-           console.log(r.node)
-          
-            this.setData({recommendations:r.recommendations || [], nodes: r.nodes,fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+            if (r.entity.type == 'wxArticle') {
+                this.setData({ videoId: r.entity.txvVids[0], videoSource: r.entity.txvVids })
+            }
+            console.log(r.node)
 
-            gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type});
+            this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+
+            gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
         })
 
 
@@ -327,15 +326,15 @@ Page({
         var currPage = pages[pages.length - 1];  //当前选择好友页面
         var prevPage = pages[pages.length - 2]; //上一个编辑款项页面
         //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
-        if(this.data.isFirst !=0 ){
-            prevPage.setData({  
-                listenIndexCurrent: this.data.clickIndex ,
-                listening:this.data.isPlay,
-                letter:this.data.isPlay,
+        if (this.data.isFirst != 0) {
+            prevPage.setData({
+                listenIndexCurrent: this.data.clickIndex,
+                listening: this.data.isPlay,
+                letter: this.data.isPlay,
             });
-            
+
         }
-       
+
     },
     recordUserscroll: function (event) {
         if (event.detail.scrollTop < 0) {
@@ -344,7 +343,7 @@ Page({
         let num1 = event.detail.scrollTop;
         const scene = gdt.showParam.scene;
         if (num1 > this.data.num) {
-            this.setData({ isShow: false,isChangeBig:false ,isShowListen:false});
+            this.setData({ isShow: false, isChangeBig: false, isShowListen: false });
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: false });
             }
@@ -353,7 +352,7 @@ Page({
             // }
 
         } else {
-            this.setData({ isShow: true,isChangeBig:false ,isShowListen:true});
+            this.setData({ isShow: true, isChangeBig: false, isShowListen: true });
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: true });
             }
@@ -456,10 +455,10 @@ Page({
             // const numArtical = 672+ '';
             ctx.setFillStyle('#fff');
             ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
-            let type =''
-            if(this.data.entity.type == 'wxArticle'){
+            let type = ''
+            if (this.data.entity.type == 'wxArticle') {
                 type = '阅读的'
-            }else{
+            } else {
                 type = '观看的'
             }
 
@@ -468,7 +467,7 @@ Page({
             ctx.setFillStyle('#fff');
             ctx.fillText(bigTitle, 100 * ratio, 74 * ratio);
 
-            const bigTitleType = (type+'第')
+            const bigTitleType = (type + '第')
             ctx.setFontSize(12 * ratio)
             ctx.setFillStyle('#fff');
             ctx.fillText(bigTitleType, 100 * ratio, 96 * ratio);
@@ -490,8 +489,8 @@ Page({
                 ctx.font = 'normal bold 18px sans-serif';
                 if (numFriend.length === 1) {
 
-                    ctx.fillText(numFriend, 225 * ratio, 96 * ratio);
-                } else if (numFriend.length === 2 ) {
+                    ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2) {
 
                     ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
                 } else if (numFriend.length === 3) {
@@ -506,8 +505,8 @@ Page({
                 ctx.font = 'normal bold 18px sans-serif';
                 if (numFriend.length === 1) {
 
-                    ctx.fillText(numFriend, 225 * ratio, 96 * ratio);
-                } else if (numFriend.length === 2 ) {
+                    ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2) {
 
                     ctx.fillText(numFriend, 230 * ratio, 96 * ratio);
                 } else if (numFriend.length === 3) {
@@ -522,8 +521,8 @@ Page({
                 ctx.font = 'normal bold 18px sans-serif';
                 if (numFriend.length === 1) {
 
-                    ctx.fillText(numFriend, 235 * ratio, 96 * ratio);
-                } else if (numFriend.length === 2 ) {
+                    ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2) {
 
                     ctx.fillText(numFriend, 238 * ratio, 96 * ratio);
                 } else if (numFriend.length === 3) {
@@ -537,13 +536,13 @@ Page({
                 ctx.save();
                 ctx.font = 'normal bold 18px sans-serif';
                 if (numFriend.length === 1) {
-    
-                    ctx.fillText(numFriend, 250 * ratio, 96 * ratio);
-                } else if (numFriend.length === 2 ) {
-    
+
+                    ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2) {
+
                     ctx.fillText(numFriend, 258 * ratio, 96 * ratio);
                 } else if (numFriend.length === 3) {
-    
+
                     ctx.fillText(numFriend, 265 * ratio, 96 * ratio);
                 }
                 ctx.restore()
@@ -553,20 +552,20 @@ Page({
                 ctx.save();
                 ctx.font = 'normal bold 18px sans-serif';
                 if (numFriend.length === 1) {
-    
-                    ctx.fillText(numFriend, 264 * ratio, 96 * ratio);
-                } else if (numFriend.length === 2 ) {
-    
-                    ctx.fillText(numFriend, 270* ratio, 96 * ratio);
+
+                    ctx.fillText(numFriend, 260 * ratio, 96 * ratio);
+                } else if (numFriend.length === 2) {
+
+                    ctx.fillText(numFriend, 270 * ratio, 96 * ratio);
                 } else if (numFriend.length === 3) {
-    
+
                     ctx.fillText(numFriend, 276 * ratio, 96 * ratio);
                 }
                 ctx.restore()
             }
-            
 
-            
+
+
 
             ctx.setFontSize(12 * ratio)
             ctx.setFillStyle('#fff');
@@ -609,6 +608,7 @@ Page({
 
             //z绘制描述
             ctx.save();
+            ctx.font = 'normal normal 14px sans-serif';
             ctx.setFontSize(14 * ratio)
             ctx.setFillStyle('#666666');
             if (describe.length < parseInt(19 / ratio)) {
@@ -650,7 +650,7 @@ Page({
             ctx.setFontSize(14 * ratio)
             ctx.setFillStyle('#333333');
             ctx.fillText(miniAppShare, 130 * ratio, 326 * ratio, 220 * ratio);
-            ctx.font = 'normal bold 14px sans-serif';
+            ctx.font = 'normal normal 14px sans-serif';
             let appName = '「' + this.data.appName + '」';
 
             ctx.setFillStyle('#000');
@@ -691,10 +691,17 @@ Page({
                             wx.saveImageToPhotosAlbum({
                                 filePath: that.data.shareImage,
                                 success: function () {
-                                    console.log('保存成功')
+                                    console.log('保存成功');
+                                    that.setData({
+                                        saveToCamera:''
+                                    })
+                                    
                                 },
                                 fail: function () {
-                                    console.log('保存失败')
+                                    console.log('保存失败');
+                                    that.setData({
+                                        saveToCamera:'openSetting'
+                                    })
                                 }
                             })
                         })
@@ -722,80 +729,95 @@ Page({
     handleSavePicture: function () {
         this.setData({ isShowPoster: false });
     },
-    
-    handlePlayVideo:function(){
-       
+   
+    handleSavePictureToCamera: function () {
+        var that = this;
+        console.log('hhhhhh')
+        //获取相册授权
+        wx.openSetting({
+            success (res) {
+              console.log(res.authSetting)
+              // res.authSetting = {
+              //   "scope.userInfo": true,
+              //   "scope.userLocation": true
+              // }
+            }
+          })
+    },
+  
+    handlePlayVideo: function () {
+
         let that = this;
-        
-        if(!this.data.isPause){
+
+        if (!this.data.isPause) {
             const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
-            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid='+voiceId;
+            innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
         }
-        this.setData({isPlay:true ,audioName:innerAudioContext.title})
-        
+        this.setData({ isPlay: true, audioName: innerAudioContext.title })
+
         innerAudioContext.play();
-        innerAudioContext.onEnded(()=>{
+        innerAudioContext.onEnded(() => {
             console.log('end')
-            this.setData({isPlay:false ,audioName:innerAudioContext.title})
+            this.setData({ isPlay: false, audioName: innerAudioContext.title })
         })
         // 时间的当前的进度;
-        
-        innerAudioContext.onTimeUpdate(()=>{
+
+        innerAudioContext.onTimeUpdate(() => {
             that.setData({
-                isFirst:1,
-                currentTime:parseInt(innerAudioContext.currentTime),
-                totalTime:parseInt(innerAudioContext.duration),
-                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
-                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+                isFirst: 1,
+                currentTime: parseInt(innerAudioContext.currentTime),
+                totalTime: parseInt(innerAudioContext.duration),
+                currentProgress: formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress: formatSeconds(parseInt(innerAudioContext.duration))
             })
         })
         //进度条的隐藏 和显示
-        this.setData({isChangeBig:!this.data.isChangeBig})
-       
+        this.setData({ isChangeBig: !this.data.isChangeBig })
+
     },
-    handlePauseVideo:function(){
+    handlePauseVideo: function () {
         console.log('暂停');
-        
+
         innerAudioContext.pause();
-       
-        this.setData({isPlay:false,isPause:true,isFirst:1,})
+
+        this.setData({ isPlay: false, isPause: true, isFirst: 1, })
         // this.setData({isChangeBig:!this.data.isChangeBig})
     },
-    handleShink:function(){
-        this.setData({isChangeBig:!this.data.isChangeBig})
+    handleShink: function () {
+        this.setData({ isChangeBig: !this.data.isChangeBig })
     },
-    handlePauseVideoNow:function(){
-        
-        this.setData({isFirst:1,isPlay:false,isPause:true})
+    handlePauseVideoNow: function () {
+
+        this.setData({ isFirst: 1, isPlay: false, isPause: true })
         innerAudioContext.pause();
     },
-    handlePlayVideoNow:function(){
+    handlePlayVideoNow: function () {
 
-        this.setData({isFirst:1,isPlay:true,isPause:true})
+        this.setData({ isFirst: 1, isPlay: true, isPause: true })
         innerAudioContext.play();
         console.log('end111')
-        innerAudioContext.onEnded(()=>{
+        innerAudioContext.onEnded(() => {
             console.log('end')
-            this.setData({isFirst:1,isPlay:false,isPause:true})
+            this.setData({ isFirst: 1, isPlay: false, isPause: true })
         })
     },
     //拖动过程中的一些处理
-    handleChanging:function(e){
+    handleChanging: function (e) {
         let that = this;
         this.setData({
-            currentTime:e.detail.value,
-            currentProgress:formatSeconds(parseInt(e.detail.value)),
+            currentTime: e.detail.value,
+            currentProgress: formatSeconds(parseInt(e.detail.value)),
         })
         innerAudioContext.seek(e.detail.value);
-        innerAudioContext.onTimeUpdate(()=>{
+        innerAudioContext.onTimeUpdate(() => {
             that.setData({
-                currentTime:parseInt(innerAudioContext.currentTime),
-                totalTime:parseInt(innerAudioContext.duration),
-                currentProgress:formatSeconds(parseInt(innerAudioContext.currentTime)),
-                totalProgress:formatSeconds(parseInt(innerAudioContext.duration))
+                currentTime: parseInt(innerAudioContext.currentTime),
+                totalTime: parseInt(innerAudioContext.duration),
+                currentProgress: formatSeconds(parseInt(innerAudioContext.currentTime)),
+                totalProgress: formatSeconds(parseInt(innerAudioContext.duration))
             })
         })
-       
+
     }
 
 })

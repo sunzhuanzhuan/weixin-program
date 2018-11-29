@@ -1,7 +1,7 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 const util = require('../../utils/util');
-const txvContext = requirePlugin("tencentvideo");
+
 const innerAudioContext = app.backgroundAudioManager
 Page({
     data: {

@@ -94,6 +94,7 @@
                         </view>
                     </view>
                 </view>
+
                 <view wx:else>
                     <view class="item  item-{{index}} itemBigBox">
                         <!-- 大图 -->
