@@ -71,7 +71,8 @@ Page({
         isPlayVideo: false,
         isFirst: 0,
         videoCurrent: 0,
-        saveToCamera:'openSetting'
+        saveToCamera:'openSetting',
+        currentVideo:0
     },
 
     handleChangeTypeVideo: function (e) {
@@ -86,7 +87,7 @@ Page({
     // 点击切换视频
     handleVideo: function (e) {
         console.log(1111111)
-        // this.setData({videoId:e.currentTarget.dataset.videoid,videoTitle:e.currentTarget.dataset.videotitle});
+        this.setData({currentVideo:e.currentTarget.dataset.index});
         let qPromise;
         const scene = gdt.showParam.scene;
         qPromise = gdt.fetchEntityDetail(e.currentTarget.dataset.id, {

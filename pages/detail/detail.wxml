@@ -26,20 +26,23 @@
     </scroll-view>
     <!-- 纯视频的布局 -->
      <view wx:if="{{entity.type == 'txvVideo'}}">
-       <view style="margin-left:34rpx;width:680rpx;height:390rpx;">
-            <txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
-            <view class="nowrapBig" style="margin-top:20rpx">{{entity.title}}</view>
-            <view class="nowrap" style="font-size:32rpx;">
-                <text  style="font-size:20rpx;color:#FF6156;border:1px solid #FF6156;padding:0 6rpx;border-radius:6rpx">视频</text>
-               <text style="font-size:24rpx;color:#999"> {{entity.author}}</text>
+       <view style="width:680rpx;height:390rpx;">
+            <view style="width:750rpx"><txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video></view>
+            <view style="width:750rpx;background:#fff;">
+                <view class="nowrapBig" style="padding-top:20rpx;padding-left:34rpx;">{{entity.title}}</view>
+                <view class="nowrap" style="font-size:32rpx;padding-left:34rpx;">
+                    <text  style="font-size:24rpx;color:#BBBBBB;">来源</text>
+                <text style="font-size:24rpx;color:#BBBBBB"> {{entity.author}}</text>
+                </view>
             </view>
+           
         </view>
-        <view>
-            <view style="margin-left:34rpx;margin-top:100rpx;font-size:28rpx;color: #333;margin-bottom:20rpx;"> 相关视频</view>
-            <view style="height:400px;overflow-y:scroll"> 
-                <view wx:for="{{recommendations}}"  data-id="{{item.id}}" bindtap="handleVideo" style="display:flex;flex-direction:rows">
+        <view> 
+            <view style="margin-left:34rpx;margin-top:160rpx;font-size:36rpx;color: #54586D;font-weight:bold;margin-bottom:20rpx;"> 相关</view>
+            <view style="{{isIphoneX?'height:660rpx':'height:520rpx'}};overflow-y:scroll;background:#fff"> 
+                <view wx:for="{{recommendations}}"  data-id="{{item.id}}"  data-index="{{index}}" bindtap="handleVideo" style="display:flex;flex-direction:rows;{{index === 0?'padding-top:40rpx':''}}">
                     <view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:50rpx;">
-                        <image style="width:260rpx;height:180rpx;" src="{{item.coverUrl}}"/>
+                        <image style="width:260rpx;height:180rpx; {{currentVideo == index?'box-shadow: 0 2rpx 8rpx 8rpx #ffe000;':''}}" src="{{item.coverUrl}}"/>
                     </view>
                     <view style="position:relative;height:180rpx;">
 
@@ -49,8 +52,8 @@
                         </view>
                         <view style="font-size:24rpx;color:#999;position:absolute;bottom:0">
 
-                             <text  style="font-size:20rpx;color:#FF6156;border:1px solid #FF6156;display:inline-block;margin-right:10rpx;padding:0 6rpx;border-radius:6rpx">视频</text>
                             来源: {{item.author}}</view>
+                            
                     </view>
                 </view>
             </view >
