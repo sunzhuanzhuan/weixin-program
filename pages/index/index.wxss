@@ -218,7 +218,6 @@ button::after{ border: none; }
   z-index: 20;
   width: 100%;
   top:90rpx;
-  background: #f3eeef;
 }
 .lineTop{
   position: fixed;
