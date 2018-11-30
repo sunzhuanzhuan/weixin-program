@@ -755,7 +755,24 @@ Page({
             }
           })
     },
-  
+    handleAuthorToPlay:function(){
+        gdt.userInfo.then(() => {
+            this.handlePlayVideo()
+        }).catch(() => {
+            gdt.once('userInfo', () => {
+                this.handlePlayVideo()
+            });
+        })
+    },
+    handleAuthorToPause:function(){
+        gdt.userInfo.then(() => {
+            this.handlePauseVideo()
+        }).catch(() => {
+            gdt.once('userInfo', () => {
+                this.handlePauseVideo()
+            });
+        })
+    },
     handlePlayVideo: function () {
 
         let that = this;
