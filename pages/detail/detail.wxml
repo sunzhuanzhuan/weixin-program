@@ -57,7 +57,7 @@
 <!-- 生成海报 -->
 <view wx:if="{{isShowPoster}}" style="position:fixed;bottom:0;left:0;right:0;top:0;background:rgba(0,0,0,0.65);z-index:91" bindtap="handleSavePicture">
     <canvas style="width: 640rpx; height: 760rpx;background:#fff;margin-top:160rpx;margin-left:54rpx;z-index:99" canvas-id="shareCanvas" bindlongtap="handleSavePictureToCamera"></canvas>
-    <button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99">已保存到相册，记得分享哦</button>
+    <button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99">{{btnSavePitcureLetter}}</button>
 </view>
 
 
@@ -92,7 +92,7 @@
             <image wx:if="{{isPlay}}" src="/images/pauseLine.png" style="vertical-align:middle;width:24rpx;height:34rpx;margin-left:60rpx" bindtap="handlePauseVideoNow"/>
 
             <image wx:else src="/images/playing.png" style="vertical-align:top;width:24rpx;height:34rpx;margin-left:60rpx;display:block;overflow:hidden;margin-top:18rpx" bindtap="handlePlayVideoNow"/>
-             <view style="display:inline-block;font-size:24rpx;color:#fff;width:100%;height:80rpx;line-height:36rpx;overflow:hidden;margin-left:40rpx;" bindtap="handlePlayVideoNow">听一听 </view> 
+             <view style="font-size:24rpx;color:#fff;width:100%;height:80rpx;line-height:36rpx;overflow:hidden;margin-left:40rpx;" bindtap="handlePlayVideoNow">听一听 </view> 
         </view>
     </view>
 </view>

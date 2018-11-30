@@ -263,17 +263,32 @@ Page({
     onPullDownRefresh: function () {
         if(this.data.name === 'history'){
             
-            gdt.magicMyViewsLoadLatest();
-            gdt.track('item-list-view-load-first')
+            gdt.magicMyViewsLoadLatest().then(() => {
+                gdt.track('item-list-view-load-first')
+                setTimeout(() => {
+                    wx.stopPullDownRefresh();
+                }, 500);
+            });
+            
            
         }else if(this.data.name === 'artical'){
             
-            gdt.magicMyCollectArticalLoadLatest();
-            gdt.track('item-list-liked-wxArticle-load-first')
+            gdt.magicMyCollectArticalLoadLatest().then(() => {
+                gdt.track('item-list-liked-wxArticle-load-first')
+                setTimeout(() => {
+                    wx.stopPullDownRefresh();
+                }, 500);
+            });
+            
            
         }else{
-            gdt.magicMyCollectVideoLoadLatest();
-            gdt.track('item-list-liked-txvVideo-load-first')
+            gdt.magicMyCollectVideoLoadLatest().then(() => {
+                gdt.track('item-list-liked-txvVideo-load-first')
+                setTimeout(() => {
+                    wx.stopPullDownRefresh();
+                }, 500);
+            });
+            
             
         }
     },

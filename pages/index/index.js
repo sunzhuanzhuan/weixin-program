@@ -26,51 +26,64 @@ Page({
         type1: 'getUserInfo',
         isVideo: false,
         currentindex: undefined,
-        
-        
+
+
         //推荐的top 
         imgUrls: [],
         indicatorDots: false,
         autoplay: false,
         interval: 5000,
         duration: 1000,
-        swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-        swiperActiveOne:['','activeLetter'],
-        swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+        swiperActiveZero: ['noActive', 'noActiveLetter', 'margin30'],
+        swiperActiveOne: ['', 'activeLetter'],
+        swiperActiveTwo: ['noActive', 'noActiveLetter', 'margin30'],
         //是否正在播放
         listening: false,
-        listenIndexCurrent:undefined,
+        listenIndexCurrent: undefined,
         listenTablistCurrent: 0,
-        voiceId:undefined,
-        currentSwiper:1,
-        letter:false
-        
+        voiceId: undefined,
+        currentSwiper: 1,
+        letter: false,
+        // 触摸开始时间
+        touchStartTime: 0,
+        // 触摸结束时间
+        touchEndTime: 0,  
+        // 最后一次单击事件点击发生时间
+        lastTapTime: 0, 
+        // 单击事件点击后要触发的函数
+        lastTapTimeoutFunc: null,
+
     },
+    //双击标题回到顶部并且刷新
+    
 
     //切换轮播图的时候
-    handleChangeSwiper:function(e){
-        console.log();
-        this.setData({currentSwiper :e.detail.current})
-        if(e.detail.current == 2){
-            this.setData({
-                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-                swiperActiveOne:['noActive','noActiveLetter','margin30'],
-                swiperActiveTwo: ['','activeLetter'],
-            })
-            
-        }else if(e.detail.current == 0){
-            this.setData({
-                swiperActiveZero: ['','activeLetter'],
-                swiperActiveOne:['noActive','noActiveLetter','margin30'],
-                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
-            })
-        }else if(e.detail.current == 1){
-            this.setData({
-                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-                swiperActiveOne:['','activeLetter'],
-                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
-            })
+    handleChangeSwiper: function (e) {
+        console.log(e.detail.source);
+        this.setData({ currentSwiper: e.detail.current })
+        if(e.detail.source == 'autoplay' || e.detail.source == 'touch' ){
+            if (e.detail.current == 2) {
+                this.setData({
+                    swiperActiveZero: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveOne: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveTwo: ['', 'activeLetter'],
+                })
+    
+            } else if (e.detail.current == 0) {
+                this.setData({
+                    swiperActiveZero: ['', 'activeLetter'],
+                    swiperActiveOne: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveTwo: ['noActive', 'noActiveLetter', 'margin30'],
+                })
+            } else if (e.detail.current == 1) {
+                this.setData({
+                    swiperActiveZero: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveOne: ['', 'activeLetter'],
+                    swiperActiveTwo: ['noActive', 'noActiveLetter', 'margin30'],
+                })
+            }
         }
+        
     },
     //听力
     handleListing: function (e) {
@@ -81,10 +94,10 @@ Page({
             if (this.data.listening) {
                 innerAudioContext.pause();
                 this.setData({
-                    letter:false,
+                    letter: false,
                     listening: false,
                     listenIndexCurrent: e.currentTarget.dataset.index,
-                    voiceId:voiceId
+                    voiceId: voiceId
                 })
                 gdt.track('pause-article-voice-on-index-page', {
                     voiceId: voiceId,
@@ -92,24 +105,24 @@ Page({
                     playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0
                 });
             } else {
-                if(voiceId !=  this.data.voiceId){
+                if (voiceId != this.data.voiceId) {
                     innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
                     innerAudioContext.title = e.currentTarget.dataset.item.title
                 }
-                innerAudioContext.onEnded(()=>{
+                innerAudioContext.onEnded(() => {
                     this.setData({
-                        letter:false,
+                        letter: false,
                         listening: false,
                         listenIndexCurrent: e.currentTarget.dataset.index,
-                        voiceId:voiceId
+                        voiceId: voiceId
                     })
                 })
-                
+
                 this.setData({
-                    letter:true,
+                    letter: true,
                     listening: true,
                     listenIndexCurrent: e.currentTarget.dataset.index,
-                    voiceId:voiceId
+                    voiceId: voiceId
                 })
                 innerAudioContext.play();
                 gdt.track('play-article-voice-on-index-page', {
@@ -123,10 +136,10 @@ Page({
             innerAudioContext.title = e.currentTarget.dataset.item.title
             innerAudioContext.play();
             this.setData({
-                letter:true,
+                letter: true,
                 listening: true,
                 listenIndexCurrent: e.currentTarget.dataset.index,
-                voiceId:voiceId
+                voiceId: voiceId
             })
             gdt.track('play-article-voice-on-index-page', {
                 voiceId: voiceId,
@@ -185,40 +198,47 @@ Page({
 
     },
     onShow: function () {
-      
-       
+
+
         let that = this
-        wx.showShareMenu({ 
+        wx.showShareMenu({
             withShareTicket: true
-         });
+        });
 
         gdt.track('show-index');
     },
 
     handleTitleTab(e) {
-        // let list= this.data.lists[this.data.currentTabIndex].items;
-        // console.log(list)
-        // if(list.length>0){
-        //     for (let i in list){
-        //         let that = this  // 
-        //         wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-        //             console.log(ret.intersectionRatio)
-        //             if (ret.intersectionRatio > 0){
-        //                 list[i].isShow =  true 
-        //             }
-        //             that.setData({ // 更新数据
-        //                 lists:that.data.lists
-        //             })
-        //         })
-        //     }
-        // }
+        
+        // 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
+        if (this.data.touchEndTime - this.data.touchStartTime < 350) {
+            // 当前点击的时间
+            var currentTime = e.timeStamp
+            var lastTapTime = this.data.lastTapTime
+            // 更新最后一次点击时间
+            this.data.lastTapTime = currentTime
+
+            // 如果两次点击时间在300毫秒内，则认为是双击事件
+            if (currentTime - lastTapTime < 300) {
+                wx.pageScrollTo({
+                    scrollTop: 0,
+                    duration: 1000
+                })
+                const currentListInstance = this.data.lists[this.data.currentTabIndex]
+                if (currentListInstance) {
+                    gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
+                        gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
+                    });
+                }
+            }
+        }
         this.setData({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab,
             isVideo: false,
             currentindex: undefined,
-            listenIndexCurrent:undefined,
-            
+            listenIndexCurrent: undefined,
+
         });
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {
@@ -259,13 +279,13 @@ Page({
                 url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
             })
         }
-       
-       
+
+
     },
     handleTouchEnd(e) {
         let that = this;
         // let list= this.data.lists[this.data.currentTabIndex].items;
-               
+
         // if(list.length>0){
         //      for (let i in list){
         //          let that = this  // 
@@ -310,14 +330,14 @@ Page({
                         if (that.data.listening) {
                             that.setData({
                                 letter: true
-            
+
                             })
                         } else {
-            
+
                             that.setData({
                                 letter: false
                             })
-            
+
                         }
                     }
                 }
@@ -349,14 +369,14 @@ Page({
                         if (that.data.listening) {
                             that.setData({
                                 letter: true
-            
+
                             })
                         } else {
-            
+
                             that.setData({
                                 letter: false
                             })
-            
+
                         }
                     }
                 }
@@ -422,13 +442,13 @@ Page({
                     title: app.title,
                 });
             }
-        //    app.lists.unshift({
-        //     id:'123',
-        //     title:'推荐',
-        //     items:[1,2]
-        //    })
-       
-        this.setData({
+            //    app.lists.unshift({
+            //     id:'123',
+            //     title:'推荐',
+            //     items:[1,2]
+            //    })
+
+            this.setData({
                 appTitle: app.title,
                 coverUrl: app.avatarUrl,
                 dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
@@ -456,20 +476,20 @@ Page({
             // if (app.lists.length) {
             //     gdt.magicListItemLoadMore(app.lists[0]._id);
             // }
-            gdt.magicListItemLoadMore('topScoreds').then((res)=>{
-                    let oldRes = JSON.parse(JSON.stringify(res));
-                    let arr = res.splice(0,3);
-                    if (app.lists[0] !== app.listIndex['topScoreds']) {
-                        app.lists.unshift(app.listIndex['topScoreds']);
-                    }
-                   
+            gdt.magicListItemLoadMore('topScoreds').then((res) => {
+                let oldRes = JSON.parse(JSON.stringify(res));
+                let arr = res.splice(0, 3);
+                if (app.lists[0] !== app.listIndex['topScoreds']) {
+                    app.lists.unshift(app.listIndex['topScoreds']);
+                }
+
                 this.setData({
                     lists: app.lists,
-                    imgUrls:arr
+                    imgUrls: arr
                 })
                 //  //懒加载
                 // let list= this.data.lists[this.data.currentTabIndex].items;
-               
+
                 //    if(list.length>0){
                 //         for (let i in list){
                 //             let that = this  // 
@@ -495,28 +515,28 @@ Page({
                 screenHeight: x.screenHeight,
             });
         });
-        gdt.currentUser.then((u)=> {
+        gdt.currentUser.then((u) => {
             this.data.uid = u._id;
             this.data.nickName = this.data.nickName || u.nickName;
         });
-        
-        
+
+
     },
     //上拉加载
     onReachBottom: function () {
         const currentListInstance = this.data.lists[this.data.currentTabIndex];
-        
+
         if (currentListInstance) {
-            if(currentListInstance._id === 'topScoreds'){
+            if (currentListInstance._id === 'topScoreds') {
                 gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
                     gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.oldRes.length });
-                    });
-            }else{
+                });
+            } else {
                 gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
-                gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
+                    gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
                 });
             }
-            
+
         }
     },
     //下拉刷新
@@ -559,7 +579,7 @@ Page({
     // onPageScroll() { 
     //     util.debounce(this.showImg())
     //   },
-    
+
     // showImg(){  // 判断高度是否需要加载
     //     let that = this;
     //     wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {

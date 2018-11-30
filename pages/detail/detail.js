@@ -71,7 +71,8 @@ Page({
         isPlayVideo: false,
         isFirst: 0,
         videoCurrent: 0,
-        saveToCamera:'openSetting'
+        saveToCamera:'openSetting',
+        btnSavePitcureLetter:''
     },
 
     handleChangeTypeVideo: function (e) {
@@ -127,7 +128,17 @@ Page({
     },
 
     onShow: function () {
+        wx.getSetting({
+            success: res => {
+              if (!res.authSetting['scope.writePhotosAlbum']) {
+                this.setData({btnSavePitcureLetter:'保存到相册'})
+              } else {
+                this.setData({btnSavePitcureLetter:'已保存到相册，记得分享哦'})
+              }
+            }
+        })
         
+         
         const now = Date.now();
         const lastSuspendAt = this.data.lastSuspendAt;
         if (lastSuspendAt) {

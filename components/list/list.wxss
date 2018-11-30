@@ -109,7 +109,8 @@ button{
     position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx;
 }
 .swiperCommon{
-    line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;
+    line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;margin-left:20rpx;
+
 }
 .fontShadow {
     position:absolute;
