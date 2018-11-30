@@ -224,12 +224,7 @@ Page({
                     scrollTop: 0,
                     duration: 1000
                 })
-                const currentListInstance = this.data.lists[this.data.currentTabIndex]
-                if (currentListInstance) {
-                    gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
-                        gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
-                    });
-                }
+                
             }
         }
         this.setData({
