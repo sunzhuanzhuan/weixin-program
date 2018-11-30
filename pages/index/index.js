@@ -43,7 +43,16 @@ Page({
         listenTablistCurrent: 0,
         voiceId:undefined,
         currentSwiper:1,
-        letter:false
+        letter:false,
+        // 触摸开始时间
+        touchStartTime: 0,
+        // 触摸结束时间
+        touchEndTime: 0,  
+        // 最后一次单击事件点击发生时间
+        lastTapTime: 0, 
+        // 单击事件点击后要触发的函数
+        lastTapTimeoutFunc: null,
+
         
     },
 
@@ -51,26 +60,29 @@ Page({
     handleChangeSwiper:function(e){
         console.log();
         this.setData({currentSwiper :e.detail.current})
-        if(e.detail.current == 2){
-            this.setData({
-                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-                swiperActiveOne:['noActive','noActiveLetter','margin30'],
-                swiperActiveTwo: ['','activeLetter'],
-            })
-            
-        }else if(e.detail.current == 0){
-            this.setData({
-                swiperActiveZero: ['','activeLetter'],
-                swiperActiveOne:['noActive','noActiveLetter','margin30'],
-                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
-            })
-        }else if(e.detail.current == 1){
-            this.setData({
-                swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-                swiperActiveOne:['','activeLetter'],
-                swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
-            })
+        if(e.detail.source == 'autoplay' || e.detail.source == 'touch' ){
+            if(e.detail.current == 2){
+                this.setData({
+                    swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+                    swiperActiveOne:['noActive','noActiveLetter','margin30'],
+                    swiperActiveTwo: ['','activeLetter'],
+                })
+                
+            }else if(e.detail.current == 0){
+                this.setData({
+                    swiperActiveZero: ['','activeLetter'],
+                    swiperActiveOne:['noActive','noActiveLetter','margin30'],
+                    swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+                })
+            }else if(e.detail.current == 1){
+                this.setData({
+                    swiperActiveZero: ['noActive','noActiveLetter','margin30'],
+                    swiperActiveOne:['','activeLetter'],
+                    swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+                })
+            }
         }
+        
     },
     //听力
     handleListing: function (e) {
@@ -196,22 +208,29 @@ Page({
     },
 
     handleTitleTab(e) {
-        // let list= this.data.lists[this.data.currentTabIndex].items;
-        // console.log(list)
-        // if(list.length>0){
-        //     for (let i in list){
-        //         let that = this  // 
-        //         wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-        //             console.log(ret.intersectionRatio)
-        //             if (ret.intersectionRatio > 0){
-        //                 list[i].isShow =  true 
-        //             }
-        //             that.setData({ // 更新数据
-        //                 lists:that.data.lists
-        //             })
-        //         })
-        //     }
-        // }
+        // 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
+        if (this.data.touchEndTime - this.data.touchStartTime < 350) {
+            // 当前点击的时间
+            var currentTime = e.timeStamp
+            var lastTapTime = this.data.lastTapTime
+            // 更新最后一次点击时间
+            this.data.lastTapTime = currentTime
+
+            // 如果两次点击时间在300毫秒内，则认为是双击事件
+            if (currentTime - lastTapTime < 300) {
+                wx.pageScrollTo({
+                    scrollTop: 0,
+                    duration: 1000
+                })
+                const currentListInstance = this.data.lists[this.data.currentTabIndex]
+                if (currentListInstance) {
+                    gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
+                        gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
+                    });
+                }
+            }
+        }
+
         this.setData({
             scrollTop: this.data.scrollTop = 0,
             currentTabIndex: e.currentTarget.dataset.tab,
