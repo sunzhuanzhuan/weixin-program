@@ -64,13 +64,13 @@
 <!-- 悬浮的音频 后期作品 -->
 <view  wx:if="{{entity.type == 'wxArticle' && entity.wxmpVoiceIds.length>0  && isShowListen}}" style="border-radius:8rpx 8rpx 0 0;overflow:hidden">
     <view wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="position:fixed;{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}};right:30rpx;z-index:90">
-       <button class="btnBox" style='flex:2' open-type="{{type}}"  style="width:116rpx;height:108rpx" bindtap="handleAuthorToPlay" bindgetuserinfo="handleAuthor">
+       <button class="btnBox" style='flex:2' open-type="{{type}}"  style="width:116rpx;height:108rpx;background:rgba(0,0,0,0)" bindtap="handleAuthorToPlay" bindgetuserinfo="handleAuthor">
              <image src="/images/listen.png" style="width:116rpx;height:108rpx"/>         
         </button>
 
     </view>
     <view wx:if="{{entity.type === 'wxArticle' && isPlay === true && isChangeBig === false}}" style="position:fixed;{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}};right:30rpx;z-index:90">
-         <button class="btnBox" style='flex:2' open-type="{{type}}"  style="width:116rpx;height:108rpx" bindtap="handleAuthorToPause" bindgetuserinfo="handleAuthor">
+         <button class="btnBox" style='flex:2' open-type="{{type}}"  style="width:116rpx;height:108rpx;background:rgba(0,0,0,0)" bindtap="handleAuthorToPause" bindgetuserinfo="handleAuthor">
             <image src="/images/pause.png" style="width:116rpx;height:108rpx"/>
         </button>
 
