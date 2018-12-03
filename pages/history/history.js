@@ -18,6 +18,27 @@ Page({
         screenHeight:''
 
     },
+    onShow:function(){
+        if (this.data.name == 'history') {
+           //截屏事件
+            wx.onUserCaptureScreen(function (res) {
+                gdt.track('history-capture-screen');
+            })
+        }else if(this.data.name == 'artical'){
+            //截屏事件
+            wx.onUserCaptureScreen(function (res) {
+                gdt.track('artical-capture-screen');
+            })
+        }else{
+            //截屏事件
+            wx.onUserCaptureScreen(function (res) {
+                gdt.track('txvVideo-capture-screen');
+            })
+        }
+         
+       
+    },
+
     onLoad:function(options){
        this.setData({name:options.type})
         this.appState = gdt.localState;

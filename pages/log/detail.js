@@ -10,6 +10,11 @@ Page({
         day:''
     },
     onShow:function(){
+        //截屏事件
+        wx.onUserCaptureScreen(function (res) {
+            gdt.track('let-friend-know-capture-screen');
+        })
+
         let a ='';
         if(new Date().getMonth()+1<10){
             a = "0"+(new Date().getMonth()+1);

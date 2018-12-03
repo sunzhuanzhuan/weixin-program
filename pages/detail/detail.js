@@ -130,6 +130,11 @@ Page({
     },
 
     onShow: function () {
+        //截屏事件
+        wx.onUserCaptureScreen(function (res) {
+            gdt.track('detail-capture-screen');
+        })
+
         wx.getSetting({
             success: res => {
               if (!res.authSetting['scope.writePhotosAlbum']) {

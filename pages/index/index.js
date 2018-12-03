@@ -197,6 +197,11 @@ Page({
 
     },
     onShow: function () {
+        //截屏事件
+        wx.onUserCaptureScreen(function (res) {
+            gdt.track('index-capture-screen');
+        })
+
         wx.setNavigationBarTitle({
             title: this.data.appTitle,
         });
