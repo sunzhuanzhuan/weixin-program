@@ -87,6 +87,9 @@ Page({
           gdt.fetchDashboardAnalytics();
       },
       onShow:function(){
+        wx.onUserCaptureScreen(function (res) {
+            gdt.track('my-capture-screen');
+        })
         this.appState = gdt.localState;
         this.setData({
             num: this.appState.dashboardAnalytics

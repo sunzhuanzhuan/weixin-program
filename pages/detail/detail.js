@@ -138,7 +138,10 @@ Page({
               }
             }
         })
-        
+        //截屏事件
+        wx.onUserCaptureScreen(function (res) {
+            gdt.track('detail-capture-screen');
+        })
          
         const now = Date.now();
         const lastSuspendAt = this.data.lastSuspendAt;

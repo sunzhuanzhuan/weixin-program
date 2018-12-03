@@ -13,7 +13,7 @@
                     <block style="padding-left:100rpx;background:#fff">
                         <view style="padding-left:30rpx;background:#fff">
                             <view class="readNum" style="float:left;color:#999999;">已有<text  style="color:#333"> 8 </text>位好友阅读</view>
-                            <view style="height:120rpx;padding-left:80rpx;background:#fff;width:100%;overflow-x:scroll;white-space:nowrap">
+                            <view style="height:120rpx;padding-left:80rpx;background:#fff;width:90%;overflow-x:scroll;white-space:nowrap">
                                 <image class="avatarReadS" src="/images/p1.png"></image>
                                 <image class="avatarReadS" src="/images/p2.png"></image>
                                 <image class="avatarReadS" src="/images/p3.png"></image>
@@ -47,7 +47,7 @@
                     <block wx:if="{{item.referencers.length>0}}" style="">
                         <view style="margin-left:30rpx;">
                             <view class="readNum" style="float:left;color:#999999;margin-left:44rpx">已有<text style="color:#333;font-weight:bolder"> {{item.referencers.length}} </text>位好友阅读</view>
-                            <view style="height:120rpx;margin-left:48rpx;width:100%;overflow-x:scroll;white-space:nowrap">
+                            <view style="height:120rpx;margin-left:48rpx;width:90%;overflow-x:scroll;white-space:nowrap">
                                 <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block;margin-top:10rpx;" >
                                     <view wx:if="{{item.avatarUrl}}">
                                         <image class="avatarRead" src="{{item.avatarUrl}}"></image>
