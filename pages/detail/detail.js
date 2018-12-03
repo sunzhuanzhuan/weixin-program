@@ -6,6 +6,7 @@ Page({
     data: {
         appName: '',
         nodes: [],
+        rootClassMixin: '',
         isShow: true,
         shareButton: '../../images/share.png',
 
@@ -299,7 +300,7 @@ Page({
             }
             console.log(r.node)
 
-            this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+          this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
             gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
         })
