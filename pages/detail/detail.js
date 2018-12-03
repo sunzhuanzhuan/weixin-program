@@ -728,10 +728,11 @@ Page({
 
     handlePoster: function () {
         gdt.userInfo.then(() => {
-            this.handleDrowPicture()
+            this.handleDrowPicture();
+            gdt.track('share-item', { itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
         }).catch(() => {
             gdt.once('userInfo', () => {
-                this.handleDrowPicture()
+                this.handleDrowPicture();
             });
         })
     },
