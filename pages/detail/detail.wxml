@@ -19,7 +19,7 @@
             
                 </view>
             </view>
-            <rich-text class="_root" wx:if="{{nodes.type === undefined}}"  nodes="{{[node]}}"></rich-text>
+            <rich-text class="_root {{rootClassMixin}}" wx:if="{{nodes.type === undefined}}"  nodes="{{[node]}}"></rich-text>
         </view>
          
        
