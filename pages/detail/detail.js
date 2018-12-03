@@ -729,10 +729,21 @@ Page({
     handlePoster: function () {
         gdt.userInfo.then(() => {
             this.handleDrowPicture();
+            gdt.trackShareItem(this.data.entityId, {
+                pos: this.data.viewPercentage,
+                view: this.data.viewId,
+                tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
+            });
             gdt.track('share-item', { itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
         }).catch(() => {
             gdt.once('userInfo', () => {
+                gdt.trackShareItem(this.data.entityId, {
+                    pos: this.data.viewPercentage,
+                    view: this.data.viewId,
+                    tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
+                });
                 this.handleDrowPicture();
+                gdt.track('share-item', { itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
             });
         })
     },
