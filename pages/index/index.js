@@ -198,8 +198,12 @@ Page({
 
     },
     onShow: function () {
-
-
+        
+       
+        wx.setNavigationBarTitle({
+            title: this.data.appTitle,
+        });
+        
         let that = this
         wx.showShareMenu({
             withShareTicket: true
