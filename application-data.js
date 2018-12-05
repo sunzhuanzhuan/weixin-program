@@ -427,7 +427,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 listInstance.__hasMore = false;
             }
             if (start === 0) {
-                entities.reverse().forEach((x) => {
+                Array.from(entities).reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
                     if (indexedItem) {
                         _.merge(indexedItem, x);
@@ -531,7 +531,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 targetList.__hasMore = false;
             }
             if (start === 0) {
-                clips.reverse().forEach((x) => {
+                Array.from(clips).reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
                     if (indexedItem) {
                         _.merge(indexedItem, x);
@@ -588,7 +588,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 targetList.__hasMore = false;
             }
             if (start === 0) {
-                clips.reverse().forEach((x) => {
+                Array.from(clips).reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
                     if (indexedItem) {
                         _.merge(indexedItem, x);
@@ -662,7 +662,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 targetList.__hasMore = false;
             }
             if (start === 0) {
-                clips.reverse().forEach((x) => {
+                Array.from(clips).reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
                     if (indexedItem) {
                         _.merge(indexedItem, x);
@@ -718,7 +718,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 targetList.__hasMore = false;
             }
             if (start === 0) {
-                clips.reverse().forEach((x) => {
+                Array.from(clips).reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
                     if (indexedItem) {
                         _.merge(indexedItem, x);
@@ -774,7 +774,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 targetList.__hasMore = false;
             }
             if (start === 0) {
-                clips.reverse().forEach((x) => {
+                Array.from(clips).reverse().forEach((x) => {
                     let indexedItem = itemIndex[x._id];
                     
                     if (indexedItem) {
