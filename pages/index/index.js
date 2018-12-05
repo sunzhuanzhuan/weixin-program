@@ -478,7 +478,9 @@ Page({
             // }
             gdt.magicListItemLoadMore('topScoreds').then((res)=>{
                     let oldRes = JSON.parse(JSON.stringify(res));
-                    let arr = res.splice(0,3);
+                    const theList = app.listIndex['topScoreds'];
+                    let arr = theList.items.splice(0, 3);
+    
                     if (app.lists[0] !== app.listIndex['topScoreds']) {
                         app.lists.unshift(app.listIndex['topScoreds']);
                     }
