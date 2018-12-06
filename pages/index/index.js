@@ -26,63 +26,62 @@ Page({
         type1: 'getUserInfo',
         isVideo: false,
         currentindex: undefined,
-        
-        
+
+
         //推荐的top 
         imgUrls: [],
         indicatorDots: false,
         autoplay: false,
         interval: 5000,
         duration: 1000,
-        swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-        swiperActiveOne:['','activeLetter'],
-        swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+        swiperActiveZero: ['noActive', 'noActiveLetter', 'margin30'],
+        swiperActiveOne: ['', 'activeLetter'],
+        swiperActiveTwo: ['noActive', 'noActiveLetter', 'margin30'],
         //是否正在播放
         listening: false,
-        listenIndexCurrent:undefined,
+        listenIndexCurrent: undefined,
         listenTablistCurrent: 0,
-        voiceId:undefined,
-        currentSwiper:1,
-        letter:false,
+        voiceId: undefined,
+        currentSwiper: 1,
+        letter: false,
         // 触摸开始时间
         touchStartTime: 0,
         // 触摸结束时间
-        touchEndTime: 0,  
+        touchEndTime: 0,
         // 最后一次单击事件点击发生时间
-        lastTapTime: 0, 
+        lastTapTime: 0,
         // 单击事件点击后要触发的函数
         lastTapTimeoutFunc: null,
-
-        
+        //图片来源
+        baseImageUrl: ''
     },
 
     //切换轮播图的时候
-    handleChangeSwiper:function(e){
-        console.log();
-        this.setData({currentSwiper :e.detail.current})
-        if(e.detail.source == 'autoplay' || e.detail.source == 'touch' ){
-            if(e.detail.current == 2){
+    handleChangeSwiper: function (e) {
+        this.setData({ currentSwiper: e.detail.current })
+        if (e.detail.source == 'autoplay' || e.detail.source == 'touch') {
+            if (e.detail.current == 2) {
                 this.setData({
-                    swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-                    swiperActiveOne:['noActive','noActiveLetter','margin30'],
-                    swiperActiveTwo: ['','activeLetter'],
+                    swiperActiveZero: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveOne: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveTwo: ['', 'activeLetter'],
                 })
-                
-            }else if(e.detail.current == 0){
+
+            } else if (e.detail.current == 0) {
                 this.setData({
-                    swiperActiveZero: ['','activeLetter'],
-                    swiperActiveOne:['noActive','noActiveLetter','margin30'],
-                    swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+                    swiperActiveZero: ['', 'activeLetter'],
+                    swiperActiveOne: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveTwo: ['noActive', 'noActiveLetter', 'margin30'],
                 })
-            }else if(e.detail.current == 1){
+            } else if (e.detail.current == 1) {
                 this.setData({
-                    swiperActiveZero: ['noActive','noActiveLetter','margin30'],
-                    swiperActiveOne:['','activeLetter'],
-                    swiperActiveTwo: ['noActive','noActiveLetter','margin30'],
+                    swiperActiveZero: ['noActive', 'noActiveLetter', 'margin30'],
+                    swiperActiveOne: ['', 'activeLetter'],
+                    swiperActiveTwo: ['noActive', 'noActiveLetter', 'margin30'],
                 })
             }
         }
-        
+
     },
     //听力
     handleListing: function (e) {
@@ -93,10 +92,10 @@ Page({
             if (this.data.listening) {
                 innerAudioContext.pause();
                 this.setData({
-                    letter:false,
+                    letter: false,
                     listening: false,
                     listenIndexCurrent: e.currentTarget.dataset.index,
-                    voiceId:voiceId
+                    voiceId: voiceId
                 })
                 gdt.track('pause-article-voice-on-index-page', {
                     voiceId: voiceId,
@@ -104,24 +103,24 @@ Page({
                     playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0
                 });
             } else {
-                if(voiceId !=  this.data.voiceId){
+                if (voiceId != this.data.voiceId) {
                     innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
                     innerAudioContext.title = e.currentTarget.dataset.item.title
                 }
-                innerAudioContext.onEnded(()=>{
+                innerAudioContext.onEnded(() => {
                     this.setData({
-                        letter:false,
+                        letter: false,
                         listening: false,
                         listenIndexCurrent: e.currentTarget.dataset.index,
-                        voiceId:voiceId
+                        voiceId: voiceId
                     })
                 })
-                
+
                 this.setData({
-                    letter:true,
+                    letter: true,
                     listening: true,
                     listenIndexCurrent: e.currentTarget.dataset.index,
-                    voiceId:voiceId
+                    voiceId: voiceId
                 })
                 innerAudioContext.play();
                 gdt.track('play-article-voice-on-index-page', {
@@ -135,10 +134,10 @@ Page({
             innerAudioContext.title = e.currentTarget.dataset.item.title
             innerAudioContext.play();
             this.setData({
-                letter:true,
+                letter: true,
                 listening: true,
                 listenIndexCurrent: e.currentTarget.dataset.index,
-                voiceId:voiceId
+                voiceId: voiceId
             })
             gdt.track('play-article-voice-on-index-page', {
                 voiceId: voiceId,
@@ -205,11 +204,11 @@ Page({
         wx.setNavigationBarTitle({
             title: this.data.appTitle,
         });
-       
+
         let that = this
-        wx.showShareMenu({ 
+        wx.showShareMenu({
             withShareTicket: true
-         });
+        });
 
         gdt.track('show-index');
     },
@@ -237,8 +236,8 @@ Page({
             currentTabIndex: e.currentTarget.dataset.tab,
             isVideo: false,
             currentindex: undefined,
-            listenIndexCurrent:undefined,
-            
+            listenIndexCurrent: undefined,
+
         });
         const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
         if (currentListInstance) {
@@ -279,12 +278,12 @@ Page({
                 url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
             })
         }
-       
-       
+
+
     },
     handleTouchEnd(e) {
         let that = this;
-        
+
         this.setData({ endWidth: e.changedTouches[0].clientX, isVideo: false }, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
@@ -315,14 +314,14 @@ Page({
                         if (that.data.listening) {
                             that.setData({
                                 letter: true
-            
+
                             })
                         } else {
-            
+
                             that.setData({
                                 letter: false
                             })
-            
+
                         }
                     }
                 }
@@ -354,14 +353,14 @@ Page({
                         if (that.data.listening) {
                             that.setData({
                                 letter: true
-            
+
                             })
                         } else {
-            
+
                             that.setData({
                                 letter: false
                             })
-            
+
                         }
                     }
                 }
@@ -371,9 +370,6 @@ Page({
     handleTouchStart(e) {
         this.setData({ startsWidth: e.changedTouches[0].clientX })
     },
-
-
-
     selectMy: function () {
         wx.setStorage({
             key: "isClickMy",
@@ -390,7 +386,7 @@ Page({
 
     // 分割线
 
-    onReady: function () {
+    onLoad: function () {
         let that = this;
         gdt.userInfo.then((x) => {
             this.setData({
@@ -427,8 +423,8 @@ Page({
                     title: app.title,
                 });
             }
-      
-        this.setData({
+
+            this.setData({
                 appTitle: app.title,
                 coverUrl: app.avatarUrl,
                 dashboardTipShouldDisplay: app.localStorage.dashboardTipShouldDisplay === false ? false : true
@@ -453,21 +449,21 @@ Page({
                 });
             });
 
-            
-            gdt.magicListItemLoadMore('topScoreds').then((res)=>{
-                    let oldRes = JSON.parse(JSON.stringify(res));
-                    const theList = app.listIndex['topScoreds'];
-                    let arr = theList.items.splice(0, 3);
-    
-                    if (app.lists[0] !== app.listIndex['topScoreds']) {
-                        app.lists.unshift(app.listIndex['topScoreds']);
-                    }
-                   
+
+            gdt.magicListItemLoadMore('topScoreds').then((res) => {
+                let oldRes = JSON.parse(JSON.stringify(res));
+                const theList = app.listIndex['topScoreds'];
+                let arr = theList.items.splice(0, 3);
+
+                if (app.lists[0] !== app.listIndex['topScoreds']) {
+                    app.lists.unshift(app.listIndex['topScoreds']);
+                }
+
                 this.setData({
                     lists: app.lists,
-                    imgUrls:arr
+                    imgUrls: arr
                 })
-                
+
             });
             console.log(this.appState)
         });
@@ -479,28 +475,33 @@ Page({
                 screenHeight: x.screenHeight,
             });
         });
-        gdt.currentUser.then((u)=> {
+        gdt.currentUser.then((u) => {
             this.data.uid = u._id;
             this.data.nickName = this.data.nickName || u.nickName;
         });
-        
-        
+        gdt.baseServerUri.then((res) => {
+            this.setData({
+                baseImageUrlMy: 'https://' + res.split('/')[2] + '/static/images/my.png',
+                baseImageUrlP1: 'https://' + res.split('/')[2] + '/static/images/1.png'
+            })
+        })
+
     },
     //上拉加载
     onReachBottom: function () {
         const currentListInstance = this.data.lists[this.data.currentTabIndex];
-        
+
         if (currentListInstance) {
-            if(currentListInstance._id === 'topScoreds'){
+            if (currentListInstance._id === 'topScoreds') {
                 gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
                     gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.oldRes.length });
-                    });
-            }else{
+                });
+            } else {
                 gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
-                gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
+                    gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
                 });
             }
-            
+
         }
     },
     //下拉刷新
@@ -519,7 +520,7 @@ Page({
         if (e.detail.formId) {
             gdt.collectTplMessageQuotaByForm(e.detail.formId);
         }
-       
+
     },
 
     onShareAppMessage: function (event) {
@@ -538,5 +539,5 @@ Page({
         }
         return {};
     },
-   
+
 })

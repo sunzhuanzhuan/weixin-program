@@ -4,36 +4,36 @@ let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 
 Page({
-    data:{
-        url:''
+    data: {
+        url: ''
     },
-    onLoad:function(){
-        gdt.baseServerUri.then((res)=>{
-            
+    onLoad: function () {
+        gdt.baseServerUri.then((res) => {
+
             this.setData({
-                url:'https://'+res.split('/')[2] +'/static/images/mini_show.gif'
+                url: app.baseImageUrl + '/static/images/mini_show.gif'
             })
 
         })
     },
-    handleContent:function(){
+    handleContent: function () {
         wx.setClipboardData({
             data: 'xiaoyujuhe123',
-            success (res) {
-              wx.getClipboardData({
-                success (res) {
-                  console.log(res.data) // data
-                }
-              })
+            success(res) {
+                wx.getClipboardData({
+                    success(res) {
+                        console.log(res.data) // data
+                    }
+                })
             }
-          })
+        })
     },
-    onShow:function(){
+    onShow: function () {
         //截屏事件
         wx.onUserCaptureScreen(function (res) {
             gdt.track('introduce-capture-screen');
         })
-       
+
     }
 
 })

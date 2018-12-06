@@ -4,43 +4,43 @@ let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 const util = require('../../utils/util');
 Page({
-    data:{
-        name:'',
-        myCollectArtical:[],
-        myCollectVideo:[],
-        myViews:[],
-        myCollect:[],
+    data: {
+        name: '',
+        myCollectArtical: [],
+        myCollectVideo: [],
+        myViews: [],
+        myCollect: [],
         myCollectArticalHasMore: undefined,
         myCollectVideoHasMore: undefined,
 
         myViewsHasMore: undefined,
-        type1:'getUserInfo',
-        screenHeight:''
+        type1: 'getUserInfo',
+        screenHeight: ''
 
     },
-    onShow:function(){
+    onShow: function () {
         if (this.data.name == 'history') {
-           //截屏事件
+            //截屏事件
             wx.onUserCaptureScreen(function (res) {
                 gdt.track('history-capture-screen');
             })
-        }else if(this.data.name == 'artical'){
+        } else if (this.data.name == 'artical') {
             //截屏事件
             wx.onUserCaptureScreen(function (res) {
                 gdt.track('artical-capture-screen');
             })
-        }else{
+        } else {
             //截屏事件
             wx.onUserCaptureScreen(function (res) {
                 gdt.track('txvVideo-capture-screen');
             })
         }
-         
-       
+
+
     },
 
-    onLoad:function(options){
-       this.setData({name:options.type})
+    onLoad: function (options) {
+        this.setData({ name: options.type })
         this.appState = gdt.localState;
         gdt.systemInfo.then((x) => {
             this.setData({
@@ -59,9 +59,9 @@ Page({
                 this.setData({ type1: 'share' });
             });
         });
-        
-        const makeMyCollectArtical = ()=> {
-            this.appState.myCollectArtical.forEach((x)=> {
+
+        const makeMyCollectArtical = () => {
+            this.appState.myCollectArtical.forEach((x) => {
                 const entity = x.entity;
                 if (!entity) {
                     return;
@@ -69,17 +69,17 @@ Page({
                 entity._sourceWxDisplayName = entity.sourceWxNickname || '-'
                 entity.readTimes = entity.readTimes || 0;
                 entity._publishedFromNow = util.moment(entity.publishedAt).fromNow();
-                let read = entity.readTimes +''
-                  if(read.length === 1){
-                      entity.readTimes = parseInt(Math.random()*20+30)
-                  }
+                let read = entity.readTimes + ''
+                if (read.length === 1) {
+                    entity.readTimes = parseInt(Math.random() * 20 + 30)
+                }
             });
-            this.setData({ myCollectArtical: this.appState.myCollectArtical , myCollectArticalHasMore: this.appState.myCollectArtical.__hasMore !== false});
-            
-       
+            this.setData({ myCollectArtical: this.appState.myCollectArtical, myCollectArticalHasMore: this.appState.myCollectArtical.__hasMore !== false });
+
+
         };
-        const makeMyCollectVideo = ()=> {
-            this.appState.myCollectVideo.forEach((x)=> {
+        const makeMyCollectVideo = () => {
+            this.appState.myCollectVideo.forEach((x) => {
                 const entity = x.entity;
                 if (!entity) {
                     return;
@@ -87,18 +87,18 @@ Page({
                 entity._sourceWxDisplayName = entity.sourceWxNickname || '-'
                 entity.readTimes = entity.readTimes || 0;
                 entity._publishedFromNow = util.moment(entity.publishedAt).fromNow();
-                let read = entity.readTimes +''
-                  if(read.length === 1){
-                      entity.readTimes = parseInt(Math.random()*20+30)
-                  }
+                let read = entity.readTimes + ''
+                if (read.length === 1) {
+                    entity.readTimes = parseInt(Math.random() * 20 + 30)
+                }
             });
-            
-            this.setData({ myCollectVideo: this.appState.myCollectVideo, myCollectVideoHasMore: this.appState.myCollectVideo.__hasMore !== false});
-        
-            
+
+            this.setData({ myCollectVideo: this.appState.myCollectVideo, myCollectVideoHasMore: this.appState.myCollectVideo.__hasMore !== false });
+
+
         };
-        const makeMyViews = ()=> {
-            this.appState.myViews.forEach((x)=> {
+        const makeMyViews = () => {
+            this.appState.myViews.forEach((x) => {
                 const entity = x.entity;
                 if (!entity) {
                     return;
@@ -106,17 +106,17 @@ Page({
                 entity._sourceWxDisplayName = entity.sourceWxNickname || '-'
                 entity.readTimes = entity.readTimes || 0;
                 entity._publishedFromNow = util.moment(entity.publishedAt).fromNow();
-                let read = entity.readTimes +''
-                  if(read.length === 1){
-                      entity.readTimes = parseInt(Math.random()*20+30)
-                  }
+                let read = entity.readTimes + ''
+                if (read.length === 1) {
+                    entity.readTimes = parseInt(Math.random() * 20 + 30)
+                }
             });
-            
-            this.setData({ myViews: this.appState.myViews, myViewsHasMore: this.appState.myViews.__hasMore !== false});
-           
+
+            this.setData({ myViews: this.appState.myViews, myViewsHasMore: this.appState.myViews.__hasMore !== false });
+
         };
-        const makeMyLikes = ()=> {
-            this.appState.myCollect.forEach((x)=> {
+        const makeMyLikes = () => {
+            this.appState.myCollect.forEach((x) => {
                 const entity = x.entity;
                 if (!entity) {
                     return;
@@ -124,66 +124,66 @@ Page({
                 entity._sourceWxDisplayName = entity.sourceWxNickname || '-'
                 entity.readTimes = entity.readTimes || 0;
                 entity._publishedFromNow = util.moment(entity.publishedAt).fromNow();
-                let read = entity.readTimes +''
-                  if(read.length === 1){
-                      entity.readTimes = parseInt(Math.random()*20+30)
-                  }
+                let read = entity.readTimes + ''
+                if (read.length === 1) {
+                    entity.readTimes = parseInt(Math.random() * 20 + 30)
+                }
             });
             this.setData({ myCollect: this.appState.myCollect, myLikesHasMore: this.appState.myCollect.__hasMore !== false });
         };
 
         gdt.on('entityUpdate', (x) => {
-            this.setData({ 
-                myViews: this.appState.myViews, 
+            this.setData({
+                myViews: this.appState.myViews,
                 myCollectArtical: this.appState.myCollectArtical,
                 myCollectVideo: this.appState.myCollectVideo
             });
         });
 
-        gdt.on('collectVideoItems',makeMyCollectVideo);
-        gdt.on('collectArticalItems',makeMyCollectArtical);
-        gdt.on('viewsItems',makeMyViews);
-        
+        gdt.on('collectVideoItems', makeMyCollectVideo);
+        gdt.on('collectArticalItems', makeMyCollectArtical);
+        gdt.on('viewsItems', makeMyViews);
+
         gdt.fetchDashboardAnalytics();
-       
+
 
         gdt.on('likedItems', makeMyLikes);
         gdt.on('liked', makeMyLikes);
         gdt.on('unliked', makeMyLikes);
-        
-       
-        if(options.type === 'history'){
+
+
+        if (options.type === 'history') {
             gdt.magicMyViewsFirstLoad();
             wx.setNavigationBarTitle({
                 title: '浏览历史',
             });
-           
-        }else if(options.type === 'artical'){
+
+        } else if (options.type === 'artical') {
             gdt.magicMyCollectArticalFirstLoad();
             wx.setNavigationBarTitle({
                 title: '收藏的文章',
             });
-           
-        }else{
+
+        } else {
             gdt.magicMyCollectVideoFirstLoad();
             wx.setNavigationBarTitle({
                 title: '收藏的视频',
             });
-            
+
         }
         let that = this  //
-        this.setData({ 
-            myViews: this.appState.myViews, 
+        this.setData({
+            myViews: this.appState.myViews,
             myCollectArtical: this.appState.myCollectArtical,
             myCollectVideo: this.appState.myCollectVideo
         })
-        
+
         console.log(this.appState)
-        
-        
+
+
     },
     //进入详情
-    handleDetail:function(e){
+    handleDetail: function (e) {
         wx.navigateTo({
             url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id
         })
@@ -218,21 +218,21 @@ Page({
         if (e.detail.formId) {
             gdt.collectTplMessageQuotaByForm(e.detail.formId);
         }
-        
+
     },
     onReachBottom: function () {
         if (this.data.name == 'history') {
             gdt.magicMyViewsLoadMore()
-        }else if(this.data.name == 'artical'){
+        } else if (this.data.name == 'artical') {
             gdt.magicMyCollectArticalLoadMore()
-        }else{
+        } else {
             gdt.magicMyCollectVideoLoadMore()
         }
-       
+
     },
     //下拉刷新
     onPullDownRefresh: function () {
-        if(this.data.name === 'history'){
+        if (this.data.name === 'history') {
             gdt.magicMyViewsLoadLatest().then(() => {
                 gdt.track('item-list-view-load-first')
                 setTimeout(() => {
@@ -240,9 +240,9 @@ Page({
                 }, 500);
             });
 
-           
-        }else if(this.data.name === 'artical'){
-            
+
+        } else if (this.data.name === 'artical') {
+
             gdt.magicMyCollectArticalLoadLatest().then(() => {
                 gdt.track('item-list-liked-wxArticle-load-first')
                 setTimeout(() => {
@@ -250,8 +250,8 @@ Page({
                 }, 500);
             });
 
-           
-        }else{
+
+        } else {
             gdt.magicMyCollectVideoLoadLatest().then(() => {
                 gdt.track('item-list-liked-txvVideo-load-first')
                 setTimeout(() => {
@@ -259,7 +259,7 @@ Page({
                 }, 500);
             });
 
-            
+
         }
     },
     onShareAppMessage: function (event) {
@@ -285,5 +285,5 @@ Page({
         }
 
     },
-   
+
 })
