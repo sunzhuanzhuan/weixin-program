@@ -2,7 +2,7 @@
   "usingComponents": {
     "txv-video": "plugin://tencentvideo/video"
     
-  },
-  "disableScroll":true
+  }
+ 
  
 }

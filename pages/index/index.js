@@ -284,22 +284,7 @@ Page({
     },
     handleTouchEnd(e) {
         let that = this;
-        // let list= this.data.lists[this.data.currentTabIndex].items;
-               
-        // if(list.length>0){
-        //      for (let i in list){
-        //          let that = this  // 
-        //          wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-        //              console.log(ret.intersectionRatio)
-        //              if (ret.intersectionRatio > 0){
-        //                  list[i].isShow =  true 
-        //              }
-        //              this.setData({ // 更新数据
-        //               lists:that.data.lists
-        //              })
-        //          })
-        //      }
-        // }
+        
         this.setData({ endWidth: e.changedTouches[0].clientX, isVideo: false }, () => {
             if (that.data.startsWidth >= that.data.screenWidth / 2) {
                 if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
@@ -442,12 +427,7 @@ Page({
                     title: app.title,
                 });
             }
-        //    app.lists.unshift({
-        //     id:'123',
-        //     title:'推荐',
-        //     items:[1,2]
-        //    })
-       
+      
         this.setData({
                 appTitle: app.title,
                 coverUrl: app.avatarUrl,
@@ -473,9 +453,7 @@ Page({
                 });
             });
 
-            // if (app.lists.length) {
-            //     gdt.magicListItemLoadMore(app.lists[0]._id);
-            // }
+            
             gdt.magicListItemLoadMore('topScoreds').then((res)=>{
                     let oldRes = JSON.parse(JSON.stringify(res));
                     const theList = app.listIndex['topScoreds'];
@@ -489,23 +467,7 @@ Page({
                     lists: app.lists,
                     imgUrls:arr
                 })
-                //  //懒加载
-                // let list= this.data.lists[this.data.currentTabIndex].items;
-               
-                //    if(list.length>0){
-                //         for (let i in list){
-                //             let that = this  // 
-                //             wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-                //                 console.log(ret.intersectionRatio)
-                //                 if (ret.intersectionRatio > 0){
-                //                     list[i].isShow =  true 
-                //                 }
-                //                 this.setData({ // 更新数据
-                //                  lists:that.data.lists
-                //                 })
-                //             })
-                //         }
-                //    }
+                
             });
             console.log(this.appState)
         });
@@ -557,9 +519,7 @@ Page({
         if (e.detail.formId) {
             gdt.collectTplMessageQuotaByForm(e.detail.formId);
         }
-        // console.log( e.detail.formId)
-        // this.setData({
-        // formId: e.detail.formId }) 
+       
     },
 
     onShareAppMessage: function (event) {
@@ -578,24 +538,5 @@ Page({
         }
         return {};
     },
-    // onPageScroll() { 
-    //     util.debounce(this.showImg())
-    //   },
-    
-    // showImg(){  // 判断高度是否需要加载
-    //     let that = this;
-    //     wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
-    //         // const group = that.data.lists[that.data.currentTabIndex].items
-    //         const height = that.data.screenHeight
-    //         ret.forEach((item, index) => {
-    //             if (item.top < height) {
-    //                 that.data.lists[that.data.currentTabIndex].items[index].isShow = true
-    //             }
-    //         })
-    //         that.setData({
-    //             lists:that.data.lists
-    //         })
-    //     }).exec()
-    // }
-
+   
 })

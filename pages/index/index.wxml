@@ -33,9 +33,6 @@
 
     <block>
     
-        <!-- <view class="lineTop"></view> -->
-        <!--<view wx:if="{{upLoad}}" class="lineTop1"  style="text-align: center;z-index: 27;{{iPhoneX?'top:300rpx;':'top:220rpx'}}">加载中。。。</view>-->
-        <!--<view wx:else></view>-->
     </block>
 
     <view  class="contentListBox">
@@ -54,8 +51,7 @@
 
 
         </view>
-<!-- 
-    </scroll-view> -->
+
     </view>
 </view>
 <view>

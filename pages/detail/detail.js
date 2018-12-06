@@ -14,7 +14,7 @@ Page({
 
         src: '',
         isLike: false,
-        isEyes: true,
+       
         bgImg: '',
         articleId: '',
         shareId: '',
@@ -151,10 +151,10 @@ Page({
             const dt = now - lastSuspendAt;
             this.data.suspendedFor = (this.data.suspendedFor || 0) + dt;
             this.data.lastSuspendAt = null;
-            // this.setData({ suspendedFor: (this.data.suspendedFor || 0) + dt, lastSuspendAt: null  });
+           
         } else {
             this.data.lastSuspendAt = null;
-            // this.setData({ lastSuspendAt: null });
+         
         }
         gdt.track('show-detail', { itemId: this.data.entityId, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
     },
@@ -166,22 +166,7 @@ Page({
         }
 
     },
-    handleJump: function () {
-        gdt.userInfo.then(() => {
-            wx.navigateTo({
-                url: '/pages/log/detail?nick=' + this.data.shareName
-            })
-            gdt.track('let-friend-know-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
-        }).catch(() => {
-            gdt.once('userInfo', () => {
-                wx.navigateTo({
-                    url: '/pages/log/detail?nick=' + this.data.shareName
-                })
-            });
-            gdt.track('let-friend-know-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
-        });
-
-    },
+    
     handleLikeButtonTapped: function (e) {
         gdt.userInfo.then(() => {
             this.setData({ isLike: !this.data.isLike }, () => {
@@ -209,7 +194,7 @@ Page({
 
     },
     onLoad(options) {
-        console.log(options)
+       
         if (options.listening == 'false') {
             this.setData({ isPlay: false })
         } else if (options.listening == undefined) {
@@ -282,17 +267,7 @@ Page({
         } else {
             throw new Error('No idea what to load');
         }
-        if (options.scene || ref || refee) {
-            gdt.userInfo.then((x) => {
-                this.setData({
-                    isEyes: true
-                });
-            }).catch(() => {
-                this.setData({
-                    isEyes: false
-                });
-            });
-        }
+       
         qPromise.then((r) => {
             if (r.entity) {
                 const currentTitle = r.entity.title;
@@ -364,18 +339,13 @@ Page({
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: false });
             }
-            // if (scene == 1048 || scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
-            //     this.setData({ isShare: false });
-            // }
-
+          
         } else {
             this.setData({ isShow: true, isChangeBig: false, isShowListen: true });
             if (getCurrentPages()[0].route === 'pages/detail/detail') {
                 this.setData({ isShare: true });
             }
-            // if (scene == 1048 ||scene == 1007 || scene == 1008 || scene == 1012 || scene == 1049 || scene == 1014 || scene == 1037 || scene == 1047 || scene == 1058 || scene == 1074 || scene == 1073) {
-            //     this.setData({ isShare: true });
-            // }
+         
 
         }
         this.data.num = num1;
@@ -392,14 +362,7 @@ Page({
         this.data.reportScrollTimeoutHandler = setTimeout(function () {
             this.data.viewPercentage = (event.detail.scrollTop / event.detail.scrollHeight) * 100;
             if (this.data.viewId && this.data.entityId) {
-                // gdt.trackScrollActionInViewing(
-                //     this.data.articleId, 
-                //     this.data.viewId,
-                //     this.data.scrollStartedAt - this.data.enteredAt - this.data.suspendedFor,
-                //     Date.now() - this.data.scrollStartedAt,
-                //     (this.data.scrollStartPos / event.detail.scrollHeight) * 100,
-                //     this.data.viewPercentage
-                // );
+              
                 gdt.track('detail-scroll', {
                     type: this.data.entity.type,
                     itemId: this.data.entityId,

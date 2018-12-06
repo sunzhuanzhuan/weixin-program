@@ -76,21 +76,7 @@ Page({
             });
             this.setData({ myCollectArtical: this.appState.myCollectArtical , myCollectArticalHasMore: this.appState.myCollectArtical.__hasMore !== false});
             
-        //     if(that.data.myCollectArtical.length>0){
-        //         for (let i in that.data.myCollectArtical){
-                   
-        //             wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-        //                 console.log(ret.intersectionRatio)
-        //                 if (ret.intersectionRatio > 0){
-                         
-        //                       that.data.myCollectArtical[i].isShow = true;
-        //                 }
-        //                 that.setData({ 
-        //                     myCollectArtical: that.data.myCollectArtical
-        //               });
-        //             })
-        //         }
-        //    }
+       
         };
         const makeMyCollectVideo = ()=> {
             this.appState.myCollectVideo.forEach((x)=> {
@@ -108,21 +94,7 @@ Page({
             });
             
             this.setData({ myCollectVideo: this.appState.myCollectVideo, myCollectVideoHasMore: this.appState.myCollectVideo.__hasMore !== false});
-        //     if(that.data.myCollectVideo.length>0){
-        //         for (let i in that.data.myCollectVideo){
-                   
-        //             wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-        //                 console.log(ret.intersectionRatio)
-        //                 if (ret.intersectionRatio > 0){
-                         
-        //                       that.data.myCollectVideo[i].isShow = true;
-        //                 }
-        //                 that.setData({ 
-        //                     myCollectVideo: that.data.myCollectVideo
-        //               });
-        //             })
-        //         }
-        //    }
+        
             
         };
         const makeMyViews = ()=> {
@@ -141,25 +113,6 @@ Page({
             });
             
             this.setData({ myViews: this.appState.myViews, myViewsHasMore: this.appState.myViews.__hasMore !== false});
-           
-             //懒加载
-            
-               
-            //  if(that.data.myViews.length>0){
-            //       for (let i in that.data.myViews){
-                     
-            //           wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-            //               console.log(ret.intersectionRatio)
-            //               if (ret.intersectionRatio > 0){
-                           
-            //                     that.data.myViews[i].isShow = true;
-            //               }
-            //               that.setData({ 
-            //                 myViews: that.data.myViews
-            //             });
-            //           })
-            //       }
-            //  }
            
         };
         const makeMyLikes = ()=> {
@@ -265,12 +218,9 @@ Page({
         if (e.detail.formId) {
             gdt.collectTplMessageQuotaByForm(e.detail.formId);
         }
-        // console.log( e.detail.formId)
-        // this.setData({
-        // formId: e.detail.formId }) 
+        
     },
     onReachBottom: function () {
-        console.log(11111)
         if (this.data.name == 'history') {
             gdt.magicMyViewsLoadMore()
         }else if(this.data.name == 'artical'){
@@ -335,37 +285,5 @@ Page({
         }
 
     },
-    // onPageScroll() { 
-    //     util.debounce(this.showImg())
-    //   },
-    
-    // showImg(){  // 判断高度是否需要加载
-        
-    //     let that = this;
-    //     wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
-    //         // const group = that.data.lists[that.data.currentTabIndex].items
-    //         const height = that.data.screenHeight
-    //         ret.forEach((item, index) => {
-    //             if (item.top < height) {
-                    
-    //                 if(that.data.name === 'history'){
-            
-    //                     that.data.myViews[index].isShow = true;
-                       
-    //                 }else if(that.data.name === 'artical'){
-                        
-    //                     that.data.myCollectArtical[index].isShow = true;
-                       
-    //                 }else{
-    //                     that.data.myCollectVideo[index].isShow = true;
-    //                 }
-    //             }
-    //         })
-    //         that.setData({ 
-    //             myViews: that.data.myViews, 
-    //             myCollectArtical: that.data.myCollectArtical,
-    //             myCollectVideo: that.data.myCollectVideo
-    //         });
-    //     }).exec()
-    // }
+   
 })

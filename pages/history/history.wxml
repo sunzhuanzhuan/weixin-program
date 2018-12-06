@@ -3,15 +3,7 @@
 <view>
     <view class="item item-{{index}}" wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}" style="width:100%;overflow:hidden;background:#fff;">
   <view style="{{index==0?'border-top: 1rpx solid #E6E6E6;':''}};background:#fff;border-bottom: 1rpx solid #E6E6E6;width:96%;float:right;padding:40rpx 0">
-        <!-- <view style="display:inline-block;width:11%;height:120rpx;float:left;overflow:hiden;vertical-align:top">
-            <view style="width:60rpx;height:40rpx;">
-
-                <view style="color:#979797;font-size:20rpx;float:left;padding:0 10rpx;border:1rpx solid #979797;border-radius:20rpx;width:40rpx">
- 
-                    {{item.type ==='txvVideo'?'视频':'文章'}}
-                </view>
-            </view>
-        </view> -->
+       
         <view style="display:inline-block;width:70%;height:120rpx;float:left;overflow:hidden;position:relative;vertical-align:top;vertical-align:top">
            <view class="nowrap" style="font-size:30rpx;color:#333;width: 97%;margin-top:-6rpx;" bindtap="handleDetail" data-id="{{item.entity._id}}"> {{item.entity.title}}</view>
 
@@ -45,7 +37,7 @@
                 <image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx;float:left;margin-top:82rpx;padding-left:210rpx;"></image>
                 <text style="color:#ccc;font-size:20rpx;float:left"> 由小鱼聚合平台提供技术支持</text>
             </view>
-            <!-- <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view> -->
+           
         </view>
     
      
