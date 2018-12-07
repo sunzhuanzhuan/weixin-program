@@ -85,7 +85,7 @@
                     </button>
                     <text style="border-right:1rpx solid #E6E6E6;height:36rpx;display:inline-block;width:2rpx;margin-top:34rpx;" ></text>
                     <button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor" catchtap="handlePoster" style="{{isIphoneX?'height:100rpx':'height:100rpx'}};">
-                        <image class="imgBtn" src="/images/circle.png"></image>
+                        <image class="imgBtn" src="{{baseImageUrlCircle}}"></image>
                         <view class="letter">分享海报</view>
                     </button>
                 </view>
