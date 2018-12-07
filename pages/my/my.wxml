@@ -53,12 +53,12 @@
 				</view>
 				<view style="margin-top:20rpx">
 								<scroll-view enable-back-to-top="true">
-												<template is="share" data="{{baseImageUrlCry:baseImageUrlCry,shareList:userInfo ? myShares : [],isMore: MySharesHasMore,baseImageUrlP1:baseImageUrlP1,baseImageUrlP2:baseImageUrlP2,baseImageUrlP3:baseImageUrlP3,baseImageUrlP4:baseImageUrlP4,baseImageUrlP5:baseImageUrlP5,baseImageUrlP6:baseImageUrlP6,baseImageUrlP7:baseImageUrlP7,baseImageUrlP8:baseImageUrlP8,baseImageUrlLogo:baseImageUrlLogo}}" />
+												<template is="share" data="{{reportSubmit:reportSubmit,baseImageUrlCry:baseImageUrlCry,shareList:userInfo ? myShares : [],isMore: MySharesHasMore,baseImageUrlP1:baseImageUrlP1,baseImageUrlP2:baseImageUrlP2,baseImageUrlP3:baseImageUrlP3,baseImageUrlP4:baseImageUrlP4,baseImageUrlP5:baseImageUrlP5,baseImageUrlP6:baseImageUrlP6,baseImageUrlP7:baseImageUrlP7,baseImageUrlP8:baseImageUrlP8,baseImageUrlLogo:baseImageUrlLogo}}" />
 								</scroll-view>
 				</view>
 </view>
 <!-- 悬浮回到首页 -->
-<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' wx:if="{{isHome}}">
+<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID' wx:if="{{isHome}}">
 				<button form-type="submit" class="btnForm">
 								<image src="{{baseImageUrlGoHome}}" class="goHomeStyle" bindtap="handleBack"></image>
 				</button>

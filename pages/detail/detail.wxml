@@ -67,7 +67,7 @@
 
 
     <!-- 悬浮部分 -->
-    <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+    <form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID'>
         <button form-type="submit" class="btnForm">
         <view class="fixed {{isShow?'show':''}} state1">
                 <view class="floatShadow"></view>
@@ -96,7 +96,7 @@
     </form>
 </view>
 <!-- 悬浮回到首页 -->
-<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' wx:if="{{isRoot}}">
+<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID' wx:if="{{isRoot}}">
     <button form-type="submit" class="btnForm">
         <image src="/images/goHome.png" class="{{isRoot?'goHomeStyle':'goHomeStyle1'}} state1" bindtap="handleBack"></image>
     </button>

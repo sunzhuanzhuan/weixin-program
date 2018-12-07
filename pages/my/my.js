@@ -18,7 +18,8 @@ Page({
 		shinIndex: 999999,
 
 		currentTab: 'myShares',
-		isHome: false
+		isHome: false,
+		reportSubmit: true
 	},
 	onLoad: function () {
 		if (getCurrentPages()[0] === this) {

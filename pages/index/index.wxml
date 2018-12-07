@@ -6,14 +6,14 @@
 				<view style="height:88rpx;background:#ffffff;position:relative;z-index:22;">
 								<scroll-view scroll-left="{{scrollLeft}}" scroll-x style="position:fixed;z-index:25;display:inline-block;margin-top: 0;height: 88rpx;width:calc({{winWidth-52}}px);background:#fff;white-space:nowrap;overflow: hidden">
 												<view class="nav">
-																<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID' wx:for="{{lists}}" class='tag-box' wx:key="id" style="display: inline-block">
+																<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID' wx:for="{{lists}}" class='tag-box' wx:key="id" style="display: inline-block">
 																				<button form-type="submit" hover-class='none' class="btnForm taga-item {{currentTabIndex==index?'bold':''}}" style="height:80rpx;line-height:80rpx;{{currentTabIndex==index?'color:#333':'color:#333'}}" data-tab="{{index}}" data-name='{{item.title}}' data-tabid="{{item.id}}" bindtap="handleTitleTab">
 																								{{item.title}}
 																				</button>
 																</form>
 												</view>
 								</scroll-view>
-								<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+								<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID'>
 												<button form-type="submit" class='btnForm' data-current="{{dataTab.length}}" data-name='{{item.title}}' hover-class='none' data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:55px;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
 																<image src="{{baseImageUrlMy}}" style="width:55px;height: 72rpx;" data-id="{{dataTab.length}}"></image>
 												</button>
@@ -27,7 +27,7 @@
 																				<image wx:if="{{dashboardTipShouldDisplay}}" src="{{baseImageUrlNew}}" class="bigBox" style="width:690rpx;height:430rpx;margin-top:30rpx"></image>
 																</view>
 																<view>
-																				<template is="list" data="{{baseImageUrlAllStar:baseImageUrlAllStar,baseImageUrlPlay:baseImageUrlPlay,baseImageUrlNo1:baseImageUrlNo1,baseImageUrlNo2:baseImageUrlNo2,baseImageUrlNo3:baseImageUrlNo3,letter:letter,list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo,currentSwiper:currentSwiper}}" />
+																				<template is="list" data="{{reportSubmit:reportSubmit,baseImageUrlAllStar:baseImageUrlAllStar,baseImageUrlPlay:baseImageUrlPlay,baseImageUrlNo1:baseImageUrlNo1,baseImageUrlNo2:baseImageUrlNo2,baseImageUrlNo3:baseImageUrlNo3,letter:letter,list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo,currentSwiper:currentSwiper}}" />
 																</view>
 												</block>
 								</view>

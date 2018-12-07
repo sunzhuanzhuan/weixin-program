@@ -15,7 +15,8 @@ Page({
 
 		myViewsHasMore: undefined,
 		type1: 'getUserInfo',
-		screenHeight: ''
+		screenHeight: '',
+		reportSubmit: true
 
 	},
 	onShow: function () {

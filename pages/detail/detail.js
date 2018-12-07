@@ -74,7 +74,8 @@ Page({
 		videoCurrent: 0,
 		saveToCamera: 'openSetting',
 		currentVideo: 0,
-		btnSavePitcureLetter: ''
+		btnSavePitcureLetter: '',
+		reportSubmit: true
 	},
 
 	handleChangeTypeVideo: function (e) {

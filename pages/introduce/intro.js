@@ -5,7 +5,8 @@ const gdt = app.applicationDataContext;
 
 Page({
 	data: {
-		url: ''
+		url: '',
+		reportSubmit: true
 	},
 	onLoad: function () {
 		gdt.baseServerUri.then((res) => {
