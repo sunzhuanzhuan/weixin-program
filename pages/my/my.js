@@ -118,7 +118,19 @@ Page({
 		wx.showShareMenu({
 			withShareTicket: true,
 		});
-
+		//网络状况
+		wx.getNetworkType({
+			success(res) {
+				const networkType = res.networkType;
+				if (networkType === '2g' || networkType === 'none') {
+					wx.showToast({
+						title: '阿哦～没有网络无法正常使用',
+						icon: 'none',
+						duration: 3000
+					})
+				}
+			}
+		})
 
 	},
 	handleShrink: function (e) {

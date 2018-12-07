@@ -130,6 +130,20 @@ Page({
 	},
 
 	onShow: function () {
+		//网络状况
+		wx.getNetworkType({
+			success(res) {
+				const networkType = res.networkType;
+				// console.log(networkType)
+				if (networkType === '2g' || networkType === 'none') {
+					wx.showToast({
+						title: '阿哦～没有网络无法正常使用',
+						icon: 'none',
+						duration: 3000
+					})
+				}
+			}
+		})
 		//截屏事件
 		wx.onUserCaptureScreen(function (res) {
 			gdt.track('detail-capture-screen');

@@ -195,6 +195,19 @@ Page({
 
 	},
 	onShow: function () {
+		//网络状况
+		wx.getNetworkType({
+			success(res) {
+				const networkType = res.networkType;
+				if (networkType === '2g' || networkType === 'none') {
+					wx.showToast({
+						title: '阿哦～没有网络无法正常使用',
+						icon: 'none',
+						duration: 3000
+					})
+				}
+			}
+		})
 		//截屏事件
 		wx.onUserCaptureScreen(function (res) {
 			gdt.track('index-capture-screen');
@@ -464,7 +477,6 @@ Page({
 				})
 
 			});
-			console.log(this.appState)
 		});
 		gdt.systemInfo.then((x) => {
 			this.setData({
@@ -489,8 +501,10 @@ Page({
 				baseImageUrlNo2: 'https://' + res.split('/')[2] + '/static/images/no2.png',
 				baseImageUrlNo3: 'https://' + res.split('/')[2] + '/static/images/no3.png',
 				baseImageUrlPlay: 'https://' + res.split('/')[2] + '/static/images/play.png',
+				baseImageUrlAllStar: 'https://' + res.split('/')[2] + '/static/images/allStar.png'
 			})
 		})
+
 
 	},
 	//上拉加载
