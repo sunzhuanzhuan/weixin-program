@@ -448,7 +448,18 @@ Page({
 				}
 			})
 			gdt.on('listItems', (listId, updateRange, itemList) => {
-				this.setData({ lists: app.lists });
+
+				const theList = app.listIndex['topScoreds'];
+				let arr = theList.items.splice(0, 3);
+
+				if (app.lists[0] !== app.listIndex['topScoreds']) {
+					app.lists.unshift(app.listIndex['topScoreds']);
+				}
+
+				this.setData({
+					lists: app.lists,
+					imgUrls: arr
+				})
 
 
 			});
@@ -462,21 +473,7 @@ Page({
 			});
 
 
-			gdt.magicListItemLoadMore('topScoreds').then((res) => {
-				let oldRes = JSON.parse(JSON.stringify(res));
-				const theList = app.listIndex['topScoreds'];
-				let arr = theList.items.splice(0, 3);
-
-				if (app.lists[0] !== app.listIndex['topScoreds']) {
-					app.lists.unshift(app.listIndex['topScoreds']);
-				}
-
-				this.setData({
-					lists: app.lists,
-					imgUrls: arr
-				})
-
-			});
+			gdt.magicListItemLoadMore('topScoreds')
 		});
 		gdt.systemInfo.then((x) => {
 			this.setData({
@@ -529,6 +526,7 @@ Page({
 		const currentListInstance = this.data.lists[this.data.currentTabIndex]
 		if (currentListInstance) {
 			gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
+
 				gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
 				setTimeout(() => {
 					wx.stopPullDownRefresh();
