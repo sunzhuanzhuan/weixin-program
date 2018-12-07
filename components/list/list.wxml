@@ -10,7 +10,7 @@
                             {{imgUrls[1].title}}
                         </view>
                     </view>
-                    <image src="/images/no3.png" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
+                    <image src="{{baseImageUrlNo3}}" class="{{swiperActiveZero[1]}} bg3" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
                 </swiper-item>
                 <swiper-item class="swiperItem" bindtap="handleDetail" data-id="{{imgUrls[0]._id}}">
                     <image class="{{swiperActiveOne[0]}}" mode="aspectFill" style="{{swiperActiveOne[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[0].coverUrl}}" width="600rpx" height="" />
@@ -19,7 +19,7 @@
                             {{imgUrls[0].title}}
                         </view>
                     </view>
-                    <image src="/images/no1.png" class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
+                    <image src="{{baseImageUrlNo1}}" class="{{swiperActiveOne[1]}}" style="position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx" />
                 </swiper-item>
                 <swiper-item class="swiperItem" bindtap="handleDetail" data-id="{{imgUrls[2]._id}}">
                     <image class="{{swiperActiveTwo[0]}}" mode="aspectFill" style="{{swiperActiveTwo[0]}};width:600rpx;border-radius:6rpx;display:block" src="{{imgUrls[2].coverUrl}}" width="600rpx" height="" />
@@ -28,7 +28,7 @@
                             {{imgUrls[2].title}}
                         </view>
                     </view>
-                    <image src="/images/no2.png" class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
+                    <image src="{{baseImageUrlNo2}}" class="{{swiperActiveTwo[1]}} bg2" style="position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx" />
                 </swiper-item>
             </swiper>
         </block>
@@ -40,7 +40,7 @@
                         <txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video" autoplay="{{isVideo}}"></txv-video>
                     </view>
                     <view wx:else data-currentIndex='{{index}}' data-item="{{item}}" style="position:relative;" bindtap='changeVideo'>
-                        <image src='/images/play.png' style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" />
+                        <image src='{{baseImageUrlPlay}}' style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx" />
                         <image mode="aspectFill" style="width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0" src="{{ 'http://puui.qpic.cn/vpic/0/'+item.txvVid +'.png/0'}}"></image>
                     </view>
                     <view style="background:#ffffff;height:100rpx;width:690rpx;">

@@ -69,7 +69,7 @@
     <!-- 悬浮部分 -->
     <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
         <button form-type="submit" class="btnForm">
-            <view class="fixed {{isShow?'show':''}} state1">
+        <view class="fixed {{isShow?'show':''}} state1">
                 <view class="floatShadow"></view>
                 <view style="display: flex;flex-direction: row;background: #fff;overflow:hidden;{{isIphoneX?'height:100rpx':'height:100rpx'}};width:100%">
                     <view class="btnBoxKonw" style="flex:4;"></view>

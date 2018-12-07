@@ -1,6 +1,6 @@
 {
-  "usingComponents": {
-    "txv-video": "plugin://tencentvideo/video"
-  },
-  "enablePullDownRefresh": true
+	"usingComponents": {
+		"txv-video": "plugin://tencentvideo/video"
+	},
+	"enablePullDownRefresh": true
 }

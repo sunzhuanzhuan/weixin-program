@@ -15,7 +15,7 @@
         </scroll-view>
         <form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
             <button form-type="submit" class='btnForm' data-current="{{dataTab.length}}" data-name='{{item.title}}' hover-class='none' data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:55px;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
-                <image src="{{baseImageUrl}}" style="width:55px;height: 72rpx;" data-id="{{dataTab.length}}"></image>
+                <image src="{{baseImageUrlMy}}" style="width:55px;height: 72rpx;" data-id="{{dataTab.length}}"></image>
             </button>
         </form>
     </view>
@@ -24,10 +24,10 @@
         <view>
             <block>
                 <view wx:if="{{currentTabIndex ==0}}" style="text-align:center">
-                    <image wx:if="{{dashboardTipShouldDisplay}}" src="/images/new.png" class="bigBox" style="width:690rpx;height:430rpx;margin-top:30rpx"></image>
+                    <image wx:if="{{dashboardTipShouldDisplay}}" src="{{baseImageUrlNew}}" class="bigBox" style="width:690rpx;height:430rpx;margin-top:30rpx"></image>
                 </view>
                 <view>
-                    <template is="list" data="{{letter:letter,list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo,currentSwiper:currentSwiper}}" />
+                    <template is="list" data="{{baseImageUrlPlay:baseImageUrlPlay,baseImageUrlNo1:baseImageUrlNo1,baseImageUrlNo2:baseImageUrlNo2,baseImageUrlNo3:baseImageUrlNo3,letter:letter,list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo,currentSwiper:currentSwiper}}" />
                 </view>
             </block>
         </view>
@@ -47,14 +47,14 @@
         </view>
     </view>
     <view style="position: relative">
-        <image src="/images/2.png" style="width:600rpx;height:180rpx;margin-left: 70rpx;margin-top: 46rpx  "></image>
-        <text style="color: #ffffff;font-size: 28rpx;position: absolute;top:52rpx;left:400rpx;">
+        <image src="{{baseImageUrlP2}}" style="width:600rpx;height:180rpx;margin-left: 70rpx;margin-top: 46rpx  "></image>
+        <text style="color: #ffffff;font-size: 28rpx;position: absolute;top:12rpx;left:400rpx;">
             {{appTitle}}
         </text>
     </view>
     <view style="font-size: 24rpx;color: #888888;width:500rpx;margin-left: 120rpx;">我的小程序 ></view>
     <image src="{{coverUrl}}" style="width: 60rpx;height: 60rpx;border-radius: 50%;margin-left: 120rpx;"></image>
-    <image src="/images/3.png" style="width:600rpx;height:90rpx;margin-left: 70rpx;"></image>
+    <image src="{{baseImageUrlP3}}" style="width:600rpx;height:90rpx;margin-left: 70rpx;"></image>
     <view style="text-align: center">
         <button style="background: #ffffff;width: 300rpx;height: 80rpx;line-height:80rpx;border-radius: 40rpx;text-align: center;margin-top:40rpx;font-weight:bold" bindtap="handleClose">
             我知道了
