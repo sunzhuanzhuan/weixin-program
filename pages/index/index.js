@@ -473,41 +473,27 @@ Page({
                 });
             });
 
-            // if (app.lists.length) {
-            //     gdt.magicListItemLoadMore(app.lists[0]._id);
-            // }
-            gdt.magicListItemLoadMore('topScoreds').then((res)=>{
-                    let oldRes = JSON.parse(JSON.stringify(res));
-                    const theList = app.listIndex['topScoreds'];
-                    let arr = theList.items.splice(0, 3);
-    
-                    if (app.lists[0] !== app.listIndex['topScoreds']) {
-                        app.lists.unshift(app.listIndex['topScoreds']);
-                    }
-                   
+            if (app.toplistEnabled) {
+              gdt.magicListItemLoadMore('topScoreds').then((res) => {
+                const theList = app.listIndex['topScoreds'];
+                let arr = theList.items.splice(0, 3);
+                if (app.lists[0] !== app.listIndex['topScoreds']) {
+                  app.lists.unshift(app.listIndex['topScoreds']);
+                }
+
                 this.setData({
-                    lists: app.lists,
-                    imgUrls:arr
-                })
-                //  //懒加载
-                // let list= this.data.lists[this.data.currentTabIndex].items;
-               
-                //    if(list.length>0){
-                //         for (let i in list){
-                //             let that = this  // 
-                //             wx.createIntersectionObserver().relativeToViewport({bottom: 20}).observe('.item-'+ i, (ret) => {
-                //                 console.log(ret.intersectionRatio)
-                //                 if (ret.intersectionRatio > 0){
-                //                     list[i].isShow =  true 
-                //                 }
-                //                 this.setData({ // 更新数据
-                //                  lists:that.data.lists
-                //                 })
-                //             })
-                //         }
-                //    }
-            });
-            console.log(this.appState)
+                  lists: app.lists,
+                  imgUrls: arr
+                });
+              });
+            } else {
+              if (app.lists.length) {
+                gdt.magicListItemFirstLoad(app.lists[0]._id);
+                this.setData({
+                  lists: app.lists
+                });
+              }
+            }
         });
         gdt.systemInfo.then((x) => {
             this.setData({

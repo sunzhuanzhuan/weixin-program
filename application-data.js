@@ -397,6 +397,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.localState.avatarUrl = appBaseInfo.avatarUrl;
             this.localState.lists = appBaseInfo.lists;
             this.localState.pendingAudition = appBaseInfo.pendingAudition;
+            this.localState.toplistEnabled = appBaseInfo.toplistEnabled;
             if (this.localState.pendingAudition) {
                 this.entityTypes = ['wxArticle']
             }
