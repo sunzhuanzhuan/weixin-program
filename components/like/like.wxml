@@ -1,39 +1,39 @@
 <template name="like">
-				<block wx:if="{{likeList.length>0}}">
-								<view wx:for="{{likeList}}" class="container" wx:key="{{index}}" bindtap="handleDetail" data-id="{{item.article.id}}">
-												<view>
-																<view class="bigBox" style="padding:0 32rpx">
-																				<view class="imgBox">
-																								<image class="img" mode="aspectFill" src="{{item.article.coverUrl}}" lazy-load></image>
-																								<view class="letterBox">
-																												<view class="nowrap">{{item.article.title}}</view>
-																												<view class="letter">
-																																<text class="ellipsisLike">{{item.article.sourceWxNickname}}</text>
-																																<text class="">{{item.article._publishedFromNow}}</text>
-																																<text class="time flright">{{item.article.readTimes}}阅读</text>
-																												</view>
-																								</view>
-																				</view>
-																				<view class="bottomLine"></view>
-																</view>
-												</view>
-								</view>
-								<view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;"></view>
-								<view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;">
-												<view style='height:50rpx;'>
-																<image src="/images/logo.png" style="width:32rpx;height:32rpx;margin-right: 16rpx;float:left;margin-top:82rpx;padding-left:210rpx;"></image>
-																<text style="color:#ccc;font-size:20rpx;float:left">由小鱼聚合平台提供技术支持</text>
-												</view>
-								</view>
-				</block>
-				<block>
-								<view wx:if="{{likeList.length==0}}" style="text-align: center;margin-top: 20rpx">
-												<view>
-																<image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
-												</view>
-												<view>
-																<text style="font-size: 28rpx;color: #c3c3c3">喜欢为空</text>
-												</view>
-								</view>
-				</block>
+	<block wx:if="{{likeList.length>0}}">
+		<view wx:for="{{likeList}}" class="container" wx:key="{{index}}" bindtap="handleDetail" data-id="{{item.article.id}}">
+			<view>
+				<view class="bigBox" style="padding:0 32rpx">
+					<view class="imgBox">
+						<image class="img" mode="aspectFill" src="{{item.article.coverUrl}}" lazy-load></image>
+						<view class="letterBox">
+							<view class="nowrap">{{item.article.title}}</view>
+							<view class="letter">
+								<text class="ellipsisLike">{{item.article.sourceWxNickname}}</text>
+								<text class="">{{item.article._publishedFromNow}}</text>
+								<text class="time flright">{{item.article.readTimes}}阅读</text>
+							</view>
+						</view>
+					</view>
+					<view class="bottomLine"></view>
+				</view>
+			</view>
+		</view>
+		<view wx:if="{{isMore}}" class="isMoreCss"></view>
+		<view wx:else class='isMoreElse'>
+			<view style='height:50rpx;'>
+				<image src="{{baseImageUrlLogo}}" class="footerTitleImg"></image>
+				<text class="footerTitleLetter">由小鱼聚合平台提供技术支持</text>
+			</view>
+		</view>
+	</block>
+	<block>
+		<view wx:if="{{likeList.length==0}}" style="text-align: center;margin-top: 20rpx">
+			<view>
+				<image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
+			</view>
+			<view>
+				<text style="font-size: 28rpx;color: #c3c3c3">喜欢为空</text>
+			</view>
+		</view>
+	</block>
 </template>

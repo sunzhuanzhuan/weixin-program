@@ -106,3 +106,17 @@
     color: #333333;
     width: 390rpx;
 }
+
+/* ---------------------------------           分享列表          -------------------------------------- */
+.txvOrArtical{
+    font-size:20rpx;float:left;padding:0 10rpx;margin-left:30rpx;border:1px solid #979797;border-radius:20rpx;margin-top:20rpx;color:#979797;height:17px;line-height:6px
+}
+.boxEightImg{
+    height:120rpx;padding-left:80rpx;background:#fff;width:90%;overflow-x:scroll;white-space:nowrap
+}
+.againShare{
+    float:left;color:#FFDB3D;border:2rpx solid #FFDB3D;font-size:24rpx;margin-left:30rpx;height:36rpx;line-height:40rpx;padding:2rpx 6rpx;display:inline-block;margin-top:10rpx;
+}
+.againShareBtn{
+    height:64rpx;margin-bottom:20rpx;width:144rpx;background: #ffffff;padding-bottom:40rpx;
+}

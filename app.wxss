@@ -9,3 +9,15 @@ button{
 page{
   background:#f7f7f7;
 }
+.footerTitleImg{
+  width:32rpx;height:32rpx;margin-right: 16rpx;float:left;margin-top:82rpx;padding-left:210rpx;
+}
+.footerTitleLetter{
+  color:#ccc;font-size:20rpx;float:left
+}
+.isMoreCss{
+  width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;
+}
+.isMoreElse{
+  width:100%; height:200rpx;font-size: 28rpx;text-align: center;line-height: 200rpx;
+}

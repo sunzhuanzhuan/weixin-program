@@ -167,3 +167,44 @@ button::after{ border: none; }
   width: 100%;
   height: 30rpx;
 }
+/*  --------------------------------        我的     ---------------------------------------------------- */
+.imgHistory{
+  width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx
+}
+.letterHistory{
+  font-size:24rpx;color:#333
+}
+.boxHistory{
+  display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center;
+}
+.letterLeft{
+  background:#fff;height:50rpx;border-right:1rpx solid #E6E6E6;display:inline-block;vertical-align:top;margin-top:60rpx;
+  
+}
+.letterRight{
+  background:#fff;display:inline-block;height:50rpx;border-right:1rpx solid #E6E6E6;vertical-align:top;margin-top:60rpx;
+}
+.bigBoxThree{
+  margin:0 28rpx;width:698rpx;height:160rpx;overflow:hidden;clear:both;box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;position:absolute;bottom:-100rpx;border-radius:10rpx;background:#fff;
+}
+.myShare{
+  margin-top:140rpx;margin-left:30rpx;color:#333;font-size:36rpx;font-weight:600;
+}
+.bigBox{
+  width:100%;height:420rpx;background:#fff;position:relative
+}
+.nick{
+  display:inline-block;width:50%;height:420rpx;float:left
+}
+.boxNum{
+  display:inline-block;width:45%;height:420rpx;float:right;margin-left:5%;
+}
+.letter{
+  font-size:24rpx;color:#999999
+}
+.letter44{
+  font-size:44rpx;color:#333;height:44rpx
+}
+.btnSuggest{
+  width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1rpx solid #333333;border-radius:50rpx;background:#fff;margin-top:20rpx;float:left;color:#333333
+}
