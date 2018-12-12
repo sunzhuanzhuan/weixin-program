@@ -121,7 +121,7 @@
 						</view>
 					</view>
 					<view wx:else>
-						<view>
+						<view class="item  item-{{index}} itemBigBox">
 							<!-- 大图 -->
 							<view>
 								<view bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
