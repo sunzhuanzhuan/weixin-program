@@ -1,6 +1,5 @@
 <!-- index.wxml -->
-<import src="/components/share/share.wxml" />
-<import src="/components/like/like.wxml" />
+
 <import src="/components/list/list.wxml" />
 <view class="containerBig" style="height: {{winHeight}}px;">
 	<view style="height:88rpx;background:#ffffff;position:relative;z-index:22;">

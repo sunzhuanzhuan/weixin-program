@@ -17,8 +17,7 @@
 				<view wx:else style="height:400rpx;width:700rpx;position:relative ">
 					<image style="height:400rpx;width:700rpx;" bindtap="handleChangeTypeVideo" src="{{'http://puui.qpic.cn/vpic/0/'+videoId +'.png/0'}}"
 					/>
-					<image data-index="{{index}}" style="width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx"
-					 bindtap="handleChangeTypeVideo" src="/images/play.png" />
+					<image data-index="{{index}}" class="imgOne" bindtap="handleChangeTypeVideo" src="{{baseImagePlay}}" />
 
 				</view>
 			</view>
@@ -43,16 +42,16 @@
 
 		</view>
 		<view>
-			<view style="margin-left:34rpx;margin-top:160rpx;font-size:36rpx;color: #54586D;font-weight:bold;margin-bottom:20rpx;"> 相关</view>
-			<view style="{{isIphoneX?'height:660rpx':'height:520rpx'}};overflow-y:scroll;background:#fff">
+			<view class="relative">相关</view>
+			<view class="view1" style="{{isIphoneX?'height:660rpx':'height:520rpx'}};">
 				<view wx:for="{{recommendations}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="handleVideo" style="display:flex;flex-direction:rows;{{index === 0?'padding-top:40rpx':''}}">
-					<view style="width:260rpx;height:180rpx;margin:0 34rpx;margin-bottom:50rpx;">
-						<image style="width:260rpx;height:180rpx; {{currentVideo == index?'box-shadow: 0 2rpx 8rpx 8rpx #ffe000;':''}}" src="{{item.coverUrl}}"
+					<view class="view2">
+						<image style="width:260rpx;height:180rpx;{{currentVideo == index?'box-shadow: 0 2rpx 8rpx 8rpx #ffe000;':''}}" src="{{item.coverUrl}}"
 						/>
+
+
 					</view>
 					<view style="position:relative;height:180rpx;">
-
-
 						<view class="nowrap">
 							{{item.title}}
 						</view>
@@ -77,72 +76,67 @@
 		<button form-type="submit" class="btnForm">
 			<view class="fixed {{isShow?'show':''}} state1">
 				<view class="floatShadow"></view>
-				<view style="display: flex;flex-direction: row;background: #fff;overflow:hidden;{{isIphoneX?'height:100rpx':'height:100rpx'}};width:100%">
+				<view class="boxFloat" style="{{isIphoneX?'height:100rpx':'height:100rpx'}}">
 					<view class="btnBoxKonw" style="flex:4;"></view>
-					<button class="btnBox" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor"
-					 open-type="{{type}}" style="overflow:hidden;text-align:center;opacity: 1;background:#ffffff;flex:1;position: relative;z-index: 2;{{isIphoneX?'height:100rpx;':'height:100rpx'}}">
-						<image class="imgBtn" src="{{isLike?('/images/allStar.png'):('/images/star.png')}}"></image>
-						<view class="letter">收藏</view>
+					<button class="btnBox btnCollect" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor"
+					 open-type="{{type}}" style="{{isIphoneX? 'height:100rpx;': 'height:100rpx'}} ">
+						<image class="imgBtn " src="{{isLike?( '/images/allStar.png'):( '/images/star.png')}} "></image>
+						<view class="letter ">收藏</view>
 					</button>
-					<text style="border-left:1rpx solid #E6E6E6;height:36rpx;display:inline-block;width:2rpx;margin-top:34rpx;"></text>
+					<text class="borderLeft"></text>
 
-					<button class="btnBox" style='flex:1.5' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor"
-					 style="overflow:hidden;text-align:center;border-color: #ffffff;opacity: 1;background:#ffffff;flex:1.5;position: relative;z-index: 2;{{isIphoneX?'height:100rpx':'height:100rpx'}}">
-						<image class="imgBtn" src="{{shareButton}}"></image>
-						<view class="letter">分享好友</view>
+					<button class="btnBox btnShareFriend" style='flex:1.5' open-type="{{type1}} " data-item="share " form-type="submit" bindgetuserinfo="handleAuthor "
+					 style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}} ">
+						<image class="imgBtn " src="{{shareButton}} "></image>
+						<view class="letter ">分享好友</view>
 					</button>
-					<text style="border-right:1rpx solid #E6E6E6;height:36rpx;display:inline-block;width:2rpx;margin-top:34rpx;"></text>
-					<button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor"
-					 catchtap="handlePoster" style="{{isIphoneX?'height:100rpx':'height:100rpx'}};">
-						<image class="imgBtn" src="{{baseImageUrlCircle}}"></image>
-						<view class="letter">分享海报</view>
+					<text class="borderRight"></text>
+					<button class="btnBox " style='flex:2' open-type="{{type}} " form-type="submit " data-item="poster" bindgetuserinfo="handleAuthor "
+					 catchtap="handlePoster " style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}}; ">
+						<image class="imgBtn " src="{{baseImageUrlCircle}} "></image>
+						<view class="letter ">分享海报</view>
 					</button>
 				</view>
-				<view wx:if="{{isIphoneX}}" class="bol"></view>
+				<view wx:if="{{isIphoneX}} " class="bol "></view>
 				<view wx:else></view>
 			</view>
 		</button>
 	</form>
 </view>
 <!-- 悬浮回到首页 -->
-<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID' wx:if="{{isRoot}}">
-	<button form-type="submit" class="btnForm">
-		<image src="/images/goHome.png" class="{{isRoot?'goHomeStyle':'goHomeStyle1'}} state1" bindtap="handleBack"></image>
+<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID' wx:if="{{isRoot}} ">
+	<button form-type="submit " class="btnForm ">
+		<image src="{{baseImageUrlHome}}" class="{{isRoot? 'goHomeStyle': 'goHomeStyle1'}} state1 " bindtap="handleBack "></image>
 	</button>
 </form>
 <!-- 生成海报 -->
-<view wx:if="{{isShowPoster}}" style="position:fixed;bottom:0;left:0;right:0;top:0;background:rgba(0,0,0,0.65);z-index:91"
- bindtap="handleSavePicture">
-	<canvas style="width: 640rpx; height: 760rpx;background:#fff;margin-top:160rpx;margin-left:54rpx;z-index:99" canvas-id="shareCanvas"
-	 bindlongtap="handleSavePictureToCamera"></canvas>
-	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99">{{btnSavePitcureLetter}}</button>
+<view wx:if="{{isShowPoster}} " bindtap="handleSavePicture ">
+	<canvas class="canvas" canvas-id="shareCanvas " bindlongtap="handleSavePictureToCamera "></canvas>
+	<button bindopensetting="handleSavePicture " open-type="{{saveToCamera}} " class="btnSavePicture " style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 </view>
 
 
 <!-- 悬浮的音频 后期作品 -->
-<view wx:if="{{entity.type == 'wxArticle' && entity.wxmpVoiceIds.length>0  && isShowListen}}" style="border-radius:8rpx 8rpx 0 0;overflow:hidden">
-	<view wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="position:fixed;{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}};right:30rpx;z-index:90">
+<view wx:if="{{entity.type=='wxArticle' && entity.wxmpVoiceIds.length>0 && isShowListen}}" class="audioBox">
+	<view class="coverBox" wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}}">
 
-		<button class="btnBox" style='flex:2' open-type="{{type}}" style="width:116rpx;height:108rpx;background:rgba(0,0,0,0)" bindtap="handleAuthorToPlay"
-		 bindgetuserinfo="handleAuthor">
+		<button class="btnBox btnBg" style='flex:2' open-type="{{type}}" bindtap="handleAuthorToPlay" bindgetuserinfo="handleAuthor">
 			<image src="/images/listen.png" style="width:116rpx;height:108rpx" />
 		</button>
 	</view>
-	<view wx:if="{{entity.type === 'wxArticle' && isPlay === true && isChangeBig === false}}" style="position:fixed;{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}};right:30rpx;z-index:90">
-		<button class="btnBox" style='flex:2' open-type="{{type}}" style="width:116rpx;height:108rpx;background:rgba(0,0,0,0)" bindtap="handleAuthorToPause"
-		 bindgetuserinfo="handleAuthor">
+	<view class="coverBox" wx:if="{{entity.type === 'wxArticle' && isPlay === true && isChangeBig === false}}" style="{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}}">
+		<button class="btnBox btnBg" style='flex:2' open-type="{{type}}" bindtap="handleAuthorToPause" bindgetuserinfo="handleAuthor">
 			<image src="/images/pause.png" style="width:116rpx;height:108rpx" />
 		</button>
 
 	</view>
-	<view wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="overflow:hidden;position:fixed;{{isIphoneX?'bottom:156rpx':'bottom:100rpx'}};z-index:90;width:100%;height:100rpx;background:rgba(0,0,0,0.82);line-height:100rpx;border-radius:8rpx 8rpx 0 0">
-		<view style="display:inline-block;width:110rpx;height:100rpx;line-height:100rpx;overflow:hidden;font-size:24rpx;color:#fff;vertical-align:top;border-radius:20rpx 0 0 0;"
-		 bindtap="handleShink">
-			<text style="border-right:1px solid #666666;padding-right:27rpx;padding-left:32rpx;">收起 </text>
+	<view class="shinkBoxTrue" wx:if="{{entity.type === 'wxArticle' && isChangeBig === true}}" style="{{isIphoneX?'bottom:156rpx':'bottom:100rpx'}}">
+		<view class="shinkBox" bindtap="handleShink">
+			<text class="shink">收起 </text>
 		</view>
 
-		<view style="display:inline-block;padding-left:4%;width:470rpx;height:100rpx;line-height:100rpx;overflow:hidden;vertical-align:top">
-			<view style="font-size:24rpx;color:#fff;height:40rpx;width:100%;line-height:56rpx;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{entity.title}}</view>
+		<view class="audioTitleBox">
+			<view class="audioTitle">{{entity.title}}</view>
 			<view>
 				<slider style="margin:0" blockSize="12" max="{{totalTime}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700"
 				 bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size="18"></slider>
@@ -155,14 +149,12 @@
 
 		</view>
 
-		<view style="display:inline-block;width:140rpx;height:100rpx;line-height:100rpx;vertical-align:top;;border-radius:0 20rpx 0 0;">
+		<view class="audioBoxImg">
 
-			<image wx:if="{{isPlay}}" src="/images/pauseLine.png" style="vertical-align:middle;width:24rpx;height:34rpx;margin-left:60rpx"
-			 bindtap="handlePauseVideoNow" />
+			<image wx:if="{{isPlay}}" src="/images/pauseLine.png" class="pauseImgNow" bindtap="handlePauseVideoNow" />
 
-			<image wx:else src="/images/playing.png" style="vertical-align:top;width:24rpx;height:34rpx;margin-left:60rpx;display:block;overflow:hidden;margin-top:18rpx"
-			 bindtap="handlePlayVideoNow" />
-			<view style="font-size:24rpx;color:#fff;width:100%;height:80rpx;line-height:36rpx;overflow:hidden;margin-left:40rpx;" bindtap="handlePlayVideoNow">听一听 </view>
+			<image wx:else class="playImg" src="/images/playing.png" bindtap="handlePlayVideoNow" />
+			<view class="playLetter" bindtap="handlePlayVideoNow">听一听 </view>
 		</view>
 	</view>
 </view>

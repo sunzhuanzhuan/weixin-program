@@ -278,6 +278,7 @@ Page({
 	},
 	//跳转到详情
 	handleDetail(e) {
+		console.log(e)
 		let everyIndex = e.currentTarget.dataset.everyindex;
 		if (everyIndex == this.data.listenIndexCurrent) {
 			let that = this;

@@ -302,7 +302,8 @@ Page({
 		gdt.baseServerUri.then((res) => {
 			this.setData({
 				baseImageUrlCircle: 'https://' + res.split('/')[2] + '/static/images/circle.png',
-
+				baseImageUrlHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png ',
+				baseImagePlay: 'https://' + res.split('/')[2] + '/static/images/play.png'
 			})
 		})
 

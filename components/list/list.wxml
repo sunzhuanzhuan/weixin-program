@@ -49,7 +49,7 @@
 						<image class="txvImageCover" mode="aspectFill" src="{{'http://puui.qpic.cn/vpic/0/'+item.txvVid + '.png/0'}}"></image>
 					</view>
 					<view style="background:#ffffff;height:100rpx;width:690rpx; ">
-						<view class="{{item.viewed? 'readVideoTitle': 'videoTitle'}} txvTitle" data-id="{{item._id}} " bindtap="handleDetail ">
+						<view class="txvTitle {{item.viewed? 'readVideoTitle': 'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail">
 							{{item.title}}
 						</view>
 
