@@ -46,7 +46,6 @@ Page({
 		numArtical: 200,
 		numFriend: 90,
 		ratio: 0,
-		yinHao: '/images/yinHao.png',
 
 		entityId: undefined,
 		entity: {},
@@ -75,7 +74,8 @@ Page({
 		saveToCamera: 'openSetting',
 		currentVideo: 0,
 		btnSavePitcureLetter: '',
-		reportSubmit: true
+		reportSubmit: true,
+		baseImageUrlYinHao: undefined
 	},
 
 	handleChangeTypeVideo: function (e) {
@@ -303,7 +303,9 @@ Page({
 			this.setData({
 				baseImageUrlCircle: 'https://' + res.split('/')[2] + '/static/images/circle.png',
 				baseImageUrlHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png ',
-				baseImagePlay: 'https://' + res.split('/')[2] + '/static/images/play.png'
+				baseImagePlay: 'https://' + res.split('/')[2] + '/static/images/play.png',
+				baseImageUrlAllStar: 'https://' + res.split('/')[2] + '/static/images/allStar.png',
+				baseImageUrlYinHao: 'https://' + res.split('/')[2] + '/static/images/yinHao.png',
 			})
 		})
 
@@ -572,7 +574,7 @@ Page({
 			ctx.setFillStyle('#fff');
 			ctx.fillText('阅读了我的分享', 100 * ratio, 116 * ratio);
 			// 绘制双引号
-			let yinHao = this.data.yinHao;
+			let yinHao = this.data.baseImageUrlYinHao;
 			ctx.drawImage(yinHao, 80 * ratio, 56 * ratio, 14 * ratio, 14 * ratio)
 
 			// 绘制头像
@@ -663,15 +665,12 @@ Page({
 			} else {
 				canvasTtile = title.slice(0, parseInt(14 / ratio)) + '...'
 			}
-			ctx.font = 'normal bold sans-serif';
+			ctx.font = 'normal bold 14px sans-serif';
 			ctx.setFontSize(18 * ratio)
 			ctx.setFillStyle('#333333');
 
 			ctx.fillText(canvasTtile, 30 * ratio, 180 * ratio, 260 * ratio);
-			ctx.draw();
-
-			//绘制之后加一个延时去生成图片，如果直接生成可能没有绘制完成，导出图片会有问题。
-			setTimeout(function () {
+			ctx.draw(true, () => {
 				wx.canvasToTempFilePath({
 					x: 0,
 					y: 0,
@@ -710,9 +709,10 @@ Page({
 						console.log(res)
 						wx.hideLoading();
 					}
-				})
-			}, 2000);
+				}, that)
+			});
 		})
+
 	},
 
 

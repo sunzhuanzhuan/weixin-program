@@ -80,26 +80,26 @@
 					<view class="btnBoxKonw" style="flex:4;"></view>
 					<button class="btnBox btnCollect" style='flex:1' catchtap="handleLikeButtonTapped" form-type="submit" data-item="like" bindgetuserinfo="handleAuthor"
 					 open-type="{{type}}" style="{{isIphoneX? 'height:100rpx;': 'height:100rpx'}} ">
-						<image class="imgBtn " src="{{isLike?( '/images/allStar.png'):( '/images/star.png')}} "></image>
+						<image class="imgBtn " src="{{isLike? baseImageUrlAllStar:( '/images/star.png')}} "></image>
 						<view class="letter ">收藏</view>
 					</button>
 					<text class="borderLeft"></text>
 
-					<button class="btnBox btnShareFriend" style='flex:1.5' open-type="{{type1}} " data-item="share " form-type="submit" bindgetuserinfo="handleAuthor "
+					<button class="btnBox btnShareFriend" style='flex:1.5' open-type="{{type1}}" data-item="share" form-type="submit" bindgetuserinfo="handleAuthor"
 					 style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}} ">
 						<image class="imgBtn " src="{{shareButton}} "></image>
 						<view class="letter ">分享好友</view>
 					</button>
 					<text class="borderRight"></text>
 					<button class="btnBox " style='flex:2' open-type="{{type}} " form-type="submit " data-item="poster" bindgetuserinfo="handleAuthor "
-					 catchtap="handlePoster " style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}}; ">
-						<image class="imgBtn " src="{{baseImageUrlCircle}} "></image>
+					 catchtap="handlePoster" style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}}; ">
+						<image class="imgBtn " src="/images/circle.png"></image>
 						<view class="letter ">分享海报</view>
 					</button>
 				</view>
-				<view wx:if="{{isIphoneX}} " class="bol "></view>
-				<view wx:else></view>
+
 			</view>
+			<view class="{{isIphoneX?'bol':''}}  "></view>
 		</button>
 	</form>
 </view>
@@ -110,9 +110,9 @@
 	</button>
 </form>
 <!-- 生成海报 -->
-<view wx:if="{{isShowPoster}} " bindtap="handleSavePicture ">
-	<canvas class="canvas" canvas-id="shareCanvas " bindlongtap="handleSavePictureToCamera "></canvas>
-	<button bindopensetting="handleSavePicture " open-type="{{saveToCamera}} " class="btnSavePicture " style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+<view wx:if="{{isShowPoster}}" class="posterBox" bindtap="handleSavePicture ">
+	<canvas class="canvas" canvas-id="shareCanvas" bindlongtap="handleSavePictureToCamera"></canvas>
+	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}} " class="btnSavePicture " style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 </view>
 
 

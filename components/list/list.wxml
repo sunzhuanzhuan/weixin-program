@@ -57,7 +57,7 @@
 							<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID'>
 								<button form-type="submit " class='btnStarVideo' catchtap="handleLikeButtonTapped " form-type="submit" data-liked="{{item.liked}} "
 								 data-id="{{item.id}} " data-item="{{item}} " bindgetuserinfo="handleAuthor " open-type="{{type}} ">
-									<image class="imgBtnItem txvStar" src="{{item.liked? '/images/allStar.png':'/images/star.png'}} "></image>
+									<image class="imgBtnItem txvStar" src="{{item.liked?baseImageUrlAllStar:'/images/star.png'}} "></image>
 
 									<text class="txvLikedNum">
 										{{item._likedTimes}}
@@ -158,7 +158,7 @@
 										<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID'>
 											<button form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}"
 											 data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
-												<image class="imgBtnItem" style="margin-top:32rpx" src="{{item.liked?'/images/allStar.png':'/images/star.png'}}"></image>
+												<image class="imgBtnItem" style="margin-top:32rpx" src="{{item.liked?baseImageUrlAllStar:'/images/star.png'}}"></image>
 												<text class="bigImgLikedNum">
 													{{item._likedTimes}}
 												</text>
