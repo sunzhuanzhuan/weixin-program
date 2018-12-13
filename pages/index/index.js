@@ -512,7 +512,7 @@ Page({
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
-					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.oldRes.length });
+					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
 				});
 			} else {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
