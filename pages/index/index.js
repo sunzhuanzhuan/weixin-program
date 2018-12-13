@@ -449,17 +449,8 @@ Page({
 				}
 			})
 			gdt.on('listItems', (listId, updateRange, itemList) => {
-
-				const theList = app.listIndex['topScoreds'];
-				let arr = theList.items.splice(0, 3);
-
-				if (app.lists[0] !== app.listIndex['topScoreds']) {
-					app.lists.unshift(app.listIndex['topScoreds']);
-				}
-
 				this.setData({
-					lists: app.lists,
-					imgUrls: arr
+					lists: app.lists
 				})
 
 
@@ -474,7 +465,21 @@ Page({
 			});
 
 
-			gdt.magicListItemLoadMore('topScoreds')
+			gdt.magicListItemLoadMore('topScoreds').then((res) => {
+				let oldRes = JSON.parse(JSON.stringify(res));
+				console.log(app)
+				const theList = app.listIndex['topScoreds'];
+				let arr = theList.items.splice(0, 3);
+
+				if (app.lists[0] !== app.listIndex['topScoreds']) {
+					app.lists.unshift(app.listIndex['topScoreds']);
+				}
+
+				this.setData({
+					lists: app.lists,
+					imgUrls: arr
+				})
+			});
 		});
 		gdt.systemInfo.then((x) => {
 			this.setData({
@@ -488,6 +493,7 @@ Page({
 			this.data.uid = u._id;
 			this.data.nickName = this.data.nickName || u.nickName;
 		});
+
 		gdt.baseServerUri.then((res) => {
 			this.setData({
 				baseImageUrlMy: 'https://' + res.split('/')[2] + '/static/images/my.png',
@@ -508,7 +514,6 @@ Page({
 	//上拉加载
 	onReachBottom: function () {
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
-
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
@@ -526,13 +531,30 @@ Page({
 	onPullDownRefresh: function () {
 		const currentListInstance = this.data.lists[this.data.currentTabIndex]
 		if (currentListInstance) {
-			gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
+			if (currentListInstance._id === 'topScoreds') {
+				gdt.magicListItemLoadLatest(currentListInstance._id).then((res) => {
+					let oldRes = JSON.parse(JSON.stringify(res));
+					const theList = app.listIndex['topScoreds'];
+					let arr = theList.items.splice(0, 3);
 
-				gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
-				setTimeout(() => {
-					wx.stopPullDownRefresh();
-				}, 500);
-			});
+					if (app.lists[0] !== app.listIndex['topScoreds']) {
+						app.lists.unshift(app.listIndex['topScoreds']);
+					}
+
+					this.setData({
+						lists: app.lists,
+						imgUrls: arr
+					})
+				});
+			} else {
+				gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
+
+					gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
+					setTimeout(() => {
+						wx.stopPullDownRefresh();
+					}, 500);
+				});
+			}
 		}
 	},
 	getFormID: function (e) {
