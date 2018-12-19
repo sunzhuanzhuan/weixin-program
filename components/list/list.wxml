@@ -74,7 +74,7 @@
 					</view>
 				</view>
 
-				<view wx:if="{{item.type==='wxArticle' }} ">
+				<view wx:else>
 					<!-- 小图 -->
 					<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list.items[index-1].wxMidVec && list.items[index-1].wxMidVec[list.items[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">
 						<view style="width:100%;overflow:hidden;background:#ffffff; ">
