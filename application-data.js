@@ -260,7 +260,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				body: {
 					appToken: appToken,
 					code: code
-				}
+				},
+				autoLoadingState: true
 			});
 		})
 	}
@@ -365,7 +366,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			const originalPendingRequests = this.localState.pendingRequests;
 			this.localState.pendingRequests += 1;
 			if (originalPendingRequests === 0 && this.localState.autoLoadingState) {
-				wx.showLoading({ title: '加载中' });
+				// wx.showLoading({ title: '加载中' });
 			}
 		});
 
@@ -374,7 +375,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			if (this.localState.pendingRequests <= 0) {
 				this.localState.pendingRequests = 0;
 				if (this.localState.autoLoadingState) {
-					wx.hideLoading({});
+					// wx.hideLoading({});
 				}
 			}
 		});

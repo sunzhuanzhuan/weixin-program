@@ -2,7 +2,7 @@
 @import "/components/like/like.wxss";
 @import "/components/list/list.wxss";
 @import "/pages/detail/detail.wxss";
-
+@import "/components/loadding/loadding.wxss";
 page{
   width:100%;
   height: 100%;

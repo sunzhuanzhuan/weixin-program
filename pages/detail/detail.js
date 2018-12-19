@@ -75,7 +75,8 @@ Page({
 		currentVideo: 0,
 		btnSavePitcureLetter: '',
 		reportSubmit: true,
-		baseImageUrlYinHao: undefined
+		baseImageUrlYinHao: undefined,
+		showLoadding:false
 	},
 
 	handleChangeTypeVideo: function (e) {
@@ -89,7 +90,6 @@ Page({
 
 	// 点击切换视频
 	handleVideo: function (e) {
-		console.log(1111111)
 		this.setData({ currentVideo: e.currentTarget.dataset.index });
 		let qPromise;
 		const scene = gdt.showParam.scene;
@@ -131,6 +131,7 @@ Page({
 	},
 
 	onShow: function () {
+		
 		//网络状况
 		wx.getNetworkType({
 			success(res) {
@@ -209,7 +210,10 @@ Page({
 
 	},
 	onLoad(options) {
-
+		
+		gdt.ready.then(()=>{
+			
+		})
 		if (options.listening == 'false') {
 			this.setData({ isPlay: false })
 		} else if (options.listening == undefined) {
@@ -293,7 +297,7 @@ Page({
 			if (r.entity.type == 'wxArticle') {
 				this.setData({ videoId: r.entity.txvVids[0], videoSource: r.entity.txvVids })
 			}
-			console.log(r.node)
+			this.setData({showLoadding:true})
 
 			this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 

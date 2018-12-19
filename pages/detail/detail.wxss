@@ -1,3 +1,12 @@
+
+@import "/components/loadding/loadding.wxss";
+
+.loaddingCom{
+    width:80rpx;height:120rpx;position: absolute;top:50%;left: 50%;margin-left: -40rpx;margin-top: -50rpx;text-align: center;
+}
+
+
+
 button::after{ border: none;padding: 0 }
 /* --------------------------------------详情--------------------------------------------------------------------------------- */
 .imgOne{

@@ -52,7 +52,8 @@ Page({
 		lastTapTime: 0,
 		// 单击事件点击后要触发的函数
 		lastTapTimeoutFunc: null,
-		reportSubmit: true
+		reportSubmit: true,
+		loadding:undefined
 	},
 
 	//切换轮播图的时候
@@ -226,6 +227,15 @@ Page({
 	},
 
 	handleTitleTab(e) {
+		this.setData({
+			loadding:false
+		})
+		gdt.ready.then((app) => {
+			console.log(app.autoLoadingState)
+			this.setData({
+				loadding:app.autoLoadingState
+			})
+		})
 		// 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
 		if (this.data.touchEndTime - this.data.touchStartTime < 350) {
 			// 当前点击的时间
@@ -278,7 +288,6 @@ Page({
 	},
 	//跳转到详情
 	handleDetail(e) {
-		console.log(e)
 		let everyIndex = e.currentTarget.dataset.everyindex;
 		if (everyIndex == this.data.listenIndexCurrent) {
 			let that = this;
@@ -429,7 +438,6 @@ Page({
 			this.data.appTitle = x;
 		});
 		gdt.ready.then((app) => {
-
 			this.appState = app;
 			if (app.title) {
 				wx.setNavigationBarTitle({
@@ -463,11 +471,12 @@ Page({
 					lists: app.lists
 				});
 			});
-
+			this.setData({
+				loadding:app.autoLoadingState
+			})
 
 			gdt.magicListItemLoadMore('topScoreds').then((res) => {
 				let oldRes = JSON.parse(JSON.stringify(res));
-				console.log(app)
 				const theList = app.listIndex['topScoreds'];
 				let arr = theList.items.splice(0, 3);
 
