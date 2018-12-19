@@ -199,7 +199,7 @@ button::after{ border: none; }
 .boxNum{
   display:inline-block;width:45%;height:420rpx;float:right;margin-left:5%;
 }
-.letter{
+.letter1{
   font-size:24rpx;color:#999999
 }
 .letter44{

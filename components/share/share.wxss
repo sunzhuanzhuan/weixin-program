@@ -52,7 +52,7 @@
 .readNum{
     font-size: 24rpx;
     text-align: left;
-    margin-left: 74rpx;
+    margin-left: 107rpx;
 }
 
   

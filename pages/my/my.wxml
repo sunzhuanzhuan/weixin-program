@@ -13,13 +13,13 @@
 			</view>
 			<view class="boxNum">
 				<view>
-					<view class="letter">阅读</view>
+					<view class="letter1">阅读</view>
 					<view class="letter44">
 						{{userInfo ? num.read : ''}}
 					</view>
 				</view>
 				<view style="margin-top:20rpx">
-					<view class="letter">分享</view>
+					<view class="letter1">分享</view>
 					<view class="letter44">
 						{{userInfo ? num.shared : ''}}
 					</view>
@@ -53,7 +53,7 @@
 	</view>
 	<view style="margin-top:20rpx">
 		<scroll-view enable-back-to-top="true">
-			<template is="share" data="{{reportSubmit:reportSubmit,baseImageUrlCry:baseImageUrlCry,shareList:userInfo ? myShares : [],isMore: MySharesHasMore,baseImageUrlP1:baseImageUrlP1,baseImageUrlP2:baseImageUrlP2,baseImageUrlP3:baseImageUrlP3,baseImageUrlP4:baseImageUrlP4,baseImageUrlP5:baseImageUrlP5,baseImageUrlP6:baseImageUrlP6,baseImageUrlP7:baseImageUrlP7,baseImageUrlP8:baseImageUrlP8,baseImageUrlLogo:baseImageUrlLogo}}"
+			<template is="share" data="{{baseImageUrlShenmi:baseImageUrlShenmi,reportSubmit:reportSubmit,baseImageUrlCry:baseImageUrlCry,shareList:userInfo ? myShares : [],isMore: MySharesHasMore,baseImageUrlP1:baseImageUrlP1,baseImageUrlP2:baseImageUrlP2,baseImageUrlP3:baseImageUrlP3,baseImageUrlP4:baseImageUrlP4,baseImageUrlP5:baseImageUrlP5,baseImageUrlP6:baseImageUrlP6,baseImageUrlP7:baseImageUrlP7,baseImageUrlP8:baseImageUrlP8,baseImageUrlLogo:baseImageUrlLogo}}"
 			/>
 		</scroll-view>
 	</view>

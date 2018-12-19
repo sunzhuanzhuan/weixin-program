@@ -2,7 +2,8 @@
 	<block wx:if="{{list.items.length>0}}">
 		<!-- 推荐页的文章 -->
 		<block wx:if="{{list._id==='topScoreds'}}">
-			<swiper current="{{currentSwiper}}" duration="600" autoplay="true" interval="3000" circular="true" previous-margin="60rpx"
+				<!-- autoplay="true"  -->
+			<swiper current="{{currentSwiper}}" duration="600" interval="3000" circular="true" previous-margin="60rpx"
 			 next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
 				<swiper-item class="swiperItem" bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
 					<image class="{{swiperActiveZero[0]}} swiperImg" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[1].coverUrl}}"
