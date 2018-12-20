@@ -231,9 +231,8 @@ Page({
 			loadding:false
 		})
 		gdt.ready.then((app) => {
-			console.log(app.autoLoadingState)
 			this.setData({
-				loadding:app.autoLoadingState
+				loadding:true
 			})
 		})
 		// 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
@@ -310,13 +309,18 @@ Page({
 			if (that.data.startsWidth >= that.data.screenWidth / 2) {
 				if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
 					that.setData({
+						loadding:false,
 						scrollTop: that.data.scrollTop = 0,
 						scrollLeft: that.data.scrollLeft + 50,
 						templateFlag: true, currentTabIndex: ++that.data.currentTabIndex, isMore: true, list: []
 					}, () => {
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (that.data.currentTabIndex !== that.data.lists.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id);
+							gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+								that.setData({
+									loadding:true,
+								})
+							});
 						}
 					});
 
@@ -324,6 +328,7 @@ Page({
 						that.setData({ currentTabIndex: 0 })
 						that.setData({
 							scrollLeft: that.data.scrollLeft = -100,
+							loadding:true,
 						});
 						wx.hideLoading();
 					}
@@ -359,11 +364,15 @@ Page({
 						that.setData({ scrollLeft: that.data.scrollLeft = 0 });
 					}
 
-					that.setData({ currentTabIndex: --that.data.currentTabIndex, list: [] }, () => {
+					that.setData({ currentTabIndex: --that.data.currentTabIndex, list: [] ,	loadding:false,}, () => {
 
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (!currentListInstance.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id);
+							gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+								that.setData({
+									loadding:true,
+								})
+							});
 						}
 					})
 					if (that.data.listenTablistCurrent != that.data.currentTabIndex) {
@@ -472,7 +481,7 @@ Page({
 				});
 			});
 			this.setData({
-				loadding:app.autoLoadingState
+				loadding:true
 			})
 
 			gdt.magicListItemLoadMore('topScoreds').then((res) => {
@@ -522,14 +531,23 @@ Page({
 	},
 	//上拉加载
 	onReachBottom: function () {
+		this.setData({
+			loadding:false
+		})
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
+					this.setData({
+						loadding:true
+					})
 					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
 				});
 			} else {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
+					this.setData({
+						loadding:true
+					})
 					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
 				});
 			}
@@ -538,10 +556,17 @@ Page({
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
-		const currentListInstance = this.data.lists[this.data.currentTabIndex]
+		const currentListInstance = this.data.lists[this.data.currentTabIndex];
+		this.setData({
+			loadding:false
+		})
+		let that = this;
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadLatest(currentListInstance._id).then((res) => {
+					this.setData({
+						loadding:true
+					})
 					let oldRes = JSON.parse(JSON.stringify(res));
 					const theList = app.listIndex['topScoreds'];
 					let arr = theList.items.splice(0, 3);
@@ -561,6 +586,9 @@ Page({
 					gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
 					setTimeout(() => {
 						wx.stopPullDownRefresh();
+						that.setData({
+							loadding:true
+						})
 					}, 500);
 				});
 			}

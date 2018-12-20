@@ -19,7 +19,8 @@ Page({
 
 		currentTab: 'myShares',
 		isHome: false,
-		reportSubmit: true
+		reportSubmit: true,
+		loadding:false
 	},
 	onLoad: function () {
 		if (getCurrentPages()[0] === this) {
@@ -75,13 +76,15 @@ Page({
 			this.setData({ myShares: this.appState.myShares, mySharesHasMore: this.appState.myShares.__hasMore !== false });
 		});
 		gdt.on('shared', () => {
-			this.setData({ myShares: this.appState.myShares, mySharesHasMore: this.appState.myShares.__hasMore !== false });
+			this.setData({myShares: this.appState.myShares, mySharesHasMore: this.appState.myShares.__hasMore !== false });
 		});
 		gdt.on('likedItems', makeMyLikes);
 		gdt.on('liked', makeMyLikes);
 		gdt.on('unliked', makeMyLikes);
 		// gdt.magicMyLikedFirstLoad();
-		gdt.magicMySharedFirstLoad();
+		gdt.magicMySharedFirstLoad().then(()=>{
+			this.setData({loadding:true,})
+		});
 		gdt.fetchDashboardAnalytics();
 		gdt.baseServerUri.then((res) => {
 			this.setData({
@@ -114,6 +117,7 @@ Page({
 		this.appState = gdt.localState;
 		this.setData({
 			num: this.appState.dashboardAnalytics
+			
 		});
 		gdt.track('show-my-dashboard');
 		wx.showShareMenu({
@@ -159,8 +163,10 @@ Page({
 		});
 	},
 	onReachBottom: function () {
-
-		gdt.magicMySharedLoadMore();
+		this.setData({loadding:false})
+		gdt.magicMySharedLoadMore().then(()=>{
+			this.setData({loadding:true})
+		});
 		gdt.track('item-list-share-load-more')
 	},
 	onShareAppMessage: function ({ from, target, webViewUrl }) {
@@ -203,14 +209,16 @@ Page({
 	},
 	//收藏和浏览足迹
 	handleTapHistoryOrArticalOrVideo: function (e) {
-		console.log(e.currentTarget.dataset.name)
 		wx.navigateTo({
 			url: '/pages/history/history?type=' + e.currentTarget.dataset.name
 		})
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
-		gdt.magicMySharedLoadLatest();
+		this.setData({loadding:false})
+		gdt.magicMySharedLoadLatest().then(()=>{
+			this.setData({loadding:true})
+		});
 		gdt.track('item-list-share-load-first')
 	},
 

@@ -1,9 +1,13 @@
 <import src="/components/like/like.wxml" />
 <import src="/components/share/share.wxml" />
+
+<import src="/components/loadding/loadding.wxml" />
+<template is='loadding' wx:if="{{!loadding}}"/>
+
 <view>
 	<view class="bigBox">
 		<view>
-			<view class="nick" style="">
+			<view class="nick" >
 				<button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
 					<image style="width: 200rpx;height: 200rpx;border-radius: 50%;" src="{{userInfo.avatarUrl?userInfo.avatarUrl:baseImageUrlNoAvator}}"></image>
 					<view class="avatar" style="text-aligin:center;color:#333333;font-weight:normal">
@@ -36,7 +40,7 @@
 				<image src="{{baseImageUrlHistory}}" class="imgHistory" />
 				<view class="letterHistory">浏览历史</view>
 			</view>
-			<text class="letterLeft" style=""></text>
+			<text class="letterLeft"></text>
 			<view bindtap="handleTapHistoryOrArticalOrVideo" data-name="artical" class="boxHistory">
 				<image src="{{baseImageUrlArtical}}" class="imgHistory" />
 				<view class="letterHistory">收藏的文章</view>

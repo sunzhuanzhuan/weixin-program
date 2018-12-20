@@ -1,3 +1,8 @@
+
+
+<import src="/components/loadding/loadding.wxml" />
+<template is='loadding' wx:if="{{!loadding}}"/>
+
 <view>
 	<view class="item item-{{index}}" wx:for="{{name === 'history' ? myViews : name === 'artical'? myCollectArtical :myCollectVideo }}"
 	 style="width:100%;overflow:hidden;background:#fff;">

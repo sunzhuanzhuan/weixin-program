@@ -1,6 +1,7 @@
 
 @import "/components/share/share.wxss";
 @import "/components/like/like.wxss";
+@import "/components/loadding/loadding.wxss";
 button::after{ border: none; }
 ::-webkit-scrollbar{
   width: 0;

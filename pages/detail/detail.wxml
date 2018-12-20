@@ -103,9 +103,9 @@
 						<view class="letter ">分享海报</view>
 					</button>
 				</view>
-
+				<view class="{{isIphoneX?'bol':''}}  "></view>
 			</view>
-			<view class="{{isIphoneX?'bol':''}}  "></view>
+			
 		</button>
 	</form>
 </view>

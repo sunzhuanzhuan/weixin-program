@@ -16,7 +16,8 @@ Page({
 		myViewsHasMore: undefined,
 		type1: 'getUserInfo',
 		screenHeight: '',
-		reportSubmit: true
+		reportSubmit: true,
+		loadding:false,
 
 	},
 	onShow: function () {
@@ -88,7 +89,7 @@ Page({
 					entity.readTimes = parseInt(Math.random() * 20 + 30)
 				}
 			});
-			this.setData({ myCollectArtical: this.appState.myCollectArtical, myCollectArticalHasMore: this.appState.myCollectArtical.__hasMore !== false });
+			this.setData({myCollectArtical: this.appState.myCollectArtical, myCollectArticalHasMore: this.appState.myCollectArtical.__hasMore !== false });
 
 
 		};
@@ -167,19 +168,25 @@ Page({
 
 
 		if (options.type === 'history') {
-			gdt.magicMyViewsFirstLoad();
+			gdt.magicMyViewsFirstLoad().then(()=>{
+				this.setData({loadding:true})
+			});
 			wx.setNavigationBarTitle({
 				title: '浏览历史',
 			});
 
 		} else if (options.type === 'artical') {
-			gdt.magicMyCollectArticalFirstLoad();
+			gdt.magicMyCollectArticalFirstLoad().then(()=>{
+				this.setData({loadding:true})
+			});
 			wx.setNavigationBarTitle({
 				title: '收藏的文章',
 			});
 
 		} else {
-			gdt.magicMyCollectVideoFirstLoad();
+			gdt.magicMyCollectVideoFirstLoad().then(()=>{
+				this.setData({loadding:true})
+			});
 			wx.setNavigationBarTitle({
 				title: '收藏的视频',
 			});
@@ -241,19 +248,29 @@ Page({
 
 	},
 	onReachBottom: function () {
+		this.setData({loadding:false,})
 		if (this.data.name == 'history') {
-			gdt.magicMyViewsLoadMore()
+			gdt.magicMyViewsLoadMore().then(()=>{
+				this.setData({loadding:true,})
+			})
 		} else if (this.data.name == 'artical') {
-			gdt.magicMyCollectArticalLoadMore()
+			gdt.magicMyCollectArticalLoadMore().then(()=>{
+				this.setData({loadding:true,})
+			})
 		} else {
-			gdt.magicMyCollectVideoLoadMore()
+			gdt.magicMyCollectVideoLoadMore().then(()=>{
+				this.setData({loadding:true,})
+			})
 		}
 
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
+		let that = this;
+		this.setData({loadding:false})
 		if (this.data.name === 'history') {
 			gdt.magicMyViewsLoadLatest().then(() => {
+				that.setData({loadding:true,})
 				gdt.track('item-list-view-load-first')
 				setTimeout(() => {
 					wx.stopPullDownRefresh();
@@ -264,6 +281,7 @@ Page({
 		} else if (this.data.name === 'artical') {
 
 			gdt.magicMyCollectArticalLoadLatest().then(() => {
+				that.setData({loadding:true,})
 				gdt.track('item-list-liked-wxArticle-load-first')
 				setTimeout(() => {
 					wx.stopPullDownRefresh();
@@ -273,6 +291,7 @@ Page({
 
 		} else {
 			gdt.magicMyCollectVideoLoadLatest().then(() => {
+				that.setData({loadding:true,})
 				gdt.track('item-list-liked-txvVideo-load-first')
 				setTimeout(() => {
 					wx.stopPullDownRefresh();
