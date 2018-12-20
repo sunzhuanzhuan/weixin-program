@@ -5,7 +5,6 @@
     top:40%;
     left: 50%;
     margin-left: -40rpx;
-    margin-top: -50rpx;
     text-align: center;
     z-index: 2000;
 }
