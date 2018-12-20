@@ -187,6 +187,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					if (autoLoadingState) {
 						this.emit('loadingComplete');
 					}
+					wx.showToast({
+						title:'请求失败，请稍后重试',
+						icon:'none',
+						duration:2000
+					})
 					return Promise.reject(err);
 				});
 			});
