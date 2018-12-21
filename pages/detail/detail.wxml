@@ -10,67 +10,14 @@
 <view>
 	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll"
 	 enable-back-to-top="true">
+	 <view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
+           
+		<rich-text class="_root" wx:if="{{nodes.type === undefined}}"  nodes="{{[node]}}"></rich-text>
+	</view>
 
-
-
-		<view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
-			<!-- <txv-video wx:if="{{node.type == 'txvVideo'}}" vid="{{node.vid}}" playerid="video{{node.vid}}" muted="{{isMuted}}"></txv-video> -->
-
-			<view wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
-				<view wx:if="{{isPlayVideo && index == videoCurrent}}">
-					<txv-video vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
-				</view>
-				<view wx:else style="height:400rpx;width:700rpx;position:relative ">
-					<image style="height:400rpx;width:700rpx;" bindtap="handleChangeTypeVideo" src="{{'http://puui.qpic.cn/vpic/0/'+videoId +'.png/0'}}"
-					/>
-					<image data-index="{{index}}" class="imgOne" bindtap="handleChangeTypeVideo" src="{{baseImagePlay}}" />
-
-				</view>
-			</view>
-			<rich-text class="_root {{rootClassMixin}}" wx:if="{{nodes.type === undefined}}" nodes="{{[node]}}"></rich-text>
-		</view>
 
 
 	</scroll-view>
-	<!-- 纯视频的布局 -->
-	<view wx:if="{{entity.type == 'txvVideo'}}">
-		<view style="width:680rpx;height:390rpx;">
-			<view style="width:750rpx">
-				<txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
-			</view>
-			<view style="width:750rpx;background:#fff;padding:10rpx 0;">
-				<view class="nowrapBig" style="padding-top:20rpx;padding-left:34rpx;">{{entity.title}}</view>
-				<view class="nowrap" style="font-size:32rpx;padding-left:34rpx;">
-					<text style="font-size:24rpx;color:#BBBBBB;">来源</text>
-					<text style="font-size:24rpx;color:#BBBBBB"> {{entity.author}}</text>
-				</view>
-			</view>
-
-		</view>
-		<view>
-			<view class="relative">相关</view>
-			<view class="view1" style="{{isIphoneX?'height:660rpx':'height:520rpx'}};">
-				<view wx:for="{{recommendations}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="handleVideo" style="display:flex;flex-direction:rows;{{index === 0?'padding-top:40rpx':''}}">
-					<view class="view2">
-						<image style="width:260rpx;height:180rpx;{{currentVideo == index?'box-shadow: 0 2rpx 8rpx 8rpx #ffe000;':''}}" src="{{item.coverUrl}}"
-						/>
-
-
-					</view>
-					<view style="position:relative;height:180rpx;">
-						<view class="nowrap">
-							{{item.title}}
-						</view>
-						<view style="font-size:24rpx;color:#999;position:absolute;bottom:0">
-
-							来源: {{item.author}}</view>
-
-					</view>
-				</view>
-			</view>
-
-		</view>
-	</view>
 
 
 

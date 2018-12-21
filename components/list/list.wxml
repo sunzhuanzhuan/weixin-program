@@ -40,41 +40,9 @@
 		</block>
 		<view bind:touchstart="handleTouchStart" bind:touchend="handleTouchEnd">
 			<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
-				<!-- 视频 -->
-				<view wx:if="{{item.type === 'txvVideo'}}" class="item  item-{{index}} itemBigBox">
-					<view wx:if='{{currentindex == index }}' data-item="{{item}}" data-currentIndex='{{index}}'>
-						<txv-video vid="{{item.txvVid}}" playerid="{{item.txvVid}}video" autoplay="{{isVideo}}"></txv-video>
-					</view>
-					<view wx:else data-currentIndex='{{index}}' data-item="{{item}}" style="position:relative;" bindtap='changeVideo'>
-						<image src='{{baseImageUrlPlay}}' class="txvImageUrlPlay" />
-						<image class="txvImageCover" mode="aspectFill" src="{{'http://puui.qpic.cn/vpic/0/'+item.txvVid + '.png/0'}}"></image>
-					</view>
-					<view style="background:#ffffff;height:100rpx;width:690rpx; ">
-						<view class="txvTitle {{item.viewed? 'readVideoTitle': 'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail">
-							{{item.title}}
-						</view>
+				
 
-						<view data-id="{{item._id}} " style="float:right;width:250rpx ">
-							<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID'>
-								<button form-type="submit " class='btnStarVideo' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}} "
-								 data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor " open-type="{{type}} ">
-									<image class="imgBtnItem txvStar" src="{{item.liked?baseImageUrlAllStar:'/images/star.png'}} "></image>
-
-									<text class="txvLikedNum">
-										{{item._likedTimes}}
-									</text>
-								</button>
-							</form>
-							<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID'>
-								<button class='btnShareVideo' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
-									<image class="imgBtnItem " src="/images/share.png "></image>
-								</button>
-							</form>
-						</view>
-					</view>
-				</view>
-
-				<view wx:else>
+				<view>
 					<!-- 小图 -->
 					<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list.items[index-1].wxMidVec && list.items[index-1].wxMidVec[list.items[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">
 						<view style="width:100%;overflow:hidden;background:#ffffff; ">
