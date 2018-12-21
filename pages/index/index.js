@@ -230,11 +230,6 @@ Page({
 		this.setData({
 			loadding:false
 		})
-		gdt.ready.then((app) => {
-			this.setData({
-				loadding:true
-			})
-		})
 		// 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
 		if (this.data.touchEndTime - this.data.touchStartTime < 350) {
 			// 当前点击的时间
@@ -262,7 +257,11 @@ Page({
 		});
 		const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
 		if (currentListInstance) {
-			gdt.magicListItemFirstLoad(currentListInstance._id);
+			gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+				this.setData({
+					loadding:true
+				})
+			});
 			gdt.track('index-show-tab', { listId: currentListInstance._id, title: currentListInstance.title });
 		}
 		if (this.data.listenTablistCurrent != this.data.currentTabIndex) {
