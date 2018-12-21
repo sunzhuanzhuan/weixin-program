@@ -1,0 +1,7 @@
+
+<template name="loadding">
+	<view class="loaddingCom">
+		<image src='/images/loading.png' style="width:80rpx;height:100rpx;"></image>
+		<text style="font-size:20rpx">加载中</text>
+	</view>
+</template>

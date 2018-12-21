@@ -2,7 +2,7 @@ module.exports.request = function (method, url, _options) {
     let options = _options || {};
     const qObj = {
         url: url,
-        method: method.toUpperCase(),
+		method: method.toUpperCase(),
 
     };
 
@@ -49,7 +49,7 @@ module.exports.request = function (method, url, _options) {
 
     return new Promise((resolve, reject) => {
         qObj.success = resolve;
-        qObj.fail = reject;
+        qObj.fail =reject;
         wx.request(qObj);
     });
 

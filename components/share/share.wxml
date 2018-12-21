@@ -1,99 +1,103 @@
 <template name="share">
-    <block wx:if="{{shareList.length==0}}">
-            <view style="overflow:hidden;background:#fff" bindtap="handleDetailIntroduce">
-                        <text style="font-size:20rpx;float:left;padding:0 10rpx;margin-left:30rpx;border:1px solid #979797;border-radius:20rpx;margin-top:20rpx;color:#979797"> {{item.type=="txvVideo"?'视频':'文章'}} </text>
-                        <view style="float:left;height:80rpx" >
-                            
-                            <view class="letterBox">
-                                <view class="nowrapBig">功能介绍：终于知道分享的内容被谁读了</view>
-                                
-                            </view>
-                        </view>
-                    </view>
-                    <block style="padding-left:100rpx;background:#fff">
-                        <view style="padding-left:30rpx;background:#fff">
-                            <view class="readNum" style="float:left;color:#999999;">已有<text  style="color:#333"> 8 </text>位好友阅读</view>
-                            <view style="height:120rpx;padding-left:80rpx;background:#fff;width:90%;overflow-x:scroll;white-space:nowrap">
-                                <image class="avatarReadS" src="/images/p1.png"></image>
-                                <image class="avatarReadS" src="/images/p2.png"></image>
-                                <image class="avatarReadS" src="/images/p3.png"></image>
-                                <image class="avatarReadS" src="/images/p4.png"></image>
-                                <image class="avatarReadS" src="/images/p5.png"></image>
-                                <image class="avatarReadS" src="/images/p6.png"></image>
-                                <image class="avatarReadS" src="/images/p7.png"></image>
-                                <image class="avatarReadS" src="/images/p8.png"></image>
-                            </view>
-
-                        </view>
-                        
-
-                    </block>
-    </block> 
-
-    <block  wx:if="{{shareList.length >0}}">
-        <view wx:for="{{shareList}}" class="container"  wx:key="{{index}}" style="background:#fff;padding-top:20rpx">
-            <view data-id="{{item.id}}"  >
-                <view style="width:96%;margin-left:4%;border-bottom: 1rpx solid #E6E6E6;overflow:hidden">
-                    <view style="overflow:hidden">
-                        <text style="color:#979797;font-size:20rpx;float:left;padding:0 10rpx;border:1rpx solid #979797;border-radius:20rpx;margin-top:20rpx"> {{item.type=="txvVideo"?'视频':'文章'}} </text>
-                        <view bindtap="handleDetail" data-id="{{item.entity.id}}" style="float:left;height:80rpx" >
-                            
-                            <view class="letterBox">
-                                <view class="nowrapBig" style="color:#333">{{item.entity.title}}</view>
-                                
-                            </view>
-                        </view>
-                    </view>
-                    <block wx:if="{{item.referencers.length>0}}" style="">
-                        <view style="margin-left:30rpx;">
-                            <view class="readNum" style="float:left;color:#999999;margin-left:44rpx">已有<text style="color:#333;font-weight:bolder"> {{item.referencers.length}} </text>位好友阅读</view>
-                            <view style="height:120rpx;margin-left:48rpx;width:90%;overflow-x:scroll;white-space:nowrap">
-                                <view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block;margin-top:10rpx;" >
-                                    <view wx:if="{{item.avatarUrl}}">
-                                        <image class="avatarRead" src="{{item.avatarUrl}}"></image>
-                                    </view>
-                                    <view wx:else wx:key="{{item.id}}">
-                                        <image class="avatarReadS" src="/images/shenmi.png"></image>
-                                    </view>
-                                </view>
-                            </view>
-
-                        </view>
-                        
-
-                    </block>
-                    <block wx:else>
-                         <view class="readNum" style="float:left;color:#999999;margin-top:12rpx;">已有<text style="color:#333;font-weight:bolder"> 0 </text> 位好友阅读</view>
-
-                        <button  open-type="share" data-item="{{item}}" class="readNum" style="height:64rpx;margin-bottom:20rpx;width:144rpx;background: #ffffff;padding-bottom:40rpx;">
-
-                            <view style="float:left;color:#FFDB3D;border:2rpx solid #FFDB3D;font-size:24rpx;margin-left:30rpx;height:36rpx;line-height:40rpx;padding:2rpx 6rpx;display:inline-block;margin-top:10rpx;">再次分享</view>
-                        </button>
-                    </block>
-                </view>
-
-            </view>
-        </view> 
-        <view wx:if="{{isMore}}" style="width:100%; height:60rpx;font-size: 28rpx;text-align: center;line-height: 60rpx;">
-        </view>
-       <view wx:else style="width:100%; height:200rpx;font-size: 28rpx;text-align: center;margin-top:60rpx">
-            <view style='height:50rpx;overflow:hidden'>
-                <image src="/images/logo.png" style="vertical-align:top;width:32rpx;height:32rpx;margin-right: 12rpx;float:left;margin-top:10rpx;padding-left:210rpx;"></image>
-                <text style="color:#ccc;font-size:20rpx;float:left;vertical-align:top;line-height:25px;height:25px"> 由小鱼聚合平台提供技术支持</text>
-            </view>
-            <!-- <view style="text-align:center;dispaly:block">产品意见反馈请添加微信：13264256564</view> -->
-        </view>
-    </block>
-    <block>
-        <view wx:if="{{shareList.length==0}}" style="text-align: center;margin-top: 20rpx">
-            <view>
-                <image src="{{imgCry}}" style="width: 140rpx;height: 140rpx;"></image>
-            </view>
-            <view>
-                <text style="font-size: 28rpx;color: #c3c3c3">分享为空</text>
-            </view>
-        </view>
-    </block>
-
-
+	<block wx:if="{{shareList.length==0}}">
+		<view style="overflow:hidden;background:#fff" bindtap="handleDetailIntroduce">
+			<text class="txvOrArtical">
+				{{item.type=="txvVideo"?'视频':'文章'}}
+			</text>
+			<view style="float:left;height:80rpx">
+				<view class="letterBox">
+					<view class="nowrapBig">功能介绍：终于知道分享的内容被谁读了</view>
+				</view>
+			</view>
+		</view>
+		<block style="padding-left:100rpx;background:#fff">
+			<view style="padding-left:30rpx;background:#fff">
+				<view class="readNum" style="float:left;color:#999999;">
+					已有
+					<text style="color:#333">8</text>
+					位好友阅读
+				</view>
+				<view class="boxEightImg">
+					<image class="avatarReadS" src="{{baseImageUrlP1}}"></image>
+					<image class="avatarReadS" src="{{baseImageUrlP2}}"></image>
+					<image class="avatarReadS" src="{{baseImageUrlP3}}"></image>
+					<image class="avatarReadS" src="{{baseImageUrlP4}}"></image>
+					<image class="avatarReadS" src="{{baseImageUrlP5}}"></image>
+					<image class="avatarReadS" src="{{baseImageUrlP6}}"></image>
+					<image class="avatarReadS" src="{{baseImageUrlP7}}"></image>
+					<image class="avatarReadS" src="{{baseImageUrlP8}}"></image>
+				</view>
+			</view>
+		</block>
+	</block>
+	<block wx:if="{{shareList.length >0}}">
+		<view wx:for="{{shareList}}" class="container" wx:key="{{index}}" style="background:#fff;padding-top:20rpx">
+			<view data-id="{{item.id}}">
+				<view style="width:96%;margin-left:4%;border-bottom: 1rpx solid #E6E6E6;overflow:hidden">
+					<view style="overflow:hidden">
+						<text class="txvOrArtical">
+							{{item.type=="txvVideo"?'视频':'文章'}}
+						</text>
+						<view bindtap="handleDetail" data-id="{{item.entity.id}}" style="float:left;height:80rpx">
+							<view class="letterBox">
+								<view class="nowrapBig" style="color:#333">
+									{{item.entity.title}}
+								</view>
+							</view>
+						</view>
+					</view>
+					<block wx:if="{{item.referencers.length>0}}">
+						<view style="margin-left:64rpx;">
+							<view class="readNum" style="float:left;color:#999999;margin-left:44rpx">
+								已有
+								<text style="color:#333;font-weight:bolder;display:inline-block;line-height:1">
+									{{item.referencers.length}}
+								</text>
+								位好友阅读
+							</view>
+							<view style="height:120rpx;margin-left:48rpx;width:90%;overflow-x:scroll;white-space:nowrap">
+								<view wx:for="{{item.referencers}}" wx:key="{{index}}" style="display: inline-block;margin-top:10rpx;">
+									<view wx:if="{{item.avatarUrl}}">
+										<image class="avatarRead" src="{{item.avatarUrl}}"></image>
+									</view>
+									<view wx:else wx:key="{{item.id}}">
+										<image class="avatarReadS" src="{{baseImageUrlShenmi}}"></image>
+									</view>
+								</view>
+							</view>
+						</view>
+					</block>
+					<block wx:else>
+						<view class="readNum" style="float:left;color:#999999;margin-top:12rpx;">
+							已有
+							<text style="color:#333;font-weight:bolder;display:inline-block;line-height:1">0</text>
+							位好友阅读
+						</view>
+						<button open-type="share" data-item="{{item}}" class="readNum againShareBtn">
+							<view class="againShare">
+								再次分享
+							</view>
+						</button>
+					</block>
+				</view>
+			</view>
+		</view>
+		<view wx:if="{{isMore}}" class="isMoreCss"></view>
+		<view wx:else class='isMoreElse'>
+			<view style='height:50rpx;'>
+				<image src="{{baseImageUrlLogo}}" class="footerTitleImg"></image>
+				<text class="footerTitleLetter">由小鱼聚合平台提供技术支持</text>
+			</view>
+		</view>
+	</block>
+	<block>
+		<view wx:if="{{shareList.length==0}}" style="text-align: center;margin-top: 20rpx">
+			<view>
+				<image src="{{baseImageUrlCry}}" style="width: 140rpx;height: 140rpx;"></image>
+			</view>
+			<view>
+				<text style="font-size: 28rpx;color: #c3c3c3">分享为空</text>
+			</view>
+		</view>
+	</block>
 </template>

@@ -1,56 +1,66 @@
-let app = getApp().globalData;
+// pages/log/detail.js
 Page({
-    data:{
-        iPhoneX:false,
-        name:'',
-        home: '../../images/home.png',
-        bgImg:'/images/date.png',
-        year:'',
-        month:'',
-        day:''
-    },
-    onShow:function(){
-        //截屏事件
-        wx.onUserCaptureScreen(function (res) {
-            gdt.track('let-friend-know-capture-screen');
-        })
-        let a ='';
-        if(new Date().getMonth()+1<10){
-            a = "0"+(new Date().getMonth()+1);
-        }else{
-            a = new Date().getMonth()+1;
-        }
 
-        this.setData({
-            year:new Date().getFullYear(),
-            month:a,
-            day:new Date().getDate()
-        })
-    },
-    onLoad:function (options) {
-        this.setData({name:options.nick})
-        // wx.getSystemInfo({
-        //     success: function (res) {
-        //         let arr = res.model.split(' ').pop().join(' ');
-        //         if (res.model === 'iPhone X'|| arr=='iPhone X') {
-        //             that.setData({iPhoneX: true})
-        //         } else {
-        //             that.setData({iPhoneX: false})
-        //         }
-        //     }
-        // })
-    },
-    //关闭
-    handleClose() {
-        wx.navigateBack({
-            url:'/pages/detail/detail'
-        })
-        this.setData({name:''})
-    },
-    handleCallHome(){
-        wx.navigateTo({
-            url:'/pages/index/index'
-        })
-        this.setData({name:''})
-    }
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

@@ -7,10 +7,10 @@ const util = require("./utils/util.js")
 const PAGESIZE = 20;
 
 const __FAILSAFE_DEMO_EXTCONFIG = {
-    "distroId": "5b63fb56b106d81d9b74972a",
-    "appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
-    "appName": "",
-    "baseUri": "https://dev.xiaoyujuhe.com/v1/distribution"
+	"distroId": "5b63fb56b106d81d9b74972a",
+	"appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
+	"appName": "",
+	"baseUri": "https://dev.xiaoyujuhe.com/v1/distribution"
 };
 
 module.exports = class GlobalDataContext extends EventEmitter {
@@ -186,7 +186,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 }, (err) => {
                     if (autoLoadingState) {
                         this.emit('loadingComplete');
-                    }
+					}
+					wx.showToast({
+						title:'请求失败，请稍后重试',
+						icon:'none',
+						duration:2000
+					})
                     return Promise.reject(err);
                 });
             });
@@ -365,7 +370,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             const originalPendingRequests = this.localState.pendingRequests;
             this.localState.pendingRequests += 1;
             if (originalPendingRequests === 0 && this.localState.autoLoadingState) {
-                wx.showLoading({ title: '加载中' });
+                // wx.showLoading({ title: '加载中' });
             }
         });
 
@@ -374,7 +379,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             if (this.localState.pendingRequests <= 0) {
                 this.localState.pendingRequests = 0;
                 if (this.localState.autoLoadingState) {
-                    wx.hideLoading({});
+                    // wx.hideLoading({});
                 }
             }
         });
@@ -397,6 +402,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
             this.localState.avatarUrl = appBaseInfo.avatarUrl;
             this.localState.lists = appBaseInfo.lists;
             this.localState.pendingAudition = appBaseInfo.pendingAudition;
+            this.localState.toplistEnabled = appBaseInfo.toplistEnabled;
             if (this.localState.pendingAudition) {
                 this.entityTypes = ['wxArticle']
             }
@@ -1311,7 +1317,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
             const queryPromise = this.simpleApiCall('POST', '/my/likes', {
                 body: {
                     entityId: itemId
-                }
+				},
+				autoLoadingState: true
             });
             this.emit('entityUpdate', { _id: itemId, liked: true });
             queryPromise.then((x) => {
@@ -1326,7 +1333,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/likes', {
                 query: {
-                    action: 'del'
+					action: 'del',
+					autoLoadingState: true
                 },
                 body: {
                     entityId: itemId
@@ -1346,7 +1354,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/shares', {
-                body: queryBody
+				body: queryBody,
+				autoLoadingState: true
             });
 
             queryPromise.then((x) => {
@@ -1369,7 +1378,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     duration: duration,
                     startPos: startPos,
                     endPos: endPos
-                }
+				},
+				autoLoadingState: true
             });
 
             return queryPromise;
@@ -1383,7 +1393,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: entityId,
                     view: viewId,
                     duration: duration
-                }
+				},
+				autoLoadingState: true
             });
 
             return queryPromise;
@@ -1397,7 +1408,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
                     entityId: entityId,
                     scene: this.showParam.scene,
                     ref: refId
-                }
+				},
+				autoLoadingState: true
             });
 
             return queryPromise;
@@ -1413,7 +1425,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
                 data: { ...(props || {}), systemInfo, networkType, scene: this.showParam.scene, showParam: this.showParam }
             }
 
-            return this.simpleApiCall('POST', '/ev-collect', { body: qBody });
+            return this.simpleApiCall('POST', '/ev-collect', { body: qBody , autoLoadingState: true});
         });
     }
     //推送消息
@@ -1428,7 +1440,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
         return this.currentUser.then(() => {
             const queryPromise = this.simpleApiCall('POST', '/my/tplMsgQuota', {
-                body: queryBody
+				body: queryBody,
+				autoLoadingState: true
             });
 
             return queryPromise;

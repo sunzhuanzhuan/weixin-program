@@ -1,0 +1,10 @@
+.loaddingCom{
+    width:80rpx;
+    height:120rpx;
+    position: fixed;
+    top:40%;
+    left: 50%;
+    margin-left: -40rpx;
+    text-align: center;
+    z-index: 2000;
+}

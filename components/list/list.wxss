@@ -178,7 +178,7 @@ button{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 630rpx;
+    width: 560rpx;
     font-size: 34rpx;
 }
 .swiperItem{
@@ -228,6 +228,72 @@ button{
       background: -moz-linear-gradient(right,  #FA6450 , #FF9072); /* Firefox 3.6 - 15 */
       background: linear-gradient(to right, #FA6450 , #FF9072); /* 标准的语法（必须放在*/
 }
+/* --------------------------------      首页列表          --------------------------------------- */
+.swiperImg{
+    width:600rpx;border-radius:6rpx;display:block
+}
+.swiperLette{
+    margin-left:20rpx;line-height:100rpx;text-align:left;width:500rpx;font-weight: 600;
+}
+.swiperNumBox{
+    position:absolute;z-index:1;bottom:0;left:0;color:#fff;width:95%;border-radius:0 0 6rpx 6rpx;line-height:90rpx;
 
+}
+.swiperImgRank{
+    position:absolute;z-index:1;left:0;color:#fff;border-radius:0 20rpx 20rpx 0;font-size:22rpx;line-height:40rpx
+}
+.swiperImgRankTwo{
+    position:absolute;z-index:1;left:0;color:#333333;width:80rpx;height:40rpx;border-radius:0 20rpx 20rpx 0;font-size:22rpx;background:#ffe000;line-height:40rpx
+}
+.txvImageUrlPlay{
+    width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx
+}
+.txvImageCover{
+    width:690rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0
+}
+.txvLikedNum{
+    color:#999;font-size:24rpx;display:inline-block;line-height:12rpx;height: 100rpx;float:left;margin-top:32rpx;padding-left:10rpx; 
+}
+.txvStar{
+    float:left;margin-top:28rpx 
+}
+.txvTitle{
+    display:inline-block;line-height:88rpx;padding-left:30rpx;font-weight:bold
+}
+.smallImgCover{
+    float:right;width:240rpx;height:180rpx;border-radius:8rpx 
+}
+.smallImgPause{
+    vertical-align:top;font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:9rpx;height:24rpx
+}
+.smallImgLikedNum{
+    vertical-align:top;color:#999;font-size:24rpx;margin-left:10rpx;display:inline-block;float:left;height:32rpx;line-height:0.5
+}
+.smallImgShare{
+    float:right;background:#fff;margin-right:-18rpx;height:32rpx
+}
+.smallImgLeftFooter{
+    background:#ffffff;width:430rpx;position:absolute;bottom:0;height:32rpx;overflow:hidden
+}
+.smallImgLeftTitleBox{
+    float:rigth;width:430rpx;height:180rpx;position:relative; 
+}
 
-/*                                       新的代码样式 */
+.bigImgCover{
+    width:690rpx;height:400rpx;display:block
+}
+.bigImgCoverBox{
+    position:relative;padding:0;height:400rpx;border-radius:8rpx 8rpx 0 0
+}
+.bigImgTitle{
+    margin-left:20rpx;line-height:100rpx;text-align:left;font-weight:bold
+}
+.bigImgTitleShadow{
+    position:absolute;z-index:1;bottom:0;left:0;color:#fff
+}
+.bigImgPause{
+    vertical-align:top;margin-top:30rpx;font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:10rpx;height:28rpx
+}  
+.bigImgLikedNum{
+    vertical-align:top;color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:34rpx;height: 100rpx;
+}  
