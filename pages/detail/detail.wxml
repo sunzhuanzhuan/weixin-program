@@ -38,7 +38,7 @@
 			<view style="width:750rpx">
 				<txv-video vid="{{entity.txvVid}}" playerid="video"></txv-video>
 			</view>
-			<view style="width:750rpx;background:#fff;">
+			<view style="width:750rpx;background:#fff;padding:10rpx 0;">
 				<view class="nowrapBig" style="padding-top:20rpx;padding-left:34rpx;">{{entity.title}}</view>
 				<view class="nowrap" style="font-size:32rpx;padding-left:34rpx;">
 					<text style="font-size:24rpx;color:#BBBBBB;">来源</text>

@@ -56,8 +56,8 @@
 
 						<view data-id="{{item._id}} " style="float:right;width:250rpx ">
 							<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID'>
-								<button form-type="submit " class='btnStarVideo' catchtap="handleLikeButtonTapped " form-type="submit" data-liked="{{item.liked}} "
-								 data-id="{{item.id}} " data-item="{{item}} " bindgetuserinfo="handleAuthor " open-type="{{type}} ">
+								<button form-type="submit " class='btnStarVideo' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}} "
+								 data-id="{{item.id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor " open-type="{{type}} ">
 									<image class="imgBtnItem txvStar" src="{{item.liked?baseImageUrlAllStar:'/images/star.png'}} "></image>
 
 									<text class="txvLikedNum">
@@ -66,7 +66,7 @@
 								</button>
 							</form>
 							<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID'>
-								<button form-type="submit " class='btnShareVideo' open-type="{{type1}} " data-item="{{item}} " form-type="submit" bindgetuserinfo="handleAuthor ">
+								<button class='btnShareVideo' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
 									<image class="imgBtnItem " src="/images/share.png "></image>
 								</button>
 							</form>
@@ -79,9 +79,9 @@
 					<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" style="background:#f3eeef;{{list.items[index-1].wxMidVec && list.items[index-1].wxMidVec[list.items[index-1].wxMidVec.length-1] == '1'?'margin-top:15rpx':''}};{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1] == '1')?'margin-bottom:15rpx':''}}">
 						<view style="width:100%;overflow:hidden;background:#ffffff; ">
 							<view class="itemSmall " style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1]=='1')? '': 'border-bottom: 1rpx solid #E6E6E6;'}} ">
-								<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail " data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
+								<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
 								<view class="smallImgLeftTitleBox">
-									<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}} " bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">
+									<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">
 										{{item.title}}
 									</view>
 									<view class="smallImgLeftFooter">

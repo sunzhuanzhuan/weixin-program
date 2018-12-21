@@ -459,7 +459,7 @@ Page({
 
 
 			const numArtical = res[0].readingMeta.nthRead + '';
-			// const numArtical = 672+ '';
+			// const numArtical = 162+ '';
 			ctx.setFillStyle('#fff');
 			ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
 			let type = ''
@@ -488,7 +488,7 @@ Page({
 			ctx.setFillStyle('#fff');
 
 			const numFriend = res[0].readingMeta.referencers + '';
-			// const numFriend = 280+ '';
+			// const numFriend = 129+ '';
 			if (numArtical.length === 1) {
 				ctx.fillText(friend, 164 * ratio, 96 * ratio);
 				ctx.fillText(my, 238 * ratio, 96 * ratio);
@@ -515,10 +515,10 @@ Page({
 					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
 
-					ctx.fillText(numFriend, 230 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
 
-					ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 3) {
@@ -531,7 +531,7 @@ Page({
 					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
 
-					ctx.fillText(numFriend, 238 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
 
 					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
@@ -674,48 +674,52 @@ Page({
 			ctx.setFillStyle('#333333');
 
 			ctx.fillText(canvasTtile, 30 * ratio, 180 * ratio, 260 * ratio);
-			ctx.draw(true, () => {
-				wx.canvasToTempFilePath({
-					x: 0,
-					y: 0,
-					width: 320 * ratio,
-					height: 370 * ratio,
-					destWidth: 1280,
-					destHeight: 1480,
-					fileType: 'jpg',
-					quality: 1,
-					canvasId: 'shareCanvas',
-					success: function (res) {
-						that.setData({
-							shareImage: res.tempFilePath,
-							showSharePic: true
-						}, () => {
-							wx.saveImageToPhotosAlbum({
-								filePath: that.data.shareImage,
-								success: function () {
-									console.log('保存成功');
-									that.setData({
-										saveToCamera: ''
-									})
+			ctx.draw();
 
-								},
-								fail: function () {
-									console.log('保存失败');
-									that.setData({
-										saveToCamera: 'openSetting'
-									})
-								}
-							})
-						})
-						wx.hideLoading();
-					},
-					fail: function (res) {
-						console.log(res)
-						wx.hideLoading();
-					}
-				}, that)
-			});
-		})
+            //绘制之后加一个延时去生成图片，如果直接生成可能没有绘制完成，导出图片会有问题。
+            setTimeout(function () {
+                wx.canvasToTempFilePath({
+                    x: 0,
+                    y: 0,
+                    width: 320 * ratio,
+                    height: 370 * ratio,
+                    destWidth: 1280,
+                    destHeight: 1480,
+                    fileType: 'jpg',
+                    quality: 1,
+                    canvasId: 'shareCanvas',
+                    success: function (res) {
+                        that.setData({
+                            shareImage: res.tempFilePath,
+                            showSharePic: true
+                        }, () => {
+                            wx.saveImageToPhotosAlbum({
+                                filePath: that.data.shareImage,
+                                success: function () {
+                                    console.log('保存成功');
+                                    that.setData({
+                                        saveToCamera:''
+                                    })
+                                    
+                                },
+                                fail: function () {
+                                    console.log('保存失败');
+                                    that.setData({
+                                        saveToCamera:'openSetting'
+                                    })
+                                }
+                            })
+                        })
+                        wx.hideLoading();
+                    },
+                    fail: function (res) {
+                        console.log(res)
+                        wx.hideLoading();
+                    }
+                })
+            }, 2000);
+        })
+
 
 	},
 
