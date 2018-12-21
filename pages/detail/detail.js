@@ -459,7 +459,7 @@ Page({
 
 
 			const numArtical = res[0].readingMeta.nthRead + '';
-			// const numArtical = 162+ '';
+			// const numArtical = 215+ '';
 			ctx.setFillStyle('#fff');
 			ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
 			let type = ''
@@ -488,7 +488,7 @@ Page({
 			ctx.setFillStyle('#fff');
 
 			const numFriend = res[0].readingMeta.referencers + '';
-			// const numFriend = 129+ '';
+			// const numFriend = 8+ '';
 			if (numArtical.length === 1) {
 				ctx.fillText(friend, 164 * ratio, 96 * ratio);
 				ctx.fillText(my, 238 * ratio, 96 * ratio);
@@ -496,13 +496,13 @@ Page({
 				ctx.font = 'normal bold 18px sans-serif';
 				if (numFriend.length === 1) {
 
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
 
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
 
-					ctx.fillText(numFriend, 233 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 2) {
@@ -512,13 +512,13 @@ Page({
 				ctx.font = 'normal bold 18px sans-serif';
 				if (numFriend.length === 1) {
 
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
 
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
 
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 3) {
@@ -528,7 +528,7 @@ Page({
 				ctx.font = 'normal bold 18px sans-serif';
 				if (numFriend.length === 1) {
 
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 236* ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
 
 					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
