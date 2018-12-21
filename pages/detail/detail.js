@@ -421,307 +421,307 @@ Page({
 		let ratio = this.data.ratio;
 		let that = this;
 		wx.showLoading({
-			title: '正在生成图片...',
-			mask: true,
+		 title: '正在生成图片...',
+		 mask: true,
 		});
 		let artical = gdt.fetchEntityMeta(this.data.entityId);
 		let downAvatar = gdt.downloadMyAvatar();
 		let downCode = gdt.downloadWxaCode(320, 'pages/detail/detail', this.data.shareId, 'auto')
 		Promise.all([artical, downAvatar, downCode]).then((res) => {
-			let yOffset = 30 * ratio;
-			//绘制标题背景
-			const ctx = wx.createCanvasContext('shareCanvas');
-			ctx.setFillStyle('#ffffff')
-			ctx.fillRect(0, 0, 320 * ratio, 450 * ratio);
-
-			// 绘制通话的框
-			ctx.moveTo(68 * ratio, 62 * ratio)
-			ctx.lineTo(75 * ratio, 52 * ratio);
-			ctx.lineTo(75 * ratio, 72 * ratio);
-			ctx.closePath()
-			// ctx.setFillStyle('#e9ecfa');
-			ctx.setStrokeStyle('#ffffff')
-			ctx.stroke()
-			// 绘制接口的文章数量和分享和背景
-			ctx.rect(75 * ratio, 46 * ratio, 226 * ratio, 80 * ratio)
-			const grd = ctx.createLinearGradient(75 * ratio, 60 * ratio, 226 * ratio, 80 * ratio)
-			grd.addColorStop(0, '#545454')
-			grd.addColorStop(0.2, '#505050')
-			grd.addColorStop(0.4, '#4a4a4a')
-			grd.addColorStop(0.5, '#474747')
-			grd.addColorStop(0.66, '#434343')
-			grd.addColorStop(0.83, '#3c3c3c')
-			grd.addColorStop(1, '#383838')
-			ctx.setFillStyle(grd)
-			ctx.fill();
-			// 绘制数字
-			ctx.font = 'normal bold 18px sans-serif';
-
-
-			const numArtical = res[0].readingMeta.nthRead + '';
-			// const numArtical = 162+ '';
-			ctx.setFillStyle('#fff');
-			ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
-			let type = ''
-			if (this.data.entity.type == 'wxArticle') {
-				type = '阅读的'
-			} else {
-				type = '观看的'
-			}
-
-			const bigTitle = ('这是我在' + this.data.appName + '小程序')
-			ctx.setFontSize(12 * ratio)
-			ctx.setFillStyle('#fff');
-			ctx.fillText(bigTitle, 100 * ratio, 74 * ratio);
-
-			const bigTitleType = (type + '第')
-			ctx.setFontSize(12 * ratio)
-			ctx.setFillStyle('#fff');
-			ctx.fillText(bigTitleType, 100 * ratio, 96 * ratio);
-
-			const friend = ('篇已经有')
-			ctx.setFontSize(12 * ratio)
-			ctx.setFillStyle('#fff');
-
-			const my = (' 个好友')
-			ctx.setFontSize(12 * ratio)
-			ctx.setFillStyle('#fff');
-
-			const numFriend = res[0].readingMeta.referencers + '';
-			// const numFriend = 129+ '';
-			if (numArtical.length === 1) {
-				ctx.fillText(friend, 164 * ratio, 96 * ratio);
-				ctx.fillText(my, 238 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
-				if (numFriend.length === 1) {
-
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
-				} else if (numFriend.length === 2) {
-
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
-				} else if (numFriend.length === 3) {
-
-					ctx.fillText(numFriend, 233 * ratio, 96 * ratio);
-				}
-				ctx.restore()
-			} else if (numArtical.length === 2) {
-				ctx.fillText(friend, 174 * ratio, 96 * ratio);
-				ctx.fillText(my, 248 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
-				if (numFriend.length === 1) {
-
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
-				} else if (numFriend.length === 2) {
-
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
-				} else if (numFriend.length === 3) {
-
-					ctx.fillText(numFriend, 222 * ratio, 96 * ratio);
-				}
-				ctx.restore()
-			} else if (numArtical.length === 3) {
-				ctx.fillText(friend, 184 * ratio, 96 * ratio);
-				ctx.fillText(my, 255 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
-				if (numFriend.length === 1) {
-
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
-				} else if (numFriend.length === 2) {
-
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
-				} else if (numFriend.length === 3) {
-
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
-				}
-				ctx.restore()
-			} else if (numArtical.length === 4) {
-				ctx.fillText(friend, 194 * ratio, 96 * ratio);
-				ctx.fillText(my, 268 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
-				if (numFriend.length === 1) {
-
-					ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
-				} else if (numFriend.length === 2) {
-
-					ctx.fillText(numFriend, 258 * ratio, 96 * ratio);
-				} else if (numFriend.length === 3) {
-
-					ctx.fillText(numFriend, 265 * ratio, 96 * ratio);
-				}
-				ctx.restore()
-			} else if (numArtical.length === 5) {
-				ctx.fillText(friend, 204 * ratio, 96 * ratio);
-				ctx.fillText(my, 278 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
-				if (numFriend.length === 1) {
-
-					ctx.fillText(numFriend, 260 * ratio, 96 * ratio);
-				} else if (numFriend.length === 2) {
-
-					ctx.fillText(numFriend, 270 * ratio, 96 * ratio);
-				} else if (numFriend.length === 3) {
-
-					ctx.fillText(numFriend, 276 * ratio, 96 * ratio);
-				}
-				ctx.restore()
-			}
-
-
-
-
-			ctx.setFontSize(12 * ratio)
-			ctx.setFillStyle('#fff');
-			ctx.fillText('阅读了我的分享', 100 * ratio, 116 * ratio);
-			// 绘制双引号
-			let yinHao = this.data.baseImageUrlYinHao;
-			ctx.drawImage(yinHao, 80 * ratio, 56 * ratio, 14 * ratio, 14 * ratio)
-
-			// 绘制头像
-			const imgPath = res[1];
-			ctx.save()
-			ctx.beginPath()
-			ctx.arc(40 * ratio, 47 * ratio, 23 * ratio, 0, 2 * Math.PI)
-			ctx.clip()
-			ctx.drawImage(imgPath, 17 * ratio, 24 * ratio, 46 * ratio, 46 * ratio)
-			ctx.restore()
-
-			//绘制文章标题
-			const goodsTitle = this.data.nickName;
-			let goodsTitleArray = [];
-			//为了防止标题过长，分割字符串,每行18个
-			for (let i = 0; i < goodsTitle.length / 18; i++) {
-				if (i > 2) {
-					break;
-				}
-				goodsTitleArray.push(goodsTitle.substr(i * 18, 18));
-			}
-			yOffset = 40 * ratio;
-			goodsTitleArray.forEach(function (value) {
-				ctx.setFontSize(14 * ratio);
-				ctx.setFillStyle('#666666');
-				ctx.fillText(value, 80 * ratio, yOffset);
-				yOffset += 25 * ratio;
-			});
-			// 绘制文章的标题和描述
-			const describe = this.data.entity.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～';
-			let canvasDescribe
-
-			//z绘制描述
-			ctx.save();
-			ctx.font = 'normal normal 14px sans-serif';
-			ctx.setFontSize(14 * ratio)
-			ctx.setFillStyle('#666666');
-			if (describe.length < parseInt(19 / ratio)) {
-				canvasDescribe = describe;
-
-				ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
-			} else if (describe.length < parseInt(38 / ratio) && describe.length > parseInt(19 / ratio)) {
-				canvasDescribe = describe.slice(0, parseInt(19 / ratio));
-				ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
-
-				let canvasDescribe1 = describe.slice(parseInt(19 / ratio), describe.length);
-				ctx.fillText(canvasDescribe1, 30 * ratio, 230 * ratio, 260 * ratio);
-
-			} else {
-				canvasDescribe = describe.slice(0, parseInt(19 / ratio));
-				ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
-
-				let canvasDescribe2 = describe.slice(parseInt(19 / ratio), parseInt(38 / ratio)) + '...';
-				ctx.fillText(canvasDescribe2, 30 * ratio, 230 * ratio, 260 * ratio);
-
-			}
-			ctx.restore()
-
-			ctx.moveTo(30 * ratio, 260 * ratio)
-			ctx.setStrokeStyle('#F0F0F0');
-			ctx.lineTo(300 * ratio, 260 * ratio)
-			ctx.stroke()
-			//小程序二维码
-			const code = res[2];
-			ctx.drawImage(code, 20 * ratio, 270 * ratio, 96 * ratio, 96 * ratio)
-
-			//绘制长按小程序
-			let miniApp = '长按识别,进入小程序'
-			ctx.setFontSize(14 * ratio)
-			ctx.setFillStyle('#333333');
-			ctx.fillText(miniApp, 130 * ratio, 300 * ratio, 220 * ratio);
-
-			let miniAppShare = '分享来自'
-			ctx.setFontSize(14 * ratio)
-			ctx.setFillStyle('#333333');
-			ctx.fillText(miniAppShare, 130 * ratio, 326 * ratio, 220 * ratio);
-			ctx.font = 'normal normal 14px sans-serif';
-			let appName = '「' + this.data.appName + '」';
-
-			ctx.setFillStyle('#000');
-			ctx.fillText(appName, 124 * ratio, 346 * ratio, 220 * ratio);
-
-
-			const title = this.data.entity.title;
-			let canvasTtile
-			if (title.length < parseInt(14 / ratio)) {
-				canvasTtile = title;
-			} else {
-				canvasTtile = title.slice(0, parseInt(14 / ratio)) + '...'
-			}
-			ctx.font = 'normal bold 14px sans-serif';
-			ctx.setFontSize(18 * ratio)
-			ctx.setFillStyle('#333333');
-
-			ctx.fillText(canvasTtile, 30 * ratio, 180 * ratio, 260 * ratio);
-			ctx.draw();
-
-            //绘制之后加一个延时去生成图片，如果直接生成可能没有绘制完成，导出图片会有问题。
-            setTimeout(function () {
-                wx.canvasToTempFilePath({
-                    x: 0,
-                    y: 0,
-                    width: 320 * ratio,
-                    height: 370 * ratio,
-                    destWidth: 1280,
-                    destHeight: 1480,
-                    fileType: 'jpg',
-                    quality: 1,
-                    canvasId: 'shareCanvas',
-                    success: function (res) {
-                        that.setData({
-                            shareImage: res.tempFilePath,
-                            showSharePic: true
-                        }, () => {
-                            wx.saveImageToPhotosAlbum({
-                                filePath: that.data.shareImage,
-                                success: function () {
-                                    console.log('保存成功');
-                                    that.setData({
-                                        saveToCamera:''
-                                    })
-                                    
-                                },
-                                fail: function () {
-                                    console.log('保存失败');
-                                    that.setData({
-                                        saveToCamera:'openSetting'
-                                    })
-                                }
-                            })
-                        })
-                        wx.hideLoading();
-                    },
-                    fail: function (res) {
-                        console.log(res)
-                        wx.hideLoading();
-                    }
-                })
-            }, 2000);
-        })
-
-
-	},
+		 let yOffset = 30 * ratio;
+		 //绘制标题背景
+		 const ctx = wx.createCanvasContext('shareCanvas');
+		 ctx.setFillStyle('#ffffff')
+		 ctx.fillRect(0, 0, 320 * ratio, 450 * ratio);
+	  
+		 // 绘制通话的框
+		 ctx.moveTo(68 * ratio, 62 * ratio)
+		 ctx.lineTo(75 * ratio, 52 * ratio);
+		 ctx.lineTo(75 * ratio, 72 * ratio);
+		 ctx.closePath()
+		 // ctx.setFillStyle('#e9ecfa');
+		 ctx.setStrokeStyle('#ffffff')
+		 ctx.stroke()
+		 // 绘制接口的文章数量和分享和背景
+		 ctx.rect(75 * ratio, 46 * ratio, 226 * ratio, 80 * ratio)
+		 const grd = ctx.createLinearGradient(75 * ratio, 60 * ratio, 226 * ratio, 80 * ratio)
+		 grd.addColorStop(0, '#545454')
+		 grd.addColorStop(0.2, '#505050')
+		 grd.addColorStop(0.4, '#4a4a4a')
+		 grd.addColorStop(0.5, '#474747')
+		 grd.addColorStop(0.66, '#434343')
+		 grd.addColorStop(0.83, '#3c3c3c')
+		 grd.addColorStop(1, '#383838')
+		 ctx.setFillStyle(grd)
+		 ctx.fill();
+		 // 绘制数字
+		 ctx.font = 'normal bold 18px sans-serif';
+	  
+	  
+		 // const numArtical = res[0].readingMeta.nthRead + '';
+		 const numArtical = 215+ '';
+		 ctx.setFillStyle('#fff');
+		 ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
+		 let type = ''
+		 if (this.data.entity.type == 'wxArticle') {
+		  type = '阅读的'
+		 } else {
+		  type = '观看的'
+		 }
+	  
+		 const bigTitle = ('这是我在' + this.data.appName + '小程序')
+		 ctx.setFontSize(12 * ratio)
+		 ctx.setFillStyle('#fff');
+		 ctx.fillText(bigTitle, 100 * ratio, 74 * ratio);
+	  
+		 const bigTitleType = (type + '第')
+		 ctx.setFontSize(12 * ratio)
+		 ctx.setFillStyle('#fff');
+		 ctx.fillText(bigTitleType, 100 * ratio, 96 * ratio);
+	  
+		 const friend = ('篇已经有')
+		 ctx.setFontSize(12 * ratio)
+		 ctx.setFillStyle('#fff');
+	  
+		 const my = (' 个好友')
+		 ctx.setFontSize(12 * ratio)
+		 ctx.setFillStyle('#fff');
+	  
+		 // const numFriend = res[0].readingMeta.referencers + '';
+		 const numFriend = 8+ '';
+		 if (numArtical.length === 1) {
+		  ctx.fillText(friend, 164 * ratio, 96 * ratio);
+		  ctx.fillText(my, 238 * ratio, 96 * ratio);
+		  ctx.save();
+		  ctx.font = 'normal bold 18px sans-serif';
+		  if (numFriend.length === 1) {
+	  
+		   ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 2) {
+	  
+		   ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 3) {
+	  
+		   ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
+		  }
+		  ctx.restore()
+		 } else if (numArtical.length === 2) {
+		  ctx.fillText(friend, 174 * ratio, 96 * ratio);
+		  ctx.fillText(my, 248 * ratio, 96 * ratio);
+		  ctx.save();
+		  ctx.font = 'normal bold 18px sans-serif';
+		  if (numFriend.length === 1) {
+	  
+		   ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 2) {
+	  
+		   ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 3) {
+	  
+		   ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
+		  }
+		  ctx.restore()
+		 } else if (numArtical.length === 3) {
+		  ctx.fillText(friend, 184 * ratio, 96 * ratio);
+		  ctx.fillText(my, 255 * ratio, 96 * ratio);
+		  ctx.save();
+		  ctx.font = 'normal bold 18px sans-serif';
+		  if (numFriend.length === 1) {
+	  
+		   ctx.fillText(numFriend, 236* ratio, 96 * ratio);
+		  } else if (numFriend.length === 2) {
+	  
+		   ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 3) {
+	  
+		   ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+		  }
+		  ctx.restore()
+		 } else if (numArtical.length === 4) {
+		  ctx.fillText(friend, 194 * ratio, 96 * ratio);
+		  ctx.fillText(my, 268 * ratio, 96 * ratio);
+		  ctx.save();
+		  ctx.font = 'normal bold 18px sans-serif';
+		  if (numFriend.length === 1) {
+	  
+		   ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 2) {
+	  
+		   ctx.fillText(numFriend, 258 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 3) {
+	  
+		   ctx.fillText(numFriend, 265 * ratio, 96 * ratio);
+		  }
+		  ctx.restore()
+		 } else if (numArtical.length === 5) {
+		  ctx.fillText(friend, 204 * ratio, 96 * ratio);
+		  ctx.fillText(my, 278 * ratio, 96 * ratio);
+		  ctx.save();
+		  ctx.font = 'normal bold 18px sans-serif';
+		  if (numFriend.length === 1) {
+	  
+		   ctx.fillText(numFriend, 260 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 2) {
+	  
+		   ctx.fillText(numFriend, 270 * ratio, 96 * ratio);
+		  } else if (numFriend.length === 3) {
+	  
+		   ctx.fillText(numFriend, 276 * ratio, 96 * ratio);
+		  }
+		  ctx.restore()
+		 }
+	  
+	  
+	  
+	  
+		 ctx.setFontSize(12 * ratio)
+		 ctx.setFillStyle('#fff');
+		 ctx.fillText('阅读了我的分享', 100 * ratio, 116 * ratio);
+		 // 绘制双引号
+		 let yinHao = this.data.baseImageUrlYinHao;
+		 ctx.drawImage(yinHao, 80 * ratio, 56 * ratio, 14 * ratio, 14 * ratio)
+	  
+		 // 绘制头像
+		 const imgPath = res[1];
+		 ctx.save()
+		 ctx.beginPath()
+		 ctx.arc(40 * ratio, 47 * ratio, 23 * ratio, 0, 2 * Math.PI)
+		 ctx.clip()
+		 ctx.drawImage(imgPath, 17 * ratio, 24 * ratio, 46 * ratio, 46 * ratio)
+		 ctx.restore()
+	  
+		 //绘制文章标题
+		 const goodsTitle = this.data.nickName;
+		 let goodsTitleArray = [];
+		 //为了防止标题过长，分割字符串,每行18个
+		 for (let i = 0; i < goodsTitle.length / 18; i++) {
+		  if (i > 2) {
+		   break;
+		  }
+		  goodsTitleArray.push(goodsTitle.substr(i * 18, 18));
+		 }
+		 yOffset = 40 * ratio;
+		 goodsTitleArray.forEach(function (value) {
+		  ctx.setFontSize(14 * ratio);
+		  ctx.setFillStyle('#666666');
+		  ctx.fillText(value, 80 * ratio, yOffset);
+		  yOffset += 25 * ratio;
+		 });
+		 // 绘制文章的标题和描述
+		 const describe = this.data.entity.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～';
+		 let canvasDescribe
+	  
+		 //z绘制描述
+		 ctx.save();
+		 ctx.font = 'normal normal 14px sans-serif';
+		 ctx.setFontSize(14 * ratio)
+		 ctx.setFillStyle('#666666');
+		 if (describe.length < parseInt(19 / ratio)) {
+		  canvasDescribe = describe;
+	  
+		  ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
+		 } else if (describe.length < parseInt(38 / ratio) && describe.length > parseInt(19 / ratio)) {
+		  canvasDescribe = describe.slice(0, parseInt(19 / ratio));
+		  ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
+	  
+		  let canvasDescribe1 = describe.slice(parseInt(19 / ratio), describe.length);
+		  ctx.fillText(canvasDescribe1, 30 * ratio, 230 * ratio, 260 * ratio);
+	  
+		 } else {
+		  canvasDescribe = describe.slice(0, parseInt(19 / ratio));
+		  ctx.fillText(canvasDescribe, 30 * ratio, 210 * ratio, 260 * ratio);
+	  
+		  let canvasDescribe2 = describe.slice(parseInt(19 / ratio), parseInt(38 / ratio)) + '...';
+		  ctx.fillText(canvasDescribe2, 30 * ratio, 230 * ratio, 260 * ratio);
+	  
+		 }
+		 ctx.restore()
+	  
+		 ctx.moveTo(30 * ratio, 260 * ratio)
+		 ctx.setStrokeStyle('#F0F0F0');
+		 ctx.lineTo(300 * ratio, 260 * ratio)
+		 ctx.stroke()
+		 //小程序二维码
+		 const code = res[2];
+		 ctx.drawImage(code, 20 * ratio, 270 * ratio, 96 * ratio, 96 * ratio)
+	  
+		 //绘制长按小程序
+		 let miniApp = '长按识别,进入小程序'
+		 ctx.setFontSize(14 * ratio)
+		 ctx.setFillStyle('#333333');
+		 ctx.fillText(miniApp, 130 * ratio, 300 * ratio, 220 * ratio);
+	  
+		 let miniAppShare = '分享来自'
+		 ctx.setFontSize(14 * ratio)
+		 ctx.setFillStyle('#333333');
+		 ctx.fillText(miniAppShare, 130 * ratio, 326 * ratio, 220 * ratio);
+		 ctx.font = 'normal normal 14px sans-serif';
+		 let appName = '「' + this.data.appName + '」';
+	  
+		 ctx.setFillStyle('#000');
+		 ctx.fillText(appName, 124 * ratio, 346 * ratio, 220 * ratio);
+	  
+	  
+		 const title = this.data.entity.title;
+		 let canvasTtile
+		 if (title.length < parseInt(14 / ratio)) {
+		  canvasTtile = title;
+		 } else {
+		  canvasTtile = title.slice(0, parseInt(14 / ratio)) + '...'
+		 }
+		 ctx.font = 'normal bold 14px sans-serif';
+		 ctx.setFontSize(18 * ratio)
+		 ctx.setFillStyle('#333333');
+	  
+		 ctx.fillText(canvasTtile, 30 * ratio, 180 * ratio, 260 * ratio);
+		 ctx.draw();
+	  
+				  //绘制之后加一个延时去生成图片，如果直接生成可能没有绘制完成，导出图片会有问题。
+				  setTimeout(function () {
+					  wx.canvasToTempFilePath({
+						  x: 0,
+						  y: 0,
+						  width: 320 * ratio,
+						  height: 370 * ratio,
+						  destWidth: 1280,
+						  destHeight: 1480,
+						  fileType: 'jpg',
+						  quality: 1,
+						  canvasId: 'shareCanvas',
+						  success: function (res) {
+							  that.setData({
+								  shareImage: res.tempFilePath,
+								  showSharePic: true
+							  }, () => {
+								  wx.saveImageToPhotosAlbum({
+									  filePath: that.data.shareImage,
+									  success: function () {
+										  console.log('保存成功');
+										  that.setData({
+											  saveToCamera:''
+										  })
+										  
+									  },
+									  fail: function () {
+										  console.log('保存失败');
+										  that.setData({
+											  saveToCamera:'openSetting'
+										  })
+									  }
+								  })
+							  })
+							  wx.hideLoading();
+						  },
+						  fail: function (res) {
+							  console.log(res)
+							  wx.hideLoading();
+						  }
+					  })
+				  }, 2000);
+			  })
+	  
+	  
+	   },
 
 
 	handlePoster: function () {

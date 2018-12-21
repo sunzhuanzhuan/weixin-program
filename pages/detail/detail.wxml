@@ -59,11 +59,11 @@
 <!-- 悬浮回到首页 -->
 <form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID' wx:if="{{isRoot}} ">
 	<button form-type="submit " class="btnForm ">
-		<image src="{{baseImageUrlHome}}" class="{{isRoot? 'goHomeStyle': 'goHomeStyle1'}} state1 " bindtap="handleBack "></image>
+		<image src="{{baseImageUrlHome}}" class="{{isRoot? 'goHomeStyle': 'goHomeStyle1'}} state1 " bindtap="handleBack"></image>
 	</button>
 </form>
 <!-- 生成海报 -->
-<view wx:if="{{isShowPoster}}" class="posterBox" bindtap="handleSavePicture ">
+<view wx:if="{{isShowPoster}}" class="posterBox" bindtap="handleSavePicture">
 	<canvas class="canvas" canvas-id="shareCanvas" bindlongtap="handleSavePictureToCamera"></canvas>
 	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}} " class="btnSavePicture " style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 </view>
