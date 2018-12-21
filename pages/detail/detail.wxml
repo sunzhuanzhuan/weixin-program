@@ -118,7 +118,7 @@
 <!-- 生成海报 -->
 <view wx:if="{{isShowPoster}}" class="posterBox" bindtap="handleSavePicture">
 	<canvas class="canvas" canvas-id="shareCanvas" bindlongtap="handleSavePictureToCamera"></canvas>
-	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}} " class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 </view>
 
 
