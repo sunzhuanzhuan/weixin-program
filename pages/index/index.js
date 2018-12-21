@@ -483,20 +483,27 @@ Page({
 				loadding:true
 			})
 
-			gdt.magicListItemLoadMore('topScoreds').then((res) => {
-				let oldRes = JSON.parse(JSON.stringify(res));
-				const theList = app.listIndex['topScoreds'];
-				let arr = theList.items.splice(0, 3);
-
-				if (app.lists[0] !== app.listIndex['topScoreds']) {
-					app.lists.unshift(app.listIndex['topScoreds']);
-				}
-
-				this.setData({
-					lists: app.lists,
-					imgUrls: arr
-				})
-			});
+			if (app.topListEnabled === false) {
+				gdt.magicListItemLoadMore('topScoreds').then((res) => {
+					const theList = app.listIndex['topScoreds'];
+					let arr = theList.items.splice(0, 3);
+	
+					if (app.lists[0] !== app.listIndex['topScoreds']) {
+						app.lists.unshift(app.listIndex['topScoreds']);
+					}
+	
+					this.setData({
+						lists: app.lists,
+						imgUrls: arr
+					})
+				});
+			} else {
+				gdt.magicListItemFirstLoad(app.lists[0]._id).then(() => {
+					this.setData({
+						lists: app.lists
+					})
+				});
+			}
 		});
 		gdt.systemInfo.then((x) => {
 			this.setData({
