@@ -483,7 +483,7 @@ Page({
 				loadding:true
 			})
 
-			if (app.topListEnabled === false) {
+      if (app.toplistEnabled !== false) {
 				gdt.magicListItemLoadMore('topScoreds').then((res) => {
 					const theList = app.listIndex['topScoreds'];
 					let arr = theList.items.splice(0, 3);
