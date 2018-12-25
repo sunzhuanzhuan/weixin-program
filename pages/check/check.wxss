@@ -1,0 +1,151 @@
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding:40rpx 0 40rpx 0;
+    background-color:rgb(250, 204, 79);
+  } 
+  .goToFinish{
+    width:100rpx;
+    height:47rpx;
+    font-size:11px;
+    color:rgb(56,56,56);
+    padding:0;
+    line-height:47rpx;
+    float:right;
+    margin-top:9rpx;
+    background-color: rgb(250,210,88);
+    border-radius: 20px;
+  }
+  .task-main{
+    font-size:14px;
+    font-weight: bold;
+  }
+  .task{
+    padding:0 30rpx 0 30rpx;
+    margin-top:30rpx;
+  }
+  .rightTop{
+    position:absolute;
+    right:0;
+    top:0;
+    font-size:12px;
+    display:flex;
+    flex-direction: column;
+    margin-right:30rpx;
+    margin-top:20rpx;
+  }
+  .scoreShop{
+    margin-top:20rpx;
+    color:white;
+  }
+  .activeRules{
+    color:rgb(202,147,1);
+  }
+  .notDone{
+    color:rgb(52,52,52);
+  }
+  /* ******************* 活动规则弹出框部分***************/
+  .actRule{
+    width:100%;
+    height:100%;
+    background-color:rgba(50,50,50,.5);
+    position:fixed;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .ruleBox{
+    width:80%;
+    height:80%;
+    background-color:white;
+    border-radius: 20px;
+  }
+  .ruleHead{
+    text-align: center;
+    font-size:18px;
+    font-weight: bold;
+    margin-top:40rpx;
+  }
+  .circleIcon{
+    width:19rpx;
+    height:19rpx;
+    border-radius: 50%;
+    background-color:black;
+    margin:0rpx 15rpx 4rpx 0rpx;
+    display:inline-block;
+  }
+  .ruleTitle{
+    font-size:16px;
+    font-weight: bold;
+  }
+  .ruleText{
+    margin-top:15rpx;
+    font-size:14px;
+    line-height: 50rpx;
+    padding:0 10rpx 0 40rpx;
+  }
+  .iSee{
+    position: absolute;
+    bottom: 10%;
+    width:80%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: rgb(250,211,88);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  /***小图标样式****/
+  .iconCheck{
+    margin-top:20rpx;
+    z-index: 2;
+  }
+  .iconModel{
+    display:inline-block;
+    width:10%;
+    height:20%;
+    margin-left:28rpx;
+    text-align:center;
+  }
+  .iconCont{
+    font-size:13px;
+    color:rgb(211,161,30);
+  }
+  .iconDate{
+    width:39px;
+    height:39px;
+    background-color:rgb(246,187,13);
+    border-radius:50%;
+    text-align:center;
+    align-items:center;
+    line-height:39px;
+  }
+  .iconTxt{
+    font-size:16px;
+    color:rgb(255,226,140);
+  }
+  .iconDate-after{
+    width:39px;
+    height:39px;
+    background-color:rgb(255,226,140);
+    border-radius:50%;
+    text-align:center;
+    align-items:center;
+    line-height:39px;
+  }
+  .iconTxt-after{
+    font-size:16px;
+    color:rgb(246,187,13);
+  }
+  .cross{
+    width:75%;
+    height:6rpx;
+    position:relative;
+    background-color:rgb(246,187,13);
+    top:-36rpx;
+  }

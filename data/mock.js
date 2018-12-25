@@ -43,7 +43,7 @@ export const data = {
 				"type": "shareBeenRead",
 				"title": "分享文章被好友阅读",
 				"description": "每篇文章需要阅读5秒以上",
-				"completed": false,
+				"completed": true,
 				"criteriaSatisfied": true,
 				"reward": 100,
 				"payload": {
