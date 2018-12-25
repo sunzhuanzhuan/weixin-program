@@ -248,18 +248,18 @@ Page({
 
 	},
 	onReachBottom: function () {
-		this.setData({loadding:false,})
+		wx.showLoading({title:'加载中',icon:'loadding'})
 		if (this.data.name == 'history') {
 			gdt.magicMyViewsLoadMore().then(()=>{
-				this.setData({loadding:true,})
+				wx.hideLoading()
 			})
 		} else if (this.data.name == 'artical') {
 			gdt.magicMyCollectArticalLoadMore().then(()=>{
-				this.setData({loadding:true,})
+				wx.hideLoading()
 			})
 		} else {
 			gdt.magicMyCollectVideoLoadMore().then(()=>{
-				this.setData({loadding:true,})
+				wx.hideLoading()
 			})
 		}
 
@@ -267,10 +267,10 @@ Page({
 	//下拉刷新
 	onPullDownRefresh: function () {
 		let that = this;
-		this.setData({loadding:false})
+		wx.showLoading({title:'加载中',icon:'loadding'})
 		if (this.data.name === 'history') {
 			gdt.magicMyViewsLoadLatest().then(() => {
-				that.setData({loadding:true,})
+				wx.hideLoading()
 				gdt.track('item-list-view-load-first')
 				setTimeout(() => {
 					wx.stopPullDownRefresh();
@@ -281,7 +281,7 @@ Page({
 		} else if (this.data.name === 'artical') {
 
 			gdt.magicMyCollectArticalLoadLatest().then(() => {
-				that.setData({loadding:true,})
+				wx.hideLoading()
 				gdt.track('item-list-liked-wxArticle-load-first')
 				setTimeout(() => {
 					wx.stopPullDownRefresh();
@@ -291,7 +291,7 @@ Page({
 
 		} else {
 			gdt.magicMyCollectVideoLoadLatest().then(() => {
-				that.setData({loadding:true,})
+				wx.hideLoading()
 				gdt.track('item-list-liked-txvVideo-load-first')
 				setTimeout(() => {
 					wx.stopPullDownRefresh();

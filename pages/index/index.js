@@ -537,23 +537,17 @@ Page({
 	},
 	//上拉加载
 	onReachBottom: function () {
-		this.setData({
-			loadding:false
-		})
+		wx.showLoading({title:'加载中',icon:'loadding'})
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
-					this.setData({
-						loadding:true
-					})
+					wx.hideLoading()
 					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
 				});
 			} else {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
-					this.setData({
-						loadding:true
-					})
+					wx.hideLoading()
 					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
 				});
 			}
@@ -563,16 +557,12 @@ Page({
 	//下拉刷新
 	onPullDownRefresh: function () {
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
-		this.setData({
-			loadding:false
-		})
+		wx.showLoading({title:'加载中',icon:'loadding'})
 		let that = this;
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadLatest(currentListInstance._id).then((res) => {
-					this.setData({
-						loadding:true
-					})
+					wx.hideLoading()
 					let oldRes = JSON.parse(JSON.stringify(res));
 					const theList = app.listIndex['topScoreds'];
 					let arr = theList.items.splice(0, 3);
@@ -588,7 +578,7 @@ Page({
 				});
 			} else {
 				gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
-
+					wx.hideLoading()
 					gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
 					setTimeout(() => {
 						wx.stopPullDownRefresh();
