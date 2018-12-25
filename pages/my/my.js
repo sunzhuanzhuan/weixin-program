@@ -163,9 +163,9 @@ Page({
 		});
 	},
 	onReachBottom: function () {
-		this.setData({loadding:false})
+		wx.showLoading({title:'加载中',icon:'loadding'})
 		gdt.magicMySharedLoadMore().then(()=>{
-			this.setData({loadding:true})
+			wx.hideLoading()
 		});
 		gdt.track('item-list-share-load-more')
 	},
@@ -215,9 +215,9 @@ Page({
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
-		this.setData({loadding:false})
+		wx.showLoading({title:'加载中',icon:'loadding'})
 		gdt.magicMySharedLoadLatest().then(()=>{
-			this.setData({loadding:true})
+			wx.hideLoading()
 		});
 		gdt.track('item-list-share-load-first')
 	},
