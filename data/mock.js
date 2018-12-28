@@ -1,6 +1,6 @@
 
 export const data = {
-    "data":{
+	"data": {
 		"accountBalance": 666,
 		"missions": [
 			{
@@ -11,8 +11,8 @@ export const data = {
 				"criteriaSatisfied": true,
 				"reward": 40,
 				"payload": {
-					"level": 3,
-					"rewards": [10, 20, 30, 40, 50, 60, 70, 80, 90]
+					"level": 5,
+					"rewards": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110]
 				}
 			},
 			{
