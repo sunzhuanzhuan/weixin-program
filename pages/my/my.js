@@ -105,6 +105,7 @@ Page({
 				baseImageUrlGoHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png',
 				baseImageUrlShenmi: 'https://' + res.split('/')[2] + '/static/images/shenmi.png',
 				baseImageUrlLogo: 'https://' + res.split('/')[2] + '/static/images/logo.png',
+				baseImageUrlClickMe: 'https://' + res.split('/')[2] + '/static/images/clickMe.jpg'
 			})
 		})
 
