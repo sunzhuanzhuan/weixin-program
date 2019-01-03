@@ -29,7 +29,7 @@
 					</view>
 				</view>
 				<view style="margin-top:20rpx">
-					<button class="btnSuggest" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img='/images/clickMe.jpg'>
+					<button class="btnSuggest" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img="{{baseImageUrlClickMe}}">
 						意见反馈
 					</button>
 				</view>
