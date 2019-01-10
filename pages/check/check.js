@@ -36,6 +36,7 @@ Page({
 		res.forEach(item => {
 			if (item.type == 'showup') {
 				const level = item.payload.level;
+				this.setData({ checked: item.completed })
 				if (item.payload.level >= 3) {
 					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3]
 					let preveArr = item.payload.rewards.slice(level - 3, level);
@@ -56,10 +57,10 @@ Page({
 					this.setData({ arrDate: allArr })
 				}
 				this.setData({ check: item, level: item.payload.level })
-			} else if (item.type == '"articleShared"') {
+			} else if (item.type == "articleShared") {
 				this.setData({ articleShared: item })
 			} else if (item.type == 'articleRead') {
-				this.setData({ articlearticleReadShared: item })
+				this.setData({ articleRead: item })
 			} else {
 				this.setData({ shareBeenRead: item })
 			}
@@ -77,7 +78,7 @@ Page({
 			accountBalance: data.data.data.accountBalance,
 			missions: data.data.data.missions.slice(1)
 		});
-		console.log(this.data.missions)
+
 
 
 	},

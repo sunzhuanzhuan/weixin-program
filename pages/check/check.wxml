@@ -1,56 +1,92 @@
 <!-- 上方积分模块 -->
-<view class="container">
-	<view style=''>
-		<view style='display:flex;flex-direction:column;justify-content:center;align-items:center'>
-			<text style='font-size:13px;'>我的积分</text>
-			<text style="font-size:26px;font-weight:bold;">{{accountBalance}}</text>
+<view class="bg">
+	<view class="container">
+		<view style=''>
+			<view style='display:flex;flex-direction:column;justify-content:center;align-items:center'>
+				<text style='font-size:13px;'>我的积分</text>
+				<text style="font-size:26px;font-weight:bold;">{{accountBalance}}</text>
+			</view>
+
+			<view class='rightTop'>
+				<text class='activeRules' bindtap="handleRule">活动规则</text>
+				<text class='scoreShop'>积分商城</text>
+			</view>
+
+		</view>
+		<!-- icon -->
+		<view class="iconCheck">
+			<view wx:for="{{arrCheck}}" class="iconModel">
+				<text class='iconCont'>{{item.name}}</text>
+				<view class="iconDate">
+					<text wx:if="{{index>level}}" class='iconTxt-after' style="color:#fff">{{item.number}}</text>
+					<text wx:else class='iconTxt'>∨</text>
+				</view>
+			</view>
+
 		</view>
 		<view>
-			<button style='width:300rpx;height:90rpx;font-size:16px;padding:0;margin:35rpx 0 0 0;line-height:90rpx;border-radius:30px;background-color:rgb(246,187,13);color:white;'
-			 bindtap='toCheck'>{{checked == true? '今日已签到':'签到'}}</button>
-		</view>
-		<view class='rightTop'>
-			<text class='activeRules' bindtap="handleRule">活动规则</text>
-			<text class='scoreShop'>积分商城</text>
-		</view>
-	</view>
-	<!-- icon -->
-	<view class="iconCheck">
-		<view wx:for="{{arrCheck}}" class="iconModel">
-			<text class='iconCont'>{{item.name}}</text>
-			<view class="iconDate">
-				<text wx:if="{{index>level}}" class='iconTxt-after' style="color:#fff">{{item.number}}</text>
-				<text wx:else class='iconTxt'>∨</text>
-			</view>
-		</view>
+			<button class="checkBtn" bindtap='toCheck' disabled="{{checked? true:false}}">{{checked? '今日已签到':'签到'}}</button>
 
-	</view>
-	<view class="cross "></view>
-</view>
-<!--日常任务-->
-<view style='padding-left:20rpx;margin-top:20rpx;'>
-	<view style='display:inline-block;width:5px;height:12px;border-radius:20px;background-color:rgb(250,207,84);margin-top:2rpx;'></view>
-	<text style='font-size:14px;font-weight:bold;margin-left:10rpx;'>日常任务</text>
-	<view>
-		<view class='task' wx:for="{{missions}} ">
-			<text class='task-main'>{{item.title}}</text>
-			<text style='font-size:12px;margin-left:30rpx;color:rgb(251,210,89);'>{{item.reward}}积分</text>
-			<view style="display:inline-block;margin-left:38%;color:rgb(204,204,204); " wx:if="{{item.payload.required}} ">
-				<text style="font-size:12px; ">{{item.payload.current}}/</text>
-				<text style="font-size:12px; " class="{{item.payload.current==item.payload.required ? '': 'notDone'}} ">{{item.payload.required}}</text>
-			</view>
-			<button class='goToFinish' bindtap='goToFinish' data-criteria='{{item.criteriaSatisfied}}' data-completed='{{item.completed}}'
-			 data-reward='{{item.reward}}'>{{item.criteriaSatisfied==false ? "去完成 ": item.completed==false? "领取 ":"已完成 "}}</button>
-			<view style='font-size:9px;color:#ccc;'>{{item.description}}</view>
 		</view>
+	</view>
+	<!--日常任务-->
+	<view>
+		<view class="font28 marginTB2411 marginLeft56 borderLeft">日常任务</view>
+		<view>
+			<view class="dispayInline widthBox1 marginLeft56">
+				<text class="font28">{{articleRead.title}}</text>
+				<text class="font24">+{{articleRead.reward}}积分</text>
+
+			</view>
+			<view class="dispayInline widthBox2">
+				<text class="font24">完成</text>
+				<text class="font24">{{articleRead.payload.current}}/{{articleRead.payload.required}}</text>
+			</view>
+			<view class="dispayInline widthBox3">
+				<button class="finishBtn" bindtap='toCheck'>去完成</button>
+			</view>
+			<view class="font22 marginLeft56">每篇文章需要阅读5秒以上</view>
+		</view>
+		<!--  -->
+		<view class="marginTB">
+			<view class="dispayInline widthBox1 marginLeft56">
+				<text class="font28">{{articleShared.title}}</text>
+				<text class="font24">+{{articleShared.reward}}积分</text>
+			</view>
+			<view class="dispayInline widthBox2">
+				<text class="font24">完成</text>
+				<text class="font24">{{articleShared.payload.current}}/{{articleShared.payload.required}}</text>
+			</view>
+			<view class="dispayInline widthBox3">
+				<button class="finishBtn" bindtap='toCheck'>去完成</button>
+			</view>
+			<view class="font22 marginLeft56">通过将文章或海报分享给好友、群聊或朋友圈可获得积分</view>
+		</view>
+		<!--  -->
+		<view>
+			<view class="dispayInline widthBox1 marginLeft56">
+				<text class="font28">{{shareBeenRead.title}}</text>
+				<text class="font24">+{{shareBeenRead.reward}}积分</text>
+			</view>
+			<view class="dispayInline widthBox2">
+				<!-- <text class="font24">完成</text>
+			<text class="font24">{{shareBeenRead.payload.current}}/{{shareBeenRead.payload.cap}}</text> -->
+			</view>
+			<view class="dispayInline widthBox3">
+				<button class="finishBtn" bindtap='toCheck'>去完成</button>
+			</view>
+			<view class="font22 marginLeft56">当前已获得: {{shareBeenRead.reward}}积分</view>
+			<view class="font22 marginLeft56">分享文章被一个好友阅读即可领取10积分，当日最高可领取100积分</view>
+		</view>
+	</view>
+	<!--  -->
+	<view class="font28 marginTB2411 marginLeft56 borderLeft">拉新奖励</view>
+	<view class="font22 marginLeft56 marginRight56">
+		当好友由于你的分享开始使用小程序且从未使用过我们的小程序当,并参加签到活动后。您将获得他积分的3%作为奖励。每日领取拉新积分上限为500积分
 	</view>
 </view>
 <!--拉新奖励-->
-<view style='padding-left:20rpx;margin-top:20rpx;'>
-	<view style='display:inline-block;width:5px;height:12px;border-radius:20px;background-color:rgb(250,207,84);margin-top:2rpx;'></view>
-	<text style='font-size:14px;font-weight:bold;margin-left:10rpx;'>拉新奖励</text>
-	<view style='font-size:10px;margin:20rpx 0 0 15rpx;color:rgb(171,171,171);'>您只需将小程序的文章分享给好友，且好友从未使用过我们的小程序，当好友由于你的分享开始使用小程序，并参加签到领取礼物活动后，您将获得好友积分的3%作为奖励</view>
-</view>
+
 <!--活动规则弹出框-->
 <!-- <view wx:if="{{ruleIsShow==true}} " class='actRule'>
 	<view class='ruleBox'>

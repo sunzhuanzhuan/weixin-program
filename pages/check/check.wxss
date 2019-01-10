@@ -1,3 +1,4 @@
+button::after{ border: none;padding: 0 }
 .container {
     height: 100%;
     display: flex;
@@ -142,10 +143,63 @@
     font-size:16px;
     color:rgb(246,187,13);
   }
-  .cross{
-    width:75%;
-    height:6rpx;
-    position:relative;
-    background-color:rgb(246,187,13);
-    top:-36rpx;
-  }
+ .checkBtn{
+   width: 260rpx;
+   height:80rpx;
+   margin-top: 70rpx;
+   border-radius: 40rpx;
+ }
+ .finishBtn{
+  width: 120rpx;
+  height:50rpx;
+  border-radius: 25rpx;
+  font-size: 24rpx;
+  background-color:rgb(255,226,140);
+ }
+ .dispayInline{
+   display: inline-block;
+   vertical-align: middle;
+ }
+ .widthBox1{
+    width: 430rpx
+ }
+ .widthBox2{
+  width: 100rpx
+ }
+ .widthBox3{
+  width: 100rpx
+}
+.font28{
+  font-size: 28rpx;
+  font-weight: bolder;
+  color: #333;
+}
+.font24{
+  font-size: 24rpx;
+  color: #666;
+}
+.font22{
+  font-size: 22rpx;
+  color: #999;
+}
+.marginLeft56{
+  margin-left: 56rpx;
+}
+.marginTB{
+  margin: 50rpx 0
+}
+.marginTB2411{
+  margin: 48rpx 0  22rpx 56rpx;
+  padding-left:10rpx;
+}
+.borderLeft{
+  border-left: 10rpx solid #ffce20;
+}
+.bg{
+  background: #fff;
+  height: 100%;
+}
+.marginRight56{
+  margin-right: 56rpx;
+}
+

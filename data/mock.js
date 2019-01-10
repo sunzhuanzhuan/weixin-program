@@ -7,7 +7,7 @@ export const data = {
 				"type": "showup",
 				"title": "签到",
 				"description": "连续签到7天获得更高积分",
-				"completed": false,
+				"completed": true,
 				"criteriaSatisfied": true,
 				"reward": 40,
 				"payload": {
