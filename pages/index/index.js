@@ -53,7 +53,7 @@ Page({
 		// 单击事件点击后要触发的函数
 		lastTapTimeoutFunc: null,
 		reportSubmit: true,
-		loadding:undefined
+		loadding: undefined
 	},
 
 	//切换轮播图的时候
@@ -90,7 +90,7 @@ Page({
 		this.setData({ listenTablistCurrent: e.currentTarget.dataset.tablist });
 		if (e.currentTarget.dataset.index == this.data.listenIndexCurrent) {
 			if (this.data.listening) {
-				innerAudioContext.pause();
+				innerAudioContext.stop();
 				this.setData({
 					letter: false,
 					listening: false,
@@ -228,7 +228,7 @@ Page({
 
 	handleTitleTab(e) {
 		this.setData({
-			loadding:false
+			loadding: false
 		})
 		// 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
 		if (this.data.touchEndTime - this.data.touchStartTime < 350) {
@@ -257,9 +257,9 @@ Page({
 		});
 		const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
 		if (currentListInstance) {
-			gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+			gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
 				this.setData({
-					loadding:true
+					loadding: true
 				})
 			});
 			gdt.track('index-show-tab', { listId: currentListInstance._id, title: currentListInstance.title });
@@ -308,16 +308,16 @@ Page({
 			if (that.data.startsWidth >= that.data.screenWidth / 2) {
 				if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
 					that.setData({
-						loadding:false,
+						loadding: false,
 						scrollTop: that.data.scrollTop = 0,
 						scrollLeft: that.data.scrollLeft + 50,
 						templateFlag: true, currentTabIndex: ++that.data.currentTabIndex, isMore: true, list: []
 					}, () => {
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (that.data.currentTabIndex !== that.data.lists.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+							gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
 								that.setData({
-									loadding:true,
+									loadding: true,
 								})
 							});
 						}
@@ -327,7 +327,7 @@ Page({
 						that.setData({ currentTabIndex: 0 })
 						that.setData({
 							scrollLeft: that.data.scrollLeft = -100,
-							loadding:true,
+							loadding: true,
 						});
 						wx.hideLoading();
 					}
@@ -363,13 +363,13 @@ Page({
 						that.setData({ scrollLeft: that.data.scrollLeft = 0 });
 					}
 
-					that.setData({ currentTabIndex: --that.data.currentTabIndex, list: [] ,	loadding:false,}, () => {
+					that.setData({ currentTabIndex: --that.data.currentTabIndex, list: [], loadding: false, }, () => {
 
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (!currentListInstance.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+							gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
 								that.setData({
-									loadding:true,
+									loadding: true,
 								})
 							});
 						}
@@ -480,18 +480,18 @@ Page({
 				});
 			});
 			this.setData({
-				loadding:true
+				loadding: true
 			})
 
-      if (app.toplistEnabled !== false) {
+			if (app.toplistEnabled !== false) {
 				gdt.magicListItemLoadMore('topScoreds').then((res) => {
 					const theList = app.listIndex['topScoreds'];
 					let arr = theList.items.slice(3);
-	
+
 					if (app.lists[0] !== app.listIndex['topScoreds']) {
 						app.lists.unshift(app.listIndex['topScoreds']);
 					}
-	
+
 					this.setData({
 						lists: app.lists,
 						imgUrls: arr
@@ -537,7 +537,7 @@ Page({
 	},
 	//上拉加载
 	onReachBottom: function () {
-		wx.showLoading({title:'加载中',icon:'loadding'})
+		wx.showLoading({ title: '加载中', icon: 'loadding' })
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		if (currentListInstance) {
 			gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
@@ -549,7 +549,7 @@ Page({
 	//下拉刷新
 	onPullDownRefresh: function () {
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
-		wx.showLoading({title:'加载中',icon:'loadding'})
+		wx.showLoading({ title: '加载中', icon: 'loadding' })
 		let that = this;
 		if (currentListInstance) {
 			gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {

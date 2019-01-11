@@ -2,10 +2,7 @@
 <!-- detail.wxml -->
 <import src="/components/loadding/loadding.wxml" />
 
-<template is='loadding' wx:if="{{!showLoadding}}"/>
-
-
-
+<template is='loadding' wx:if="{{!showLoadding}}" />
 
 <view>
 	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll"
@@ -14,8 +11,6 @@
 
 
 		<view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
-			<!-- <txv-video wx:if="{{node.type == 'txvVideo'}}" vid="{{node.vid}}" playerid="video{{node.vid}}" muted="{{isMuted}}"></txv-video> -->
-
 			<view wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
 				<view wx:if="{{isPlayVideo && index == videoCurrent}}">
 					<txv-video vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
@@ -27,7 +22,28 @@
 
 				</view>
 			</view>
-			<rich-text class="_root {{rootClassMixin}}" wx:if="{{nodes.type === undefined}}" nodes="{{[node]}}"></rich-text>
+			<rich-text class="_root {{rootClassMixin}}" wx:if="{{!nodes.type}}" nodes="{{[node]}}"></rich-text>
+			<view wx:if="{{node.type == 'wxmpVoice'}}" class="wxmpVoice">
+				<view class="audioTitleBox">
+					<view class="audioTitle">{{entity.title}}</view>
+					<view>
+						<slider style="margin:0" blockSize="12" max="{{totalTime}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700"
+						 bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size="18"></slider>
+					</view>
+					<view style="height:30rpx;font-size:20rpx;color:#fff;line-height:16rpx;margin-left:-50rpx;">
+						<text style="float:left;margin-left:50rpx">{{currentProgress}} </text>
+						<text style="float:right;">{{totalProgress}} </text>
+					</view>
+
+
+				</view>
+				<view class="audioBoxImg">
+					<image wx:if="{{isPlay}}" src="/images/pauseLine.png" class="pauseImgNow" bindtap="handlePauseVideo" />
+
+					<image wx:else class="playImg" src="/images/playing.png" bindtap="handlePlayVideo" />
+					<view class="playLetter" bindtap="handlePlayVideo">听一听 </view>
+				</view>
+			</view>
 		</view>
 
 
@@ -105,7 +121,7 @@
 				</view>
 				<view class="{{isIphoneX?'bol':''}}  "></view>
 			</view>
-			
+
 		</button>
 	</form>
 </view>
@@ -123,7 +139,7 @@
 
 
 <!-- 悬浮的音频 后期作品 -->
-<view wx:if="{{entity.type=='wxArticle' && entity.wxmpVoiceIds.length>0 && isShowListen}}" class="audioBox">
+<!-- <view wx:if="{{entity.type=='wxArticle' && entity.wxmpVoiceIds.length>0 && isShowListen}}" class="audioBox">
 	<view class="coverBox" wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}}">
 
 		<button class="btnBox btnBg" style='flex:2' open-type="{{type}}" bindtap="handleAuthorToPlay" bindgetuserinfo="handleAuthor">
@@ -163,4 +179,4 @@
 			<view class="playLetter" bindtap="handlePlayVideoNow">听一听 </view>
 		</view>
 	</view>
-</view>
+</view> -->
