@@ -1,0 +1,56 @@
+
+
+.declareBox{
+    width: 670rpx;
+    height: 412rpx;
+    margin:0 auto;
+    background: #F5F5F5;
+    border: 1px solid #000;
+}
+.leftBox{
+    display: inline-block;
+    float: left;
+    width: 112rpx;
+    height: 44rpx;
+    border: 1px solid #000;
+}
+.rightBox{
+    display: inline-block;
+    float: left;
+    width: 400rpx;
+    height: 44rpx;
+    border: 1px solid #000;
+}
+.taiBox{
+    clear: both;
+    padding-top:22rpx;
+    text-align: center;
+}
+.taiLeftBox{
+    width: 300rpx;
+    height: 160rpx;
+    display: inline-block;
+    border: 1px solid #000;
+    margin-right: 40rpx;
+    background: #EBEBEB;
+    position: relative;
+}
+.taiRightBox{
+    width: 300rpx;
+    height: 160rpx;
+    display: inline-block;
+    border: 1px solid #000;
+    background: #EBEBEB;
+    position: relative;
+}
+.hold{
+    width: 200rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    border-radius: 28rpx;
+    font-size: 28rpx;
+    position: absolute;
+    bottom: -28rpx;
+    left: 50rpx;
+    color: #fff;
+}

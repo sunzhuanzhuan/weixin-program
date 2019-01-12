@@ -137,6 +137,13 @@
 	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 </view>
 
+<!-- 表态 -->
+
+
+
+
+
+
 
 <!-- 悬浮的音频 后期作品 -->
 <!-- <view wx:if="{{entity.type=='wxArticle' && entity.wxmpVoiceIds.length>0 && isShowListen}}" class="audioBox">

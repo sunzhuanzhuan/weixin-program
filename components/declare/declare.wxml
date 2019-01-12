@@ -1,0 +1,14 @@
+<template name="declare">
+	<view class="declareBox">
+		<view class="leftBox"></view>
+		<view class="rightBox"></view>
+		<view class="taiBox">
+			<view class="taiLeftBox">
+				<button class="hold" style="background: #196AD8;">支持</button>
+			</view>
+			<view class="taiRightBox">
+				<button class="hold" style="background: #F53B55;">支持</button>
+			</view>
+		</view>
+	</view>
+</template>
