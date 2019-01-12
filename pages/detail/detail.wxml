@@ -27,12 +27,12 @@
 				<view class="audioTitleBox">
 					<view class="audioTitle">{{entity.title}}</view>
 					<view>
-						<slider style="margin:0" blockSize="12" max="{{totalTime}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700"
-						 bindchanging="handleChanging" min="0" value="{{currentTime}}" block-size="18"></slider>
+						<slider style="margin:0" blockSize="12" max="{{isPlay?totalTime:0}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700"
+						 bindchanging="handleChanging" min="0" value="{{isPlay?currentTime:0}}" block-size="18"></slider>
 					</view>
 					<view style="height:30rpx;font-size:20rpx;color:#fff;line-height:16rpx;margin-left:-50rpx;">
-						<text style="float:left;margin-left:50rpx">{{currentProgress}} </text>
-						<text style="float:right;">{{totalProgress}} </text>
+						<text style="float:left;margin-left:50rpx">{{isPlay?currentProgress:0}} </text>
+						<text style="float:right;">{{isPlay?totalProgress:0}} </text>
 					</view>
 
 

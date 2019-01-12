@@ -76,7 +76,8 @@ Page({
 		btnSavePitcureLetter: '',
 		reportSubmit: true,
 		baseImageUrlYinHao: undefined,
-		showLoadding: false
+		showLoadding: false,
+		listenTablistCurrent: undefined
 	},
 
 	handleChangeTypeVideo: function (e) {
@@ -210,7 +211,7 @@ Page({
 
 	},
 	onLoad(options) {
-		console.log(options.listening)
+		this.setData({ listenTablistCurrent: options.listenTablistCurrent })
 		if (options.listening == 'false') {
 			this.setData({ isPlay: false, isFirst: 0 })
 
@@ -301,6 +302,7 @@ Page({
 			this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
 			gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
+			// this.setData({ clickIndex: options.index })
 			if (options.listening && options.index == this.data.clickIndex) {
 				innerAudioContext.title = this.data.entity.title;
 				let this_ = this;
@@ -313,7 +315,6 @@ Page({
 					})
 				})
 			} else {
-				innerAudioContext.pause();
 			}
 
 
@@ -365,6 +366,7 @@ Page({
 				listenIndexCurrent: this.data.clickIndex,
 				listening: this.data.isPlay,
 				letter: this.data.isPlay,
+				listenTablistCurrent: this.data.listenTablistCurrent
 			});
 
 		}
@@ -826,7 +828,6 @@ Page({
 	},
 	handlePauseVideo: function () {
 		innerAudioContext.pause();
-
 		this.setData({ isPlay: false, isPause: true, isFirst: 1, })
 	},
 

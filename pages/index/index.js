@@ -90,7 +90,7 @@ Page({
 		this.setData({ listenTablistCurrent: e.currentTarget.dataset.tablist });
 		if (e.currentTarget.dataset.index == this.data.listenIndexCurrent) {
 			if (this.data.listening) {
-				innerAudioContext.stop();
+				innerAudioContext.pause();
 				this.setData({
 					letter: false,
 					listening: false,
@@ -246,6 +246,9 @@ Page({
 				})
 			}
 		}
+		// console.log(this.data.listenIndexCurrent);
+		// console.log(this.data.listening);
+		// console.log(this.data.letter);
 
 		this.setData({
 			scrollTop: this.data.scrollTop = 0,
@@ -255,6 +258,8 @@ Page({
 			listenIndexCurrent: undefined,
 
 		});
+		// console.log(this.data.listenTablistCurrent);
+		// console.log(this.data.currentTabIndex);
 		const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
 		if (currentListInstance) {
 			gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
@@ -290,12 +295,12 @@ Page({
 		if (everyIndex == this.data.listenIndexCurrent) {
 			let that = this;
 			wx.navigateTo({
-				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=' + this.data.listening + '&index=' + everyIndex
+				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&listenTablistCurrent=' + that.data.currentTabIndex + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=' + this.data.listening + '&index=' + everyIndex
 			})
 		} else {
 			let that = this;
 			wx.navigateTo({
-				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
+				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&listenTablistCurrent=' + that.data.currentTabIndex + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
 			})
 		}
 
