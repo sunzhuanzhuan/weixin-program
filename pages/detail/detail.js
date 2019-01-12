@@ -212,13 +212,13 @@ Page({
 	onLoad(options) {
 		console.log(options.listening)
 		if (options.listening == 'false') {
-			this.setData({ isPlay: false })
+			this.setData({ isPlay: false, isFirst: 0 })
 
 		} else if (options.listening == 'undefined') {
-			this.setData({ isPlay: false })
+			this.setData({ isPlay: false, isFirst: 0 })
 		}
 		else {
-			this.setData({ isPlay: true })
+			this.setData({ isPlay: true, isFirst: 1 })
 		}
 		this.setData({ clickIndex: options.index })
 
@@ -301,13 +301,11 @@ Page({
 			this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
 			gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
-			if (options.listening) {
+			if (options.listening && options.index == this.data.clickIndex) {
 				innerAudioContext.title = this.data.entity.title;
-				let this_ = this
+				let this_ = this;
 				innerAudioContext.onTimeUpdate(() => {
-					console.log(1111)
 					this_.setData({
-						isFirst: 1,
 						currentTime: parseInt(innerAudioContext.currentTime),
 						totalTime: parseInt(innerAudioContext.duration),
 						currentProgress: formatSeconds(parseInt(innerAudioContext.currentTime)),
@@ -370,6 +368,7 @@ Page({
 			});
 
 		}
+
 
 	},
 	recordUserscroll: function (event) {
@@ -809,7 +808,6 @@ Page({
 
 		innerAudioContext.play();
 		innerAudioContext.onEnded(() => {
-			console.log('end')
 			this.setData({ isPlay: false })
 		})
 		// 时间的当前的进度;
@@ -836,6 +834,7 @@ Page({
 	handleChanging: function (e) {
 		let that = this;
 		this.setData({
+			isPlay: true, isPause: false, isFirst: 1,
 			currentTime: e.detail.value,
 			currentProgress: formatSeconds(parseInt(e.detail.value)),
 		})
