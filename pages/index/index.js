@@ -53,7 +53,9 @@ Page({
 		// 单击事件点击后要触发的函数
 		lastTapTimeoutFunc: null,
 		reportSubmit: true,
-		loadding: undefined
+		loadding: undefined,
+		m:1,
+		n:0
 	},
 
 	//切换轮播图的时候

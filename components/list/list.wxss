@@ -116,7 +116,6 @@ button{
     height:180rpx;
     
     padding: 50rpx 0;
-    padding-right:30rpx;
     background:#fff;
     
    

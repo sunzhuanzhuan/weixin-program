@@ -1,29 +1,36 @@
 <template name="declare">
 	<view class="declareBox">
-		<view class="leftBox"></view>
-		<view class="rightBox"></view>
-		<view class="taiBox">
+		<view class="leftBox marginLeft26">表态</view>
+		<view class="rightBox">
+				你觉得ofo是否应该值得同情
+		</view>
+		<view class="taiBox marginLeft26">
 			<view class="taiLeftBox">
+				<view class="fontTai">说到底是资本毁了的,说到底是资本毁了的,说到底是资本毁了的,说到底是资本毁了的,说到底是资</view>
+					
 				<button class="hold" style="background: #196AD8;">支持</button>
 			</view>
 			<view class="taiRightBox">
+				<view class="fontTai">共享单车还是有市场的,寒冬 过去了就好了?</view>
 				<button class="hold" style="background: #F53B55;">支持</button>
 			</view>
 		</view>
 		<view class="progressBox marginLeft26">
-			<view style="float: left;">
-				<view class="leftPro" style="width:300rpx"></view>
-				<view class="leftArrow"></view>
+			<view wx:if="{{[1].length ==0}}">
+					<view class="leftPro" style="width:96%;background:#EBEBEB;"></view>
 			</view>
-			
-			<view style="float: left;margin-left:-24rpx;">
-				<view class="rightArrow"></view>
-				<view class="rightPro" style="width:100rpx"></view>
+			<view wx:else>
+					<view style="float: left;">
+							<view class="leftPro" style="width:{{m*640}}rpx"></view>
+						</view>
+						<view style="float: left;margin-right:-10rpx;">
+							<view class="rightPro" style="width:{{n*640}}rpx"></view>
+						</view>
 			</view>
 		</view>
-		<view class="percentBox">
-			<view class="leftPercent fontPercent">25%</view>
-			<view class="rightPercent fontPercent">75%</view>
+		<view class="percentBox marginLeft26">
+				<view class="leftPercent fontPercent">25%</view>
+				<view class="rightPercent fontPercent">75%</view>
 		</view>
 		<view class="view">
 			<view class="leftView">
@@ -32,7 +39,14 @@
 			<view class="rightView">
 				<view style="float:right;margin-right: 40rpx">
 					<image wx:for="{{[1,2,3]}}" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3551379535,312598408&fm=26&gp=0.jpg" class="touxiang {{[1,2,3].length>0?'many':''}}"></image>
+					
 				</view>
+				<view style="float: right;margin-top: 20rpx;margin-right: 30rpx;">
+					<view class="dotDeclare"></view>
+					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
+					<view class="dotDeclare" style="opacity: 0.4;"></view>
+				</view>
+				
 				
 			</view>
 		</view>
