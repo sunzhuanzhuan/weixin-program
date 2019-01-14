@@ -88,7 +88,7 @@
 							<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" >
 								<view class="itemBigBox" style="height:266rpx">
 								
-									<view class="itemSmall " style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1]=='1')? '': 'border-bottom: 1rpx solid #E6E6E6;'}} ">
+									<view class="itemSmall ">
 										<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
 										<view class="smallImgLeftTitleBox">
 											<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">
@@ -232,7 +232,7 @@
 						<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}">
 							<view class="itemBigBox" style="height:266rpx">
 							
-								<view class="itemSmall " style="float:right;{{(list.items[index+1].wxMidVec && list.items[index+1].wxMidVec[list.items[index+1].wxMidVec.length-1]=='1')? '': 'border-bottom: 1rpx solid #E6E6E6;'}} ">
+								<view class="itemSmall">
 									<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
 									<view class="smallImgLeftTitleBox">
 										<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">

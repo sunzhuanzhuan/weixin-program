@@ -89,7 +89,7 @@ button{
 .itemBigBox{
     width: 690rpx;
     height:500rpx;
-    margin: 15rpx 30rpx;
+    margin: 20rpx 30rpx;
     
 }
 .videoTitle{
