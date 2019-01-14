@@ -54,3 +54,78 @@
     left: 50rpx;
     color: #fff;
 }
+.progressBox{
+    overflow: hidden;
+    margin-top: 50rpx;
+
+}
+.leftPro{
+    height: 20rpx;
+    background: #196AD8;
+    float: left;
+    
+}
+.rightPro{
+    height: 20rpx;
+    background: #F53B55;
+    float: left;
+   
+}
+.marginLeft26{
+    margin-left: 26rpx;
+}
+.leftArrow{
+    float: left;
+    width:0;
+    height:0;
+    border-width:10rpx 16rpx;
+    border-style:solid;
+    border-color:#196AD8 transparent transparent #196AD8;
+}
+.percentBox{
+    margin:0 30rpx
+}
+.rightArrow{
+    float: left;
+    width:0;
+    height:0;
+    border-width:10rpx 16rpx;
+    border-style:solid;
+    border-color:transparent #F53B55 #F53B55 transparent;
+}
+.leftPercent{
+    float: left;
+}
+.rightPercent{
+    float: right;
+}
+.fontPercent{
+    font-size: 20rpx;
+    color: #333;
+}
+.view{
+    margin:0 30rpx;
+    margin-top: 10rpx;
+    clear: both;
+    overflow: hidden;
+}
+.leftView{
+    float: left;
+    width: 50%;
+}
+.rightView{
+    float: right;
+    overflow: hidden;
+    width:50%;
+}
+.touxiang{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+}
+.many{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+    margin-right: -24rpx;
+}
