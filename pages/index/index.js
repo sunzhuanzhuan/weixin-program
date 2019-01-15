@@ -54,8 +54,7 @@ Page({
 		lastTapTimeoutFunc: null,
 		reportSubmit: true,
 		loadding: undefined,
-		m:1,
-		n:0
+		voteId:''
 	},
 
 	//切换轮播图的时候
@@ -591,5 +590,28 @@ Page({
 		}
 		return {};
 	},
+	//支持
+	handleSupport(e){
+		let num = e.currentTarget.dataset.num;
+		let id = e.currentTarget.dataset.item._id
+		let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
+		let obj={}
+		obj.supportId=supportId;
+		obj.id=id;
+		gdt.supportOption(obj).then((res)=>{
+				this.setData({
+					lists: app.lists
+				});
+				wx.showToast({
+					title:'投票成功',
+					duration:2000
+				})	
+		}).catch(()=>{
+			wx.showToast({
+				title:'投票失败',
+				duration:2000
+			})
+		})
+	}
 
 })

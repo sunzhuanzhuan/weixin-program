@@ -452,7 +452,20 @@ module.exports = class GlobalDataContext extends EventEmitter {
                         indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
                     if (indexedItem.type == "txvVideo") {
                         indexedItem.wxMidVec = '1234#1'
-                    }
+					}
+					if(indexedItem.type == "simpleSurvey"){
+						let one = indexedItem.surveyOptions[0].supporters.length;
+						let two = indexedItem.surveyOptions[1].supporters.length;
+						let total = one +two;
+						if(total == 0){
+							indexedItem.m=0;
+							indexedItem.n=0;
+						}else{
+							indexedItem.m=(one/total).toFixed(2)*100;
+							indexedItem.n=100-((one/total).toFixed(2)*100);
+						}
+						
+					}
                     // indexedItem.isShow=false
                     const r = _.find(targetList, { _id: x._id });
                     if (r) {
@@ -897,7 +910,18 @@ module.exports = class GlobalDataContext extends EventEmitter {
         queryPromise.then((x) => this.emit('applicationIndex', x));
         return queryPromise;
     }
-
+	//表态支持
+	supportOption(item){
+		const queryPromise = this.simpleApiCall(
+			'POST', `/simpleSurvey/${item.id}/votes`,
+				{
+					body:{
+						vote:item.supportId||{},
+					},
+				autoLoadingState: true
+			})
+		return queryPromise
+	}
     fetchListItems(listId, page, pageSize, _queryParams) {
         const SPECIAL_LISTS = {
             topScoreds: '/topScoreds'

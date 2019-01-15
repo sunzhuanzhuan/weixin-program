@@ -1,6 +1,6 @@
 
 @import "/components/loadding/loadding.wxss";
-
+@import "/components/declare/declare.wxss";
 .wxmpVoice{
     width: 94%;
     padding: 0 3%;

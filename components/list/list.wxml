@@ -8,7 +8,7 @@
 		<!-- 推荐页的文章 -->
 		<block wx:if="{{list._id==='topScoreds'}}">
 			<!-- autoplay="true"  -->
-			<swiper current="{{currentSwiper}}" duration="600" interval="3000" circular="true" previous-margin="60rpx" next-margin="60rpx"
+			<swiper autoplay="true" current="{{currentSwiper}}" duration="600" interval="3000" circular="true" previous-margin="60rpx" next-margin="60rpx"
 			 style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
 				<swiper-item class="swiperItem" bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
 					<image class="{{swiperActiveZero[0]}} swiperImg" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[1].coverUrl}}"
@@ -43,11 +43,11 @@
 				</swiper-item>
 			</swiper>
 		</block>
-		<template is="declare" data="{{m:m, n:n}}"/>
+		
 		<view bind:touchstart="handleTouchStart" bind:touchend="handleTouchEnd">
 
 			<view wx:if="{{list._id==='topScoreds'}}">
-				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
+				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
 					<view wx:if="{{index>3}}">
 						<!-- 视频 -->
 						<view wx:if="{{item.type === 'txvVideo'}}" class="item  item-{{index}} itemBigBox">
@@ -86,7 +86,7 @@
 						<view wx:else>
 							<!-- 小图 -->
 							<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}" >
-								<view class="itemBigBox" style="height:266rpx">
+								<view class="itemBigBox">
 								
 									<view class="itemSmall ">
 										<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
@@ -192,7 +192,7 @@
 				</view>
 			</view>
 			<view wx:else>
-				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="overflow:hidden;{{index==0?'margin-top:20rpx':''}}">
+				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
 					<!-- 视频 -->
 					<view wx:if="{{item.type === 'txvVideo'}}" class="item  item-{{index}} itemBigBox">
 						<view wx:if='{{currentindex == index }}' data-item="{{item}}" data-currentIndex='{{index}}'>
@@ -227,11 +227,10 @@
 						</view>
 					</view>
 
-					<view wx:else>
+					<view wx:elif="{{item.type === 'wxArticle'}}">
 						<!-- 小图 -->
 						<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}">
-							<view class="itemBigBox" style="height:266rpx">
-							
+							<view class="itemBigBox">
 								<view class="itemSmall">
 									<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
 									<view class="smallImgLeftTitleBox">
@@ -272,7 +271,21 @@
 											</form>
 										</view>
 									</view>
+									<view wx:if="{{item.annotations}}" style="height:120rpx;"  bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
+										<view style="overflow: hidden;">
+												<view class="leftBox marginLeft26">表态</view>
+												<view class="rightBox">
+														{{item.annotations[0].title}} ＞
+												</view>
+										</view>
+										<view class="marginLeft26">
+											<image src="http://img.wenzhangba.com/allimg/180328/1P32Q61A4-6213-0.jpg" class="touxiang" style="margin-top: 20rpx"></image>
+										</view>
+										
+									</view> 
+									<view wx:else></view>
 								</view>
+								
 							</view>
 						</view>
 						<view wx:else>
@@ -326,11 +339,17 @@
 											</form>
 										</view>
 									</view>
+									<view wx:if="{{item.annotations}}">
+										123
+									</view> 
+									<view wx:else></view>
 								</view>
 							</view>
 						</view>
 					</view>
-
+					<view wx:else>
+						<template is="declare" data="{{item:item,voteId:voteId}}"/>
+					</view>
 				</view>
 			</view>
 

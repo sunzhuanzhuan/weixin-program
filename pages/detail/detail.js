@@ -297,6 +297,19 @@ Page({
 			if (r.entity.type == 'wxArticle') {
 				this.setData({ videoId: r.entity.txvVids[0], videoSource: r.entity.txvVids })
 			}
+			if(r.entity.annotations){
+				let enti = r.entity.annotations[0]
+				let one = enti.surveyOptions[0].supporters.length;
+				let two = enti.surveyOptions[1].supporters.length;
+				let total = one +two;
+				if(total == 0){
+					enti.m=0;
+					enti.n=0;
+				}else{
+					enti.m=(one/total).toFixed(2)*100;
+					enti.n=100-((one/total).toFixed(2)*100);
+				}
+			}
 			this.setData({ showLoadding: true })
 
 			this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
@@ -849,6 +862,29 @@ Page({
 			})
 		})
 
+	},
+	//支持
+	handleSupport(e){
+		let num = e.currentTarget.dataset.num;
+		let id = e.currentTarget.dataset.item._id
+		let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
+		let obj={}
+		obj.supportId=supportId;
+		obj.id=id;
+		gdt.supportOption(obj).then((res)=>{
+				this.setData({
+					lists: app.lists
+				});
+				wx.showToast({
+					title:'投票成功',
+					duration:2000
+				})	
+		}).catch(()=>{
+			wx.showToast({
+				title:'投票失败',
+				duration:2000
+			})
+		})
 	}
 
 })

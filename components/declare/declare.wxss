@@ -64,7 +64,7 @@
     border-radius: 4rpx;
     vertical-align: top;
 }
-.hold{
+.holdOne{
     width: 200rpx;
     height: 56rpx;
     line-height: 56rpx;
@@ -74,6 +74,19 @@
     bottom: -28rpx;
     left: 50rpx;
     color: #fff;
+    background: #196AD8;
+}
+.holdTwo{
+    width: 200rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    border-radius: 28rpx;
+    font-size: 28rpx;
+    position: absolute;
+    bottom: -28rpx;
+    left: 50rpx;
+    color: #fff;
+    background: #F53B55;
 }
 .progressBox{
     overflow: hidden;

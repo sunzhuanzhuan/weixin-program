@@ -1,7 +1,7 @@
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <import src="/components/loadding/loadding.wxml" />
-
+<import src="/components/declare/declare.wxml" />
 <template is='loadding' wx:if="{{!showLoadding}}" />
 
 <view>
@@ -45,7 +45,10 @@
 				</view>
 			</view>
 		</view>
-
+		<!-- 表态 -->
+		<view wx:if="{{entity.annotations}}">
+			<template is="declare" data="{{item:entity.annotations[0],voteId:voteId}}"/>
+		</view>
 
 	</scroll-view>
 	<!-- 纯视频的布局 -->
@@ -85,6 +88,10 @@
 				</view>
 			</view>
 
+		</view>
+		<!-- 表态 -->
+		<view wx:if="{{entity.annotations}}">
+			<template is="declare" data="{{item:entity.annotations[0],voteId:voteId}}"/>
 		</view>
 	</view>
 
@@ -137,7 +144,7 @@
 	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 </view>
 
-<!-- 表态 -->
+
 
 
 

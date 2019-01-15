@@ -2,43 +2,42 @@
 	<view class="declareBox">
 		<view class="leftBox marginLeft26">表态</view>
 		<view class="rightBox">
-				你觉得ofo是否应该值得同情
+				{{item.title}}
 		</view>
 		<view class="taiBox marginLeft26">
 			<view class="taiLeftBox">
-				<view class="fontTai">说到底是资本毁了的,说到底是资本毁了的,说到底是资本毁了的,说到底是资本毁了的,说到底是资</view>
-					
-				<button class="hold" style="background: #196AD8;">支持</button>
+				<view class="fontTai">{{item.surveyOptions[0].description}}</view>
+				<button disabled="{{item.voteFor[0] ==undefined?false:item.voteFor[0] ==item.surveyOptions[0]._id?false:true}}" class="holdOne" data-item="{{item}}" data-num="0" bindtap="handleSupport">{{item.voteFor[0] !=undefined ?item.voteFor[0] ==item.surveyOptions[0]._id ?'已支持':'未支持':'支持'}}</button>
 			</view>
 			<view class="taiRightBox">
-				<view class="fontTai">共享单车还是有市场的,寒冬 过去了就好了?</view>
-				<button class="hold" style="background: #F53B55;">支持</button>
+				<view class="fontTai">{{item.surveyOptions[1].description}}</view>
+				<button disabled="{{item.voteFor[0] ==undefined?false:item.voteFor[0] ==item.surveyOptions[1]._id?false:true}}" class="holdTwo" data-item="{{item}}" data-num="1" bindtap="handleSupport">{{item.voteFor[0] !=undefined?item.voteFor[0]  ==item.surveyOptions[1]._id ?'已支持':'未支持':'支持'}}</button>
 			</view>
 		</view>
 		<view class="progressBox marginLeft26">
-			<view wx:if="{{[1].length ==0}}">
+			<view wx:if="{{item.surveyOptions[0].supporters.length ==0 && item.surveyOptions[1].supporters ==0}}">
 					<view class="leftPro" style="width:96%;background:#EBEBEB;"></view>
 			</view>
 			<view wx:else>
 					<view style="float: left;">
-							<view class="leftPro" style="width:{{m*640}}rpx"></view>
+							<view class="leftPro" style="width:{{item.m*6.40}}rpx"></view>
 						</view>
 						<view style="float: left;margin-right:-10rpx;">
-							<view class="rightPro" style="width:{{n*640}}rpx"></view>
+							<view class="rightPro" style="width:{{item.n*6.40}}rpx"></view>
 						</view>
 			</view>
 		</view>
 		<view class="percentBox marginLeft26">
-				<view class="leftPercent fontPercent">25%</view>
-				<view class="rightPercent fontPercent">75%</view>
+				<view class="leftPercent fontPercent">{{(item.m)}}%</view>
+				<view class="rightPercent fontPercent">{{item.n}}%</view>
 		</view>
 		<view class="view">
 			<view class="leftView">
-				<image src="/images/circle.png" class="touxiang"></image>
+				<image wx:for="{{item.surveyOptions[0].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{item.surveyOptions[0].supporters.length>0?'many':''}}"></image>
 			</view>
 			<view class="rightView">
 				<view style="float:right;margin-right: 40rpx">
-					<image wx:for="{{[1,2,3]}}" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3551379535,312598408&fm=26&gp=0.jpg" class="touxiang {{[1,2,3].length>0?'many':''}}"></image>
+					<image wx:for="{{item.surveyOptions[1].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{item.surveyOptions[0].supporters.length>0?'many':''}}"></image>
 					
 				</view>
 				<view style="float: right;margin-top: 20rpx;margin-right: 30rpx;">
