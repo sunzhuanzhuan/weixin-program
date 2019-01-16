@@ -4,7 +4,7 @@ const request = require("./utils/request.js").request;
 const download = require("./utils/request.js").download;
 const util = require("./utils/util.js")
 
-const PAGESIZE = 20;
+const PAGESIZE = 21;
 
 const __FAILSAFE_DEMO_EXTCONFIG = {
 	"distroId": "5b63fb56b106d81d9b74972a",
@@ -454,8 +454,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 						indexedItem.wxMidVec = '1234#1'
 					}
 					if (indexedItem.type == "simpleSurvey") {
-						let one = indexedItem.surveyOptions[0].supporters.length;
-						let two = indexedItem.surveyOptions[1].supporters.length;
+						let one = indexedItem.surveyOptions[0].totalSupporters || 0;
+						let two = indexedItem.surveyOptions[1].totalSupporters || 0;
 						let total = one + two;
 						if (total == 0) {
 							indexedItem.m = 0;
@@ -512,52 +512,60 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			});
 		});
 
-		this.on('entityUpdate', (entity, voteId) => {
-			console.log(voteId)
+		this.on('entityUpdate', (entity) => {
 			const itemIndex = this.localState.itemIndex;
-
-			let indexedItem = itemIndex[entity._id];
-			if (indexedItem) {
-				_.merge(indexedItem, entity);
-			} else {
-				indexedItem = entity;
-				itemIndex[entity._id] = indexedItem;
-			}
-
-			if (!indexedItem.randomNum) {
-				indexedItem.randomNum = Math.floor(Math.random() * 40);
-			}
-			indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
-			indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
-
-			indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
-				indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
-			if (indexedItem.type == "txvVideo") {
-				indexedItem.wxMidVec = '1234#1'
-			}
-			// console.log(indexedItem)
-			if (indexedItem.type == 'simpleSurvey') {
+			//旧的
+			console.log(itemIndex)
+			let indexedItem = {};
+			if (entity.type == 'simpleSurvey') {
+				let indexedItem = itemIndex[entity._id];
+				console.log(indexedItem)
+				// _.merge(indexedItem, entity);
 				indexedItem.vote = true;
-				indexedItem.voteFor = [voteId];
-				indexedItem.surveyOptions
-				// let one = indexedItem.surveyOptions[0].supporters.length;
-				// let two = indexedItem.surveyOptions[1].supporters.length;
-				// let total = one + two;
-				// if (total == 0) {
-				// 	indexedItem.m = 0;
-				// 	indexedItem.n = 0;
-				// } else {
-				// 	indexedItem.m = (one / total).toFixed(2) * 100;
-				// 	indexedItem.n = 100 - ((one / total).toFixed(2) * 100);
-				// }
+				indexedItem.voteFor = entity.surveyVoteFor;
+				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
 
+				this.userInfo.then((res) => {
+					indexedItem.surveyOptions[entity.num].supporters.push(res.userInfo)
+				})
+				let one = indexedItem.surveyOptions[0].totalSupporters || 0;
+				let two = indexedItem.surveyOptions[1].totalSupporters || 0;
+
+				let total = one + two;
+				if (total == 0) {
+					indexedItem.m = 0;
+					indexedItem.n = 0;
+				} else {
+					indexedItem.m = (one / total).toFixed(2) * 100;
+					indexedItem.n = 100 - ((one / total).toFixed(2) * 100);
+				}
+				// console.log(indexedItem)
+
+			} else {
+
+				let indexedItem = itemIndex[entity._id];
+				if (indexedItem) {
+					_.merge(indexedItem, entity);
+				} else {
+					indexedItem = entity;
+					itemIndex[entity._id] = indexedItem;
+				}
+
+				if (!indexedItem.randomNum) {
+					indexedItem.randomNum = Math.floor(Math.random() * 40);
+				}
+				indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+				indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
+
+				indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+					indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
+				if (indexedItem.type == "txvVideo") {
+					indexedItem.wxMidVec = '1234#1'
+				}
 			}
-			// if(indexedItem.isShow){
-			//     indexedItem.isShow=true
-			// }else{
-			//     indexedItem.isShow=false
-			// }
 
+
+			// console.log(indexedItem)
 			return;
 		});
 		this.on('voteItemUpdate', () => {
@@ -865,6 +873,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				indexedItem = x;
 				itemIndex[x._id] = indexedItem;
 			}
+
 			this.localState.dashboardAnalytics.liked = (this.localState.dashboardAnalytics.liked + 1) || 1;
 			if (x.entity) {
 				this.emit('entityUpdate', x.entity);
@@ -930,7 +939,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 		queryPromise.then((x) => this.emit('applicationIndex', x));
 		return queryPromise;
 	}
-	//表态支持
+	//列表表态支持
 	supportOption(item) {
 		const queryPromise = this.simpleApiCall(
 			'POST', `/simpleSurvey/${item.id}/votes`,
@@ -941,14 +950,29 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				autoLoadingState: true
 			})
 		queryPromise.then((x) => {
-			x.num = item.num
+			x._id = x.articleId;
+			delete x.articleId
+			x.num = Number(item.num)
 			// this.emit('entityDetail', x);
-			this.emit('entityUpdate', x, x);
+			this.emit('entityUpdate', x);
 			// if (x.entity) {
 			// 	x.entity.viewed = true;
 
 			// }
 		});
+		return queryPromise
+	}
+	//详情表态
+	supportOptionDetail(item) {
+		const queryPromise = this.simpleApiCall(
+			'POST', `/simpleSurvey/${item.id}/votes`,
+			{
+				body: {
+					vote: item.supportId || {},
+				},
+				autoLoadingState: true
+			})
+
 		return queryPromise
 	}
 	fetchListItems(listId, page, pageSize, _queryParams) {
@@ -959,7 +983,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			page = 1;
 		}
 		if (!pageSize) {
-			pageSize = 21;
+			pageSize = 20;
 		}
 		if (!listId) {
 			return []
@@ -1044,7 +1068,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			page = 1;
 		}
 		if (!pageSize) {
-			pageSize = 21;
+			pageSize = 20;
 		}
 		if (this.localState.__currentFetchMySharedsOp) {
 			return this.localState.__currentFetchMySharedsOp;

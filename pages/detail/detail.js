@@ -77,7 +77,9 @@ Page({
 		reportSubmit: true,
 		baseImageUrlYinHao: undefined,
 		showLoadding: false,
-		listenTablistCurrent: undefined
+		listenTablistCurrent: undefined,
+		votePage: 'detail',
+		vote: [],
 	},
 
 	handleChangeTypeVideo: function (e) {
@@ -297,18 +299,19 @@ Page({
 			if (r.entity.type == 'wxArticle') {
 				this.setData({ videoId: r.entity.txvVids[0], videoSource: r.entity.txvVids })
 			}
-			if(r.entity.annotations){
+			if (r.entity.annotations) {
 				let enti = r.entity.annotations[0]
-				let one = enti.surveyOptions[0].supporters.length;
-				let two = enti.surveyOptions[1].supporters.length;
-				let total = one +two;
-				if(total == 0){
-					enti.m=0;
-					enti.n=0;
-				}else{
-					enti.m=(one/total).toFixed(2)*100;
-					enti.n=100-((one/total).toFixed(2)*100);
-				}
+				let one = enti.surveyOptions[0].totalSupporters;
+				let two = enti.surveyOptions[1].totalSupporters;
+				let total = one + two;
+				if (total == 0) {
+					enti.m = 0;
+					enti.n = 0;
+				} else {
+					enti.m = (one / total).toFixed(2) * 100;
+					enti.n = 100 - ((one / total).toFixed(2) * 100);
+				};
+				this.setData({ vote: r.entity.annotations[0] })
 			}
 			this.setData({ showLoadding: true })
 
@@ -864,27 +867,58 @@ Page({
 
 	},
 	//支持
-	handleSupport(e){
+	handleSupport(e) {
+		let votePage = e.currentTarget.dataset.votepage;
 		let num = e.currentTarget.dataset.num;
 		let id = e.currentTarget.dataset.item._id
 		let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
-		let obj={}
-		obj.supportId=supportId;
-		obj.id=id;
-		gdt.supportOption(obj).then((res)=>{
-				this.setData({
-					lists: app.lists
-				});
+		let obj = {}
+		obj.supportId = supportId;
+		obj.id = id;
+		if (votePage == 'detail') {
+			gdt.supportOptionDetail(obj).then((res) => {
+				// console.log(res);
 				wx.showToast({
-					title:'投票成功',
-					duration:2000
-				})	
-		}).catch(()=>{
-			wx.showToast({
-				title:'投票失败',
-				duration:2000
+					title: '投票成功',
+					duration: 2000
+				})
+				let obj = this.data.vote;
+				console.log(obj)
+				obj.voteFor = res.surveyVoteFor;
+				obj.surveyOptions[num].totalSupporters = obj.surveyOptions[num].totalSupporters + 1
+				obj.vote = true;
+				let one = obj.surveyOptions[0].totalSupporters;
+				let two = obj.surveyOptions[1].totalSupporters;
+				let total = one + two;
+				if (total == 0) {
+					obj.m = 0;
+					obj.n = 0;
+				} else {
+					// obj.m = 5;
+					// obj.n = 56
+					obj.m = (one / total).toFixed(2) * 100;
+					obj.n = 100 - ((one / total).toFixed(2) * 100);
+				};
+				gdt.userInfo.then((res) => {
+					obj.surveyOptions[num].supporters.push(res)
+				})
+				let that = this;
+				setTimeout(function () {
+					that.setData({ vote: obj })
+				}, 500)
+				// setTimeout(() => {
+				// 	console.log(12)
+				// 	that.setData({ vote: obj, a: 2 })
+				// }, 500)
+
+
+			}).catch(() => {
+				// wx.showToast({
+				// 	title: '投票失败',
+				// 	duration: 2000
+				// })
 			})
-		})
+		}
 	}
 
 })

@@ -54,7 +54,7 @@ Page({
 		lastTapTimeoutFunc: null,
 		reportSubmit: true,
 		loadding: undefined,
-		voteId: ''
+		votePage: 'index'
 	},
 
 	//切换轮播图的时候
@@ -479,13 +479,15 @@ Page({
 			});
 
 			gdt.on('entityUpdate', (x) => {
-
-				console.log(x)
 				const itemIndex = this.appState.itemIndex;
-				console.log(itemIndex)
-				this.setData({
-					lists: app.lists
-				});
+				let this_ = this
+				console.log(11111111)
+				setTimeout(() => {
+					this_.setData({
+						lists: app.lists
+					});
+				}, 500)
+
 			});
 			this.setData({
 				loadding: true
@@ -594,26 +596,29 @@ Page({
 	},
 	//支持
 	handleSupport(e) {
+		let votePage = e.currentTarget.dataset.votepage
 		let num = e.currentTarget.dataset.num;
 		let id = e.currentTarget.dataset.item._id
 		let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
 		let obj = {}
 		obj.supportId = supportId;
 		obj.id = id;
-		obj.num = num
-		gdt.supportOption(obj).then((res) => {
-
-
-			wx.showToast({
-				title: '投票成功',
-				duration: 2000
+		obj.num = num;
+		console.log(e.currentTarget.dataset.item);
+		if (votePage == 'index') {
+			gdt.supportOption(obj).then((res) => {
+				wx.showToast({
+					title: '投票成功',
+					duration: 2000
+				})
+			}).catch(() => {
+				wx.showToast({
+					title: '投票失败',
+					duration: 2000
+				})
 			})
-		}).catch(() => {
-			wx.showToast({
-				title: '投票失败',
-				duration: 2000
-			})
-		})
+		}
+
 	}
 
 })

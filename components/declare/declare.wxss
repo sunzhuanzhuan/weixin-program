@@ -149,6 +149,7 @@
     height: 50rpx;
     border-radius: 50rpx;
     margin-right: -24rpx;
+    float:left
 }
 .dotDeclare{
     border-radius: 6rpx;

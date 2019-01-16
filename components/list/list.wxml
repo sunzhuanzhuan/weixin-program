@@ -379,7 +379,7 @@
 						</view>
 					</view>
 					<view wx:elif="{{item.type === 'simpleSurvey'}}">
-						<template is="declare" data="{{item:item,voteId:voteId}}" />
+						<template is="declare" data="{{itemDeclare:item,votePage:votePage}}" />
 					</view>
 				</view>
 			</view>
