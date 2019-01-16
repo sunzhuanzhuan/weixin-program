@@ -480,7 +480,6 @@ Page({
 
 			gdt.on('entityUpdate', (x) => {
 				const itemIndex = this.appState.itemIndex;
-
 				this.setData({
 					lists: app.lists
 				});
