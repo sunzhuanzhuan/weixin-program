@@ -225,7 +225,7 @@
 								</form>
 							</view>
 						</view>
-						<view wx:if="{{item.annotations}}" style="height:120rpx;" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
+						<!-- <view wx:if="{{item.annotations}}" style="height:120rpx;" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
 							<view style="overflow: hidden;">
 								<view class="leftBox marginLeft26">表态</view>
 								<view class="rightBox">
@@ -240,7 +240,7 @@
 							</view>
 
 						</view>
-						<view wx:else></view>
+						<view wx:else></view> -->
 					</view>
 
 					<view wx:elif="{{item.type === 'wxArticle'}}">
@@ -295,10 +295,29 @@
 											</view>
 										</view>
 										<view class="marginLeft26">
-											<view class="leftView" wx:if="{{item.surveyOptions[0].supporters.length>0}}">
-												<image wx:for="{{item.surveyOptions[0].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{item.surveyOptions[0].supporters.length>0?'many':''}}"></image>
+
+											<view class="leftView" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
+												<image wx:for="{{item.annotations[0].surveyOptions[0].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{item.surveyOptions[0].supporters.length>0?'many':''}}"></image>
 											</view>
-											<text style="color:#B3B3B3;font-size: 24rpx;">进入文章,表达你的态度</text>
+											<view wx:if="{{item.annotations[0].surveyOptions[0].totalSupporters+item.annotations[0].surveyOptions[1].totalSupporters == 0 }}">
+												<text style="color:#B3B3B3;font-size: 24rpx;">进入文章,表达你的态度</text>
+											</view>
+											<view wx:else style="overflow:hidden;margin-top:10rpx;">
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters}}" src="{{item.avatarUrl}}"></image>
+												</view>
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>5}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters.slice(5)}}" src="{{item.avatarUrl}}"></image>
+												</view>
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>0}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}" src="{{item.avatarUrl}}"></image>
+												</view>
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>5}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters.slice(5)}}" src="{{item.avatarUrl}}"></image>
+												</view>
+
+												<text style="color:#B3B3B3;font-size: 24rpx;float:left;margin-top:10rpx;margin-left:16rpx;">他们已经表达了态度</text>
+											</view>
 										</view>
 
 									</view>
@@ -358,18 +377,35 @@
 											</form>
 										</view>
 									</view>
-									<view wx:if="{{item.annotations}}" style="height:120rpx;" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
+									<view wx:if="{{item.annotations}}" style="height:120rpx;background: #fff" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
 										<view style="overflow: hidden;">
-											<view class="leftBox marginLeft26">表态</view>
-											<view class="rightBox">
+											<view class="leftBox marginLeft26" style="margin-top: 0">表态</view>
+											<view class="rightBox" style="margin-top: 0">
 												{{item.annotations[0].title}} ＞
 											</view>
 										</view>
 										<view class="marginLeft26">
-											<view class="leftView" wx:if="{{item.surveyOptions[0].supporters.length>0}}">
-												<image wx:for="{{item.surveyOptions[0].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{item.surveyOptions[0].supporters.length>0?'many':''}}"></image>
+											<view class="leftView" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
+												<image wx:for="{{item.annotations[0].surveyOptions[0].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{item.surveyOptions[0].supporters.length>0?'many':''}}"></image>
 											</view>
-											<text style="color:#B3B3B3;font-size: 24rpx;">进入文章,表达你的态度</text>
+											<view wx:if="{{item.annotations[0].surveyOptions[0].totalSupporters+item.annotations[0].surveyOptions[1].totalSupporters == 0 }}">
+												<text style="color:#B3B3B3;font-size: 24rpx;">进入文章,表达你的态度</text>
+											</view>
+											<view wx:else style="overflow:hidden;margin-top:10rpx;">
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters}}" src="{{item.avatarUrl}}"></image>
+												</view>
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>5}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters.slice(5)}}" src="{{item.avatarUrl}}"></image>
+												</view>
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>0}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}" src="{{item.avatarUrl}}"></image>
+												</view>
+												<view style="float:left" class="touxiang" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>5}}">
+													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}" src="{{item.avatarUrl}}"></image>
+												</view>
+												<text style="color:#B3B3B3;font-size: 24rpx;float:left;margin-top:10rpx;margin-left:16rpx;">他们已经表达了态度</text>
+											</view>
 										</view>
 
 									</view>

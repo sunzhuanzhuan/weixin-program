@@ -44,7 +44,6 @@
 		</view>
 		<!-- 表态 -->
 
-		{{vote.m}}---{{a}}
 		<view wx:if="{{entity.annotations[0] }}">
 			<template is="declare" data="{{itemDeclare:vote,votePage:votePage }}" />
 		</view>
@@ -87,12 +86,6 @@
 				</view>
 			</view>
 
-		</view>
-		<!-- 表态 -->
-		{{vote.m}}
-
-		<view wx:if="{{entity.annotations[0] }}">
-			<template is="declare" data="{{itemDeclare:vote,votePage:votePage }}" />
 		</view>
 	</view>
 

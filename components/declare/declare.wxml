@@ -1,4 +1,4 @@
-<template name="declare">{{itemDeclare.m}}
+<template name="declare">
 	<view class="declareBox">
 		<view class="leftBox marginLeft26">表态</view>
 		<view class="rightBox">
@@ -39,6 +39,11 @@
 
 					<image src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[0].supporters.length>0?'many':''}}"></image>
 				</view>
+				<view wx:if="{{itemDeclare.surveyOptions[0].supporters.length==5}}" style="float: right;margin-top: 18rpx;margin-right: 90rpx;">
+					<view class="dotDeclare"></view>
+					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
+					<view class="dotDeclare" style="opacity: 0.4;"></view>
+				</view>
 
 			</view>
 			<view class="rightView">
@@ -46,7 +51,7 @@
 					<image wx:for="{{itemDeclare.surveyOptions[1].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[1].supporters.length>1?'many':''}}"></image>
 
 				</view>
-				<view style="float: right;margin-top: 20rpx;margin-right: 30rpx;">
+				<view wx:if="{{itemDeclare.surveyOptions[1].supporters.length==5}}" style="float: right;margin-top: 20rpx;margin-right: 30rpx;">
 					<view class="dotDeclare"></view>
 					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
 					<view class="dotDeclare" style="opacity: 0.4;"></view>

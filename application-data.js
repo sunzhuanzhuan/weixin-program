@@ -526,7 +526,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
 
 				this.userInfo.then((res) => {
-					indexedItem.surveyOptions[entity.num].supporters.push(res.userInfo)
+					if (indexedItem.surveyOptions[entity.num].supporters.length < 5) {
+						indexedItem.surveyOptions[entity.num].supporters.push(res.userInfo)
+					}
+
 				})
 				let one = indexedItem.surveyOptions[0].totalSupporters || 0;
 				let two = indexedItem.surveyOptions[1].totalSupporters || 0;
