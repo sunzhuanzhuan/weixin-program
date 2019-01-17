@@ -125,3 +125,7 @@
     margin-right: 4px;
     margin-bottom: -1px;
 }
+
+.giftWillCome {
+    margin-top: 36px;
+}

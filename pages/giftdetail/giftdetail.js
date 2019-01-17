@@ -20,6 +20,11 @@ Page({
 			notEnough: true
 		})
 	},
+	confirm:function(){
+		wx.reLaunch({
+			url: '/pages/check/check?box=true',
+		});
+	},
 	onLoad: function (options) {
 
 	},

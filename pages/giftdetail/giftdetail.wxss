@@ -250,3 +250,55 @@
     color: rgba(0, 0, 0, 1);
     line-height: 44px;
 }
+
+.changeDetail {}
+
+.changeTitle {
+    text-align: center;
+    margin-top: 26px;
+    height: 22px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.changeTitleText {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 20px;
+}
+
+.changeScore {
+    text-align: center;
+    margin-top: 21px;
+}
+
+.changeLeft {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.productPic {
+    width: 76px;
+    height: 76px;
+    margin-top: 13px;
+}
+
+.scoreminus {
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    line-height: 20px;
+}
+
+.minusNum {
+    margin-left: 10px;
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    line-height: 20px;
+}

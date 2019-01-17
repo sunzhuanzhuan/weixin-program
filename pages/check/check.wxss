@@ -376,3 +376,102 @@ button::after {
   margin-left: 5px;
   margin-bottom: -2px;
 }
+
+/*兑换弹窗*/
+.changeBox {
+  width: 300px;
+  height: 370px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+}
+
+.changeInfo {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.changeN {
+  text-align: center;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  line-height: 17px;
+  margin-top: 13px;
+}
+
+.changeNdetail {
+  height: 30px;
+  background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+  padding: 5px 12px 5px 13px;
+  text-align: center;
+  margin-top: 4px;
+  line-height: 30px;
+}
+
+.addService {
+  margin-top: 16px;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  line-height: 17px;
+}
+
+.addChange {
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  line-height: 17px;
+}
+
+.eq {
+  width: 120px;
+  height: 120px;
+}
+
+.weChat {
+  margin-top: 4px;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  color: rgba(0, 0, 0, 1);
+}
+
+.we1 {
+  font-weight: 400;
+}
+
+.we2 {
+  font-weight: 600;
+}
+
+.attention {
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(255, 0, 0, 1);
+  line-height: 17px;
+}
+
+.attention:first-child {
+  margin-top: 19px;
+}
+
+.savePicToPhone {
+  margin-top: 13px;
+  width: 300px;
+  height: 48px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+  text-align: center;
+  line-height: 48px;
+  margin-top: 23px;
+}

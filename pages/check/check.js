@@ -14,10 +14,11 @@ Page({
 		day: null,
 		level: 0,
 		arrDate: [],
-		dateArr: []
+		dateArr: [],
+		changeBox: false,
 	},
 	onShow: function () {},
-	onLoad: function () {
+	onLoad: function (option) {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			const missions = res.missions || [];
 			const accountBalance = res.accountBalance;
@@ -127,6 +128,11 @@ Page({
 				missions: missions.slice(1)
 			});
 		});
+		if (option.box) {
+			this.setData({
+				changeBox: true
+			})
+		}
 
 	},
 	jumptogift: function (e) {
@@ -140,6 +146,28 @@ Page({
 		this.setData({
 			ruleIsShow: !this.data.ruleIsShow,
 		})
+	},
+	/*兑换商品的弹窗，点击确认保存客服的二维码*/
+	savePic: function () {
+		this.setData({
+			changeBox: false
+		})
+		console.log("保存");
+		// 授权，获取写入相册的权限，保存图片到本地
+		// wx.getSetting({
+		// 	success(res) {
+		// 		if (!res.authSetting['scope.writePhotosAlbum']) {
+		// 			wx.authorize({
+		// 				scope: 'scope.writePhotosAlbum',
+		// 				success() {
+		// 					wx.saveImageToPhotosAlbum({
+		// 						filePath :
+		// 					})
+		// 				}
+		// 			})
+		// 		}
+		// 	}
+		// })
 	},
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {

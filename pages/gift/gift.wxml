@@ -35,4 +35,8 @@
             <text class='text2'>剩余 10</text>
         </view>
     </view>
+    <view class='giftThismonth giftWillCome'>
+        <view class='yellowBorder'></view>
+        <text class='monthGift'>2月礼物预告</text>
+    </view>
 </view>

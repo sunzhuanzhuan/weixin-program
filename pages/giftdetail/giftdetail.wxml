@@ -36,17 +36,25 @@
 <!--兑换弹窗 -->
 <view class="changeJump" wx:if="{{visible}}">
     <view class="changeBox">
-        <view>
-            <view></view>
-            <view></view>
-            <view></view>
-            <view></view>
+        <view class="changeDetail">
+            <view class="changeTitle">
+                <text class="changeTitleText">风倍清免洗去味除菌喷雾 350ml</text>
+            </view>
+            <view class="productPic"></view>
+            <view class="changeScore">
+                <text class="scoreminus">积分减扣:</text>
+                <text class="minusNum">-2500分</text>
+            </view>
+            <view class="changeLeft">
+                <text class="scoreminus">数量</text>
+                <text class="minusNum">1 份</text>
+            </view>
         </view>
         <view class="cancelOrSure">
             <view class="cancel" bindtap="cancel">
                 <text class="txt">再想想</text>
             </view>
-            <view class="sure">
+            <view class="sure" bindtap="confirm">
                 <text class="txt">确认兑换</text>
             </view>
         </view>
