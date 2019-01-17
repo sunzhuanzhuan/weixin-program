@@ -1,3 +1,15 @@
+.imgGif{
+    width: 160rpx;
+    height: 160rpx;
+}
+
+
+
+
+
+
+
+
 .topFix {
     position: fixed;
     top: 0;
@@ -56,6 +68,7 @@
     margin-top: 12px;
     margin-left: 20px;
     display: inline-block;
+    text-align: center;
 }
 
 .giftBox:nth-child(2n) {
