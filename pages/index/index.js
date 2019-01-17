@@ -444,7 +444,7 @@ Page({
 		})
 	},
 	jumpToCheck() {
-		wx.reLaunch({
+		wx.navigateTo({
 			url: '/pages/check/check',
 		});
 	},

@@ -227,14 +227,12 @@ Page({
 			gdt.missionComplete('showup').then((res) => {
 				const scoreAdd = res.data.transaction.amount
 				wx.showToast({
-					title: '领取成功，获得{{scoreAdd}}积分',
+					title: '领取成功，获得'+scoreAdd+'积分',
 					icon: 'none',
 					duration: 1000,
 					mask: true,
 					success: res => {
-						this.setData({
-							checked: true,
-						})
+						this.onLoad();
 					}
 				});
 			})
