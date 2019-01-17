@@ -141,6 +141,11 @@ Page({
 	handleShrink: function (e) {
 		this.setData({ shinIndex: e.currentTarget.dataset.id, heightFlag: !this.data.heightFlag })
 	},
+	jumpToCheck() {
+		wx.reLaunch({
+			url: '/pages/check/check',
+		});
+	},
 	handleTab: function (e) {
 		if (e.currentTarget.dataset.name == 'myShares') {
 			gdt.magicMySharedFirstLoad().then(() => this.setData({ myShares: this.appState.myShares }));

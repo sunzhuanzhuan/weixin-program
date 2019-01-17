@@ -1467,4 +1467,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
             })
         });
     }
+
+    getDailyMissions() {
+      return this.simpleApiCall('GET', '/rewards/dailyMission')
+    }
+
+  missionComplete(type) {
+    return this.simpleApiCall('POST', `/rewards/dailyMission/${type}`)
+  }
 }

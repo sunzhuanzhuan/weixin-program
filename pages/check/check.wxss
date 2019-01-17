@@ -1,205 +1,378 @@
-button::after{ border: none;padding: 0 }
+button::after {
+  border: none;
+  padding: 0
+}
+
 .container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding:40rpx 0 40rpx 0;
-    background-color:rgb(250, 204, 79);
-  } 
-  .goToFinish{
-    width:100rpx;
-    height:47rpx;
-    font-size:11px;
-    color:rgb(56,56,56);
-    padding:0;
-    line-height:47rpx;
-    float:right;
-    margin-top:9rpx;
-    background-color: rgb(250,210,88);
-    border-radius: 20px;
-  }
-  .task-main{
-    font-size:14px;
-    font-weight: bold;
-  }
-  .task{
-    padding:0 30rpx 0 30rpx;
-    margin-top:30rpx;
-  }
-  .rightTop{
-    position:absolute;
-    right:0;
-    top:0;
-    font-size:12px;
-    display:flex;
-    flex-direction: column;
-    margin-right:30rpx;
-    margin-top:20rpx;
-  }
-  .scoreShop{
-    margin-top:20rpx;
-    color:white;
-  }
-  .activeRules{
-    color:rgb(202,147,1);
-  }
-  .notDone{
-    color:rgb(52,52,52);
-  }
-  /* ******************* 活动规则弹出框部分***************/
-  .actRule{
-    width:100%;
-    height:100%;
-    background-color:rgba(50,50,50,.5);
-    position:fixed;
-    top:0;
-    left:0;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .ruleBox{
-    width:80%;
-    height:80%;
-    background-color:white;
-    border-radius: 20px;
-  }
-  .ruleHead{
-    text-align: center;
-    font-size:18px;
-    font-weight: bold;
-    margin-top:40rpx;
-  }
-  .circleIcon{
-    width:19rpx;
-    height:19rpx;
-    border-radius: 50%;
-    background-color:black;
-    margin:0rpx 15rpx 4rpx 0rpx;
-    display:inline-block;
-  }
-  .ruleTitle{
-    font-size:16px;
-    font-weight: bold;
-  }
-  .ruleText{
-    margin-top:15rpx;
-    font-size:14px;
-    line-height: 50rpx;
-    padding:0 10rpx 0 40rpx;
-  }
-  .iSee{
-    position: absolute;
-    bottom: 10%;
-    width:80%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    background-color: rgb(250,211,88);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-  /***小图标样式****/
-  .iconCheck{
-    margin-top:20rpx;
-    z-index: 2;
-  }
-  .iconModel{
-    display:inline-block;
-    width:10%;
-    height:20%;
-    margin-left:28rpx;
-    text-align:center;
-  }
-  .iconCont{
-    font-size:13px;
-    color:rgb(211,161,30);
-  }
-  .iconDate{
-    width:39px;
-    height:39px;
-    background-color:rgb(246,187,13);
-    border-radius:50%;
-    text-align:center;
-    align-items:center;
-    line-height:39px;
-  }
-  .iconTxt{
-    font-size:16px;
-    color:rgb(255,226,140);
-  }
-  .iconDate-after{
-    width:39px;
-    height:39px;
-    background-color:rgb(255,226,140);
-    border-radius:50%;
-    text-align:center;
-    align-items:center;
-    line-height:39px;
-  }
-  .iconTxt-after{
-    font-size:16px;
-    color:rgb(246,187,13);
-  }
- .checkBtn{
-   width: 260rpx;
-   height:80rpx;
-   margin-top: 70rpx;
-   border-radius: 40rpx;
- }
- .finishBtn{
-  width: 120rpx;
-  height:50rpx;
-  border-radius: 25rpx;
-  font-size: 24rpx;
-  background-color:rgb(255,226,140);
- }
- .dispayInline{
-   display: inline-block;
-   vertical-align: middle;
- }
- .widthBox1{
-    width: 430rpx
- }
- .widthBox2{
-  width: 100rpx
- }
- .widthBox3{
-  width: 100rpx
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 23px 0 23px 0;
+  position: relative;
+  background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+  box-shadow: 0px 2px 8px 0px rgba(246, 187, 13, 0.3);
+  border-bottom-left-radius: 70% 13%;
+  border-bottom-right-radius: 70% 13%;
 }
-.font28{
+
+.myScoreText {
+  width: 48px;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 17px;
+}
+
+.myScoreNumber {
+  font-size: 30px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+  line-height: 42px;
+}
+
+.goToFinish {
+  width: 100rpx;
+  height: 47rpx;
+  font-size: 11px;
+  color: rgb(56, 56, 56);
+  padding: 0;
+  line-height: 47rpx;
+  float: right;
+  margin-top: 9rpx;
+  background-color: rgb(250, 210, 88);
+  border-radius: 20px;
+}
+
+.task-main {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.task {
+  padding: 0 30rpx 0 30rpx;
+  margin-top: 30rpx;
+}
+
+.containerScore {
+  flex: 1;
+}
+
+.ScoreShopButton {
+  width: 80px;
+  height: 34px;
+  background: rgba(247, 188, 0, 1);
+  border-radius: 0px 100px 100px 0px;
+}
+
+.mainlyContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.ScoreShop {
+  width: 48px;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+  line-height: 17px;
+  margin-left: 6px;
+}
+
+.activeRules {
+  width: 48px;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(159, 116, 2, 1);
+  line-height: 17px;
+  cursor: pointer;
+  margin-right: 16px;
+}
+
+.notDone {
+  color: rgb(52, 52, 52);
+}
+
+/* ******************* 活动规则弹出框部分***************/
+.actRule {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(50, 50, 50, .5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.ruleBox {
+  width: 300px;
+  height: 370px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+  position: relative;
+}
+
+.ruleHead {
+  text-align: center;
+  height: 25px;
+  font-size: 18px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  line-height: 25px;
+  margin-top: 23px;
+}
+
+.circleIcon {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: black;
+  margin: 0rpx 6px 4rpx 0rpx;
+  display: inline-block;
+}
+
+.ruleTitle {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+
+}
+
+.ruleText {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 17px;
+  padding: 0 19px 0 26px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+}
+
+.iSee {
+  position: absolute;
+  bottom: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 300px;
+  height: 48px;
+  background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  font-size: 16px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+}
+
+/***小图标样式****/
+.iconCheck {
+  margin-top: 20rpx;
+  z-index: 2;
+}
+
+.iconModel {
+  display: inline-block;
+  width: 10%;
+  height: 20%;
+  margin-left: 28rpx;
+  text-align: center;
+}
+
+.iconCont {
+  font-size: 13px;
+  color: rgb(211, 161, 30);
+}
+
+.iconDate {
+  width: 39px;
+  height: 39px;
+  background-color: rgb(246, 187, 13);
+  border-radius: 50%;
+  text-align: center;
+  align-items: center;
+  line-height: 39px;
+}
+
+.iconTxt {
+  font-size: 16px;
+  color: rgb(255, 226, 140);
+}
+
+.iconDate-after {
+  width: 39px;
+  height: 39px;
+  background-color: rgb(255, 226, 140);
+  border-radius: 50%;
+  text-align: center;
+  align-items: center;
+  line-height: 39px;
+}
+
+.iconTxt-after {
+  font-size: 16px;
+  color: rgb(246, 187, 13);
+}
+
+.checked {
+  background: #F6BB0D;
+}
+
+.uncheck {
+  background: rgba(51, 51, 51, 1);
+  box-shadow: 0px 2px 11px 0px rgb(165, 126, 0);
+}
+
+.checkBtn {
+  width: 128px;
+  height: 40px;
+  border-radius: 20px;
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkedtext {
+  width: 48px;
+  height: 22px;
+  font-size: 16px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(186, 140, 0, 1);
+  line-height: 22px;
+  text-align: center;
+}
+
+.unchecktext {
+  width: 64px;
+  height: 22px;
+  font-size: 16px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 22px;
+  text-align: center;
+}
+
+.dailyMission {}
+
+.finishBtn {
+  width: 60px;
+  height: 24px;
+  background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(255, 197, 47, 1) 100%);
+  border-radius: 13px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2;
+  margin-top: 3px;
+}
+
+.dispayInline {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.widthBox1 {
+  width: 430rpx
+}
+
+.widthBox2 {
+  width: 60px;
+}
+
+.widthBox3 {
+  width: 60px
+}
+
+.font28 {
   font-size: 28rpx;
-  font-weight: bolder;
-  color: #333;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
 }
-.font24{
-  font-size: 24rpx;
-  color: #666;
+
+.addScore {
+  margin-left: 16rpx;
 }
-.font22{
+
+.font24 {
+  color: #666666;
+  display: inline-block;
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+}
+
+.font-line {
+  color: #CCCCCC;
+}
+
+.font-finish {
+  color: #B3B3B3;
+  margin-left: 16rpx;
+}
+
+.font22 {
   font-size: 22rpx;
   color: #999;
 }
-.marginLeft56{
+
+.marginLeft56 {
   margin-left: 56rpx;
 }
-.marginTB{
+
+.marginTB {
   margin: 50rpx 0
 }
-.marginTB2411{
-  margin: 48rpx 0  22rpx 56rpx;
-  padding-left:10rpx;
+
+.marginTB2411 {
+  margin: 48rpx 0 22rpx 56rpx;
+  padding-left: 10rpx;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
+  position: relative;
 }
-.borderLeft{
-  border-left: 10rpx solid #ffce20;
+
+.borderLeft {
+  width: 4px;
+  height: 14px;
+  background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+  border-radius: 2px;
+  position: absolute;
+  top: 4px;
+  left: -4px;
 }
-.bg{
+
+.bg {
   background: #fff;
   height: 100%;
 }
-.marginRight56{
+
+.marginRight56 {
   margin-right: 56rpx;
 }
 
+.scoreIcon {
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  margin-left: 5px;
+  margin-bottom: -2px;
+}

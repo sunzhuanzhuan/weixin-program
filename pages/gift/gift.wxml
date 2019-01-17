@@ -1,0 +1,38 @@
+<view class="" hover-class="none" hover-stop-propagation="false">
+    lalalalallala
+</view>
+<view>
+    <view class='topFix'>
+        <image class="scoreIcon" src="../../images/score.png"></image>
+        <text class='canUse'>可用积分:</text>
+        <text class='canUseNumber'>{{accountBalance}}</text>
+    </view>
+    <view class='giftThismonth'>
+        <view class='yellowBorder'></view>
+        <text class='monthGift'>1月礼物(每月更新)</text>
+    </view>
+    <view class='giftBox' bindtap="jumpToDetail">
+        <view class='imgBox' wx:if="true">
+        </view>
+        <view wx:else>已抢光</view>
+        <view class='giftTitle'>
+            <text class='giftTitleDetail'>海飞丝幽香啦啦啦啦啦啦啊啦啦啦啦啦啦啦</text>
+        </view>
+        <view class="textGroup">
+            <text class='text1'>250 积分</text>
+            <text class='text2'>剩余 10</text>
+        </view>
+    </view>
+    <view class='giftBox' bindtap="jumpToDetail">
+        <view class='imgBox' wx:if="true">
+        </view>
+        <view wx:else>已抢光</view>
+        <view class='giftTitle'>
+            <text class='giftTitleDetail'>海飞丝幽香啦啦啦啦啦啦啊啦啦啦啦啦啦啦</text>
+        </view>
+        <view class="textGroup">
+            <text class='text1'>250 积分</text>
+            <text class='text2'>剩余 10</text>
+        </view>
+    </view>
+</view>

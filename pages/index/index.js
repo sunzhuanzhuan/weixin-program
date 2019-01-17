@@ -53,12 +53,14 @@ Page({
 		// 单击事件点击后要触发的函数
 		lastTapTimeoutFunc: null,
 		reportSubmit: true,
-		loadding:undefined
+		loadding: undefined
 	},
 
 	//切换轮播图的时候
 	handleChangeSwiper: function (e) {
-		this.setData({ currentSwiper: e.detail.current })
+		this.setData({
+			currentSwiper: e.detail.current
+		})
 		if (e.detail.source == 'autoplay' || e.detail.source == 'touch') {
 			if (e.detail.current == 2) {
 				this.setData({
@@ -87,7 +89,9 @@ Page({
 	handleListing: function (e) {
 		const entity = e.currentTarget.dataset.item;
 		let voiceId = entity.wxmpVoiceIds[0];
-		this.setData({ listenTablistCurrent: e.currentTarget.dataset.tablist });
+		this.setData({
+			listenTablistCurrent: e.currentTarget.dataset.tablist
+		});
 		if (e.currentTarget.dataset.index == this.data.listenIndexCurrent) {
 			if (this.data.listening) {
 				innerAudioContext.pause();
@@ -99,7 +103,8 @@ Page({
 				})
 				gdt.track('pause-article-voice-on-index-page', {
 					voiceId: voiceId,
-					itemId: entity._id, title: entity.title,
+					itemId: entity._id,
+					title: entity.title,
 					playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0
 				});
 			} else {
@@ -125,7 +130,8 @@ Page({
 				innerAudioContext.play();
 				gdt.track('play-article-voice-on-index-page', {
 					voiceId: voiceId,
-					itemId: entity._id, title: entity.title
+					itemId: entity._id,
+					title: entity.title
 				});
 			}
 
@@ -141,7 +147,8 @@ Page({
 			})
 			gdt.track('play-article-voice-on-index-page', {
 				voiceId: voiceId,
-				itemId: entity._id, title: entity.title
+				itemId: entity._id,
+				title: entity.title
 			});
 		}
 
@@ -153,11 +160,16 @@ Page({
 	//变成video
 	changeVideo: function (e) {
 		const current = e.currentTarget.dataset.currentindex;
-		this.setData({ isVideo: true, currentindex: current })
+		this.setData({
+			isVideo: true,
+			currentindex: current
+		})
 		const item = e.currentTarget.dataset.item;
 		if (item && item.type === 'txvVideo' && item._id) {
 			gdt.trackVideoPlay(item._id);
-			gdt.track('video-play', { itemId: item._id });
+			gdt.track('video-play', {
+				itemId: item._id
+			});
 		}
 	},
 	//授权
@@ -175,10 +187,16 @@ Page({
 
 			if (!targetEntity.liked) {
 				gdt.likeItem(targetEntity._id);
-				gdt.track('like-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
+				gdt.track('like-item-on-index-page', {
+					itemId: targetEntity._id,
+					type: targetEntity.type
+				});
 			} else {
 				gdt.unlikeItem(targetEntity._id);
-				gdt.track('unlike-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
+				gdt.track('unlike-item-on-index-page', {
+					itemId: targetEntity._id,
+					type: targetEntity.type
+				});
 			}
 
 
@@ -186,10 +204,16 @@ Page({
 			gdt.once('userInfo', () => {
 				if (!targetEntity.liked) {
 					gdt.likeItem(targetEntity._id);
-					gdt.track('like-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
+					gdt.track('like-item-on-index-page', {
+						itemId: targetEntity._id,
+						type: targetEntity.type
+					});
 				} else {
 					gdt.unlikeItem(targetEntity._id);
-					gdt.track('unlike-item-on-index-page', { itemId: targetEntity._id, type: targetEntity.type });
+					gdt.track('unlike-item-on-index-page', {
+						itemId: targetEntity._id,
+						type: targetEntity.type
+					});
 				}
 			})
 		});
@@ -228,7 +252,7 @@ Page({
 
 	handleTitleTab(e) {
 		this.setData({
-			loadding:false
+			loadding: false
 		})
 		// 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
 		if (this.data.touchEndTime - this.data.touchStartTime < 350) {
@@ -257,12 +281,15 @@ Page({
 		});
 		const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
 		if (currentListInstance) {
-			gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+			gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
 				this.setData({
-					loadding:true
+					loadding: true
 				})
 			});
-			gdt.track('index-show-tab', { listId: currentListInstance._id, title: currentListInstance.title });
+			gdt.track('index-show-tab', {
+				listId: currentListInstance._id,
+				title: currentListInstance.title
+			});
 		}
 		if (this.data.listenTablistCurrent != this.data.currentTabIndex) {
 			this.setData({
@@ -304,30 +331,38 @@ Page({
 	handleTouchEnd(e) {
 		let that = this;
 
-		this.setData({ endWidth: e.changedTouches[0].clientX, isVideo: false }, () => {
+		this.setData({
+			endWidth: e.changedTouches[0].clientX,
+			isVideo: false
+		}, () => {
 			if (that.data.startsWidth >= that.data.screenWidth / 2) {
 				if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
 					that.setData({
-						loadding:false,
+						loadding: false,
 						scrollTop: that.data.scrollTop = 0,
 						scrollLeft: that.data.scrollLeft + 50,
-						templateFlag: true, currentTabIndex: ++that.data.currentTabIndex, isMore: true, list: []
+						templateFlag: true,
+						currentTabIndex: ++that.data.currentTabIndex,
+						isMore: true,
+						list: []
 					}, () => {
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (that.data.currentTabIndex !== that.data.lists.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+							gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
 								that.setData({
-									loadding:true,
+									loadding: true,
 								})
 							});
 						}
 					});
 
 					if (that.data.currentTabIndex === that.data.lists.length) {
-						that.setData({ currentTabIndex: 0 })
+						that.setData({
+							currentTabIndex: 0
+						})
 						that.setData({
 							scrollLeft: that.data.scrollLeft = -100,
-							loadding:true,
+							loadding: true,
 						});
 						wx.hideLoading();
 					}
@@ -360,16 +395,22 @@ Page({
 						})
 					}
 					if (that.data.currentTabIndex === 1) {
-						that.setData({ scrollLeft: that.data.scrollLeft = 0 });
+						that.setData({
+							scrollLeft: that.data.scrollLeft = 0
+						});
 					}
 
-					that.setData({ currentTabIndex: --that.data.currentTabIndex, list: [] ,	loadding:false,}, () => {
+					that.setData({
+						currentTabIndex: --that.data.currentTabIndex,
+						list: [],
+						loadding: false,
+					}, () => {
 
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (!currentListInstance.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id).then(()=>{
+							gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
 								that.setData({
-									loadding:true,
+									loadding: true,
 								})
 							});
 						}
@@ -398,7 +439,14 @@ Page({
 		})
 	},
 	handleTouchStart(e) {
-		this.setData({ startsWidth: e.changedTouches[0].clientX })
+		this.setData({
+			startsWidth: e.changedTouches[0].clientX
+		})
+	},
+	jumpToCheck() {
+		wx.reLaunch({
+			url: '/pages/check/check',
+		});
 	},
 	selectMy: function () {
 		wx.setStorage({
@@ -411,7 +459,9 @@ Page({
 
 	},
 	handleClose: function () {
-		this.setData({ isModal: false })
+		this.setData({
+			isModal: false
+		})
 	},
 
 	// 分割线
@@ -430,14 +480,20 @@ Page({
 				type1: 'getUserInfo'
 			});
 			gdt.once('userInfo', () => {
-				this.setData({ type1: 'share' });
+				this.setData({
+					type1: 'share'
+				});
 			});
 		});
 		let randomNum = parseInt(Math.random() * 60 + 30);
 		gdt.userInfo.then((res) => {
-			this.setData({ isModal: false })
+			this.setData({
+				isModal: false
+			})
 		}).catch(() => {
-			this.setData({ isModal: true })
+			this.setData({
+				isModal: true
+			})
 		})
 		gdt.appName.then((x) => {
 			wx.setNavigationBarTitle({
@@ -461,7 +517,9 @@ Page({
 
 			gdt.on("storageSet", (k, v) => {
 				if (k === 'dashboardTipShouldDisplay') {
-					this.setData({ dashboardTipShouldDisplay: v });
+					this.setData({
+						dashboardTipShouldDisplay: v
+					});
 				}
 			})
 			gdt.on('listItems', (listId, updateRange, itemList) => {
@@ -480,18 +538,18 @@ Page({
 				});
 			});
 			this.setData({
-				loadding:true
+				loadding: true
 			})
 
 			if (app.topListEnabled === false) {
 				gdt.magicListItemLoadMore('topScoreds').then((res) => {
 					const theList = app.listIndex['topScoreds'];
 					let arr = theList.items.splice(0, 3);
-	
+
 					if (app.lists[0] !== app.listIndex['topScoreds']) {
 						app.lists.unshift(app.listIndex['topScoreds']);
 					}
-	
+
 					this.setData({
 						lists: app.lists,
 						imgUrls: arr
@@ -538,23 +596,31 @@ Page({
 	//上拉加载
 	onReachBottom: function () {
 		this.setData({
-			loadding:false
+			loadding: false
 		})
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
 					this.setData({
-						loadding:true
+						loadding: true
 					})
-					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
+					gdt.track('item-list-load-more', {
+						listId: currentListInstance._id,
+						title: currentListInstance.title,
+						acc: currentListInstance.items.length
+					});
 				});
 			} else {
 				gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
 					this.setData({
-						loadding:true
+						loadding: true
 					})
-					gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
+					gdt.track('item-list-load-more', {
+						listId: currentListInstance._id,
+						title: currentListInstance.title,
+						acc: currentListInstance.items.length
+					});
 				});
 			}
 
@@ -564,14 +630,14 @@ Page({
 	onPullDownRefresh: function () {
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		this.setData({
-			loadding:false
+			loadding: false
 		})
 		let that = this;
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadLatest(currentListInstance._id).then((res) => {
 					this.setData({
-						loadding:true
+						loadding: true
 					})
 					let oldRes = JSON.parse(JSON.stringify(res));
 					const theList = app.listIndex['topScoreds'];
@@ -589,11 +655,14 @@ Page({
 			} else {
 				gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
 
-					gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
+					gdt.track('item-list-refresh', {
+						listId: currentListInstance._id,
+						title: currentListInstance.title
+					});
 					setTimeout(() => {
 						wx.stopPullDownRefresh();
 						that.setData({
-							loadding:true
+							loadding: true
 						})
 					}, 500);
 				});
@@ -613,7 +682,11 @@ Page({
 			const entity = target.dataset.item;
 			if (entity) {
 				gdt.trackShareItem(entity._id);
-				gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });
+				gdt.track('share-item-on-index-page', {
+					itemId: entity._id,
+					title: entity.title,
+					type: entity.type
+				});
 				return {
 					title: entity.title || '默认转发标题',
 					path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,

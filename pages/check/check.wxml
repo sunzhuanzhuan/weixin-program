@@ -1,17 +1,19 @@
 <!-- 上方积分模块 -->
 <view class="bg">
 	<view class="container">
-		<view style=''>
-			<view style='display:flex;flex-direction:column;justify-content:center;align-items:center'>
-				<text style='font-size:13px;'>我的积分</text>
-				<text style="font-size:26px;font-weight:bold;">{{accountBalance}}</text>
+		<view class='mainlyContainer'>
+			<!-- 左边的积分商城-->
+			<view class='ScoreShopButton' bindtap='jumptogift' data-score='{{accountBalance}}'>
+				<text class='ScoreShop'>积分商城</text>
+				<image src="../../images/score.png" class="scoreIcon" />
 			</view>
-
-			<view class='rightTop'>
-				<text class='activeRules' bindtap="handleRule">活动规则</text>
-				<text class='scoreShop'>积分商城</text>
+			<view class='containerScore'>
+				<view style='display:flex;flex-direction:column;justify-content:center;align-items:center'>
+					<text class='myScoreText'>我的积分</text>
+					<text class='myScoreNumber'>{{accountBalance}}</text>
+				</view>
 			</view>
-
+			<text class='activeRules' bindtap="handleRule">活动规则</text>
 		</view>
 		<!-- icon -->
 		<view class="iconCheck">
@@ -19,76 +21,83 @@
 				<text class='iconCont'>{{item.name}}</text>
 				<view class="iconDate">
 					<text wx:if="{{index>level}}" class='iconTxt-after' style="color:#fff">{{item.number}}</text>
-					<text wx:else class='iconTxt'>∨</text>
+					<text wx:else class='iconTxt'>√</text>
 				</view>
 			</view>
 
 		</view>
+		<!--签到按钮 -->
 		<view>
-			<button class="checkBtn" bindtap='toCheck' disabled="{{checked? true:false}}">{{checked? '今日已签到':'签到'}}</button>
-
+			<view class="{{checked ? 'checked checkBtn' : 'uncheck checkBtn'}}" bindtap='toCheck'>
+				<text class="{{checked ? 'checkedtext' : 'unchecktext'}}">{{checked? '已签到':'点击签到'}}</text>
+			</view>
 		</view>
 	</view>
 	<!--日常任务-->
-	<view>
-		<view class="font28 marginTB2411 marginLeft56 borderLeft">日常任务</view>
+	<view class='dailyMission'>
+		<view class="font28 marginTB2411 marginLeft56">日常任务
+			<view class='borderLeft'></view>
+		</view>
+		<!-- 阅读文章-->
 		<view>
 			<view class="dispayInline widthBox1 marginLeft56">
 				<text class="font28">{{articleRead.title}}</text>
-				<text class="font24">+{{articleRead.reward}}积分</text>
+				<text class="font24 addScore">+{{articleRead.reward}}积分</text>
 
 			</view>
 			<view class="dispayInline widthBox2">
-				<text class="font24">完成</text>
-				<text class="font24">{{articleRead.payload.current}}/{{articleRead.payload.required}}</text>
+				<text class="font24 font-finish">完成</text>
+				<text class="font24">{{articleRead.payload.current}}</text>
+				<text class="font24 font-line">/</text>
+				<text class="font24">{{articleRead.payload.required}}</text>
 			</view>
 			<view class="dispayInline widthBox3">
-				<button class="finishBtn" bindtap='toCheck'>去完成</button>
+				<button class="finishBtn" bindtap='goToFinish' data-completed="{{articleRead.completed}}" data-criteriaSatisfied = '{{articleRead.criteriaSatisfied}}' data-type='articleRead'>{{articleRead.criteriaSatisfied == false ? '去完成' : articleRead.completed == false? '领取' : '已领取'}}</button>
 			</view>
 			<view class="font22 marginLeft56">每篇文章需要阅读5秒以上</view>
 		</view>
-		<!--  -->
+		<!-- 分享文章 -->
 		<view class="marginTB">
 			<view class="dispayInline widthBox1 marginLeft56">
 				<text class="font28">{{articleShared.title}}</text>
-				<text class="font24">+{{articleShared.reward}}积分</text>
+				<text class="font24 addScore">+{{articleShared.reward}}积分</text>
 			</view>
 			<view class="dispayInline widthBox2">
-				<text class="font24">完成</text>
-				<text class="font24">{{articleShared.payload.current}}/{{articleShared.payload.required}}</text>
+				<text class="font24 font-finish">完成</text>
+				<text class="font24">{{articleShared.payload.current}}</text>
+				<text class="font24 font-line">/</text>
+				<text class="font24">{{articleShared.payload.required}}</text>
 			</view>
 			<view class="dispayInline widthBox3">
-				<button class="finishBtn" bindtap='toCheck'>去完成</button>
+				<button class="finishBtn" bindtap='goToFinish' data-completed='{{articleShared.completed}}' data-criteriaSatisfied='{{articleShared.criteriaSatisfied}}' data-type='articleShared'>{{articleShared.criteriaSatisfied == false ? '去完成' : articleShared.completed == false? '领取' : '已领取'}}</button>
 			</view>
 			<view class="font22 marginLeft56">通过将文章或海报分享给好友、群聊或朋友圈可获得积分</view>
 		</view>
-		<!--  -->
+		<!-- 分享被读 -->
 		<view>
 			<view class="dispayInline widthBox1 marginLeft56">
 				<text class="font28">{{shareBeenRead.title}}</text>
-				<text class="font24">+{{shareBeenRead.reward}}积分</text>
+				<text class="font24 addScore">+{{shareBeenRead.reward}}积分</text>
 			</view>
 			<view class="dispayInline widthBox2">
-				<!-- <text class="font24">完成</text>
-			<text class="font24">{{shareBeenRead.payload.current}}/{{shareBeenRead.payload.cap}}</text> -->
 			</view>
 			<view class="dispayInline widthBox3">
-				<button class="finishBtn" bindtap='toCheck'>去完成</button>
+				<button class="finishBtn" bindtap='goToFinish' data-completed='finished' data-type='shareBeenRead'>去完成</button>
 			</view>
-			<view class="font22 marginLeft56">当前已获得: {{shareBeenRead.reward}}积分</view>
-			<view class="font22 marginLeft56">分享文章被一个好友阅读即可领取10积分，当日最高可领取100积分</view>
+			<view class="font22 marginLeft56">当前已获得: {{shareBeenRead.payload.current}}积分</view>
+			<view class="font22 marginLeft56">{{shareBeenRead.description}}</view>
 		</view>
 	</view>
-	<!--  -->
-	<view class="font28 marginTB2411 marginLeft56 borderLeft">拉新奖励</view>
+	<view class="font28 marginTB2411 marginLeft56">拉新奖励<view class='borderLeft'></view></view>
 	<view class="font22 marginLeft56 marginRight56">
 		当好友由于你的分享开始使用小程序且从未使用过我们的小程序当,并参加签到活动后。您将获得他积分的3%作为奖励。每日领取拉新积分上限为500积分
 	</view>
 </view>
 <!--拉新奖励-->
 
+
 <!--活动规则弹出框-->
-<!-- <view wx:if="{{ruleIsShow==true}} " class='actRule'>
+ <view wx:if="{{ruleIsShow == true}}" class='actRule'>
 	<view class='ruleBox'>
 		<view class='ruleHead'>
 			<text>活动规则</text>
@@ -115,4 +124,6 @@
 			<button bindtap='handleRule' class='iSee'>我知道了</button>
 		</view>
 	</view>
-</view> -->
+</view>
+<view wx:else>
+</view>

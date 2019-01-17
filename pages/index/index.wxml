@@ -40,6 +40,11 @@
 			</block>
 		</view>
 	</view>
+	<view class="entranceOfGift" bindtap='jumpToCheck'>
+		<image class="checkPic" src="../../images/check.png" mdoe="scaleToFill">
+		</image>
+		<text class="checkTxt">签到领礼物</text>
+	</view>
 </view>
 <view></view>
 <view wx:if="{{isModal}}" style="position: fixed;top:0;bottom:0;right: 0;left:0;z-index: 30;background-color: #242424;">

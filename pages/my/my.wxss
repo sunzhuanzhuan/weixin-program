@@ -204,3 +204,29 @@ button::after{ border: none; }
 .btnSuggest{
   width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1rpx solid #333333;border-radius:50rpx;background:#fff;margin-top:20rpx;float:left;color:#333333
 }
+.entranceOfGift {
+  width: 67px;
+  height: 46px;
+  position: fixed;
+  top: 19x;
+  right: 4px;
+  z-index: 100;
+}
+
+.checkPic {
+  width: 67px;
+  height: 46px;
+}
+
+.checkTxt {
+  position: absolute;
+  font-size: 10px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: rgba(82, 66, 70, 1);
+  line-height: 14px;
+  width: 50px;
+  height: 14px;
+  bottom: 9px;
+  left: 8.5px;
+}

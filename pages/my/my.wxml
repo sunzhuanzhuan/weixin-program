@@ -5,6 +5,11 @@
 <template is='loadding' wx:if="{{!loadding}}"/>
 
 <view>
+	<view class="entranceOfGift" bindtap='jumpToCheck'>
+		<image class="checkPic" src="../../images/check.png" mdoe="scaleToFill">
+		</image>
+		<text class="checkTxt">签到领礼物</text>
+	</view>
 	<view class="bigBox">
 		<view>
 			<view class="nick" >

@@ -1,0 +1,252 @@
+/* pages/giftdetail/giftdetail.wxss */
+.detailBox {
+    background: rgba(247, 247, 247, 1);
+}
+
+.pictureBox {
+    height: 290px;
+    background: rgba(255, 255, 255, 1);
+}
+
+.picBox {
+    height: 210px;
+    border-bottom: 1px solid rgba(204, 204, 204, 1);
+}
+
+.giftPic {
+    width: 180px;
+    height: 180px;
+}
+
+.giftDetail {
+    height: 80px;
+}
+
+.detail {
+    height: 20px;
+    margin-top: 19px;
+}
+
+.giftTitle {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 20px;
+    margin-left: 20px;
+    float: left;
+}
+
+.giftWorth {
+    font-size: 12px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 20px;
+    float: right;
+    margin-right: 15px;
+}
+
+.price {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(204, 204, 204, 1);
+    line-height: 20px;
+    text-decoration: line-through;
+    float: right;
+    margin-right: 16px;
+}
+
+.specification {
+    margin-top: 4px;
+    height: 17px;
+}
+
+.specText {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+    line-height: 17px;
+    float: left;
+    margin-left: 20px;
+}
+
+.specNum {
+    float: left;
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 17px;
+    margin-left: 4px;
+}
+
+.textBox {
+    background: rgba(255, 255, 255, 1);
+    margin-top: 11px;
+    padding: 12px 10px 26px 20px;
+}
+
+.textTitle {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 20px;
+}
+
+.giftIntroduceBox {
+    margin-top: 8px;
+}
+
+.giftIntroduce {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+    line-height: 17px;
+}
+
+.statementBox {
+    height: 150px;
+    margin-top: 7px;
+    text-align: center;
+}
+
+.statement {
+    height: 14px;
+    font-size: 10px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(204, 204, 204, 1);
+    line-height: 14px;
+}
+
+.bottomBtn {
+    width: 100%;
+    height: 47px;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+.bottomBtn2 {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background: rgba(204, 204, 204, 1);
+    color: #FFFFFF;
+}
+
+.change {
+    line-height: 47px;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+}
+
+
+/******兑换弹窗********/
+.changeJump {
+    background-color: rgba(50, 50, 50, .5);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.changeBox {
+    width: 300px;
+    height: 270px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    position: relative;
+}
+
+.cancelOrSure {
+    width: 300px;
+    height: 44px;
+    background: rgba(241, 241, 241, 1);
+    position: absolute;
+    bottom: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.cancel {
+    width: 150px;
+    height: 44px;
+    background: rgba(241, 241, 241, 1);
+    text-align: center;
+    display: inline-block;
+    border-bottom-left-radius: 10px;
+}
+
+.sure {
+    width: 150px;
+    height: 44px;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    text-align: center;
+    display: inline-block;
+    border-bottom-right-radius: 10px;
+}
+
+.txt {
+    line-height: 44px;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+}
+
+.earnBox {
+    width: 300px;
+    height: 144px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+}
+
+.earnTitle {
+    height: 100px;
+    background: rgba(255, 255, 255, 1);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+}
+
+.earn {
+    line-height: 100px;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+}
+
+.earnConfirm {
+    position: absolute;
+    width: 300px;
+    height: 44px;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+}
+
+.earnConfirmText {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 44px;
+}
