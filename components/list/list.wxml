@@ -385,9 +385,9 @@
 											</view>
 										</view>
 										<view class="marginLeft26">
-											<view class="leftView" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
+											<!-- <view class="leftView" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
 												<image wx:for="{{item.annotations[0].surveyOptions[0].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{item.surveyOptions[0].supporters.length>0?'many':''}}"></image>
-											</view>
+											</view> -->
 											<view wx:if="{{item.annotations[0].surveyOptions[0].totalSupporters+item.annotations[0].surveyOptions[1].totalSupporters == 0 }}">
 												<text style="color:#B3B3B3;font-size: 24rpx;">进入文章,表达你的态度</text>
 											</view>
