@@ -1,9 +1,8 @@
 {
 	"pages": [
+		"pages/gift/gift",
 		"pages/check/check",
 		"pages/index/index",
-
-		"pages/gift/gift",
 		"pages/test/detail",
 		"pages/log/detail",
 		"pages/detail/detail",
