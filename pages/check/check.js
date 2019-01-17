@@ -16,10 +16,23 @@ Page({
 		arrDate: [],
 		dateArr: [],
 		changeBox: false,
+		page: 1,
+		pageSize: 10,
 	},
 	onShow: function () {},
 	onLoad: function (option) {
+		this.setData({
+			changeBox: false
+		})
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
+			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
+				console.log("进入接口")
+				this.setData({
+					totalBounses: result.totalBounses,
+					totalReferencers: result.totalReferencers,
+					detail: result.detail
+				});
+			})
 			const missions = res.missions || [];
 			const accountBalance = res.accountBalance;
 
@@ -128,11 +141,18 @@ Page({
 				missions: missions.slice(1)
 			});
 		});
+
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
+			})
+		});
 		if (option.box) {
 			this.setData({
 				changeBox: true
 			})
-		}
+		};
+
 
 	},
 	jumptogift: function (e) {
@@ -171,7 +191,6 @@ Page({
 	},
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {
-		console.log(e);
 		if (e.target.dataset.criteriasatisfied == false) {
 			wx.reLaunch({
 				url: '/pages/index/index'
@@ -181,45 +200,43 @@ Page({
 				gdt.missionComplete('articleRead').then((res) => {
 					const scoreAdd = res.data.transaction.amount;
 					wx.showToast({
-						title: '领取成功，获得{{scoreAdd}}积分',
+						title: '领取成功，获得' + scoreAdd + '积分',
 						icon: 'none',
 						duration: 1000,
 						mask: true,
-						success: res => {
+						success: () => {
 							this.onLoad();
 						}
 					});
 				})
-			} else if (e.target.dataset.type == articleShared) {
-				gdt.missionComplete('articleRead').then((res) => {
+			} else if (e.target.dataset.type == "articleShared") {
+				gdt.missionComplete('articleShared').then((res) => {
 					const scoreAdd = res.data.transaction.amount;
 					wx.showToast({
-						title: '领取成功，获得{{scoreAdd}}积分',
+						title: '领取成功，获得' + scoreAdd + '积分',
 						icon: 'none',
 						duration: 1000,
 						mask: true,
-						success: res => {
+						success: () => {
 							this.onLoad();
 						}
 					});
 				})
 			} else {
-				wx.showToast({
-					title: '领取成功',
-					icon: 'none',
-					duration: 1000,
-					mask: true,
-					success: res => {
-						this.setData({
-							accountBalance: this.data.accountBalance + e.target.dataset.reward,
-						});
-						e.target.dataset.completed = true;
-					}
+				gdt.missionComplete('shareBeenRead').then((res) => {
+					const scoreAdd = res.data.transaction.amount;
+					wx.showToast({
+						title: '领取成功，获得' + scoreAdd + '积分',
+						icon: 'none',
+						duration: 1000,
+						mask: true,
+						success: () => {
+							this.onLoad();
+						}
+					});
 				})
 			}
-		} else {
-			return 0;
-		}
+		} else {}
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -227,11 +244,11 @@ Page({
 			gdt.missionComplete('showup').then((res) => {
 				const scoreAdd = res.data.transaction.amount
 				wx.showToast({
-					title: '领取成功，获得'+scoreAdd+'积分',
+					title: '领取成功，获得' + scoreAdd + '积分',
 					icon: 'none',
 					duration: 1000,
 					mask: true,
-					success: res => {
+					success: () => {
 						this.onLoad();
 					}
 				});
@@ -244,6 +261,26 @@ Page({
 				mask: true,
 			})
 		}
+	},
+	onReachBottom: function () {
+		let page = this.data.page++;
+		let pageSize = this.data.pageSize;
+		gdt.getReferral(page, pageSize).then((result) => {
+			console.log(this.data.detail.concat(result.detail));
+			this.setData({
+				detail: this.data.detail.concat(result.detail)
+			})
+		})
+	},
+	loadMore: function () {
+		let page = this.data.page++;
+		let pageSize = this.data.pageSize;
+		gdt.getReferral(page, pageSize).then((result) => {
+			console.log(typeof (this.data.detail))
+			this.setData({
+				detail: this.data.detail.push(result.detail)
+			})
+		})
 	}
 
 })

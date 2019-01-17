@@ -82,7 +82,7 @@
 			<view class="dispayInline widthBox2">
 			</view>
 			<view class="dispayInline widthBox3">
-				<button class="finishBtn" bindtap='goToFinish' data-completed='finished' data-type='shareBeenRead'>去完成</button>
+				<button class="finishBtn" bindtap='goToFinish' data-criteriaSatisfied='{{shareBeenRead.criteriaSatisfied}}' data-completed='{{shareBeenRead.completed}}' data-type='shareBeenRead'>{{shareBeenRead.completed == true ? '已完成' : shareBeenRead.criteriaSatisfied == true ? '领取' : '去完成'}}</button>
 			</view>
 			<view class="font22 marginLeft56">当前已获得: {{shareBeenRead.payload.current}}积分</view>
 			<view class="font22 marginLeft56">{{shareBeenRead.description}}</view>
@@ -91,6 +91,22 @@
 	<view class="font28 marginTB2411 marginLeft56">拉新奖励<view class='borderLeft'></view></view>
 	<view class="font22 marginLeft56 marginRight56">
 		当好友由于你的分享开始使用小程序且从未使用过我们的小程序当,并参加签到活动后。您将获得他积分的3%作为奖励。每日领取拉新积分上限为500积分
+	</view>
+	<view class="myFresh">
+		<text>我的拉新</text>
+		<text>我的奖励</text>
+	</view>
+	<view class="sub">
+		<text>共{{totalReferencers}}人</text><text>共{{totalBounses}}积分</text>
+	</view>
+	<view class="freshList">
+		<view class="freshSingle" wx:for="{{detail}}">
+			<text class="freshName">{{item.nickname}}</text>
+			<text class="freshWorth">+{{item.amount}}积分</text>
+		</view>
+	</view>
+	<view class="loadMore">
+		<text bindtap="loadMore">加载更多</text>
 	</view>
 </view>
 <!--拉新奖励-->
@@ -138,7 +154,7 @@
 			<view class="addChange">
 				<text>添加小鱼聚合客服小姐姐兑换礼物吧</text>
 			</view>
-			<view class="eq"></view>
+			<view class="eq"> <image class="eqDetail" src="{{baseImageUrlEq}}" mode="aspectFit|aspectFill|widthFix"></image></view>
 			<view class="weChat"> <text class="we1">微信：</text><text class="we2">xiaoyujuhe123</text></view>
 			<view class="attention">注意事项:</view>
 			<view class="attention">请务必保存好图片以防丢失后无法继续领取礼物</view>
