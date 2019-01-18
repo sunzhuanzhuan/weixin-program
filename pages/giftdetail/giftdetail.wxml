@@ -9,8 +9,8 @@
 					<text class="giftTitle">{{detail.name}}</text>
 					<text class="price">￥{{detail.rmbPrice}}</text>
 					<view class="giftWorth">
-					<view class="giftWorthline"></view>
-					<text class="giftWorthTxt">{{detail.price}} 积分</text>
+						<view class="giftWorthline"></view>
+						<text class="giftWorthTxt">{{detail.price}} 积分</text>
 					</view>
 				</view>
 				<!-- <view class="specification">

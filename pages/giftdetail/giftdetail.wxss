@@ -22,8 +22,8 @@
 }
 
 .giftPicSmall {
-    width: 152rpx;
-    height: 152rpx;
+    width: 240rpx;
+    height: 160rpx;
 }
 
 .giftDetail {
