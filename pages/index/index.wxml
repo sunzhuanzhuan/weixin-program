@@ -2,8 +2,10 @@
 
 <import src="/components/list/list.wxml" />
 <import src="/components/loadding/loadding.wxml" />
+<view class="{{up?'up':''}}">
+	<template is='loadding' wx:if="{{!loadding}}" data="{{first:first}}" />
+</view>
 
-<template is='loadding' wx:if="{{!loadding}}"/>
 
 
 <view class="containerBig" style="height: {{winHeight}}px;">
