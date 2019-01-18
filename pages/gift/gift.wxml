@@ -1,0 +1,37 @@
+<view class="" hover-class="none" hover-stop-propagation="false">
+	lalalalallala
+</view>
+<view>
+	<view class='topFix'>
+		<image class="scoreIcon" src="../../images/score.png"></image>
+		<text class='canUse'>可用积分:</text>
+		<text class='canUseNumber'>{{accountBalance}}</text>
+	</view>
+	<view class='giftThismonth'>
+		<view class='yellowBorder'></view>
+		<text class='monthGift'>{{currentMonth}}月礼物(每月更新)</text>
+	</view>
+	<view wx:for="{{data}}" class='giftBox' bindtap="jumpToDetail" data-detail="{{item._id}}" data-status="{{item.status}}">
+		<image class="imgGif" src="{{baseImageUrl+item.coverUrl}}"><view class='maskOut' wx:if="{{item.stock <= 0}}">
+			<text class="haveBeenRunOut">已抢光</text>
+		</view><view wx:else></view></image>
+		<view class='giftTitle'>
+			<text class='giftTitleDetail'>{{item.name}}</text>
+		</view>
+		<view class="textGroup">
+			<text class='text1'>{{item.price}} 积分</text>
+			<text class='text2'>剩余 {{item.stock}}</text>
+		</view>
+	</view>
+
+	<view class='giftThismonth giftWillCome'>
+		<view class='yellowBorder'></view>
+		<text class='monthGift'>{{nextMonth}}月礼物预告</text>
+	</view>
+	<view wx:for="{{data1}}" class='giftBox' bindtap="jumpToDetail" data-detail="{{item._id}}" data-status="{{item.status}}">
+		<image class="imgGif" src="{{baseImageUrl+item.coverUrl}}"></image>
+		<view class='giftTitle'>
+			<text class='giftTitleDetail'>{{item.name}}</text>
+		</view>
+	</view>
+</view>

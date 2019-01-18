@@ -8,3 +8,7 @@
     text-align: center;
     z-index: 2000;
 }
+.loaddingUp{
+    margin-left: -40rpx;
+    text-align: center;
+}

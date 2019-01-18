@@ -1,0 +1,64 @@
+<template name="declare">
+	<view class="declareBox">
+		<view class="leftBox marginLeft26">表态</view>
+		<view class="rightBox">
+			{{itemDeclare.title}}
+		</view>
+		<view class="taiBox marginLeft26">
+			<view class="taiLeftBox">
+				<view class="fontTai">{{itemDeclare.surveyOptions[0].description}}</view>
+				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id?false:true}}"
+				 class="holdOne" data-item="{{itemDeclare}}" data-num="0" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'已支持':'未支持':'支持'}}</button>
+			</view>
+			<view class="taiRightBox">
+				<view class="fontTai">{{itemDeclare.surveyOptions[1].description}}</view>
+				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id?false:true}}"
+				 class="holdTwo" data-item="{{itemDeclare}}" data-num="1" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'已支持':'未支持':'支持'}}</button>
+			</view>
+		</view>
+		<view class="progressBox marginLeft26">
+			<view wx:if="{{itemDeclare.surveyOptions[0].supporters.length ==0 && itemDeclare.surveyOptions[1].supporters ==0}}">
+				<view class="leftPro" style="width:96%;background:#EBEBEB;"></view>
+			</view>
+			<view wx:else>
+				<view style="float: left;">
+					<view class="leftPro" style="width:{{itemDeclare.m*6.40}}rpx"></view>
+				</view>
+				<view style="float: left;margin-right:-10rpx;">
+					<view class="rightPro" style="width:{{itemDeclare.n*6.40}}rpx"></view>
+				</view>
+			</view>
+		</view>
+		<view class="percentBox marginLeft26">
+			<view class="leftPercent fontPercent">{{itemDeclare.m}}%</view>
+			<view class="rightPercent fontPercent">{{itemDeclare.n}}%</view>
+		</view>
+		<view class="view">
+			<view class="leftView">
+				<view wx:for="{{itemDeclare.surveyOptions[0].supporters}}" wx:key="{{index}}" class="touxiang {{itemDeclare.surveyOptions[0].supporters.length>1?'many':''}}">
+
+					<image src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[0].supporters.length>0?'many':''}}"></image>
+				</view>
+				<view wx:if="{{itemDeclare.surveyOptions[0].supporters.length==5}}" style="float: right;margin-top: 18rpx;margin-right: 90rpx;">
+					<view class="dotDeclare"></view>
+					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
+					<view class="dotDeclare" style="opacity: 0.4;"></view>
+				</view>
+
+			</view>
+			<view class="rightView">
+				<view style="float:right;margin-right: 40rpx">
+					<image wx:for="{{itemDeclare.surveyOptions[1].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[1].supporters.length>1?'many':''}}"></image>
+
+				</view>
+				<view wx:if="{{itemDeclare.surveyOptions[1].supporters.length==5}}" style="float: right;margin-top: 20rpx;margin-right: 30rpx;">
+					<view class="dotDeclare"></view>
+					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
+					<view class="dotDeclare" style="opacity: 0.4;"></view>
+				</view>
+
+
+			</view>
+		</view>
+	</view>
+</template>

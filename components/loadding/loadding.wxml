@@ -1,7 +1,6 @@
-
 <template name="loadding">
-	<view class="loaddingCom">
-		<image src='/images/loading.png' style="width:80rpx;height:100rpx;"></image>
-		<text style="font-size:20rpx">加载中</text>
+	<view class="{{first?'loaddingUp':'loaddingCom'}}">
+		<image src='/images/loading.png' style="{{first?'width:40rpx;height:50rpx;':'width:80rpx;height:100rpx;'}}"></image>
+		<text wx:if="{{!first}}" style="font-size:20rpx">加载中</text>
 	</view>
 </template>

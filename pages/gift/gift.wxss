@@ -1,0 +1,169 @@
+.imgGif {
+    width: 160rpx;
+    height: 160rpx;
+    position: relative;
+    z-index: 5
+}
+
+.maskOut {
+    position: absolute;
+    width: 160rpx;
+    height: 160rpx;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 1);
+    border-radius: 2px;
+    opacity: 0.5956;
+    text-align: center;
+}
+
+.haveBeenRunOut {
+    font-size: 14px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    line-height: 20px;
+    margin-top: 60rpx;
+}
+
+
+
+
+
+
+
+
+.topFix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72rpx;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    text-align: center;
+    align-items: center;
+    z-index: 6;
+}
+
+.canUse {
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 72rpx;
+    display: inline;
+}
+
+.canUseNumber {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 72rpx;
+    display: inline;
+}
+
+.giftThismonth {
+    width: 278rpx;
+    height: 44rpx;
+    font-size: 16px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 4rpx;
+    position: relative;
+    margin-top: 60rpx;
+    margin-left: 44rpx;
+}
+
+.yellowBorder {
+    width: 8rpx;
+    height: 28rpx;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    border-radius: 2px;
+    position: absolute;
+    top: -10rpx;
+    left: -16rpx;
+}
+
+.giftBox {
+    width: 280rpx;
+    height: 264rpx;
+    margin-top: 24rpx;
+    margin-left: 40rpx;
+    display: inline-block;
+    text-align: center;
+}
+
+.giftBox:nth-child(2n) {
+    float: right;
+    margin-right: 40rpx;
+    margin-left: 0;
+}
+
+.giftBox:not(:nth-child(1)):not(:nth-child(2)) {
+    margin-top: 48rpx;
+}
+
+.imgBox {
+    width: 280rpx;
+    height: 160rpx;
+}
+
+.giftTitle {
+    width: 280rpx;
+    height: 28rpx;
+    font-size: 14px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    line-height: 28rpx;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 32rpx;
+}
+
+.giftTitleDetail {
+    width: 280rpx;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.textGroup {
+    text-align: center;
+}
+
+.text1 {
+    width: 114rpx;
+    height: 34rpx;
+    font-size: 12px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(250, 202, 76, 1);
+    line-height: 34rpx;
+    margin-left: 44rpx;
+}
+
+.text2 {
+    width: 62rpx;
+    height: 28rpx;
+    font-size: 10px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+    line-height: 28rpx;
+    margin-left: 18rpx;
+}
+
+.scoreIcon {
+    width: 26rpx;
+    height: 26rpx;
+    margin-right: 8rpx;
+    margin-bottom: -2rpx;
+}
+
+.giftWillCome {
+    margin-top: 72rpx;
+}

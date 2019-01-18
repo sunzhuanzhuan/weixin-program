@@ -1,0 +1,310 @@
+/* pages/giftdetail/giftdetail.wxss */
+.detailBox {
+    background: rgba(247, 247, 247, 1);
+}
+
+.pictureBox {
+    height: 540rpx;
+    background: rgba(255, 255, 255, 1);
+}
+
+.picBox {
+    height: 420rpx;
+    border-bottom: 1px solid rgba(204, 204, 204, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.giftPic {
+    width: 360rpx;
+    height: 360rpx;
+}
+
+.giftPicSmall {
+    width: 152rpx;
+    height: 152rpx;
+}
+
+.giftDetail {
+    height: 100rpx;
+}
+
+.detail {
+    height: 40rpx;
+    margin-top: 38rpx;
+}
+
+.giftTitle {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 40rpx;
+    margin-left: 40rpx;
+    float: left;
+}
+
+.giftWorth {
+    font-size: 12px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 40rpx;
+    float: right;
+    margin-right: 30rpx;
+}
+
+.price {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(204, 204, 204, 1);
+    line-height: 40rpx;
+    text-decoration: line-through;
+    float: right;
+    margin-right: 32rpx;
+}
+
+.specification {
+    margin-top: 8rpx;
+    height: 34rpx;
+}
+
+.specText {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+    line-height: 34rpx;
+    float: left;
+    margin-left: 40rpx;
+}
+
+.specNum {
+    float: left;
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 34rpx;
+    margin-left: 8rpx;
+}
+
+.textBox {
+    background: rgba(255, 255, 255, 1);
+    margin-top: 22rpx;
+    padding: 24rpx 20rpx 52rpx 40rpx;
+}
+
+.textTitle {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 40rpx;
+}
+
+.giftIntroduceBox {
+    margin-top: 16rpx;
+}
+
+.giftIntroduce {
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+    line-height: 34rpx;
+}
+
+.statementBox {
+    height: 30r0px;
+    margin-top: 14rpx;
+    text-align: center;
+}
+
+.statement {
+    height: 128rpx;
+    font-size: 10px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(204, 204, 204, 1);
+    line-height: 28rpx;
+}
+
+.bottomBtn {
+    width: 100%;
+    height: 94rpx;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+.bottomBtn2 {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background: rgba(204, 204, 204, 1);
+    color: #FFFFFF;
+}
+
+.change {
+    line-height: 94rpx;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+}
+
+
+/******兑换弹窗********/
+.changeJump {
+    background-color: rgba(50, 50, 50, .5);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.changeBox {
+    width: 600rpx;
+    height: 540rpx;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    position: relative;
+}
+
+.cancelOrSure {
+    width: 600rpx;
+    height: 88rpx;
+    background: rgba(241, 241, 241, 1);
+    position: absolute;
+    bottom: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.cancel {
+    width: 300rpx;
+    height: 88rpx;
+    background: rgba(241, 241, 241, 1);
+    text-align: center;
+    display: inline-block;
+    border-bottom-left-radius: 10px;
+}
+
+.sure {
+    width: 300rpx;
+    height: 88rpx;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    text-align: center;
+    display: inline-block;
+    border-bottom-right-radius: 10px;
+}
+
+.txt {
+    line-height: 88rpx;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+}
+
+.earnBox {
+    width: 600rpx;
+    height: 288rpx;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+}
+
+.earnTitle {
+    height: 200rpx;
+    background: rgba(255, 255, 255, 1);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+}
+
+.earn {
+    line-height: 200rpx;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+}
+
+.earnConfirm {
+    position: absolute;
+    width: 600rpx;
+    height: 88rpx;
+    background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+}
+
+.earnConfirmText {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 88rpx;
+}
+
+.changeTitle {
+    text-align: center;
+    margin-top: 52rpx;
+    height: 44rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.changeTitleText {
+    font-size: 14px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 40rpx;
+}
+
+.changeScore {
+    text-align: center;
+    margin-top: 42rpx;
+}
+
+.changeLeft {
+    text-align: center;
+}
+
+.productPic {
+    width: 100%;
+    height: 160rpx;
+    margin-top: 26rpx;
+    text-align: center
+}
+
+.scoreminus {
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    line-height: 40rpx;
+}
+
+.minusNum {
+    margin-left: 20rpx;
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    line-height: 40rpx;
+}

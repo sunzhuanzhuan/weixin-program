@@ -25,7 +25,7 @@ indent_style = tab
 [*.{js,jsx,json,wxml}]
 indent_size = 4
 indent_style = tab
-
+editor.formatOnSave=true
 # Indentation override for all JS under lib directory
 # [lib/**.js]
 # indent_style = space

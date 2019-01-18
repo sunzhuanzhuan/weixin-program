@@ -1,21 +1,52 @@
 <!-- detail.wxml -->
 <!-- detail.wxml -->
 <import src="/components/loadding/loadding.wxml" />
-
-<template is='loadding' wx:if="{{!showLoadding}}"/>
-
-
-
+<import src="/components/declare/declare.wxml" />
+<template is='loadding' wx:if="{{!showLoadding}}" />
 
 <view>
 	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll"
 	 enable-back-to-top="true">
-	 <view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
-           
-		<rich-text class="_root" wx:if="{{nodes.type === undefined}}"  nodes="{{[node]}}"></rich-text>
-	</view>
+		<view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
+			<!-- <view wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
+				<view wx:if="{{isPlayVideo && index == videoCurrent}}">
+					<txv-video vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
+				</view>
+				<view wx:else style="height:400rpx;width:700rpx;position:relative ">
+					<image style="height:400rpx;width:700rpx;" bindtap="handleChangeTypeVideo" src="{{'http://puui.qpic.cn/vpic/0/'+videoId +'.png/0'}}"
+					/>
+					<image data-index="{{index}}" class="imgOne" bindtap="handleChangeTypeVideo" src="{{baseImagePlay}}" />
+
+				</view>
+			</view> -->
+			<rich-text class="_root {{rootClassMixin}}" wx:if="{{!nodes.type}}" nodes="{{[node]}}"></rich-text>
+			<view wx:if="{{node.type == 'wxmpVoice'}}" class="wxmpVoice">
+				<view class="audioTitleBox">
+					<view class="audioTitle">{{entity.title}}</view>
+					<view>
+						<slider style="margin:0" blockSize="12" max="{{isPlay?totalTime:0}}" backgroundColor="#747474" activeColor="#fff" block-color="#ffd700"
+						 bindchanging="handleChanging" min="0" value="{{isPlay?currentTime:0}}" block-size="18"></slider>
+					</view>
+					<view style="height:30rpx;font-size:20rpx;color:#fff;line-height:16rpx;margin-left:-50rpx;">
+						<text style="float:left;margin-left:50rpx">{{isPlay?currentProgress:0}} </text>
+						<text style="float:right;">{{isPlay?totalProgress:0}} </text>
+					</view>
 
 
+				</view>
+				<view class="audioBoxImg">
+					<image wx:if="{{isPlay}}" src="/images/pauseLine.png" class="pauseImgNow" bindtap="handlePauseVideo" />
+
+					<image wx:else class="playImg" src="/images/playing.png" bindtap="handlePlayVideo" />
+					<view class="playLetter" bindtap="handlePlayVideo">听一听 </view>
+				</view>
+			</view>
+		</view>
+		<!-- 表态 -->
+
+		<view wx:if="{{entity.annotations[0] }}">
+			<template is="declare" data="{{type:type,itemDeclare:vote,votePage:votePage }}" />
+		</view>
 
 	</scroll-view>
 
@@ -44,7 +75,7 @@
 						<view class="letter ">分享好友</view>
 					</button>
 					<text class="borderRight"></text>
-					<button class="btnBox " style='flex:2' open-type="{{type}} " form-type="submit " data-item="poster" bindgetuserinfo="handleAuthor "
+					<button class="btnBox " style='flex:2' open-type="{{type}} " form-type="submit " data-item="poster" bindgetuserinfo="handleAuthor"
 					 catchtap="handlePoster" style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}}; ">
 						<image class="imgBtn " src="/images/circle.png"></image>
 						<view class="letter ">分享海报</view>
@@ -52,7 +83,7 @@
 				</view>
 				<view class="{{isIphoneX?'bol':''}}  "></view>
 			</view>
-			
+
 		</button>
 	</form>
 </view>
@@ -65,12 +96,19 @@
 <!-- 生成海报 -->
 <view wx:if="{{isShowPoster}}" class="posterBox" bindtap="handleSavePicture">
 	<canvas class="canvas" canvas-id="shareCanvas" bindlongtap="handleSavePictureToCamera"></canvas>
-	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture " style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+	<button bindopensetting="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 </view>
 
 
+
+
+
+
+
+
+
 <!-- 悬浮的音频 后期作品 -->
-<view wx:if="{{entity.type=='wxArticle' && entity.wxmpVoiceIds.length>0 && isShowListen}}" class="audioBox">
+<!-- <view wx:if="{{entity.type=='wxArticle' && entity.wxmpVoiceIds.length>0 && isShowListen}}" class="audioBox">
 	<view class="coverBox" wx:if="{{entity.type === 'wxArticle' && isPlay === false  && isChangeBig === false }}" style="{{isIphoneX?'bottom:250rpx':'bottom:200rpx'}}">
 
 		<button class="btnBox btnBg" style='flex:2' open-type="{{type}}" bindtap="handleAuthorToPlay" bindgetuserinfo="handleAuthor">
@@ -110,4 +148,4 @@
 			<view class="playLetter" bindtap="handlePlayVideoNow">听一听 </view>
 		</view>
 	</view>
-</view>
+</view> -->
