@@ -165,7 +165,6 @@ Page({
 	//授权
 	//授权的时候发生的
 	handleAuthor: function (e) {
-
 		if (e.detail && e.detail.userInfo) {
 			gdt.emit('userInfo', e.detail);
 		}
@@ -602,28 +601,44 @@ Page({
 	},
 	//支持
 	handleSupport(e) {
-		let votePage = e.currentTarget.dataset.votepage
-		let num = e.currentTarget.dataset.num;
-		let id = e.currentTarget.dataset.item._id
-		let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
-		let obj = {}
-		obj.supportId = supportId;
-		obj.id = id;
-		obj.num = num;
-		console.log(e.currentTarget.dataset.item);
-		if (votePage == 'index') {
-			gdt.supportOption(obj).then((res) => {
-				wx.showToast({
-					title: '投票成功',
-					duration: 2000
+		gdt.userInfo.then((x) => {
+			this.setData({
+				type: "",
+				type1: 'share',
+				nickName: x.userInfo.nickName
+			});
+			let votePage = e.currentTarget.dataset.votepage
+			let num = e.currentTarget.dataset.num;
+			let id = e.currentTarget.dataset.item._id
+			let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
+			let obj = {}
+			obj.supportId = supportId;
+			obj.id = id;
+			obj.num = num;
+			console.log(e.currentTarget.dataset.item);
+			if (votePage == 'index') {
+				gdt.supportOption(obj).then((res) => {
+					wx.showToast({
+						title: '投票成功',
+						duration: 2000
+					})
+				}).catch(() => {
+					wx.showToast({
+						title: '投票失败',
+						duration: 2000
+					})
 				})
-			}).catch(() => {
-				wx.showToast({
-					title: '投票失败',
-					duration: 2000
-				})
-			})
-		}
+			}
+		}).catch(() => {
+			this.setData({
+				type: 'getUserInfo',
+				type1: 'getUserInfo'
+			});
+			gdt.once('userInfo', () => {
+				this.setData({ type1: 'share' });
+			});
+		});
+
 
 	}
 

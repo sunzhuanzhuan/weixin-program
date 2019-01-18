@@ -45,7 +45,7 @@
 		<!-- 表态 -->
 
 		<view wx:if="{{entity.annotations[0] }}">
-			<template is="declare" data="{{itemDeclare:vote,votePage:votePage }}" />
+			<template is="declare" data="{{type1:type1,itemDeclare:vote,votePage:votePage }}" />
 		</view>
 
 	</scroll-view>
@@ -114,7 +114,7 @@
 						<view class="letter ">分享好友</view>
 					</button>
 					<text class="borderRight"></text>
-					<button class="btnBox " style='flex:2' open-type="{{type}} " form-type="submit " data-item="poster" bindgetuserinfo="handleAuthor "
+					<button class="btnBox " style='flex:2' open-type="{{type}} " form-type="submit " data-item="poster" bindgetuserinfo="handleAuthor"
 					 catchtap="handlePoster" style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}}; ">
 						<image class="imgBtn " src="/images/circle.png"></image>
 						<view class="letter ">分享海报</view>

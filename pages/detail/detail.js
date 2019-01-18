@@ -868,57 +868,73 @@ Page({
 	},
 	//支持
 	handleSupport(e) {
-		let votePage = e.currentTarget.dataset.votepage;
-		let num = e.currentTarget.dataset.num;
-		let id = e.currentTarget.dataset.item._id
-		let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
-		let obj = {}
-		obj.supportId = supportId;
-		obj.id = id;
-		if (votePage == 'detail') {
-			gdt.supportOptionDetail(obj).then((res) => {
-				// console.log(res);
-				wx.showToast({
-					title: '投票成功',
-					duration: 2000
-				})
-				let obj = this.data.vote;
-				console.log(obj)
-				obj.voteFor = res.surveyVoteFor;
-				obj.surveyOptions[num].totalSupporters = obj.surveyOptions[num].totalSupporters + 1
-				obj.vote = true;
-				let one = obj.surveyOptions[0].totalSupporters;
-				let two = obj.surveyOptions[1].totalSupporters;
-				let total = one + two;
-				if (total == 0) {
-					obj.m = 0;
-					obj.n = 0;
-				} else {
-					// obj.m = 5;
-					// obj.n = 56
-					obj.m = (one / total).toFixed(2) * 100;
-					obj.n = 100 - ((one / total).toFixed(2) * 100);
-				};
-				gdt.userInfo.then((res) => {
-					obj.surveyOptions[num].supporters.push(res)
-				})
-				let that = this;
-				setTimeout(function () {
-					that.setData({ vote: obj })
-				}, 500)
-				// setTimeout(() => {
-				// 	console.log(12)
-				// 	that.setData({ vote: obj, a: 2 })
-				// }, 500)
+		gdt.userInfo.then((x) => {
+			this.setData({
+				type: "",
+				type1: 'share',
+				nickName: x.userInfo.nickName
+			});
+			let votePage = e.currentTarget.dataset.votepage;
+			let num = e.currentTarget.dataset.num;
+			let id = e.currentTarget.dataset.item._id
+			let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
+			let obj = {}
+			obj.supportId = supportId;
+			obj.id = id;
+			if (votePage == 'detail') {
+				gdt.supportOptionDetail(obj).then((res) => {
+					// console.log(res);
+					wx.showToast({
+						title: '投票成功',
+						duration: 2000
+					})
+					let obj = this.data.vote;
+					console.log(obj)
+					obj.voteFor = res.surveyVoteFor;
+					obj.surveyOptions[num].totalSupporters = obj.surveyOptions[num].totalSupporters + 1
+					obj.vote = true;
+					let one = obj.surveyOptions[0].totalSupporters;
+					let two = obj.surveyOptions[1].totalSupporters;
+					let total = one + two;
+					if (total == 0) {
+						obj.m = 0;
+						obj.n = 0;
+					} else {
+						// obj.m = 5;
+						// obj.n = 56
+						obj.m = (one / total).toFixed(2) * 100;
+						obj.n = 100 - ((one / total).toFixed(2) * 100);
+					};
+					gdt.userInfo.then((res) => {
+						obj.surveyOptions[num].supporters.push(res)
+					})
+					let that = this;
+					setTimeout(function () {
+						that.setData({ vote: obj })
+					}, 500)
+					// setTimeout(() => {
+					// 	console.log(12)
+					// 	that.setData({ vote: obj, a: 2 })
+					// }, 500)
 
 
-			}).catch(() => {
-				// wx.showToast({
-				// 	title: '投票失败',
-				// 	duration: 2000
-				// })
-			})
-		}
+				}).catch(() => {
+					// wx.showToast({
+					// 	title: '投票失败',
+					// 	duration: 2000
+					// })
+				})
+			}
+		}).catch(() => {
+			this.setData({
+				type: 'getUserInfo',
+				type1: 'getUserInfo'
+			});
+			gdt.once('userInfo', () => {
+				this.setData({ type1: 'share' });
+			});
+		});
+
 	}
 
 })
