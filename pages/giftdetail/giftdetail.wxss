@@ -4,12 +4,12 @@
 }
 
 .pictureBox {
-    height: 540rpx;
+    height: 620rpx;
     background: rgba(255, 255, 255, 1);
 }
 
 .picBox {
-    height: 420rpx;
+    height: 500rpx;
     border-bottom: 1px solid rgba(204, 204, 204, 1);
     display: flex;
     justify-content: center;
@@ -17,13 +17,13 @@
 }
 
 .giftPic {
-    width: 360rpx;
-    height: 360rpx;
+    width: 100%;
+    height: 500rpx;
 }
 
 .giftPicSmall {
-    width: 152rpx;
-    height: 152rpx;
+    width: 240rpx;
+    height: 160rpx;
 }
 
 .giftDetail {
@@ -33,10 +33,11 @@
 .detail {
     height: 40rpx;
     margin-top: 38rpx;
+    position: relative;
 }
 
 .giftTitle {
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
@@ -46,17 +47,31 @@
 }
 
 .giftWorth {
-    font-size: 12px;
+    font-size: 24rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 40rpx;
     float: right;
     margin-right: 30rpx;
+    position: relative;
+}
+
+.giftWorthTxt {
+    position: relative;
+}
+
+.giftWorthline {
+    position: absolute;
+    width: 126rpx;
+    height: 8rpx;
+    background: rgba(254, 218, 60, 1);
+    bottom: 8rpx;
+    right: 0;
 }
 
 .price {
-    font-size: 12px;
+    font-size: 24rpx;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(204, 204, 204, 1);
@@ -72,7 +87,7 @@
 }
 
 .specText {
-    font-size: 12px;
+    font-size: 24rpx;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
@@ -83,7 +98,7 @@
 
 .specNum {
     float: left;
-    font-size: 12px;
+    font-size: 24rpx;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
@@ -98,7 +113,7 @@
 }
 
 .textTitle {
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
@@ -110,7 +125,7 @@
 }
 
 .giftIntroduce {
-    font-size: 12px;
+    font-size: 24rpx;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
@@ -125,7 +140,7 @@
 
 .statement {
     height: 128rpx;
-    font-size: 10px;
+    font-size: 20rpx;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(204, 204, 204, 1);
@@ -154,7 +169,7 @@
 
 .change {
     line-height: 94rpx;
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
 }
@@ -212,7 +227,7 @@
 
 .txt {
     line-height: 88rpx;
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(0, 0, 0, 1);
@@ -231,11 +246,15 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .earn {
-    line-height: 200rpx;
-    font-size: 14px;
+    line-height: 40rpx;
+    font-size: 28rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(0, 0, 0, 1);
@@ -252,7 +271,7 @@
 }
 
 .earnConfirmText {
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(0, 0, 0, 1);
@@ -269,7 +288,7 @@
 }
 
 .changeTitleText {
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(0, 0, 0, 1);
@@ -293,7 +312,7 @@
 }
 
 .scoreminus {
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(0, 0, 0, 1);
@@ -302,7 +321,7 @@
 
 .minusNum {
     margin-left: 20rpx;
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(0, 0, 0, 1);
