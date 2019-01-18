@@ -11,11 +11,10 @@
 		<view class='yellowBorder'></view>
 		<text class='monthGift'>{{currentMonth}}月礼物(每月更新)</text>
 	</view>
-	<view wx:for="{{data}}" class='giftBox' bindtap="jumpToDetail">
-		<image class="imgGif" src="{{baseImageUrl+item.coverUrl+item.coverUrl}}"></image>
-		<!-- <view class='imgBox' wx:if="false">
-		</view> -->
-		<!-- <view wx:else>已抢光</view> -->
+	<view wx:for="{{data}}" class='giftBox' bindtap="jumpToDetail" data-detail="{{item._id}}">
+		<image class="imgGif" src="{{baseImageUrl+item.coverUrl}}"><view class='maskOut' wx:if="{{item.stock <= 0}}">
+			<text class="haveBeenRunOut">已抢光</text>
+		</view><view wx:else></view></image>
 		<view class='giftTitle'>
 			<text class='giftTitleDetail'>{{item.name}}</text>
 		</view>
@@ -29,17 +28,10 @@
 		<view class='yellowBorder'></view>
 		<text class='monthGift'>{{nextMonth}}月礼物预告</text>
 	</view>
-	<view wx:for="{{data1}}" class='giftBox' bindtap="jumpToDetail">
-		<image class="imgGif" src="http://www.ixiupet.com/uploads/allimg/150317/2-15031H22T0.jpg"></image>
-		<!-- <view class='imgBox' wx:if="false">
-			</view> -->
-		<!-- <view wx:else>已抢光</view> -->
+	<view wx:for="{{data1}}" class='giftBox' bindtap="jumpToDetail" data-detail="{{item._id}}">
+		<image class="imgGif" src="{{baseImageUrl+item.coverUrl}}"></image>
 		<view class='giftTitle'>
 			<text class='giftTitleDetail'>{{item.name}}</text>
-		</view>
-		<view class="textGroup">
-			<text class='text1'>{{item.price}} 积分</text>
-			<text class='text2'>剩余 {{item.stock}}</text>
 		</view>
 	</view>
 </view>

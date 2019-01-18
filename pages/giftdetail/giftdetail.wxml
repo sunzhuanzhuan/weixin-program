@@ -2,12 +2,12 @@
 	<view class='detailBox'>
 		<view class="pictureBox">
 			<view class="picBox">
-				<image class="giftPic" src="{{detail.coverUrl}}"></image>
+				<image class="giftPic" src="{{baseImageUrl+detail.coverUrl}}"></image>
 			</view>
 			<view class="giftDetail">
 				<view class="detail">
 					<text class="giftTitle">{{detail.name}}</text>
-					<text class="price">￥45.00</text>
+					<text class="price">￥{{detail.rmbPrice}}</text>
 					<text class="giftWorth">{{detail.price}} 积分</text>
 				</view>
 				<!-- <view class="specification">
@@ -26,7 +26,7 @@
 	<view class="statementBox">
 		<text class="statement">本商品无质量问题不支持退换货</text>
 	</view>
-	<view class="bottomBtn" bindtap="change" wx:if="{{canIchange}}">
+	<view class="bottomBtn" bindtap="change" wx:if="{{accountBalance >= detail.price}}">
 		<text class="change">兑换</text>
 	</view>
 	<view wx:else class="bottomBtn2" bindtap="canNotChange">
@@ -41,7 +41,7 @@
 				<text class="changeTitleText">{{detail.name}}</text>
 			</view>
 			<view class="productPic">
-				<image class="giftPic" src="https://goss.veer.com/creative/vcg/veer/800water/veer-150976736.jpg"></image>
+				<image class="giftPicSmall" src="{{baseImageUrl+detail.coverUrl}}"></image>
 			</view>
 			<view class="changeScore">
 				<text class="scoreminus">积分减扣: -{{detail.price}}</text>
@@ -67,7 +67,7 @@
 		<view class="earnTitle">
 			<text class="earn">您的积分不足，去努力赚取积分吧~</text>
 		</view>
-		<view class="earnConfirm">
+		<view class="earnConfirm" bindtap="ToEarnScore">
 			<text class="earnConfirmText">去赚积分</text>
 		</view>
 	</view>

@@ -157,7 +157,7 @@
 				<text>兑换码</text>
 			</view>
 			<view class="changeNdetail">
-				<text>NFU2EA345L64FJ</text>
+				<text>{{code}}</text>
 			</view>
 			<view class="addService">
 				<text>识别二维码也可以添加客服喔</text>

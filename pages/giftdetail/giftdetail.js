@@ -1,3 +1,5 @@
+let app = getApp().globalData;
+const gdt = app.applicationDataContext;
 Page({
 
 	data: {
@@ -21,19 +23,37 @@ Page({
 		})
 	},
 	confirm: function () {
-		wx.reLaunch({
-			url: '/pages/check/check?box=true',
-		});
+		gdt.purchase(option.id, 1).then((res) => {
+			this.setData({
+				code: res.code
+			});
+			wx.reLaunch({
+				url: '/pages/check/check?box=true&code=' + res.code,
+			});
+		})
+
 	},
-	onLoad: function (options) {
+	ToEarnScore: function () {
+		wx.navigateBack({
+			delta: 2
+		})
+	},
+	onLoad: function (option) {
+		let id = option.id;
 		let that = this;
-		wx.request({
-			url: 'http://192.168.20.51:7300/mock/5b5696c70a4cc60021ebdf86/mocked/rewards/commodity/adfadfadsfadsfadsfasdf',
-			method: 'GET',
-			success(res) {
-				console.log(res.data.data);
-				that.setData({ detail: res.data.data })
-			}
+		that.setData({
+			accountBalance: option.accountBalance
+		})
+		gdt.getCommodityDetail(id).then((res) => {
+			console.log(res);
+			that.setData({
+				detail: res
+			})
+		});
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrl: 'https://' + res.split('/')[2],
+			})
 		})
 	},
 

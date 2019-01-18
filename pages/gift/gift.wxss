@@ -1,6 +1,29 @@
 .imgGif {
     width: 160rpx;
     height: 160rpx;
+    position: relative;
+    z-index: 5
+}
+
+.maskOut {
+    position: absolute;
+    width: 160rpx;
+    height: 160rpx;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 1);
+    border-radius: 2px;
+    opacity: 0.5956;
+    text-align: center;
+}
+
+.haveBeenRunOut {
+    font-size: 14px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    line-height: 20px;
+    margin-top: 60rpx;
 }
 
 
@@ -19,6 +42,7 @@
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     text-align: center;
     align-items: center;
+    z-index: 6;
 }
 
 .canUse {
@@ -48,7 +72,7 @@
     color: rgba(51, 51, 51, 1);
     line-height: 4rpx;
     position: relative;
-    margin-top: 40rpx;
+    margin-top: 60rpx;
     margin-left: 44rpx;
 }
 
@@ -58,7 +82,7 @@
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     border-radius: 2px;
     position: absolute;
-    top: 8rpx;
+    top: -10rpx;
     left: -16rpx;
 }
 
@@ -98,6 +122,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
+    margin-top: 32rpx;
 }
 
 .giftTitleDetail {

@@ -1,3 +1,5 @@
+let app = getApp().globalData;
+const gdt = app.applicationDataContext;
 Page({
 	data: {
 		accountBalance: 0,
@@ -15,45 +17,42 @@ Page({
 		}
 
 		let that = this;
-		wx.request({
-			url: 'http://192.168.20.51:7300/mock/5b5696c70a4cc60021ebdf86/mocked/rewards/commodity',
-			method: 'GET',
-			success: function (res) {
-				console.log(res.data.data);
-				let arr = [];
-				let arr1 = [];
-				res.data.data.commodities.map((item) => {
-					if (item.status == 2) {
-						arr.push(item)
-					} else if (item.status == 1) {
-						arr1.push(item)
-					}
-				})
-				that.setData({
-					data: arr,
-					data1: arr1,
-				})
-			}
+		gdt.getCommodity().then((res) => {
+			console.log(res);
+			let arr = [];
+			let arr1 = [];
+			res.commodities.map((item) => {
+				if (item.status == 2) {
+					arr.push(item)
+				} else if (item.status == 1) {
+					arr1.push(item)
+				}
+			})
+			that.setData({
+				accountBalance: res.accountBalance.toFixed(2),
+				data: arr,
+				data1: arr1,
+			})
 		})
+
 		gdt.baseServerUri.then((res) => {
 			this.setData({
 				baseImageUrl: 'https://' + res.split('/')[2],
 			})
-
-
 		})
+
 		that.setData({
-
-			accountBalance: option.accountBalance,
 			currentMonth: currentMonth,
-			nextMonth: nextMonth
-
+			nextMonth: nextMonth,
 		})
 
 	},
-	jumpToDetail: function () {
+	jumpToDetail: function (e) {
+		let item = e.currentTarget.dataset.detail;
+		let score = this.data.accountBalance
+		console.log(item);
 		wx.navigateTo({
-			url: '/pages/giftdetail/giftdetail'
+			url: '/pages/giftdetail/giftdetail?id=' + item + '&accountBalance=' + score
 		})
 	}
 })

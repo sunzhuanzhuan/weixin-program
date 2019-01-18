@@ -1519,4 +1519,17 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			}
 		})
 	}
+
+	getCommodity() {
+		return this.simpleApiCall('GET', '/rewards/commodity')
+	}
+
+	getCommodityDetail(id) {
+		return this.simpleApiCall('GET', `/rewards/commodity/${id}`)
+	}
+	purchase(id, amount) {
+		return this.simpleApiCall('POST', `/rewards/commodity/${id}/purchase`, {
+			amount: amount
+		})
+	}
 }

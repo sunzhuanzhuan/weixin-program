@@ -19,14 +19,14 @@ Page({
 		page: 1,
 		pageSize: 10,
 	},
-	onShow: function () { },
+	onShow: function () {},
 	onLoad: function (option) {
 		this.setData({
-			changeBox: false
+			changeBox: false,
+			code: option.code
 		})
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				console.log("进入接口")
 				this.setData({
 					totalBounses: result.totalBounses,
 					totalReferencers: result.totalReferencers,
@@ -34,7 +34,7 @@ Page({
 				});
 			})
 			const missions = res.missions || [];
-			const accountBalance = res.accountBalance;
+			const accountBalance = res.accountBalance.toFixed(2);
 			let arrDateDuration = [];
 			let next1 = util.moment().add(1, 'days').format("MM-DD");
 			let next2 = util.moment().add(2, 'days').format("MM-DD");
@@ -242,7 +242,7 @@ Page({
 					});
 				})
 			}
-		} else { }
+		} else {}
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -299,7 +299,7 @@ Page({
 					pageSize: pageSize
 				})
 			})
-		} else { }
+		} else {}
 	}
 
 })
