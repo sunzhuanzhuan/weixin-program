@@ -198,7 +198,7 @@ Page({
 		} else if (e.target.dataset.completed == false) {
 			if (e.target.dataset.type == 'articleRead') {
 				gdt.missionComplete('articleRead').then((res) => {
-					const scoreAdd = res.data.transaction.amount;
+					const scoreAdd = res.transaction.amount;
 					wx.showToast({
 						title: '领取成功，获得' + scoreAdd + '积分',
 						icon: 'none',
@@ -211,20 +211,21 @@ Page({
 				})
 			} else if (e.target.dataset.type == "articleShared") {
 				gdt.missionComplete('articleShared').then((res) => {
-					const scoreAdd = res.data.transaction.amount;
+					const scoreAdd = res.transaction.amount;
 					wx.showToast({
 						title: '领取成功，获得' + scoreAdd + '积分',
 						icon: 'none',
 						duration: 1000,
 						mask: true,
 						success: () => {
+							console.log("1")
 							this.onLoad();
 						}
 					});
 				})
 			} else {
 				gdt.missionComplete('shareBeenRead').then((res) => {
-					const scoreAdd = res.data.transaction.amount;
+					const scoreAdd = res.transaction.amount;
 					wx.showToast({
 						title: '领取成功，获得' + scoreAdd + '积分',
 						icon: 'none',
@@ -241,24 +242,26 @@ Page({
 	/**点击签到 */
 	toCheck: function () {
 		if (this.data.checked == false) {
-			gdt.missionComplete('showup').then((res) => {
-				const scoreAdd = res.data.transaction.amount
+			let that = this;
+			gdt.missionComplete('showup').then((result) => {
+				let scoreAdd = result.transaction.amount;
 				wx.showToast({
 					title: '领取成功，获得' + scoreAdd + '积分',
 					icon: 'none',
 					duration: 1000,
 					mask: true,
 					success: () => {
-						this.onLoad();
+						that.onLoad();
 					}
 				});
 			})
 		} else {
+			let that = this;
 			wx.showToast({
 				title: '您已签到，請勿重复',
 				icon: 'none',
 				duration: 1000,
-				mask: true,
+				mask: true
 			})
 		}
 	},
