@@ -1,7 +1,9 @@
 Page({
 	data: {
 		accountBalance: 0,
-		data: []
+		data: [],
+
+		baseUrl: ''
 	},
 	onLoad: function (option) {
 		let currentMonth = new Date().getMonth() + 1;
@@ -33,7 +35,15 @@ Page({
 				})
 			}
 		})
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrl: 'https://' + res.split('/')[2],
+			})
+
+
+		})
 		that.setData({
+
 			accountBalance: option.accountBalance,
 			currentMonth: currentMonth,
 			nextMonth: nextMonth

@@ -14,21 +14,12 @@
 }
 
 .giftPic {
-<<<<<<< HEAD
     width: 360rpx;
     height: 360rpx;
 }
 
 .giftDetail {
     height: 160rpx;
-=======
-    width: 160rpx;
-    height: 160rpx;
-}
-
-.giftDetail {
-    height: 100rpx;
->>>>>>> 4261e1b4b607a0bc88c31255d8a84774b63e44c7
 }
 
 .detail {

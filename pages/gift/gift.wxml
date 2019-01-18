@@ -12,7 +12,7 @@
 		<text class='monthGift'>{{currentMonth}}月礼物(每月更新)</text>
 	</view>
 	<view wx:for="{{data}}" class='giftBox' bindtap="jumpToDetail">
-		<image class="imgGif" src="http://www.ixiupet.com/uploads/allimg/150317/2-15031H22T0.jpg"></image>
+		<image class="imgGif" src="{{baseImageUrl+item.coverUrl+item.coverUrl}}"></image>
 		<!-- <view class='imgBox' wx:if="false">
 		</view> -->
 		<!-- <view wx:else>已抢光</view> -->

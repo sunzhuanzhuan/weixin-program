@@ -1,18 +1,15 @@
 {
 	"pages": [
-		"pages/check/check",
-<<<<<<< HEAD
-=======
-		"pages/giftdetail/giftdetail",
->>>>>>> 4261e1b4b607a0bc88c31255d8a84774b63e44c7
-		"pages/gift/gift",
 		"pages/index/index",
+		"pages/check/check",
+		"pages/gift/gift",
 		"pages/test/detail",
 		"pages/log/detail",
 		"pages/detail/detail",
 		"pages/history/history",
 		"pages/my/my",
-		"pages/introduce/intro"
+		"pages/introduce/intro",
+		"pages/giftdetail/giftdetail"
 	],
 	"requiredBackgroundModes": [
 		"audio"
