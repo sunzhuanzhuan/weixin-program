@@ -446,10 +446,12 @@ button::after {
 
 .we1 {
   font-weight: 400;
+  font-size: 24rpx;
 }
 
 .we2 {
   font-weight: 600;
+  font-size: 24rpx;
 }
 
 .attention {
@@ -474,4 +476,8 @@ button::after {
   text-align: center;
   line-height: 48px;
   margin-top: 23px;
+}
+.linkPeople{
+  width: 240rpx;
+  height: 240rpx;
 }

@@ -52,7 +52,8 @@
 				<text class="font24">{{articleRead.payload.required}}</text>
 			</view>
 			<view class="dispayInline widthBox3">
-				<button class="finishBtn" bindtap='goToFinish' data-completed="{{articleRead.completed}}" data-criteriaSatisfied = '{{articleRead.criteriaSatisfied}}' data-type='articleRead'>{{articleRead.criteriaSatisfied == false ? '去完成' : articleRead.completed == false? '领取' : '已领取'}}</button>
+				<button class="finishBtn" bindtap='goToFinish' data-completed="{{articleRead.completed}}" data-criteriaSatisfied='{{articleRead.criteriaSatisfied}}'
+				 data-type='articleRead'>{{articleRead.criteriaSatisfied == false ? '去完成' : articleRead.completed == false? '领取' : '已领取'}}</button>
 			</view>
 			<view class="font22 marginLeft56">每篇文章需要阅读5秒以上</view>
 		</view>
@@ -69,7 +70,8 @@
 				<text class="font24">{{articleShared.payload.required}}</text>
 			</view>
 			<view class="dispayInline widthBox3">
-				<button class="finishBtn" bindtap='goToFinish' data-completed='{{articleShared.completed}}' data-criteriaSatisfied='{{articleShared.criteriaSatisfied}}' data-type='articleShared'>{{articleShared.criteriaSatisfied == false ? '去完成' : articleShared.completed == false? '领取' : '已领取'}}</button>
+				<button class="finishBtn" bindtap='goToFinish' data-completed='{{articleShared.completed}}' data-criteriaSatisfied='{{articleShared.criteriaSatisfied}}'
+				 data-type='articleShared'>{{articleShared.criteriaSatisfied == false ? '去完成' : articleShared.completed == false? '领取' : '已领取'}}</button>
 			</view>
 			<view class="font22 marginLeft56">通过将文章或海报分享给好友、群聊或朋友圈可获得积分</view>
 		</view>
@@ -88,7 +90,9 @@
 			<view class="font22 marginLeft56">{{shareBeenRead.description}}</view>
 		</view>
 	</view>
-	<view class="font28 marginTB2411 marginLeft56">拉新奖励<view class='borderLeft'></view></view>
+	<view class="font28 marginTB2411 marginLeft56">拉新奖励
+		<view class='borderLeft'></view>
+	</view>
 	<view class="font22 marginLeft56 marginRight56">
 		当好友由于你的分享开始使用小程序且从未使用过我们的小程序当,并参加签到活动后。您将获得他积分的3%作为奖励。每日领取拉新积分上限为500积分
 	</view>
@@ -97,7 +101,7 @@
 
 
 <!--活动规则弹出框-->
- <view wx:if="{{ruleIsShow == true}}" class='actRule'>
+<view wx:if="{{ruleIsShow == true}}" class='actRule'>
 	<view class='ruleBox'>
 		<view class='ruleHead'>
 			<text>活动规则</text>
@@ -127,19 +131,29 @@
 </view>
 <view wx:else>
 </view>
+<!-- wx:if="{{changeBox == true}}" -->
 <view wx:if="{{changeBox == true}}" class="actRule">
 	<view class="changeBox">
 		<view class="changeInfo">
-			<view class="changeN"><text>兑换码</text></view>
-			<view class="changeNdetail"><text>NFU2EA345L64FJ</text></view>
+			<view class="changeN">
+				<text>兑换码</text>
+			</view>
+			<view class="changeNdetail">
+				<text>NFU2EA345L64FJ</text>
+			</view>
 			<view class="addService">
 				<text>识别二维码也可以添加客服喔</text>
 			</view>
 			<view class="addChange">
 				<text>添加小鱼聚合客服小姐姐兑换礼物吧</text>
 			</view>
-			<view class="eq"></view>
-			<view class="weChat"> <text class="we1">微信：</text><text class="we2">xiaoyujuhe123</text></view>
+			<view class="eq">
+				<image class='linkPeople' src="{{baseImageUrlXiaoyu}}"></image>
+			</view>
+			<view class="weChat">
+				<text class="we1">微信：</text>
+				<text class="we2">xiaoyujuhe123</text>
+			</view>
 			<view class="attention">注意事项:</view>
 			<view class="attention">请务必保存好图片以防丢失后无法继续领取礼物</view>
 		</view>

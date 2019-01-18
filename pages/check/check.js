@@ -17,12 +17,11 @@ Page({
 		dateArr: [],
 		changeBox: false,
 	},
-	onShow: function () {},
+	onShow: function () { },
 	onLoad: function (option) {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			const missions = res.missions || [];
 			const accountBalance = res.accountBalance;
-
 			let arrDateDuration = [];
 			let next1 = util.moment().add(1, 'days').format("MM-DD");
 			let next2 = util.moment().add(2, 'days').format("MM-DD");
@@ -133,6 +132,13 @@ Page({
 				changeBox: true
 			})
 		}
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrlXiaoyu: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg'
+			})
+
+
+		})
 
 	},
 	jumptogift: function (e) {
@@ -227,7 +233,7 @@ Page({
 			gdt.missionComplete('showup').then((res) => {
 				const scoreAdd = res.data.transaction.amount
 				wx.showToast({
-					title: '领取成功，获得'+scoreAdd+'积分',
+					title: '领取成功，获得' + scoreAdd + '积分',
 					icon: 'none',
 					duration: 1000,
 					mask: true,
