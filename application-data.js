@@ -286,11 +286,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
 		}
 		const oldUserPromise = this.currentUser;
 		this.currentUser = new Promise((resolve, reject) => {
-				wx.checkSession({
-					success: resolve,
-					reject: reject
-				});
-			})
+			wx.checkSession({
+				success: resolve,
+				reject: reject
+			});
+		})
 			.then(() => this.getMyLegacyProfileFromServer())
 			.then(() => oldUserPromise)
 			.catch(() => this.autoLogin());
@@ -453,10 +453,21 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					if (indexedItem.type == "txvVideo") {
 						indexedItem.wxMidVec = '1234#1'
 					}
+					if (indexedItem.type == "simpleSurvey") {
+						let one = indexedItem.surveyOptions[0].totalSupporters || 0;
+						let two = indexedItem.surveyOptions[1].totalSupporters || 0;
+						let total = one + two;
+						if (total == 0) {
+							indexedItem.m = 0;
+							indexedItem.n = 0;
+						} else {
+							indexedItem.m = (one / total).toFixed(2) * 100;
+							indexedItem.n = 100 - ((one / total).toFixed(2) * 100);
+						}
+
+					}
 					// indexedItem.isShow=false
-					const r = _.find(targetList, {
-						_id: x._id
-					});
+					const r = _.find(targetList, { _id: x._id });
 					if (r) {
 						return;
 					}
@@ -503,35 +514,66 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
 		this.on('entityUpdate', (entity) => {
 			const itemIndex = this.localState.itemIndex;
+			//旧的
+			console.log(itemIndex)
+			let indexedItem = {};
+			if (entity.type == 'simpleSurvey') {
+				let indexedItem = itemIndex[entity._id];
+				console.log(indexedItem)
+				// _.merge(indexedItem, entity);
+				indexedItem.vote = true;
+				indexedItem.voteFor = entity.surveyVoteFor;
+				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
 
-			let indexedItem = itemIndex[entity._id];
-			if (indexedItem) {
-				_.merge(indexedItem, entity);
+				this.userInfo.then((res) => {
+					if (indexedItem.surveyOptions[entity.num].supporters.length < 5) {
+						indexedItem.surveyOptions[entity.num].supporters.push(res.userInfo)
+					}
+
+				})
+				let one = indexedItem.surveyOptions[0].totalSupporters || 0;
+				let two = indexedItem.surveyOptions[1].totalSupporters || 0;
+
+				let total = one + two;
+				if (total == 0) {
+					indexedItem.m = 0;
+					indexedItem.n = 0;
+				} else {
+					indexedItem.m = (one / total).toFixed(2) * 100;
+					indexedItem.n = 100 - ((one / total).toFixed(2) * 100);
+				}
+				// console.log(indexedItem)
+
 			} else {
-				indexedItem = entity;
-				itemIndex[entity._id] = indexedItem;
+
+				let indexedItem = itemIndex[entity._id];
+				if (indexedItem) {
+					_.merge(indexedItem, entity);
+				} else {
+					indexedItem = entity;
+					itemIndex[entity._id] = indexedItem;
+				}
+
+				if (!indexedItem.randomNum) {
+					indexedItem.randomNum = Math.floor(Math.random() * 40);
+				}
+				indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+				indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
+
+				indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+					indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
+				if (indexedItem.type == "txvVideo") {
+					indexedItem.wxMidVec = '1234#1'
+				}
 			}
 
-			if (!indexedItem.randomNum) {
-				indexedItem.randomNum = Math.floor(Math.random() * 40);
-			}
-			indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
-			indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
 
-			indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
-				indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
-			if (indexedItem.type == "txvVideo") {
-				indexedItem.wxMidVec = '1234#1'
-			}
-			// if(indexedItem.isShow){
-			//     indexedItem.isShow=true
-			// }else{
-			//     indexedItem.isShow=false
-			// }
-
+			// console.log(indexedItem)
 			return;
 		});
+		this.on('voteItemUpdate', () => {
 
+		})
 		this.on('sharedItems', ([start, end], clips) => {
 			const targetList = this.localState.myShares;
 			const itemIndex = this.localState.clipIndex;;
@@ -850,9 +892,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			if (x.entity) {
 				this.emit('entityUpdate', x.entity);
 			}
-			const r = _.find(targetList, {
-				_id: x._id
-			});
+			const r = _.find(targetList, { _id: x._id });
 			if (r) {
 				return;
 			}
@@ -881,9 +921,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 		});
 
 		this.on('appHide', () => {
-			this.track('hide', {
-				duration: Date.now() - this.launchTime
-			});
+			this.track('hide', { duration: Date.now() - this.launchTime });
 		})
 	}
 
@@ -915,7 +953,42 @@ module.exports = class GlobalDataContext extends EventEmitter {
 		queryPromise.then((x) => this.emit('applicationIndex', x));
 		return queryPromise;
 	}
+	//列表表态支持
+	supportOption(item) {
+		const queryPromise = this.simpleApiCall(
+			'POST', `/simpleSurvey/${item.id}/votes`,
+			{
+				body: {
+					vote: item.supportId || {},
+				},
+				autoLoadingState: true
+			})
+		queryPromise.then((x) => {
+			x._id = x.articleId;
+			delete x.articleId
+			x.num = Number(item.num)
+			// this.emit('entityDetail', x);
+			this.emit('entityUpdate', x);
+			// if (x.entity) {
+			// 	x.entity.viewed = true;
 
+			// }
+		});
+		return queryPromise
+	}
+	//详情表态
+	supportOptionDetail(item) {
+		const queryPromise = this.simpleApiCall(
+			'POST', `/simpleSurvey/${item.id}/votes`,
+			{
+				body: {
+					vote: item.supportId || {},
+				},
+				autoLoadingState: true
+			})
+
+		return queryPromise
+	}
 	fetchListItems(listId, page, pageSize, _queryParams) {
 		const SPECIAL_LISTS = {
 			topScoreds: '/topScoreds'
@@ -944,11 +1017,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
 		const qUri = SPECIAL_LISTS[listId] || `/list/${listId}/entities`;
 		const queryPromise = this.currentUser.then(() => {
 			return this.simpleApiCall(
-				'GET', qUri, {
-					query: _.merge({
-						page: page,
-						pageSize: pageSize
-					}, qParams, _queryParams || {}),
+				'GET', qUri,
+				{
+					query: _.merge({ page: page, pageSize: pageSize }, qParams, _queryParams || {}),
 					autoLoadingState: true
 				});
 		});
@@ -998,9 +1069,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
 	fetchDashboardAnalytics() {
 		return this.currentUser.then(() => {
-			const queryPromise = this.simpleApiCall('GET', '/my/readCount', {
-				autoLoadingState: true
-			});
+			const queryPromise = this.simpleApiCall('GET', '/my/readCount', { autoLoadingState: true });
 			queryPromise.then((x) => {
 				this.emit('dashboardAnalytics', x);
 			});
@@ -1234,7 +1303,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
 		return this.currentUser.then(() => {
 			const queryPromise = this.simpleApiCall(
-				'GET', `/article/${articleId}/richText`, {
+				'GET', `/article/${articleId}/richText`,
+				{
 					query: qOptions,
 					autoLoadingState: true
 				}
@@ -1248,11 +1318,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
 	}
 
 	fetchEntityDetail(entityId, options) {
-		const qOptions = _.merge({}, options || {});
+		const qOptions = _.merge({
+		}, options || {});
 
 		return this.currentUser.then(() => {
 			const queryPromise = this.simpleApiCall(
-				'GET', `/entity/${entityId}/detail`, {
+				'GET', `/entity/${entityId}/detail`,
+				{
 					query: qOptions,
 					autoLoadingState: true
 				}
@@ -1270,11 +1342,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
 	}
 
 	fetchEntityDetailByReferenceId(referenceId, options) {
-		const qOptions = _.merge({}, options || {});
+		const qOptions = _.merge({
+		}, options || {});
 
 		return this.currentUser.then(() => {
 			const queryPromise = this.simpleApiCall(
-				'GET', `/reference/${referenceId}/detail`, {
+				'GET', `/reference/${referenceId}/detail`,
+				{
 					query: qOptions,
 					autoLoadingState: true
 				}
@@ -1301,7 +1375,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
 		return this.currentUser.then(() => {
 			const queryPromise = this.simpleApiCall(
-				'GET', `/reference/${referenceId}/richText`, {
+				'GET', `/reference/${referenceId}/richText`,
+				{
 					query: qOptions,
 					autoLoadingState: true
 				}
@@ -1336,10 +1411,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				},
 				autoLoadingState: true
 			});
-			this.emit('entityUpdate', {
-				_id: itemId,
-				liked: true
-			});
+			this.emit('entityUpdate', { _id: itemId, liked: true });
 			queryPromise.then((x) => {
 				this.emit('liked', x);
 			});
@@ -1359,10 +1431,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					entityId: itemId
 				}
 			});
-			this.emit('entityUpdate', {
-				_id: itemId,
-				liked: false
-			});
+			this.emit('entityUpdate', { _id: itemId, liked: false });
 			queryPromise.then((x) => {
 				this.emit('unliked', x);
 			});
@@ -1372,9 +1441,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 	}
 
 	trackShareItem(itemId, otherOptions) {
-		const queryBody = _.merge({
-			entityId: itemId
-		}, otherOptions || {});
+		const queryBody = _.merge({ entityId: itemId }, otherOptions || {});
 
 		return this.currentUser.then(() => {
 			const queryPromise = this.simpleApiCall('POST', '/my/shares', {
@@ -1446,18 +1513,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			const [systemInfo, networkType] = x;
 			const qBody = {
 				event: eventName,
-				data: { ...(props || {}),
-					systemInfo,
-					networkType,
-					scene: this.showParam.scene,
-					showParam: this.showParam
-				}
+				data: { ...(props || {}), systemInfo, networkType, scene: this.showParam.scene, showParam: this.showParam }
 			}
 
-			return this.simpleApiCall('POST', '/ev-collect', {
-				body: qBody,
-				autoLoadingState: true
-			});
+			return this.simpleApiCall('POST', '/ev-collect', { body: qBody, autoLoadingState: true });
 		});
 	}
 	//推送消息
@@ -1468,10 +1527,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			console.log('Ignoring mocked formId');
 			return;
 		}
-		const queryBody = _.merge({
-			formId: formId,
-			type: 'form'
-		}, otherOptions || {});
+		const queryBody = _.merge({ formId: formId, type: 'form' }, otherOptions || {});
 
 		return this.currentUser.then(() => {
 			const queryPromise = this.simpleApiCall('POST', '/my/tplMsgQuota', {

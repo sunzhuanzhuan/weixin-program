@@ -88,8 +88,7 @@ button{
 
 .itemBigBox{
     width: 690rpx;
-    height:500rpx;
-    margin: 15rpx 30rpx;
+    margin: 20rpx 30rpx;
     
 }
 .videoTitle{
@@ -127,10 +126,9 @@ button{
 
 .itemSmall{
     width:690rpx;
-    height:180rpx;
+    /* height:180rpx; */
     
     padding: 50rpx 0;
-    padding-right:30rpx;
     background:#fff;
     
    
@@ -163,16 +161,18 @@ button{
     font-size: 34rpx;
     line-height:1.5;
     color: #CCCCCC;
+    margin-left: 28rpx;
 }
 .nowrapTwo{
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    width: 430rpx;
+    width: 410rpx;
     -webkit-line-clamp: 2;
     line-height:1.5;
     -webkit-box-orient: vertical;
     font-size: 34rpx;
+    margin-left: 28rpx;
 }
 .nowrapOne{
     overflow: hidden;
@@ -261,7 +261,7 @@ button{
     display:inline-block;line-height:88rpx;padding-left:30rpx;font-weight:bold
 }
 .smallImgCover{
-    float:right;width:240rpx;height:180rpx;border-radius:8rpx 
+    float:right;width:200rpx;height:150rpx;border-radius:8rpx;margin-right: 20rpx;
 }
 .smallImgPause{
     vertical-align:top;font-size:24rpx;border-radius:6rpx;margin-left:10rpx;padding:4rpx 6rpx;display:inline-block;line-height:9rpx;height:24rpx
@@ -273,10 +273,10 @@ button{
     float:right;background:#fff;margin-right:-18rpx;height:32rpx
 }
 .smallImgLeftFooter{
-    background:#ffffff;width:430rpx;position:absolute;bottom:0;height:32rpx;overflow:hidden
+    background:#ffffff;width:410rpx;position:absolute;bottom:0;height:32rpx;overflow:hidden
 }
 .smallImgLeftTitleBox{
-    float:rigth;width:430rpx;height:180rpx;position:relative; 
+    float:rigth;width:430rpx;height:150rpx;position:relative; 
 }
 
 .bigImgCover{

@@ -1,0 +1,161 @@
+
+
+.declareBox{
+    width: 690rpx;
+    height: 412rpx;
+    margin:0 auto;
+    background: #fff;
+    padding-bottom: 32rpx;
+}
+.leftBox{
+    margin-top: 32rpx;
+    vertical-align: top;
+    display: inline-block;
+    float: left;
+    width: 112rpx;
+    height: 44rpx;
+    font-size: 28rpx;
+    color:#fff;
+    background: #333333;
+    text-align: center;
+    line-height: 44rpx;
+    font-weight: bolder;
+}
+.rightBox{
+    margin-top: 32rpx;
+    vertical-align: top;
+    display: inline-block;
+    float: left;
+    width: 400rpx;
+    height: 44rpx;
+    background: #FFDB3D;
+    color: #333;
+    font-size: 28rpx;
+    line-height: 44rpx;
+    padding-left: 12rpx;
+    font-weight: bold;
+    
+}
+.taiBox{
+    clear: both;
+    padding-top:22rpx;
+}
+.fontTai{
+    font-size: 24rpx;
+    color: #333;
+    padding: 4rpx 6rpx
+}
+.taiLeftBox{
+    width: 308rpx;
+    height: 184rpx;
+    display: inline-block;
+    margin-right: 20rpx;
+    background: #EBEBEB;
+    position: relative;
+    border-radius: 4rpx;
+    vertical-align: top;
+}
+.taiRightBox{
+    width: 308rpx;
+    height: 184rpx;
+    display: inline-block;
+    background: #EBEBEB;
+    position: relative;
+    border-radius: 4rpx;
+    vertical-align: top;
+}
+.holdOne{
+    width: 200rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    border-radius: 28rpx;
+    font-size: 28rpx;
+    position: absolute;
+    bottom: -28rpx;
+    left: 50rpx;
+    color: #fff;
+    background: #196AD8;
+}
+.holdTwo{
+    width: 200rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    border-radius: 28rpx;
+    font-size: 28rpx;
+    position: absolute;
+    bottom: -28rpx;
+    left: 50rpx;
+    color: #fff;
+    background: #F53B55;
+}
+.progressBox{
+    overflow: hidden;
+    margin-top: 50rpx;
+
+}
+.leftPro{
+    height: 12rpx;
+    background: #196AD8;
+    float: left;
+    
+}
+.rightPro{
+    height: 12rpx;
+    background: #F53B55;
+    float: left;
+   
+}
+.marginLeft26{
+    margin-left: 26rpx;
+}
+
+.percentBox{
+    margin:6rpx 30rpx;
+
+}
+.leftPercent{
+    float: left;
+}
+.rightPercent{
+    float: right;
+}
+.fontPercent{
+    font-size: 20rpx;
+    color: #333;
+}
+.view{
+    margin:0 30rpx;
+    margin-top: 10rpx;
+    clear: both;
+    overflow: hidden;
+}
+.leftView{
+    float: left;
+    width: 50%;
+}
+.rightView{
+    float: right;
+    overflow: hidden;
+    width:45%;
+    margin-right: -12rpx;
+}
+.touxiang{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+}
+.many{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+    margin-right: -24rpx;
+    float:left
+}
+.dotDeclare{
+    border-radius: 6rpx;
+    width: 6rpx;
+    height: 6rpx;
+    background:#D8D8D8;
+    display: inline-block;
+    float: right;
+}

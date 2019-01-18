@@ -1,7 +1,12 @@
 
 @import "/components/loadding/loadding.wxss";
-
-
+@import "/components/declare/declare.wxss";
+.wxmpVoice{
+    width: 94%;
+    padding: 0 3%;
+    background: #fff;
+    border-radius: 10rpx;
+}
 
 button::after{ border: none;padding: 0 }
 /* --------------------------------------详情--------------------------------------------------------------------------------- */
@@ -49,13 +54,15 @@ button::after{ border: none;padding: 0 }
     border-right:1px solid #666666;padding-right:27rpx;padding-left:32rpx; 
 }
 .audioTitleBox{
-    display:inline-block;padding-left:4%;width:470rpx;height:100rpx;line-height:100rpx;overflow:hidden;vertical-align:top
+    display:inline-block;padding-left:4%;background:rgba(0,0,0,0.82);
+    width:530rpx;height:100rpx;line-height:100rpx;overflow:hidden;vertical-align:top
 }
 .audioTitle{
     font-size:24rpx;color:#fff;height:40rpx;width:100%;line-height:56rpx;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
 }
 .audioBoxImg{
-    display:inline-block;width:140rpx;height:100rpx;line-height:100rpx;vertical-align:top;border-radius:0 20rpx 0 0;
+    background:rgba(0,0,0,0.82);
+    display:inline-block;width:140rpx;height:100rpx;line-height:100rpx;vertical-align:top;
 }
 .pauseImgNow{
     vertical-align:middle;width:24rpx;height:34rpx;margin-left:60rpx;
