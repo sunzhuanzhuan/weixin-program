@@ -49,10 +49,11 @@ Page({
 	},
 	jumpToDetail: function (e) {
 		let item = e.currentTarget.dataset.detail;
-		let score = this.data.accountBalance
+		let score = this.data.accountBalance;
+		let status = e.currentTarget.dataset.status
 		console.log(item);
 		wx.navigateTo({
-			url: '/pages/giftdetail/giftdetail?id=' + item + '&accountBalance=' + score
+			url: '/pages/giftdetail/giftdetail?id=' + item + '&accountBalance=' + score + '&status=' + status
 		})
 	}
 })

@@ -23,7 +23,7 @@ Page({
 		})
 	},
 	confirm: function () {
-		gdt.purchase(option.id, 1).then((res) => {
+		gdt.purchase(this.data.id, 1).then((res) => {
 			this.setData({
 				code: res.code
 			});
@@ -39,10 +39,11 @@ Page({
 		})
 	},
 	onLoad: function (option) {
-		let id = option.id;
+		const id = option.id;
 		let that = this;
 		that.setData({
-			accountBalance: option.accountBalance
+			accountBalance: option.accountBalance,
+			id: option.id
 		})
 		gdt.getCommodityDetail(id).then((res) => {
 			console.log(res);
@@ -54,7 +55,12 @@ Page({
 			this.setData({
 				baseImageUrl: 'https://' + res.split('/')[2],
 			})
-		})
+		});
+		if (option.status == 1) {
+			this.setData({
+				WillOnLine: true
+			})
+		}
 	},
 
 	/**

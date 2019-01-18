@@ -32,6 +32,9 @@
 	<view wx:else class="bottomBtn2" bindtap="canNotChange">
 		<text class="change">积分不足</text>
 	</view>
+	<view class="bottomBtn2" wx:if="{{WillOnLine}}">
+		<text class="change">无法兑换</text>
+	</view>
 </view>
 <!--兑换弹窗 -->
 <view class="changeJump" wx:if="{{visible}}">

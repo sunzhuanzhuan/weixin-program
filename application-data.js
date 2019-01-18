@@ -1529,7 +1529,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
 	}
 	purchase(id, amount) {
 		return this.simpleApiCall('POST', `/rewards/commodity/${id}/purchase`, {
-			amount: amount
+			query: {
+				amount: amount
+			}
 		})
 	}
 }
