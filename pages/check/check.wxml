@@ -151,33 +151,7 @@
 </view>
 <!-- wx:if="{{changeBox == true}}" -->
 <view wx:if="{{changeBox == true}}" class="actRule">
-	<view class="changeBox">
-		<view class="changeInfo">
-			<canvas class="canvas" canvas-id="saveCanvas"></canvas>
-			<!--<view class="changeN">
-				<text>兑换码</text>
-			</view>
-			<view class="changeNdetail">
-				<text>{{code}}</text>
-			</view>
-			<view class="addService">
-				<text>识别二维码也可以添加客服喔</text>
-			</view>
-			<view class="addChange">
-				<text>添加小鱼聚合客服小姐姐兑换礼物吧</text>
-			</view>
-			<view class="eq">
-				<image class='linkPeople' src="{{baseImageUrlXiaoyu}}"></image>
-			</view>
-			<view class="weChat">
-				<text class="we1">微信：</text>
-				<text class="we2">xiaoyujuhe123</text>
-			</view>
-			<view class="attention">注意事项:</view>
-			<view class="attention">请务必保存好图片以防丢失后无法继续领取礼物</view>-->
-		</view>
-		<view class="savePicToPhone" bindtap="savePic">
-			<text>保存图片到手机</text>
-		</view>
-	</view>
+	<canvas class="canvas" canvas-id="saveCanvas"></canvas>
+	<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+
 </view>

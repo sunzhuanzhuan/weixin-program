@@ -18,8 +18,19 @@ Page({
 		changeBox: false,
 		page: 1,
 		pageSize: 10,
+		btnSavePitcureLetter: '',
 	},
-	onShow: function () {},
+	onShow: function () {
+		wx.getSetting({
+			success: res => {
+				if (!res.authSetting['scope.writePhotosAlbum']) {
+					this.setData({ btnSavePitcureLetter: '保存到相册' })
+				} else {
+					this.setData({ btnSavePitcureLetter: '已保存到相册，记得分享哦' })
+				}
+			}
+		})
+	},
 	onLoad: function (option) {
 		this.setData({
 			changeBox: false,
@@ -146,86 +157,106 @@ Page({
 				baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
 			})
 		});
-		if (option.box) {
+		gdt.systemInfo.then((x) => {
+			this.setData({
+				ratio: x.windowWidth * 2 / 750,
+			});
+		});
+		if (option) {
 			const that = this;
+
 			this.setData({
 				changeBox: true
 			}, () => {
-
+				let ratio = that.data.ratio;
 				const ctx = wx.createCanvasContext('saveCanvas');
 				ctx.setFillStyle('rgba(255, 255, 255, 1)');
-				ctx.fillRect(0, 0, 280, 322);
+				ctx.fillRect(10, 10, 280 * ratio, 322 * ratio);
 
 				const changetext = ('兑换码');
-				ctx.setFontSize(12);
+				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(changetext, 122, 26);
+				ctx.fillText(changetext, 122 * ratio, 26 * ratio);
 
 				ctx.setFillStyle('rgba(250,212,85,1)');
-				ctx.fillRect(71, 34, 146, 30);
-
-				const code = this.data.code;
+				ctx.fillRect(71 * ratio, 34 * ratio, 146 * ratio, 30 * ratio);
+				// const code = this.data.code;
+				const code = '122333';
 				ctx.setTextBaseline('top')
-				ctx.setFontSize(14);
+				ctx.setFontSize(14 * ratio);
 				ctx.setFillStyle('#000000');
-				ctx.fillText(code, 76, 39);
+				ctx.fillText(code, 76 * ratio, 39 * ratio);
 
 				const knowEq = ('识别二维码也可以添加客服喔');
-				ctx.setFontSize(12);
+				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(knowEq, 62, 80);
+				ctx.fillText(knowEq, 62 * ratio, 80 * ratio);
 
 				const addChangegift = ('添加小鱼聚合客服小姐姐兑换礼物吧');
 				ctx.setFontSize(12);
 				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(addChangegift, 44, 97);
+				ctx.fillText(addChangegift, 44 * ratio, 97 * ratio);
 
 				const equrl = this.data.baseImageUrlEq;
-				ctx.drawImage(equrl, 80, 115, 120, 120);
+				ctx.drawImage(equrl, 80 * ratio, 115 * ratio, 120 * ratio, 120 * ratio);
 
 				const wxtext = '微信：xiaoyujuhe123';
-				ctx.setFontSize(12);
+				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('#000000');
-				ctx.fillText(wxtext, 84, 239);
+				ctx.fillText(wxtext, 84 * ratio, 239 * ratio);
 
 				const payattention = '注意事项：';
-				ctx.setFontSize(12);
+				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('#FF0000');
-				ctx.fillText(payattention, 116, 275);
+				ctx.fillText(payattention, 116 * ratio, 275 * ratio);
 
 				const pay = '请务必保存好图片以防丢失后无法领取礼物!';
 				ctx.setFillStyle('#FF0000');
-				ctx.fillText(pay, 24, 292);
+				ctx.fillText(pay, 24 * ratio, 292 * ratio);
 				ctx.draw();
+				// setTimeout(function () {
+				// 	wx.canvasToTempFilePath({
+				// 		x: 0,
+				// 		y: 0,
+				// 		width: 320 * ratio,
+				// 		height: 370 * ratio,
+				// 		destWidth: 1280,
+				// 		destHeight: 1480,
+				// 		fileType: 'jpg',
+				// 		quality: 1,
+				// 		canvasId: 'saveCanvas',
+				// 		success: function (res) {
+				// 			that.setData({
+				// 				shareImage: res.tempFilePath,
+				// 				showSharePic: true
+				// 			}, () => {
+				// 				wx.saveImageToPhotosAlbum({
+				// 					filePath: that.data.shareImage,
+				// 					success: function () {
+				// 						console.log('保存成功');
+				// 						that.setData({
+				// 							saveToCamera: ''
+				// 						})
 
-				setTimeout(function () {
-					wx.canvasToTempFilePath({
-						x: 0,
-						y: 0,
-						width: 280,
-						height: 323,
-						destWidth: 1280,
-						destHeight: 1480,
-						fileType: 'jpg',
-						quality: 1,
-						canvasId: 'saveCanvas',
-						success: function (res) {
-							that.setData({
-								eqPath: res.tempFilePath,
-							})
-						}
-					})
-				}, 2000)
-
+				// 					},
+				// 					fail: function () {
+				// 						console.log('保存失败');
+				// 						that.setData({
+				// 							saveToCamera: 'openSetting'
+				// 						})
+				// 					}
+				// 				})
+				// 			})
+				// 			wx.hideLoading();
+				// 		},
+				// 		fail: function (res) {
+				// 			console.log(res)
+				// 			wx.hideLoading();
+				// 		}
+				// 	})
+				// }, 2000);
 			})
 		}
-		gdt.baseServerUri.then((res) => {
-			this.setData({
-				baseImageUrlXiaoyu: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg'
-			})
-
-
-		})
 
 	},
 	jumptogift: function (e) {
@@ -332,7 +363,7 @@ Page({
 					});
 				})
 			}
-		} else {}
+		} else { }
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -389,7 +420,13 @@ Page({
 					pageSize: pageSize
 				})
 			})
-		} else {}
+		} else { }
+	},
+	handleSavePicture: function () {
+		console.log(133)
+		this.setData({
+			changeBox: false
+		})
 	}
 
 })

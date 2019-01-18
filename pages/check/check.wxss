@@ -111,10 +111,10 @@ button::after {
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 3;
+  bottom: 0;
+  right:0;
+  text-align: center;
 }
 
 .ruleBox {
@@ -378,9 +378,13 @@ button::after {
 /*兑换弹窗*/
 .changeBox {
   width: 600rpx;
-  height: 740rpx;
+  height: 750rpx;
+  /* background: red; */
   background: rgba(255, 255, 255, 1);
   border-radius: 10px;
+  position: fixed;
+  left: 100rpx;
+  top:285rpx;
 }
 
 .changeInfo {
@@ -390,11 +394,20 @@ button::after {
   align-items: center;
 }
 
-.canvas {
-  width: 560rpx;
-  height: 644rpx;
-}
 
+.canvas{
+  width: 640rpx; height: 760rpx;background:#fff;margin-top:160rpx;margin-left:54rpx;z-index:99;border-radius: 18rpx;
+}
+.btnSavePicture{
+  background: #FAC84A;
+  font-size: 28rpx;
+  color: #000;
+  /* margin-top:-100rpx; */
+  width:640rpx;
+  height:100rpx;
+  line-height: 100rpx;
+  text-align: center;
+}
 .changeN {
   text-align: center;
   height: 34rpx;
@@ -470,7 +483,7 @@ button::after {
 }
 
 .savePicToPhone {
-  margin-top: 26rpx;
+  margin-top: 660rpx;
   width: 600rpx;
   height: 96rpx;
   border-bottom-left-radius: 10px;
@@ -478,7 +491,6 @@ button::after {
   background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
   text-align: center;
   line-height: 96rpx;
-  margin-top: 46rpx;
 }
 
 .linkPeople {

@@ -241,13 +241,12 @@ button{
     top: 50rpx;
 }
 .btnSavePicture{
-   background: #000;
    border-radius: 20px; 
    font-size: 28rpx;
    color: #fff;
-   margin-top:32rpx;
+   margin-top:-100rpx;
    width:480rpx;
-   height:80rpx;
+   height:100rpx;
    line-height: 80rpx;
    text-align: center;
 }
