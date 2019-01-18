@@ -45,7 +45,7 @@
 		<!-- 表态 -->
 
 		<view wx:if="{{entity.annotations[0] }}">
-			<template is="declare" data="{{type1:type1,itemDeclare:vote,votePage:votePage }}" />
+			<template is="declare" data="{{type:type,itemDeclare:vote,votePage:votePage }}" />
 		</view>
 
 	</scroll-view>
