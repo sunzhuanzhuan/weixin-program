@@ -14,21 +14,12 @@
 }
 
 .giftPic {
-<<<<<<< HEAD
-    width: 360rpx;
-    height: 360rpx;
-}
-
-.giftDetail {
-    height: 160rpx;
-=======
     width: 160rpx;
     height: 160rpx;
 }
 
 .giftDetail {
     height: 100rpx;
->>>>>>> 4261e1b4b607a0bc88c31255d8a84774b63e44c7
 }
 
 .detail {
@@ -77,9 +68,9 @@
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
-    line-height: 17px;
+    line-height: 34rpx;
     float: left;
-    margin-left: 20px;
+    margin-left: 40rpx;
 }
 
 .specNum {
@@ -88,14 +79,14 @@
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
-    line-height: 17px;
-    margin-left: 4px;
+    line-height: 34rpx;
+    margin-left: 8rpx;
 }
 
 .textBox {
     background: rgba(255, 255, 255, 1);
-    margin-top: 11px;
-    padding: 12px 10px 26px 20px;
+    margin-top: 22rpx;
+    padding: 24rpx 20rpx 52rpx 40rpx;
 }
 
 .textTitle {
@@ -103,11 +94,11 @@
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
-    line-height: 20px;
+    line-height: 40rpx;
 }
 
 .giftIntroduceBox {
-    margin-top: 8px;
+    margin-top: 16rpx;
 }
 
 .giftIntroduce {
@@ -115,27 +106,27 @@
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
-    line-height: 17px;
+    line-height: 34rpx;
 }
 
 .statementBox {
-    height: 150px;
-    margin-top: 7px;
+    height: 30r0px;
+    margin-top: 14rpx;
     text-align: center;
 }
 
 .statement {
-    height: 14px;
+    height: 128rpx;
     font-size: 10px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(204, 204, 204, 1);
-    line-height: 14px;
+    line-height: 28rpx;
 }
 
 .bottomBtn {
     width: 100%;
-    height: 47px;
+    height: 94rpx;
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     position: fixed;
     bottom: 0;
@@ -154,7 +145,7 @@
 }
 
 .change {
-    line-height: 47px;
+    line-height: 94rpx;
     font-size: 14px;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
@@ -176,16 +167,16 @@
 }
 
 .changeBox {
-    width: 300px;
-    height: 270px;
+    width: 600rpx;
+    height: 540rpx;
     background: rgba(255, 255, 255, 1);
     border-radius: 10px;
     position: relative;
 }
 
 .cancelOrSure {
-    width: 300px;
-    height: 44px;
+    width: 600rpx;
+    height: 88rpx;
     background: rgba(241, 241, 241, 1);
     position: absolute;
     bottom: 0;
@@ -194,8 +185,8 @@
 }
 
 .cancel {
-    width: 150px;
-    height: 44px;
+    width: 300rpx;
+    height: 88rpx;
     background: rgba(241, 241, 241, 1);
     text-align: center;
     display: inline-block;
@@ -203,8 +194,8 @@
 }
 
 .sure {
-    width: 150px;
-    height: 44px;
+    width: 300rpx;
+    height: 88rpx;
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     text-align: center;
     display: inline-block;
@@ -212,7 +203,7 @@
 }
 
 .txt {
-    line-height: 44px;
+    line-height: 88rpx;
     font-size: 14px;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
@@ -220,14 +211,14 @@
 }
 
 .earnBox {
-    width: 300px;
-    height: 144px;
+    width: 600rpx;
+    height: 288rpx;
     background: rgba(255, 255, 255, 1);
     border-radius: 10px;
 }
 
 .earnTitle {
-    height: 100px;
+    height: 200rpx;
     background: rgba(255, 255, 255, 1);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -235,7 +226,7 @@
 }
 
 .earn {
-    line-height: 100px;
+    line-height: 200rpx;
     font-size: 14px;
     font-family: PingFangSC-Semibold;
     font-weight: 600;
@@ -244,8 +235,8 @@
 
 .earnConfirm {
     position: absolute;
-    width: 300px;
-    height: 44px;
+    width: 600rpx;
+    height: 88rpx;
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -257,15 +248,13 @@
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(0, 0, 0, 1);
-    line-height: 44px;
+    line-height: 88rpx;
 }
-
-.changeDetail {}
 
 .changeTitle {
     text-align: center;
-    margin-top: 26px;
-    height: 22px;
+    margin-top: 52rpx;
+    height: 44rpx;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -276,12 +265,12 @@
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(0, 0, 0, 1);
-    line-height: 20px;
+    line-height: 40rpx;
 }
 
 .changeScore {
     text-align: center;
-    margin-top: 21px;
+    margin-top: 42rpx;
 }
 
 .changeLeft {
@@ -291,7 +280,7 @@
 .productPic {
     width: 100%;
     height: 160rpx;
-    margin-top: 13px;
+    margin-top: 26rpx;
     text-align: center
 }
 
@@ -300,14 +289,14 @@
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(0, 0, 0, 1);
-    line-height: 20px;
+    line-height: 40rpx;
 }
 
 .minusNum {
-    margin-left: 10px;
+    margin-left: 20rpx;
     font-size: 14px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(0, 0, 0, 1);
-    line-height: 20px;
+    line-height: 40rpx;
 }
