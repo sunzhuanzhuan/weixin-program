@@ -54,7 +54,8 @@ Page({
 		lastTapTimeoutFunc: null,
 		reportSubmit: true,
 		loadding: undefined,
-		votePage: 'index'
+		votePage: 'index',
+		setting: {}
 	},
 
 	//切换轮播图的时候
@@ -451,6 +452,11 @@ Page({
 			});
 			this.data.appTitle = x;
 		});
+		gdt.fetchDistributionIndex().then((res) => {
+			this.setData({
+				setting: res.settings || {}
+			})
+		})
 		gdt.ready.then((app) => {
 			this.appState = app;
 			if (app.title) {

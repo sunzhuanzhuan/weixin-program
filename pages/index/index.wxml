@@ -34,7 +34,7 @@
 					<image wx:if="{{dashboardTipShouldDisplay}}" src="{{baseImageUrlNew}}" class="bigBox" style="width:690rpx;height:430rpx;margin-top:30rpx"></image>
 				</view>
 				<view>
-					<template is="list" data="{{votePage:votePage,reportSubmit:reportSubmit,baseImageUrlAllStar:baseImageUrlAllStar,baseImageUrlPlay:baseImageUrlPlay,baseImageUrlNo1:baseImageUrlNo1,baseImageUrlNo2:baseImageUrlNo2,baseImageUrlNo3:baseImageUrlNo3,letter:letter,list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo,currentSwiper:currentSwiper}}"
+					<template is="list" data="{{setting:setting,votePage:votePage,reportSubmit:reportSubmit,baseImageUrlAllStar:baseImageUrlAllStar,baseImageUrlPlay:baseImageUrlPlay,baseImageUrlNo1:baseImageUrlNo1,baseImageUrlNo2:baseImageUrlNo2,baseImageUrlNo3:baseImageUrlNo3,letter:letter,list:lists[currentTabIndex],heightFlag:heightFlag,isMore:lists[currentTabIndex].__hasMore !== false,type:type,type1:type1,isVideo:isVideo,currentindex:currentindex,listenIndexCurrent:listenIndexCurrent,currentTabIndex:currentTabIndex,imgUrls:imgUrls,swiperActiveZero:swiperActiveZero,swiperActiveOne:swiperActiveOne,swiperActiveTwo:swiperActiveTwo,currentSwiper:currentSwiper}}"
 					/>
 				</view>
 			</block>

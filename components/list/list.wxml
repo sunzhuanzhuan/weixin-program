@@ -3,7 +3,6 @@
 
 
 <template name="list">
-
 	<block wx:if="{{list.items.length>0}}">
 		<!-- 推荐页的文章 -->
 		<block wx:if="{{list._id==='topScoreds'}}">
@@ -416,6 +415,11 @@
 					</view>
 					<view wx:elif="{{item.type === 'simpleSurvey'}}">
 						<template is="declare" data="{{itemDeclare:item,votePage:votePage}}" />
+					</view>
+					<!-- 广告 -->
+					<view wx:if="{{ index !=0 && (index+1)%setting.txAdListInterval == 0}}">
+						<ad unit-id="adunit-{{setting.txAdId}}"></ad>
+
 					</view>
 				</view>
 			</view>
