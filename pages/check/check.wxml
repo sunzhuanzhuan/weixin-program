@@ -153,7 +153,8 @@
 <view wx:if="{{changeBox == true}}" class="actRule">
 	<view class="changeBox">
 		<view class="changeInfo">
-			<view class="changeN">
+			<canvas class="canvas" canvas-id="saveCanvas"></canvas>
+			<!--<view class="changeN">
 				<text>兑换码</text>
 			</view>
 			<view class="changeNdetail">
@@ -173,7 +174,7 @@
 				<text class="we2">xiaoyujuhe123</text>
 			</view>
 			<view class="attention">注意事项:</view>
-			<view class="attention">请务必保存好图片以防丢失后无法继续领取礼物</view>
+			<view class="attention">请务必保存好图片以防丢失后无法继续领取礼物</view>-->
 		</view>
 		<view class="savePicToPhone" bindtap="savePic">
 			<text>保存图片到手机</text>

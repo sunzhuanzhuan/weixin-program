@@ -147,8 +147,76 @@ Page({
 			})
 		});
 		if (option.box) {
+			const that = this;
 			this.setData({
 				changeBox: true
+			}, () => {
+
+				const ctx = wx.createCanvasContext('saveCanvas');
+				ctx.setFillStyle('rgba(255, 255, 255, 1)');
+				ctx.fillRect(0, 0, 280, 322);
+
+				const changetext = ('兑换码');
+				ctx.setFontSize(12);
+				ctx.setFillStyle('rgba(153,153,153,1)');
+				ctx.fillText(changetext, 122, 26);
+
+				ctx.setFillStyle('rgba(250,212,85,1)');
+				ctx.fillRect(71, 34, 146, 30);
+
+				const code = this.data.code;
+				ctx.setTextBaseline('top')
+				ctx.setFontSize(14);
+				ctx.setFillStyle('#000000');
+				ctx.fillText(code, 76, 39);
+
+				const knowEq = ('识别二维码也可以添加客服喔');
+				ctx.setFontSize(12);
+				ctx.setFillStyle('rgba(153,153,153,1)');
+				ctx.fillText(knowEq, 62, 80);
+
+				const addChangegift = ('添加小鱼聚合客服小姐姐兑换礼物吧');
+				ctx.setFontSize(12);
+				ctx.setFillStyle('rgba(153,153,153,1)');
+				ctx.fillText(addChangegift, 44, 97);
+
+				const equrl = this.data.baseImageUrlEq;
+				ctx.drawImage(equrl, 80, 115, 120, 120);
+
+				const wxtext = '微信：xiaoyujuhe123';
+				ctx.setFontSize(12);
+				ctx.setFillStyle('#000000');
+				ctx.fillText(wxtext, 84, 239);
+
+				const payattention = '注意事项：';
+				ctx.setFontSize(12);
+				ctx.setFillStyle('#FF0000');
+				ctx.fillText(payattention, 116, 275);
+
+				const pay = '请务必保存好图片以防丢失后无法领取礼物!';
+				ctx.setFillStyle('#FF0000');
+				ctx.fillText(pay, 24, 292);
+				ctx.draw();
+
+				setTimeout(function () {
+					wx.canvasToTempFilePath({
+						x: 0,
+						y: 0,
+						width: 280,
+						height: 323,
+						destWidth: 1280,
+						destHeight: 1480,
+						fileType: 'jpg',
+						quality: 1,
+						canvasId: 'saveCanvas',
+						success: function (res) {
+							that.setData({
+								eqPath: res.tempFilePath,
+							})
+						}
+					})
+				}, 2000)
+
 			})
 		}
 		gdt.baseServerUri.then((res) => {
@@ -174,25 +242,47 @@ Page({
 	},
 	/*兑换商品的弹窗，点击确认保存客服的二维码*/
 	savePic: function () {
-		this.setData({
-			changeBox: false
-		})
+		let that = this;
 		console.log("保存");
 		// 授权，获取写入相册的权限，保存图片到本地
-		// wx.getSetting({
-		// 	success(res) {
-		// 		if (!res.authSetting['scope.writePhotosAlbum']) {
-		// 			wx.authorize({
-		// 				scope: 'scope.writePhotosAlbum',
-		// 				success() {
-		// 					wx.saveImageToPhotosAlbum({
-		// 						filePath :
-		// 					})
-		// 				}
-		// 			})
-		// 		}
-		// 	}
-		// })
+		wx.getSetting({
+			success(res) {
+				console.log("baocun")
+				if (!res.authSetting['scope.writePhotosAlbum']) {
+					wx.authorize({
+						scope: 'scope.writePhotosAlbum',
+						success() {
+							console.log("123412341564123")
+							wx.saveImageToPhotosAlbum({
+								filePath: that.data.eqPath,
+								success() {
+									console.log(that.data.eqPath);
+									wx.showToast({
+										title: '保存成功',
+										success: () => {
+											that.setData({
+												changeBox: false
+											})
+										}
+									})
+								},
+								fail() {
+									console.log("save shibai le")
+									wx.showToast({
+										title: '保存失败',
+										success: () => {
+											that.setData({
+												changeBox: false
+											})
+										}
+									})
+								}
+							})
+						}
+					})
+				}
+			}
+		})
 	},
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {

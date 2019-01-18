@@ -390,6 +390,11 @@ button::after {
   align-items: center;
 }
 
+.canvas {
+  width: 560rpx;
+  height: 644rpx;
+}
+
 .changeN {
   text-align: center;
   height: 34rpx;
@@ -475,10 +480,12 @@ button::after {
   line-height: 96rpx;
   margin-top: 46rpx;
 }
-.linkPeople{
+
+.linkPeople {
   width: 240rpx;
   height: 240rpx;
 }
+
 .eqDetail {
   width: 240rpx;
   height: 240rpx;
