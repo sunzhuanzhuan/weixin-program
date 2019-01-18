@@ -19,7 +19,7 @@ Page({
 		page: 1,
 		pageSize: 10,
 	},
-	onShow: function () {},
+	onShow: function () { },
 	onLoad: function (option) {
 		this.setData({
 			changeBox: false
@@ -35,7 +35,6 @@ Page({
 			})
 			const missions = res.missions || [];
 			const accountBalance = res.accountBalance;
-
 			let arrDateDuration = [];
 			let next1 = util.moment().add(1, 'days').format("MM-DD");
 			let next2 = util.moment().add(2, 'days').format("MM-DD");
@@ -151,8 +150,14 @@ Page({
 			this.setData({
 				changeBox: true
 			})
-		};
+		}
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrlXiaoyu: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg'
+			})
 
+
+		})
 
 	},
 	jumptogift: function (e) {
@@ -237,7 +242,7 @@ Page({
 					});
 				})
 			}
-		} else {}
+		} else { }
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -294,7 +299,7 @@ Page({
 					pageSize: pageSize
 				})
 			})
-		} else {}
+		} else { }
 	}
 
 })

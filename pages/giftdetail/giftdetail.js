@@ -20,13 +20,21 @@ Page({
 			notEnough: true
 		})
 	},
-	confirm:function(){
+	confirm: function () {
 		wx.reLaunch({
 			url: '/pages/check/check?box=true',
 		});
 	},
 	onLoad: function (options) {
-
+		let that = this;
+		wx.request({
+			url: 'http://192.168.20.51:7300/mock/5b5696c70a4cc60021ebdf86/mocked/rewards/commodity/adfadfadsfadsfadsfasdf',
+			method: 'GET',
+			success(res) {
+				console.log(res.data.data);
+				that.setData({ detail: res.data.data })
+			}
+		})
 	},
 
 	/**

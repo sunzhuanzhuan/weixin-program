@@ -444,10 +444,12 @@ button::after {
 
 .we1 {
   font-weight: 400;
+  font-size: 24rpx;
 }
 
 .we2 {
   font-weight: 600;
+  font-size: 24rpx;
 }
 
 .attention {
@@ -473,7 +475,10 @@ button::after {
   line-height: 96rpx;
   margin-top: 46rpx;
 }
-
+.linkPeople{
+  width: 240rpx;
+  height: 240rpx;
+}
 .eqDetail {
   width: 240rpx;
   height: 240rpx;
