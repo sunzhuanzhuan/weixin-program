@@ -76,7 +76,10 @@ Page({
 		btnSavePitcureLetter: '',
 		reportSubmit: true,
 		baseImageUrlYinHao: undefined,
-		showLoadding:false
+		showLoadding: false,
+		listenTablistCurrent: undefined,
+		votePage: 'detail',
+		vote: [],
 	},
 
 	handleChangeTypeVideo: function (e) {
@@ -131,7 +134,7 @@ Page({
 	},
 
 	onShow: function () {
-		
+
 		//网络状况
 		wx.getNetworkType({
 			success(res) {
@@ -210,16 +213,15 @@ Page({
 
 	},
 	onLoad(options) {
-		
-		gdt.ready.then(()=>{
-			
-		})
+		this.setData({ listenTablistCurrent: options.listenTablistCurrent })
 		if (options.listening == 'false') {
-			this.setData({ isPlay: false })
-		} else if (options.listening == undefined) {
-			this.setData({ isPlay: false })
-		} else {
-			this.setData({ isPlay: true })
+			this.setData({ isPlay: false, isFirst: 0 })
+
+		} else if (options.listening == 'undefined') {
+			this.setData({ isPlay: false, isFirst: 0 })
+		}
+		else {
+			this.setData({ isPlay: true, isFirst: 1 })
 		}
 		this.setData({ clickIndex: options.index })
 
@@ -297,11 +299,41 @@ Page({
 			if (r.entity.type == 'wxArticle') {
 				this.setData({ videoId: r.entity.txvVids[0], videoSource: r.entity.txvVids })
 			}
-			this.setData({showLoadding:true})
+			if (r.entity.annotations) {
+				let enti = r.entity.annotations[0]
+				let one = enti.surveyOptions[0].totalSupporters;
+				let two = enti.surveyOptions[1].totalSupporters;
+				let total = one + two;
+				if (total == 0) {
+					enti.m = 0;
+					enti.n = 0;
+				} else {
+					enti.m = (one / total).toFixed(2) * 100;
+					enti.n = 100 - ((one / total).toFixed(2) * 100);
+				};
+				this.setData({ vote: r.entity.annotations[0] })
+			}
+			this.setData({ showLoadding: true })
 
 			this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
 
 			gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
+			// this.setData({ clickIndex: options.index })
+			if (options.listening && options.index == this.data.clickIndex) {
+				innerAudioContext.title = this.data.entity.title;
+				let this_ = this;
+				innerAudioContext.onTimeUpdate(() => {
+					this_.setData({
+						currentTime: parseInt(innerAudioContext.currentTime),
+						totalTime: parseInt(innerAudioContext.duration),
+						currentProgress: formatSeconds(parseInt(innerAudioContext.currentTime)),
+						totalProgress: formatSeconds(parseInt(innerAudioContext.duration))
+					})
+				})
+			} else {
+			}
+
+
 		})
 		gdt.baseServerUri.then((res) => {
 			this.setData({
@@ -350,9 +382,11 @@ Page({
 				listenIndexCurrent: this.data.clickIndex,
 				listening: this.data.isPlay,
 				letter: this.data.isPlay,
+				listenTablistCurrent: this.data.listenTablistCurrent
 			});
 
 		}
+
 
 	},
 	recordUserscroll: function (event) {
@@ -528,7 +562,7 @@ Page({
 				ctx.font = 'normal bold 18px sans-serif';
 				if (numFriend.length === 1) {
 
-					ctx.fillText(numFriend, 236* ratio, 96 * ratio);
+					ctx.fillText(numFriend, 236 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
 
 					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
@@ -676,49 +710,49 @@ Page({
 			ctx.fillText(canvasTtile, 30 * ratio, 180 * ratio, 260 * ratio);
 			ctx.draw();
 
-            //绘制之后加一个延时去生成图片，如果直接生成可能没有绘制完成，导出图片会有问题。
-            setTimeout(function () {
-                wx.canvasToTempFilePath({
-                    x: 0,
-                    y: 0,
-                    width: 320 * ratio,
-                    height: 370 * ratio,
-                    destWidth: 1280,
-                    destHeight: 1480,
-                    fileType: 'jpg',
-                    quality: 1,
-                    canvasId: 'shareCanvas',
-                    success: function (res) {
-                        that.setData({
-                            shareImage: res.tempFilePath,
-                            showSharePic: true
-                        }, () => {
-                            wx.saveImageToPhotosAlbum({
-                                filePath: that.data.shareImage,
-                                success: function () {
-                                    console.log('保存成功');
-                                    that.setData({
-                                        saveToCamera:''
-                                    })
-                                    
-                                },
-                                fail: function () {
-                                    console.log('保存失败');
-                                    that.setData({
-                                        saveToCamera:'openSetting'
-                                    })
-                                }
-                            })
-                        })
-                        wx.hideLoading();
-                    },
-                    fail: function (res) {
-                        console.log(res)
-                        wx.hideLoading();
-                    }
-                })
-            }, 2000);
-        })
+			//绘制之后加一个延时去生成图片，如果直接生成可能没有绘制完成，导出图片会有问题。
+			setTimeout(function () {
+				wx.canvasToTempFilePath({
+					x: 0,
+					y: 0,
+					width: 320 * ratio,
+					height: 370 * ratio,
+					destWidth: 1280,
+					destHeight: 1480,
+					fileType: 'jpg',
+					quality: 1,
+					canvasId: 'shareCanvas',
+					success: function (res) {
+						that.setData({
+							shareImage: res.tempFilePath,
+							showSharePic: true
+						}, () => {
+							wx.saveImageToPhotosAlbum({
+								filePath: that.data.shareImage,
+								success: function () {
+									console.log('保存成功');
+									that.setData({
+										saveToCamera: ''
+									})
+
+								},
+								fail: function () {
+									console.log('保存失败');
+									that.setData({
+										saveToCamera: 'openSetting'
+									})
+								}
+							})
+						})
+						wx.hideLoading();
+					},
+					fail: function (res) {
+						console.log(res)
+						wx.hideLoading();
+					}
+				})
+			}, 2000);
+		})
 
 
 	},
@@ -782,19 +816,17 @@ Page({
 		})
 	},
 	handlePlayVideo: function () {
-
 		let that = this;
-
+		innerAudioContext.title = this.data.entity.title
 		if (!this.data.isPause) {
 			const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
 			innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
 		}
-		this.setData({ isPlay: true, audioName: innerAudioContext.title })
+		this.setData({ isPlay: true })
 
 		innerAudioContext.play();
 		innerAudioContext.onEnded(() => {
-			console.log('end')
-			this.setData({ isPlay: false, audioName: innerAudioContext.title })
+			this.setData({ isPlay: false })
 		})
 		// 时间的当前的进度;
 
@@ -807,40 +839,19 @@ Page({
 				totalProgress: formatSeconds(parseInt(innerAudioContext.duration))
 			})
 		})
-		//进度条的隐藏 和显示
-		this.setData({ isChangeBig: !this.data.isChangeBig })
+
 
 	},
 	handlePauseVideo: function () {
-		console.log('暂停');
-
 		innerAudioContext.pause();
-
 		this.setData({ isPlay: false, isPause: true, isFirst: 1, })
-		// this.setData({isChangeBig:!this.data.isChangeBig})
 	},
-	handleShink: function () {
-		this.setData({ isChangeBig: !this.data.isChangeBig })
-	},
-	handlePauseVideoNow: function () {
 
-		this.setData({ isFirst: 1, isPlay: false, isPause: true })
-		innerAudioContext.pause();
-	},
-	handlePlayVideoNow: function () {
-
-		this.setData({ isFirst: 1, isPlay: true, isPause: true })
-		innerAudioContext.play();
-		console.log('end111')
-		innerAudioContext.onEnded(() => {
-			console.log('end')
-			this.setData({ isFirst: 1, isPlay: false, isPause: true })
-		})
-	},
 	//拖动过程中的一些处理
 	handleChanging: function (e) {
 		let that = this;
 		this.setData({
+			isPlay: true, isPause: false, isFirst: 1,
 			currentTime: e.detail.value,
 			currentProgress: formatSeconds(parseInt(e.detail.value)),
 		})
@@ -853,6 +864,76 @@ Page({
 				totalProgress: formatSeconds(parseInt(innerAudioContext.duration))
 			})
 		})
+
+	},
+	//支持
+	handleSupport(e) {
+		gdt.userInfo.then((x) => {
+			this.setData({
+				type: "",
+				type1: 'share',
+				nickName: x.userInfo.nickName
+			});
+			let votePage = e.currentTarget.dataset.votepage;
+			let num = e.currentTarget.dataset.num;
+			let id = e.currentTarget.dataset.item._id
+			let supportId = e.currentTarget.dataset.item.surveyOptions[num]._id;
+			let obj = {}
+			obj.supportId = supportId;
+			obj.id = id;
+			if (votePage == 'detail') {
+				gdt.supportOptionDetail(obj).then((res) => {
+					// console.log(res);
+					wx.showToast({
+						title: '投票成功',
+						duration: 2000
+					})
+					let obj = this.data.vote;
+					console.log(obj)
+					obj.voteFor = res.surveyVoteFor;
+					obj.surveyOptions[num].totalSupporters = obj.surveyOptions[num].totalSupporters + 1
+					obj.vote = true;
+					let one = obj.surveyOptions[0].totalSupporters;
+					let two = obj.surveyOptions[1].totalSupporters;
+					let total = one + two;
+					if (total == 0) {
+						obj.m = 0;
+						obj.n = 0;
+					} else {
+						// obj.m = 5;
+						// obj.n = 56
+						obj.m = (one / total).toFixed(2) * 100;
+						obj.n = 100 - ((one / total).toFixed(2) * 100);
+					};
+					gdt.userInfo.then((res) => {
+						obj.surveyOptions[num].supporters.push(res)
+					})
+					let that = this;
+					setTimeout(function () {
+						that.setData({ vote: obj })
+					}, 500)
+					// setTimeout(() => {
+					// 	console.log(12)
+					// 	that.setData({ vote: obj, a: 2 })
+					// }, 500)
+
+
+				}).catch(() => {
+					// wx.showToast({
+					// 	title: '投票失败',
+					// 	duration: 2000
+					// })
+				})
+			}
+		}).catch(() => {
+			this.setData({
+				type: 'getUserInfo',
+				type1: 'getUserInfo'
+			});
+			gdt.once('userInfo', () => {
+				this.setData({ type1: 'share' });
+			});
+		});
 
 	}
 

@@ -126,6 +126,7 @@ Page({
 				baseImageUrlGoHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png',
 				baseImageUrlShenmi: 'https://' + res.split('/')[2] + '/static/images/shenmi.png',
 				baseImageUrlLogo: 'https://' + res.split('/')[2] + '/static/images/logo.png',
+				baseImageUrlClickMe: 'https://' + res.split('/')[2] + '/static/images/clickMe.jpg'
 			})
 		})
 
@@ -198,13 +199,9 @@ Page({
 		});
 	},
 	onReachBottom: function () {
-		this.setData({
-			loadding: false
-		})
+		wx.showLoading({ title: '加载中', icon: 'loadding' })
 		gdt.magicMySharedLoadMore().then(() => {
-			this.setData({
-				loadding: true
-			})
+			wx.hideLoading()
 		});
 		gdt.track('item-list-share-load-more')
 	},
@@ -262,13 +259,9 @@ Page({
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
-		this.setData({
-			loadding: false
-		})
+		wx.showLoading({ title: '加载中', icon: 'loadding' })
 		gdt.magicMySharedLoadLatest().then(() => {
-			this.setData({
-				loadding: true
-			})
+			wx.hideLoading()
 		});
 		gdt.track('item-list-share-load-first')
 	},
