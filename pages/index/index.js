@@ -53,7 +53,8 @@ Page({
 		// 单击事件点击后要触发的函数
 		lastTapTimeoutFunc: null,
 		reportSubmit: true,
-		loadding: undefined
+		loadding: undefined,
+		up: false
 	},
 
 	//切换轮播图的时候
@@ -252,7 +253,8 @@ Page({
 
 	handleTitleTab(e) {
 		this.setData({
-			loadding: false
+			loadding: false,
+			first: false
 		})
 		// 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
 		if (this.data.touchEndTime - this.data.touchStartTime < 350) {
@@ -333,7 +335,8 @@ Page({
 
 		this.setData({
 			endWidth: e.changedTouches[0].clientX,
-			isVideo: false
+			isVideo: false,
+			first: false
 		}, () => {
 			if (that.data.startsWidth >= that.data.screenWidth / 2) {
 				if (that.data.startsWidth - that.data.endWidth >= that.data.screenWidth / 4) {
@@ -596,7 +599,8 @@ Page({
 	//上拉加载
 	onReachBottom: function () {
 		this.setData({
-			loadding: false
+			loadding: false,
+			first: false
 		})
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		if (currentListInstance) {
@@ -630,13 +634,16 @@ Page({
 	onPullDownRefresh: function () {
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		this.setData({
-			loadding: false
+			up: true,
+			loadding: false,
+			first: true
 		})
 		let that = this;
 		if (currentListInstance) {
 			if (currentListInstance._id === 'topScoreds') {
 				gdt.magicListItemLoadLatest(currentListInstance._id).then((res) => {
 					this.setData({
+						up: false,
 						loadding: true
 					})
 					let oldRes = JSON.parse(JSON.stringify(res));
@@ -662,6 +669,7 @@ Page({
 					setTimeout(() => {
 						wx.stopPullDownRefresh();
 						that.setData({
+							up: false,
 							loadding: true
 						})
 					}, 500);
