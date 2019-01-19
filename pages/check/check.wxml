@@ -18,9 +18,9 @@
 		<!-- icon -->
 		<view class="iconCheck">
 			<view wx:for="{{arrCheck}}" class="iconModel">
-				<text class='iconCont'>{{item.name}}</text>
+				<text class='iconCont'>{{item.date}}</text>
 				<view class="iconDate">
-					<text wx:if="{{index>level}}" class='iconTxt-after' style="color:#fff">{{item.number}}</text>
+					<text wx:if="{{!item.shownUp}}" class='iconTxt-after' style="color:#fff">{{item.rewards}}</text>
 					<text wx:else class='iconTxt'>√</text>
 				</view>
 			</view>
