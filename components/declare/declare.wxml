@@ -36,10 +36,11 @@
 		<view class="view">
 			<view class="leftView">
 				<view wx:for="{{itemDeclare.surveyOptions[0].supporters}}" wx:key="{{index}}" class="touxiang {{itemDeclare.surveyOptions[0].supporters.length>1?'many':''}}">
+					<view wx:if="{{index>5}}"></view>
+					<image wx:else src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[0].supporters.length>0?'many':''}}"></image>
 
-					<image src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[0].supporters.length>0?'many':''}}"></image>
 				</view>
-				<view wx:if="{{itemDeclare.surveyOptions[0].supporters.length==5}}" style="float: right;margin-top: 18rpx;margin-right: 90rpx;">
+				<view wx:if="{{itemDeclare.surveyOptions[0].supporters.length>5}}" style="float: right;margin-top: 18rpx;margin-right: 90rpx;">
 					<view class="dotDeclare"></view>
 					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
 					<view class="dotDeclare" style="opacity: 0.4;"></view>
@@ -47,8 +48,12 @@
 
 			</view>
 			<view class="rightView">
-				<view style="float:right;margin-right: 40rpx">
-					<image wx:for="{{itemDeclare.surveyOptions[1].supporters}}" src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[1].supporters.length>1?'many':''}}"></image>
+				<view style="float:right;margin-right: 40rpx;">
+					<view wx:for="{{itemDeclare.surveyOptions[1].supporters}}" wx:key="{{index}}" class="touxiang {{itemDeclare.surveyOptions[1].supporters.length>1?'many':''}}">
+						<view wx:if="{{index>5}}"></view>
+						<image wx:else src="{{item.avatarUrl}}" class="touxiang {{itemDeclare.surveyOptions[1].supporters.length>1?'many':''}}"></image>
+
+					</view>
 
 				</view>
 				<view wx:if="{{itemDeclare.surveyOptions[1].supporters.length==5}}" style="float: right;margin-top: 20rpx;margin-right: 30rpx;">

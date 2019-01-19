@@ -303,6 +303,12 @@ Page({
 				let enti = r.entity.annotations[0]
 				let one = enti.surveyOptions[0].totalSupporters;
 				let two = enti.surveyOptions[1].totalSupporters;
+				if (enti.surveyOptions[0].supporters.length > 5) {
+					enti.surveyOptions[0].supporters.slice(0, 5)
+				}
+				if (enti.surveyOptions[0].supporters.length > 5) {
+					enti.surveyOptions[1].supporters.slice(0, 5)
+				}
 				let total = one + two;
 				if (total == 0) {
 					enti.m = 0;
@@ -455,8 +461,8 @@ Page({
 		let ratio = this.data.ratio;
 		let that = this;
 		wx.showLoading({
-		 title: '正在生成图片...',
-		 mask: true,
+			title: '正在生成图片...',
+			mask: true,
 		});
 		let artical = gdt.fetchEntityMeta(this.data.entityId);
 		let downAvatar = gdt.downloadMyAvatar();
@@ -905,8 +911,14 @@ Page({
 						obj.m = (one / total).toFixed(2) * 100;
 						obj.n = 100 - ((one / total).toFixed(2) * 100);
 					};
+					if (obj.surveyOptions[0].supporters.length > 5) {
+						obj.surveyOptions[0].supporters.slice(0, 5)
+					}
+					if (obj.surveyOptions[0].supporters.length > 5) {
+						obj.surveyOptions[1].supporters.slice(0, 5)
+					}
 					gdt.userInfo.then((res) => {
-						obj.surveyOptions[num].supporters.push(res)
+						obj.surveyOptions[num].supporters.push(res.userInfo)
 					})
 					let that = this;
 					setTimeout(function () {
