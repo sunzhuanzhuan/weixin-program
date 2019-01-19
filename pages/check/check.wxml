@@ -113,7 +113,7 @@
 			<text class="freshWorth">+{{item.amount}}积分</text>
 		</view>
 	</view>
-	<view class="loadMore">
+	<view class="loadMore" wx:if="{{totalReferencers>10}}">
 		<text bindtap="loadMore">加载更多</text>
 	</view>
 </view>
@@ -121,13 +121,13 @@
 
 
 <!--活动规则弹出框-->
-<view wx:if="{{ruleIsShow == true}}" class='actRule'>
-	<view class='ruleBox'>
-		<view class='ruleHead'>
+<view wx:if="{{ruleIsShow == true}}" class='actRule' catch:touchmove="touchmove">
+	<view class='ruleBox' style="margin-left:80rpx;margin-top:160rpx;">
+		<view class='ruleHead' style="line-height:100rpx;">
 			<text>活动规则</text>
 		</view>
-		<view class='ruleBody'>
-			<view style='padding-left:15rpx;margin-top:30rpx;'>
+		<view class='ruleBody' style="text-align:left;">
+			<view style='padding-left:30rpx;margin-top:80rpx;'>
 				<view class='circleIcon'>
 				</view>
 				<text class='ruleTitle'>什么是积分</text>
@@ -135,7 +135,7 @@
 			<view class='ruleText'>
 				<text>积分是微博任务里的货币单位，可以兑换超值权益和现金。</text>
 			</view>
-			<view style='padding-left:15rpx;margin-top:30rpx;'>
+			<view style='padding-left:30rpx;margin-top:30rpx;'>
 				<view class='circleIcon'>
 				</view>
 				<text class='ruleTitle'>兑换价格</text>
@@ -152,8 +152,10 @@
 <view wx:else>
 </view>
 <!-- wx:if="{{changeBox == true}}" -->
-<view wx:if="{{changeBox == true}}" class="actRule">
+<view wx:if="{{changeBox == true}}" class="actRule" catch:touchmove="touchmove">
 	<canvas class="canvas" canvas-id="saveCanvas"></canvas>
-	<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+	<cover-view style="margin-top:-98rpx;margin-left:-6rpx;">
+		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
 
+	</cover-view>
 </view>

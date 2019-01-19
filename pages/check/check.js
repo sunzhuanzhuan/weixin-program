@@ -34,7 +34,7 @@ Page({
 	onLoad: function (option) {
 		this.setData({
 			changeBox: false,
-			// code: option.code
+			code: option.code
 		})
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
@@ -131,21 +131,21 @@ Page({
 				const changetext = ('兑换码');
 				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(changetext, 122 * ratio, 26 * ratio);
+				ctx.fillText(changetext, 142 * ratio, 26 * ratio);
 
 				ctx.setFillStyle('rgba(250,212,85,1)');
-				ctx.fillRect(71 * ratio, 34 * ratio, 146 * ratio, 30 * ratio);
-				// const code = this.data.code;
-				const code = '122333';
+				ctx.fillRect(91 * ratio, 34 * ratio, 146 * ratio, 30 * ratio);
+				const code = this.data.code;
+				// const code = '122333';
 				ctx.setTextBaseline('top')
 				ctx.setFontSize(14 * ratio);
 				ctx.setFillStyle('#000000');
-				ctx.fillText(code, 76 * ratio, 39 * ratio);
+				ctx.fillText(code, 96 * ratio, 39 * ratio);
 
 				const knowEq = ('识别二维码也可以添加客服喔');
 				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(knowEq, 62 * ratio, 80 * ratio);
+				ctx.fillText(knowEq, 82 * ratio, 80 * ratio);
 
 				const addChangegift = ('添加小鱼聚合客服小姐姐兑换礼物吧');
 				ctx.setFontSize(12);
@@ -153,63 +153,47 @@ Page({
 				ctx.fillText(addChangegift, 44 * ratio, 97 * ratio);
 
 				const equrl = this.data.baseImageUrlEq;
-				ctx.drawImage(equrl, 80 * ratio, 115 * ratio, 120 * ratio, 120 * ratio);
+				ctx.drawImage(equrl, 100 * ratio, 115 * ratio, 120 * ratio, 120 * ratio);
 
 				const wxtext = '微信：xiaoyujuhe123';
 				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('#000000');
-				ctx.fillText(wxtext, 84 * ratio, 239 * ratio);
+				ctx.fillText(wxtext, 104 * ratio, 239 * ratio);
 
 				const payattention = '注意事项：';
 				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('#FF0000');
-				ctx.fillText(payattention, 116 * ratio, 275 * ratio);
+				ctx.fillText(payattention, 136 * ratio, 275 * ratio);
 
 				const pay = '请务必保存好图片以防丢失后无法领取礼物!';
 				ctx.setFillStyle('#FF0000');
-				ctx.fillText(pay, 24 * ratio, 292 * ratio);
+				ctx.fillText(pay, 44 * ratio, 292 * ratio);
 				ctx.draw();
-				// setTimeout(function () {
-				// 	wx.canvasToTempFilePath({
-				// 		x: 0,
-				// 		y: 0,
-				// 		width: 320 * ratio,
-				// 		height: 370 * ratio,
-				// 		destWidth: 1280,
-				// 		destHeight: 1480,
-				// 		fileType: 'jpg',
-				// 		quality: 1,
-				// 		canvasId: 'saveCanvas',
-				// 		success: function (res) {
-				// 			that.setData({
-				// 				shareImage: res.tempFilePath,
-				// 				showSharePic: true
-				// 			}, () => {
-				// 				wx.saveImageToPhotosAlbum({
-				// 					filePath: that.data.shareImage,
-				// 					success: function () {
-				// 						console.log('保存成功');
-				// 						that.setData({
-				// 							saveToCamera: ''
-				// 						})
+				setTimeout(function () {
+					wx.canvasToTempFilePath({
+						x: 0,
+						y: 0,
+						width: 320 * ratio,
+						height: 370 * ratio,
+						destWidth: 1280,
+						destHeight: 1480,
+						fileType: 'jpg',
+						quality: 1,
+						canvasId: 'saveCanvas',
+						success: function (res) {
+							that.setData({
+								shareImage: res.tempFilePath,
+								showSharePic: true
+							})
+							wx.hideLoading();
+						},
+						fail: function (res) {
+							console.log(res)
+							wx.hideLoading();
+						}
+					})
+				}, 2000);
 
-				// 					},
-				// 					fail: function () {
-				// 						console.log('保存失败');
-				// 						that.setData({
-				// 							saveToCamera: 'openSetting'
-				// 						})
-				// 					}
-				// 				})
-				// 			})
-				// 			wx.hideLoading();
-				// 		},
-				// 		fail: function (res) {
-				// 			console.log(res)
-				// 			wx.hideLoading();
-				// 		}
-				// 	})
-				// }, 2000);
 			})
 		}
 
@@ -378,10 +362,30 @@ Page({
 		} else { }
 	},
 	handleSavePicture: function () {
-		console.log(133)
 		this.setData({
 			changeBox: false
+		});
+		let that = this;
+		wx.saveImageToPhotosAlbum({
+			filePath: that.data.shareImage,
+			success: function () {
+				console.log('保存成功');
+				that.setData({
+					saveToCamera: ''
+				})
+
+			},
+			fail: function () {
+				console.log('保存失败');
+				that.setData({
+					saveToCamera: 'openSetting'
+				})
+			}
 		})
+
+	},
+	touchmove: function () {
+		return
 	}
 
 })
