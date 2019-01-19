@@ -68,6 +68,7 @@ button::after {
   height: 68rpx;
   background: rgba(247, 188, 0, 1);
   border-radius: 0px 200rpx 200rpx 0px;
+  line-height: 68rpx;
 }
 
 .mainlyContainer {
@@ -190,6 +191,7 @@ button::after {
   height: 20%;
   margin-left: 28rpx;
   text-align: center;
+  vertical-align: top;
 }
 
 .iconCont {
@@ -200,11 +202,11 @@ button::after {
 .iconDate {
   width: 78rpx;
   height: 78rpx;
-  background-color: rgb(246, 187, 13);
   border-radius: 50%;
   text-align: center;
   align-items: center;
   line-height: 39px;
+  vertical-align: top;
 }
 
 .iconTxt {
