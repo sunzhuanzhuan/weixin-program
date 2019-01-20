@@ -456,12 +456,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					if (indexedItem.type == "simpleSurvey") {
 						let one = indexedItem.surveyOptions[0].totalSupporters || 0;
 						let two = indexedItem.surveyOptions[1].totalSupporters || 0;
-						if (indexedItem.surveyOptions[0].supporters.length > 5) {
-							indexedItem.surveyOptions[0].supporters.slice(0, 5)
-						}
-						if (indexedItem.surveyOptions[0].supporters.length > 5) {
-							indexedItem.surveyOptions[1].supporters.slice(0, 5)
-						}
+
 						let total = one + two;
 						if (total == 0) {
 							indexedItem.m = 0;
@@ -539,12 +534,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				})
 				let one = indexedItem.surveyOptions[0].totalSupporters || 0;
 				let two = indexedItem.surveyOptions[1].totalSupporters || 0;
-				if (indexedItem.surveyOptions[0].supporters.length > 5) {
-					indexedItem.surveyOptions[0].supporters.slice(0, 5)
-				}
-				if (indexedItem.surveyOptions[0].supporters.length > 5) {
-					indexedItem.surveyOptions[1].supporters.slice(0, 5)
-				}
+
 				let total = one + two;
 				if (total == 0) {
 					indexedItem.m = 0;

@@ -134,10 +134,8 @@
     width: 50%;
 }
 .rightView{
-    float: right;
     overflow: hidden;
-    width:45%;
-    margin-right: -12rpx;
+    width:50%;
 }
 .touxiang{
     width: 50rpx;
@@ -149,6 +147,12 @@
     height: 50rpx;
     border-radius: 50rpx;
     margin-right: -24rpx;
+    float:left
+}
+.many1{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
     float:left
 }
 .dotDeclare{
