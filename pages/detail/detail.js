@@ -882,6 +882,8 @@ Page({
 			let obj = {}
 			obj.supportId = supportId;
 			obj.id = id;
+			obj.num = num;
+			obj.params = e.currentTarget.dataset.item;
 			if (votePage == 'detail') {
 				gdt.supportOptionDetail(obj).then((res) => {
 					// console.log(res);

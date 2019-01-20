@@ -547,7 +547,8 @@ Page({
 
 			gdt.on('entityUpdate', (x) => {
 				const itemIndex = this.appState.itemIndex;
-				let this_ = this
+				let this_ = this;
+				console.log(itemIndex)
 				console.log(11111111)
 				setTimeout(() => {
 					this_.setData({
