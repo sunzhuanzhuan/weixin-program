@@ -15,31 +15,13 @@ Page({
 		level: 0,
 		arrDate: [],
 		dateArr: [],
-		changeBox: false,
 		page: 1,
 		pageSize: 10,
-		btnSavePitcureLetter: '',
 	},
 	onShow: function () {
-		wx.getSetting({
-			success: res => {
-				if (!res.authSetting['scope.writePhotosAlbum']) {
-					this.setData({
-						btnSavePitcureLetter: '保存到相册'
-					})
-				} else {
-					this.setData({
-						btnSavePitcureLetter: '已保存到相册，记得分享哦'
-					})
-				}
-			}
-		})
+
 	},
-	onLoad: function (option) {
-		this.setData({
-			changeBox: false,
-			code: option.code
-		})
+	onLoad: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
 				this.setData({
@@ -112,96 +94,6 @@ Page({
 			});
 		});
 
-		gdt.baseServerUri.then((res) => {
-			this.setData({
-				baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
-			})
-		});
-		gdt.systemInfo.then((x) => {
-			this.setData({
-				ratio: x.windowWidth * 2 / 750,
-			});
-		});
-		if (option.box) {
-			const that = this;
-
-			this.setData({
-				changeBox: true
-			}, () => {
-				let ratio = that.data.ratio;
-				const ctx = wx.createCanvasContext('saveCanvas');
-				ctx.setFillStyle('rgba(255, 255, 255, 1)');
-				ctx.fillRect(10, 10, 280 * ratio, 322 * ratio);
-
-				const changetext = ('兑换码');
-				ctx.setFontSize(12 * ratio);
-				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(changetext, 142 * ratio, 26 * ratio);
-
-				ctx.setFillStyle('rgba(250,212,85,1)');
-				ctx.fillRect(91 * ratio, 34 * ratio, 146 * ratio, 30 * ratio);
-				const code = this.data.code;
-				// const code = '122333';
-				ctx.setTextBaseline('top')
-				ctx.setFontSize(14 * ratio);
-				ctx.setFillStyle('#000000');
-				ctx.fillText(code, 96 * ratio, 39 * ratio);
-
-				const knowEq = ('识别二维码也可以添加客服喔');
-				ctx.setFontSize(12 * ratio);
-				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(knowEq, 82 * ratio, 80 * ratio);
-
-				const addChangegift = ('添加小鱼聚合客服小姐姐兑换礼物吧');
-				ctx.setFontSize(12);
-				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(addChangegift, 44 * ratio, 97 * ratio);
-
-				const equrl = this.data.baseImageUrlEq;
-				ctx.drawImage(equrl, 100 * ratio, 115 * ratio, 120 * ratio, 120 * ratio);
-
-				const wxtext = '微信：xiaoyujuhe123';
-				ctx.setFontSize(12 * ratio);
-				ctx.setFillStyle('#000000');
-				ctx.fillText(wxtext, 104 * ratio, 239 * ratio);
-
-				const payattention = '注意事项：';
-				ctx.setFontSize(12 * ratio);
-				ctx.setFillStyle('#FF0000');
-				ctx.fillText(payattention, 136 * ratio, 275 * ratio);
-
-				const pay = '请务必保存好图片以防丢失后无法领取礼物!';
-				ctx.setFillStyle('#FF0000');
-				ctx.fillText(pay, 44 * ratio, 292 * ratio);
-				ctx.draw();
-				setTimeout(function () {
-					wx.canvasToTempFilePath({
-						x: 0,
-						y: 0,
-						width: 320 * ratio,
-						height: 370 * ratio,
-						destWidth: 1280,
-						destHeight: 1480,
-						fileType: 'jpg',
-						quality: 1,
-						canvasId: 'saveCanvas',
-						success: function (res) {
-							that.setData({
-								shareImage: res.tempFilePath,
-								showSharePic: true
-							})
-							wx.hideLoading();
-						},
-						fail: function (res) {
-							console.log(res)
-							wx.hideLoading();
-						}
-					})
-				}, 2000);
-
-			})
-		}
-
 	},
 	jumptogift: function (e) {
 		let accountBalance = e.currentTarget.dataset.score
@@ -213,50 +105,6 @@ Page({
 	handleRule: function () {
 		this.setData({
 			ruleIsShow: !this.data.ruleIsShow,
-		})
-	},
-	/*兑换商品的弹窗，点击确认保存客服的二维码*/
-	savePic: function () {
-		let that = this;
-		console.log("保存");
-		// 授权，获取写入相册的权限，保存图片到本地
-		wx.getSetting({
-			success(res) {
-				console.log("baocun")
-				if (!res.authSetting['scope.writePhotosAlbum']) {
-					wx.authorize({
-						scope: 'scope.writePhotosAlbum',
-						success() {
-							console.log("123412341564123")
-							wx.saveImageToPhotosAlbum({
-								filePath: that.data.eqPath,
-								success() {
-									console.log(that.data.eqPath);
-									wx.showToast({
-										title: '保存成功',
-										success: () => {
-											that.setData({
-												changeBox: false
-											})
-										}
-									})
-								},
-								fail() {
-									console.log("save shibai le")
-									wx.showToast({
-										title: '保存失败',
-										success: () => {
-											that.setData({
-												changeBox: false
-											})
-										}
-									})
-								}
-							})
-						}
-					})
-				}
-			}
 		})
 	},
 	/** 点击领取和去完成发生的动作 **/
@@ -364,31 +212,6 @@ Page({
 			})
 		} else {}
 	},
-	handleSavePicture: function () {
-		this.setData({
-			changeBox: false
-		});
-		let that = this;
-		wx.saveImageToPhotosAlbum({
-			filePath: that.data.shareImage,
-			success: function () {
-				console.log('保存成功');
-				that.setData({
-					saveToCamera: ''
-				})
 
-			},
-			fail: function () {
-				console.log('保存失败');
-				that.setData({
-					saveToCamera: 'openSetting'
-				})
-			}
-		})
-
-	},
-	touchmove: function () {
-		return
-	}
 
 })

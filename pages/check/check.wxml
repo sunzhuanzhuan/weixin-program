@@ -151,11 +151,3 @@
 </view>
 <view wx:else>
 </view>
-<!-- wx:if="{{changeBox == true}}" -->
-<view wx:if="{{changeBox == true}}" class="actRule" catch:touchmove="touchmove">
-	<canvas class="canvas" canvas-id="saveCanvas"></canvas>
-	<cover-view style="margin-top:-98rpx;margin-left:-6rpx;">
-		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
-
-	</cover-view>
-</view>
