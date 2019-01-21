@@ -594,6 +594,16 @@ Page({
 		gdt.currentUser.then((u) => {
 			this.data.uid = u._id;
 			this.data.nickName = this.data.nickName || u.nickName;
+			gdt.getDailyMissions().then((res) => {
+				const missions = res.missions || [];
+				missions.forEach(item => {
+					if (item.type == 'showup') {
+						this.setData({
+							IsChecked: !item.completed
+						})
+					}
+				})
+			})
 		});
 
 		gdt.baseServerUri.then((res) => {
@@ -615,24 +625,37 @@ Page({
 	},
 	//上拉加载
 	onReachBottom: function () {
-		wx.showLoading({ title: '加载中', icon: 'loadding' })
+		wx.showLoading({
+			title: '加载中',
+			icon: 'loadding'
+		})
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
 		if (currentListInstance) {
 			gdt.magicListItemLoadMore(currentListInstance._id).then(() => {
 				wx.hideLoading()
-				gdt.track('item-list-load-more', { listId: currentListInstance._id, title: currentListInstance.title, acc: currentListInstance.items.length });
+				gdt.track('item-list-load-more', {
+					listId: currentListInstance._id,
+					title: currentListInstance.title,
+					acc: currentListInstance.items.length
+				});
 			});
 		}
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
 		const currentListInstance = this.data.lists[this.data.currentTabIndex];
-		wx.showLoading({ title: '加载中', icon: 'loadding' })
+		wx.showLoading({
+			title: '加载中',
+			icon: 'loadding'
+		})
 		let that = this;
 		if (currentListInstance) {
 			gdt.magicListItemLoadLatest(currentListInstance._id).then(() => {
 				wx.hideLoading()
-				gdt.track('item-list-refresh', { listId: currentListInstance._id, title: currentListInstance.title });
+				gdt.track('item-list-refresh', {
+					listId: currentListInstance._id,
+					title: currentListInstance.title
+				});
 				setTimeout(() => {
 					wx.stopPullDownRefresh();
 				}, 500);
@@ -702,7 +725,9 @@ Page({
 				type1: 'getUserInfo'
 			});
 			gdt.once('userInfo', () => {
-				this.setData({ type1: 'share' });
+				this.setData({
+					type1: 'share'
+				});
 			});
 		});
 
