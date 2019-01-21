@@ -54,19 +54,25 @@ Page({
 		let that = this;
 		that.setData({
 			accountBalance: option.accountBalance,
-			id: option.id
+			id: option.id,
+			url: '../../images/load.png'
 		})
 		gdt.getCommodityDetail(id).then((res) => {
 			console.log(res);
 			that.setData({
 				detail: res
-			})
+			});
+			gdt.baseServerUri.then((res) => {
+				that.setData({
+					baseImageUrl: 'https://' + res.split('/')[2],
+				}, () => {
+					that.setData({
+						url: that.data.baseImageUrl + that.data.detail.coverUrl
+					});
+				})
+			});
 		});
-		gdt.baseServerUri.then((res) => {
-			this.setData({
-				baseImageUrl: 'https://' + res.split('/')[2],
-			})
-		});
+
 		if (option.status == 1) {
 			this.setData({
 				WillOnLine: true

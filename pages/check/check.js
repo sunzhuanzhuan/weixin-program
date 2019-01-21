@@ -24,9 +24,13 @@ Page({
 		wx.getSetting({
 			success: res => {
 				if (!res.authSetting['scope.writePhotosAlbum']) {
-					this.setData({ btnSavePitcureLetter: '保存到相册' })
+					this.setData({
+						btnSavePitcureLetter: '保存到相册'
+					})
 				} else {
-					this.setData({ btnSavePitcureLetter: '已保存到相册，记得分享哦' })
+					this.setData({
+						btnSavePitcureLetter: '已保存到相册，记得分享哦'
+					})
 				}
 			}
 		})
@@ -39,9 +43,10 @@ Page({
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
 				this.setData({
-					totalBounses: result.totalBounses,
+					totalBounses: result.totalBounses.toFixed(2),
 					totalReferencers: result.totalReferencers,
-					detail: result.detail
+					detail: result.detail,
+					amount: result.detail.amount.toFixed(2)
 				});
 			})
 			const missions = res.missions || [];
@@ -302,7 +307,7 @@ Page({
 					});
 				})
 			}
-		} else { }
+		} else {}
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -356,10 +361,11 @@ Page({
 				this.setData({
 					detail: result.detail,
 					page: page,
-					pageSize: pageSize
+					pageSize: pageSize,
+					amount: result.detail.amount.toFixed(2)
 				})
 			})
-		} else { }
+		} else {}
 	},
 	handleSavePicture: function () {
 		this.setData({

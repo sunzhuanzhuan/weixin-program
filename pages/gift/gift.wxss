@@ -7,7 +7,7 @@
 
 .maskOut {
     position: absolute;
-    width: 160rpx;
+    width: 240rpx;
     height: 160rpx;
     top: 0;
     left: 0;
@@ -22,8 +22,7 @@
     font-family: PingFangSC-Medium;
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
-    line-height: 20px;
-    margin-top: 60rpx;
+    line-height: 160rpx;
 }
 
 

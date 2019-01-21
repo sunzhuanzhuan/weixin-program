@@ -2,7 +2,7 @@
 	<view class='detailBox'>
 		<view class="pictureBox">
 			<view class="picBox">
-				<image class="giftPic" src="{{baseImageUrl+detail.coverUrl}}"></image>
+				<image class="giftPic" src="{{url}}"></image>
 			</view>
 			<view class="giftDetail">
 				<view class="detail">

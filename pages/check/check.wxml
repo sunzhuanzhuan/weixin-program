@@ -97,7 +97,7 @@
 		<view class='borderLeft'></view>
 	</view>
 	<view class="font22 marginLeft56 marginRight56">
-		当好友由于你的分享开始使用小程序且从未使用过我们的小程序当,并参加签到活动后。您将获得他积分的3%作为奖励。每日领取拉新积分上限为500积分
+		当好友由于你的分享开始使用小程序且从未使用过我们的小程序,并参加签到活动后。您将获得他积分的3%作为奖励。每日领取拉新积分上限为500积分
 	</view>
 	<view class="myFresh">
 		<text>我的拉新</text>
@@ -110,7 +110,7 @@
 	<view class="freshList">
 		<view class="freshSingle" wx:for="{{detail}}">
 			<text class="freshName">{{item.nickname}}</text>
-			<text class="freshWorth">+{{item.amount}}积分</text>
+			<text class="freshWorth">+{{amount}}积分</text>
 		</view>
 	</view>
 	<view class="loadMore" wx:if="{{totalReferencers>10}}">
