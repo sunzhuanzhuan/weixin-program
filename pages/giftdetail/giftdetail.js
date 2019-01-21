@@ -37,7 +37,7 @@ Page({
 				url: '/pages/check/check?box=true&code=' + res.code,
 			});
 		}).catch((err) => {
-			this.setDate({
+			this.setData({
 				tooLate: true,
 				visible: false
 			});
