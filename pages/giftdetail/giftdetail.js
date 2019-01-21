@@ -33,14 +33,22 @@ Page({
 			this.setData({
 				code: res.code
 			});
-			wx.reLaunch({
+			wx.navigateTo({
 				url: '/pages/check/check?box=true&code=' + res.code,
 			});
 		}).catch((err) => {
-			this.setData({
-				tooLate: true,
-				visible: false
-			});
+			console.log(err)
+			if (err.status == '41208') {
+				this.setData({
+					notEnough: true,
+					visible: false
+				})
+			} else {
+				this.setData({
+					tooLate: true,
+					visible: false
+				});
+			}
 		})
 
 	},
