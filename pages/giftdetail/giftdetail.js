@@ -64,7 +64,7 @@ Page({
 				ctx.fillText(changetext, 142 * ratio, 26 * ratio);
 
 				ctx.setFillStyle('rgba(250,212,85,1)');
-				ctx.fillRect(91 * ratio, 34 * ratio, 146 * ratio, 30 * ratio);
+				ctx.fillRect(91 * ratio, 34 * ratio, 155 * ratio, 30 * ratio);
 				const code = this.data.code;
 				ctx.setTextBaseline('top')
 				ctx.setFontSize(14 * ratio);

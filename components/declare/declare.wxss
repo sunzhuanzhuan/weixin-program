@@ -34,6 +34,9 @@
     line-height: 44rpx;
     padding-left: 12rpx;
     font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     
 }
 .taiBox{
