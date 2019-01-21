@@ -36,76 +36,7 @@ Page({
 			changeBox: false,
 			code: option.code
 		})
-		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
-			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				this.setData({
-					totalBounses: result.totalBounses,
-					totalReferencers: result.totalReferencers,
-					detail: result.detail
-				});
-			})
-			const missions = res.missions || [];
-			const accountBalance = res.accountBalance.toFixed(2);
-			let arrDateDuration = [];
-			missions.forEach(item => {
-				if (item.type == 'showup') {
-					const level = item.payload.level;
-					this.setData({
-						checked: item.completed
-					})
-					arrDateDuration = item.payload.brefHistory;
-					let rewards = item.payload.rewards
-					this.setData({
-						check: item,
-						level: item.payload.level
-					});
-					let arrCheck = [];
-					let today = util.moment().format("MM-DD");
-					arrDateDuration.forEach((item, index) => {
-						if (today == item.date) {
-							item.date = '今天'
-						}
-						arrCheck[index] = new Object()
-						arrCheck[index]['date'] = item.date;
-						arrCheck[index]['shownUp'] = item.shownUp;
-						arrCheck[index]['rewards'] = rewards[index];
-
-					})
-					console.log(arrCheck)
-					this.setData({
-						arrCheck: arrCheck
-					});
-				} else if (item.type == "articleShared") {
-					this.setData({
-						articleShared: item
-					})
-				} else if (item.type == 'articleRead') {
-					this.setData({
-						articleRead: item
-					})
-				} else {
-					this.setData({
-						shareBeenRead: item
-					})
-				}
-			});
-
-			// let arrCheck = [];
-			// this.data.arrDate.forEach((item, index) => {
-			// 	arrCheck[index] = new Object()
-			// 	arrCheck[index]['number'] = item;
-			// 	arrCheck[index]['name'] = arrDateDuration[index];
-
-			// })
-			// this.setData({
-			// 	arrCheck: arrCheck
-			// });
-			// console.log(this.data.arrCheck)
-			this.setData({
-				accountBalance: accountBalance,
-				missions: missions.slice(1)
-			});
-		});
+		this.handleCurrentUserAndDailyMission()
 
 		gdt.baseServerUri.then((res) => {
 			this.setData({
@@ -197,6 +128,122 @@ Page({
 			})
 		}
 
+	},
+	handleCurrentUserAndDailyMission: function () {
+		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
+			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
+				this.setData({
+					totalBounses: result.totalBounses,
+					totalReferencers: result.totalReferencers,
+					detail: result.detail
+				});
+			})
+			const missions = res.missions || [];
+			const accountBalance = res.accountBalance.toFixed(2);
+			this.handleData(missions)
+			this.setData({
+				accountBalance: accountBalance
+			});
+		});
+	},
+	handleData: function (missions) {
+		let arrDateDuration = [];
+		let next1 = util.moment().add(1, 'days').format("MM-DD");
+		let next2 = util.moment().add(2, 'days').format("MM-DD");
+		let next3 = util.moment().add(3, 'days').format("MM-DD");
+		let preve1 = util.moment().subtract(1, 'days').format("MM-DD");
+		let preve2 = util.moment().subtract(2, 'days').format("MM-DD");
+		let preve3 = util.moment().subtract(3, 'days').format("MM-DD");
+		let next4 = util.moment().subtract(4, 'days').format("MM-DD");
+		let next5 = util.moment().subtract(5, 'days').format("MM-DD");
+		let next6 = util.moment().subtract(6, 'days').format("MM-DD");
+		missions.forEach(item => {
+			if (item.type == 'showup') {
+				// item.payload.level = 5;
+				const level = item.payload.level;
+				this.setData({
+					checked: item.completed
+				})
+				arrDateDuration = item.payload.brefHistory;
+				let rewards = item.payload.rewards;
+				let allArr = [];
+				let showUp = []
+				if (item.payload.level == 3) {
+					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
+					allArr = item.payload.rewards.slice(0, 7);
+					showUp = [true, true, true, item.completed, false, false, false];
+					this.setData({ arrDate: allArr })
+					console.log(allArr)
+				} else if (item.payload.level == 4) {
+					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
+					let legnth = item.payload.rewards.length;
+					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
+					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
+					allArr = preveArr.concat(nextArr);
+					showUp = [true, true, true, item.completed, false, false, false];
+					console.log(allArr)
+					this.setData({ arrDate: allArr, })
+				} else if (item.payload.level == 5) {
+					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
+					let legnth = item.payload.rewards.length;
+					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
+					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
+					allArr = preveArr.concat(nextArr).concat(nextArr);
+					showUp = [true, true, true, item.completed, false, false, false];
+					this.setData({ arrDate: allArr })
+					console.log(allArr)
+				} else if (item.payload.level == 6) {
+					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
+					let legnth = item.payload.rewards.length;
+					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
+					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
+					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
+					showUp = [true, true, true, item.completed, false, false,];
+					console.log(allArr);
+					this.setData({ arrDate: allArr })
+				}
+				else if (level == 0) {
+					arrDateDuration = ['今天', next1, next2, next3, next4, next5, next6];
+					showUp = [item.completed, false, false, false, false, false, false];
+					allArr = item.payload.rewards.slice(0, 7);
+					console.log('=====');
+					console.log(allArr);
+					this.setData({ arrDate: allArr })
+				} else if (level == 1) {
+					arrDateDuration = [preve1, '今天', next1, next2, next3, next4, next5]
+					allArr = item.payload.rewards.slice(0, 7);
+					showUp = [true, item.completed, false, false, false, false, false];
+					this.setData({ arrDate: allArr })
+				} else if (level == 2) {
+					arrDateDuration = [preve1, preve2, '今天', next1, next2, next3, next4]
+					allArr = item.payload.rewards.slice(0, 7);
+					showUp = [true, true, item.completed, false, false, false, false];
+					this.setData({ arrDate: allArr })
+				}
+				let arrCheck = [];
+				allArr.forEach((item, index) => {
+					arrCheck[index] = new Object()
+					arrCheck[index]['number'] = item;
+					arrCheck[index]['name'] = arrDateDuration[index];
+					arrCheck[index]['showUp'] = showUp[index]
+
+				})
+				this.setData({ arrCheck: arrCheck });
+
+			} else if (item.type == "articleShared") {
+				this.setData({
+					articleShared: item
+				})
+			} else if (item.type == 'articleRead') {
+				this.setData({
+					articleRead: item
+				})
+			} else {
+				this.setData({
+					shareBeenRead: item
+				})
+			}
+		});
 	},
 	jumptogift: function (e) {
 		let accountBalance = e.currentTarget.dataset.score
@@ -316,7 +363,7 @@ Page({
 					duration: 1000,
 					mask: true,
 					success: () => {
-						that.onLoad();
+						that.handleCurrentUserAndDailyMission();
 					}
 				});
 			})
