@@ -32,6 +32,9 @@ button::after{ border: none; }
   height:140rpx; 
   /*background:#f6f6f6 ;*/
   text-align: center;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;  
 
 }
 .chineseLetter{
