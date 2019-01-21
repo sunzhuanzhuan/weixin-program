@@ -6,7 +6,8 @@ Page({
 		visible: false, //兑换弹窗
 		canIchange: true, //兑换和积分不足 按钮
 		notEnough: false, //赚取积分弹窗
-		tooLate: false
+		tooLate: false,
+		url: '../../images/load.png'
 	},
 	change: function () {
 		this.setData({
@@ -63,7 +64,6 @@ Page({
 		that.setData({
 			accountBalance: option.accountBalance,
 			id: option.id,
-			url: '../../images/load.png'
 		})
 		gdt.getCommodityDetail(id).then((res) => {
 			console.log(res);
