@@ -456,6 +456,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					if (indexedItem.type == "simpleSurvey") {
 						let one = indexedItem.surveyOptions[0].totalSupporters || 0;
 						let two = indexedItem.surveyOptions[1].totalSupporters || 0;
+
 						let total = one + two;
 						if (total == 0) {
 							indexedItem.m = 0;
@@ -514,9 +515,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
 		this.on('entityUpdate', (entity) => {
 			const itemIndex = this.localState.itemIndex;
-			//旧的
-			console.log(itemIndex)
-			let indexedItem = {};
+			//旧的;
+			console.log(entity)
 			if (entity.type == 'simpleSurvey') {
 				let indexedItem = itemIndex[entity._id];
 				console.log(indexedItem)
@@ -545,26 +545,46 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				// console.log(indexedItem)
 
 			} else {
-
 				let indexedItem = itemIndex[entity._id];
-				if (indexedItem) {
-					_.merge(indexedItem, entity);
+				console.log('=========');
+				console.log(itemIndex);
+				console.log(entity);
+				console.log('=========');
+				console.log(indexedItem);
+				console.log('======');
+				console.log(indexedItem.isVote);
+				console.log('======');
+				console.log(indexedItem.annotations);
+				if (indexedItem.annotations) {
+					console.log(indexedItem.annotations);
+
+					indexedItem.annotations = entity.params;
+
+					// console.log(entity.params);
+					// console.log(itemIndex)
 				} else {
-					indexedItem = entity;
-					itemIndex[entity._id] = indexedItem;
+
+					if (indexedItem) {
+						_.merge(indexedItem, entity);
+					} else {
+						indexedItem = entity;
+						itemIndex[entity._id] = indexedItem;
+					}
+
+					if (!indexedItem.randomNum) {
+						indexedItem.randomNum = Math.floor(Math.random() * 40);
+					}
+					indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
+					indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
+
+					indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
+						indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
+					if (indexedItem.type == "txvVideo") {
+						indexedItem.wxMidVec = '1234#1'
+					}
 				}
 
-				if (!indexedItem.randomNum) {
-					indexedItem.randomNum = Math.floor(Math.random() * 40);
-				}
-				indexedItem._sourceWxDisplayName = indexedItem.sourceWxNickname || '-';
-				indexedItem._publishedFromNow = util.moment(indexedItem.publishedAt).fromNow();
 
-				indexedItem._likedTimes = indexedItem.likedTimes > (indexedItem._likedTimes || 10) ?
-					indexedItem.likedTimes : (indexedItem.randomNum + indexedItem.likedTimes);
-				if (indexedItem.type == "txvVideo") {
-					indexedItem.wxMidVec = '1234#1'
-				}
 			}
 
 
@@ -986,7 +1006,41 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				},
 				autoLoadingState: true
 			})
+		console.log(item.params.referencedEntity)
+		queryPromise.then((x) => {
 
+			let obj = item.params;
+			obj.voteFor = x.surveyVoteFor;
+			obj.surveyOptions[item.num].totalSupporters = obj.surveyOptions[item.num].totalSupporters + 1
+			obj.vote = true;
+			let one = obj.surveyOptions[0].totalSupporters;
+			let two = obj.surveyOptions[1].totalSupporters;
+			this.userInfo.then((res) => {
+				if (obj.surveyOptions[item.num].supporters.length < 5) {
+					obj.surveyOptions[item.num].supporters.push(res.userInfo)
+				}
+
+			})
+			let total = one + two;
+			if (total == 0) {
+				obj.m = 0;
+				obj.n = 0;
+			} else {
+				// obj.m = 5;
+				// obj.n = 56
+				obj.m = (one / total).toFixed(2) * 100;
+				obj.n = 100 - ((one / total).toFixed(2) * 100);
+			};
+			let obj1 = {};
+			obj1._id = item.params.referencedEntity;
+			obj1.num = Number(item.num);
+			obj1.params = [obj];
+			obj1.type = 'wxArticle';
+			obj1.annotations = [obj];
+
+			obj1.isVote = true;
+			this.emit('entityUpdate', obj1);
+		})
 		return queryPromise
 	}
 	fetchListItems(listId, page, pageSize, _queryParams) {
@@ -1333,6 +1387,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				this.emit('entityDetail', x);
 				if (x.entity) {
 					x.entity.viewed = true;
+
+					x.isVote = false;
 					this.emit('entityUpdate', x.entity);
 				}
 			});
@@ -1357,6 +1413,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				this.emit('entityDetail', x);
 				if (x.entity) {
 					x.entity.viewed = true;
+					x.isVote = false;
 					this.emit('entityUpdate', x.entity);
 				}
 			});

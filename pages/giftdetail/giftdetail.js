@@ -6,6 +6,7 @@ Page({
 		visible: false, //兑换弹窗
 		canIchange: true, //兑换和积分不足 按钮
 		notEnough: false, //赚取积分弹窗
+		tooLate: false
 	},
 	change: function () {
 		this.setData({
@@ -22,6 +23,11 @@ Page({
 			notEnough: true
 		})
 	},
+	lookOther: function () {
+		wx.navigateBack({
+			delta: 1
+		})
+	},
 	confirm: function () {
 		gdt.purchase(this.data.id, 1).then((res) => {
 			this.setData({
@@ -29,6 +35,11 @@ Page({
 			});
 			wx.reLaunch({
 				url: '/pages/check/check?box=true&code=' + res.code,
+			});
+		}).catch((err) => {
+			this.setDate({
+				tooLate: true,
+				visible: false
 			});
 		})
 

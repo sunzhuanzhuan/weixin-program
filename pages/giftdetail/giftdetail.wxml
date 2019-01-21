@@ -8,7 +8,10 @@
 				<view class="detail">
 					<text class="giftTitle">{{detail.name}}</text>
 					<text class="price">￥{{detail.rmbPrice}}</text>
-					<text class="giftWorth">{{detail.price}} 积分</text>
+					<view class="giftWorth">
+						<view class="giftWorthline"></view>
+						<text class="giftWorthTxt">{{detail.price}} 积分</text>
+					</view>
 				</view>
 				<!-- <view class="specification">
 					<text class="specText">规格</text>
@@ -72,6 +75,18 @@
 		</view>
 		<view class="earnConfirm" bindtap="ToEarnScore">
 			<text class="earnConfirmText">去赚积分</text>
+		</view>
+	</view>
+</view>
+<!-- 晚了一步弹窗-->
+<view class="changeJump" wx:if="{{tooLate}}">
+	<view class="earnBox">
+		<view class="earnTitle">
+			<text class="earn">啊哦，晚了一步！</text>
+			<text class='earn'>您选择的商品刚刚兑完了</text>
+		</view>
+		<view class="earnConfirm" bindtap="lookOther">
+			<text class="earnConfirmText">看看别的商品</text>
 		</view>
 	</view>
 </view>

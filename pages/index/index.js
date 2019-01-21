@@ -547,7 +547,8 @@ Page({
 
 			gdt.on('entityUpdate', (x) => {
 				const itemIndex = this.appState.itemIndex;
-				let this_ = this
+				let this_ = this;
+				console.log(itemIndex)
 				console.log(11111111)
 				setTimeout(() => {
 					this_.setData({
@@ -563,7 +564,8 @@ Page({
 			if (app.toplistEnabled !== false) {
 				gdt.magicListItemLoadMore('topScoreds').then((res) => {
 					const theList = app.listIndex['topScoreds'];
-					let arr = theList.items.slice(3);
+					let arr = theList.items.slice(0, 3);
+
 					if (app.lists[0] !== app.listIndex['topScoreds']) {
 						app.lists.unshift(app.listIndex['topScoreds']);
 					}
