@@ -43,10 +43,10 @@ Page({
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
 				this.setData({
-					totalBounses: result.totalBounses.toFixed(2),
+					totalBounses: parseFloat(result.totalBounses).toFixed(2),
 					totalReferencers: result.totalReferencers,
 					detail: result.detail,
-					amount: result.detail.amount.toFixed(2)
+					amount: parseFloat(result.detail.amount).toFixed(2)
 				});
 			})
 			const missions = res.missions || [];
@@ -340,7 +340,6 @@ Page({
 			let page = this.data.page;
 			let pageSize = this.data.pageSize + 10;
 			gdt.getReferral(page, pageSize).then((result) => {
-				console.log(result.detail)
 				this.setData({
 					detail: result.detail,
 					page: page,
@@ -356,13 +355,11 @@ Page({
 			let page = this.data.page;
 			let pageSize = this.data.pageSize + 10;
 			gdt.getReferral(page, pageSize).then((result) => {
-				console.log(result.detail);
-				console.log(pageSize)
 				this.setData({
 					detail: result.detail,
 					page: page,
 					pageSize: pageSize,
-					amount: result.detail.amount.toFixed(2)
+					amount: parseFloat(result.detail.amount).toFixed(2)
 				})
 			})
 		} else {}
