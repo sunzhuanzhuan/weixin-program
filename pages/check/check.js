@@ -132,8 +132,9 @@ Page({
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
+				result.detail[0].amount = result.detail[0].amount.toFixed(2);
 				this.setData({
-					totalBounses: result.totalBounses,
+					totalBounses: result.totalBounses.toFixed(2),
 					totalReferencers: result.totalReferencers,
 					detail: result.detail
 				});
