@@ -206,7 +206,7 @@
 										<view style="overflow: hidden;">
 											<view class="leftBox marginLeft26">表态</view>
 											<view class="rightBox">
-												{{item.annotations[0].title}} ＞
+												{{item.annotations[0].title}}
 											</view>
 										</view>
 										<view class="marginLeft26">
@@ -218,16 +218,18 @@
 												<text style="color:#B3B3B3;font-size: 24rpx;">进入文章,表达你的态度</text>
 											</view>
 											<view wx:else style="overflow:hidden;margin-top:10rpx;">
-												<view style="float:left;{{index == 0 ?'':'margin-left:-24rpx;'}}" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
-													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters}}" src="{{item.avatarUrl}}"></image>
+												<view style="float:left;" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
+													<image class="touxiang" style="{{index == 0 ?'':'margin-left:-24rpx;'}}" wx:for="{{item.annotations[0].surveyOptions[0].supporters}}"
+													 src="{{item.avatarUrl}}"></image>
 												</view>
-												<view style="float:left;" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>5}}">
+												<view style="float:left;{{index == 0 ?'':'margin-left:-24rpx;'}}" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>5}}">
 													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters.slice(5)}}" src="{{item.avatarUrl}}"></image>
 												</view>
 												<view style="float:left;" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>0}}">
-													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}" src="{{item.avatarUrl}}"></image>
+													<image class="touxiang" style="{{index == 0 ?'':'margin-left:-24rpx;'}}" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}"
+													 src="{{item.avatarUrl}}"></image>
 												</view>
-												<view style="float:left;" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>5}}">
+												<view style="float:left;{{index == 0 ?'':'margin-left:-24rpx;'}}" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>5}}">
 													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters.slice(5)}}" src="{{item.avatarUrl}}"></image>
 												</view>
 
@@ -296,7 +298,7 @@
 										<view style="overflow: hidden;">
 											<view class="leftBox marginLeft26" style="margin-top: 0">表态</view>
 											<view class="rightBox" style="margin-top: 0">
-												{{item.annotations[0].title}} ＞
+												{{item.annotations[0].title}}
 											</view>
 										</view>
 										<view class="marginLeft26">
@@ -307,17 +309,21 @@
 												<text style="color:#B3B3B3;font-size: 24rpx;">进入文章,表达你的态度</text>
 											</view>
 											<view wx:else style="overflow:hidden;margin-top:10rpx;">
-												<view style="float:left;{{index == 0 ?'':'margin-left:-24rpx;'}}" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
-													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters}}" src="{{item.avatarUrl}}"></image>
+												<view style="float:left;" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>0}}">
+													<image class="touxiang" style="{{index == 0 ?'':'margin-left:-24rpx;'}}" wx:for="{{item.annotations[0].surveyOptions[0].supporters}}"
+													 src="{{item.avatarUrl}}"></image>
 												</view>
-												<view style="float:left" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>5}}">
-													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[0].supporters.slice(5)}}" src="{{item.avatarUrl}}"></image>
+												<view style="float:left;" wx:if="{{item.annotations[0].surveyOptions[0].supporters.length>5}}">
+													<image class="touxiang" style="{{index == 0 ?'':'margin-left:-24rpx;'}}" wx:for="{{item.annotations[0].surveyOptions[0].supporters.slice(5)}}"
+													 src="{{item.avatarUrl}}"></image>
 												</view>
-												<view style="float:left" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>0}}">
-													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}" src="{{item.avatarUrl}}"></image>
+												<view style="float:left;" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>0}}">
+													<image class="touxiang" style="{{index == 0 ?'':'margin-left:-24rpx;'}}" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}"
+													 src="{{item.avatarUrl}}"></image>
 												</view>
-												<view style="float:left" class="touxiang1" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>5}}">
-													<image class="touxiang" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}" src="{{item.avatarUrl}}"></image>
+												<view style="float:left;" wx:if="{{item.annotations[0].surveyOptions[1].supporters.length>5}}">
+													<image class="touxiang" style="{{index == 0 ?'':'margin-left:-24rpx;'}}" wx:for="{{item.annotations[0].surveyOptions[1].supporters}}"
+													 src="{{item.avatarUrl}}"></image>
 												</view>
 												<text style="color:#B3B3B3;font-size: 24rpx;float:left;margin-top:10rpx;margin-left:16rpx;">他们已经表达了态度</text>
 											</view>
