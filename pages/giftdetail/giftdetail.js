@@ -77,15 +77,16 @@ Page({
 					that.setData({
 						url: that.data.baseImageUrl + that.data.detail.coverUrl
 					});
+					if (option.status == "1" || that.data.detail.stock == '0') {
+						this.setData({
+							WillOnLine: true
+						})
+					}
 				})
 			});
 		});
 
-		if (option.status == 1) {
-			this.setData({
-				WillOnLine: true
-			})
-		}
+
 	},
 
 	/**
