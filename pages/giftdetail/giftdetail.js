@@ -39,7 +39,6 @@ Page({
 			this.setData({
 				code: res.code,
 				visible: false,
-				changeBox: true,
 			});
 			// wx.navigateTo({
 			// 	url: '/pages/check/check?box=true&code=' + res.code,
