@@ -516,11 +516,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 		this.on('entityUpdate', (entity) => {
 			const itemIndex = this.localState.itemIndex;
 			//旧的;
-			console.log(entity)
+			let indexedItem = itemIndex[entity._id];
 			if (entity.type == 'simpleSurvey') {
-				let indexedItem = itemIndex[entity._id];
-				console.log(indexedItem)
-				// _.merge(indexedItem, entity);
 				indexedItem.vote = true;
 				indexedItem.voteFor = entity.surveyVoteFor;
 				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
@@ -545,32 +542,17 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				// console.log(indexedItem)
 
 			} else {
-				let indexedItem = itemIndex[entity._id];
-				console.log('=========');
-				console.log(itemIndex);
-				console.log(entity);
-				console.log('=========');
-				console.log(indexedItem);
-				console.log('======');
-				console.log(indexedItem.isVote);
-				console.log('======');
-				console.log(indexedItem.annotations);
-				if (indexedItem.annotations) {
-					console.log(indexedItem.annotations);
+				if (indexedItem) {
+					_.merge(indexedItem, entity);
+				} else {
+					indexedItem = entity;
+					itemIndex[entity._id] = indexedItem;
+				}
+				if (indexedItem.isVote) {
 
 					indexedItem.annotations = entity.params;
-
-					// console.log(entity.params);
-					// console.log(itemIndex)
+					console.log(indexedItem.annotations);
 				} else {
-
-					if (indexedItem) {
-						_.merge(indexedItem, entity);
-					} else {
-						indexedItem = entity;
-						itemIndex[entity._id] = indexedItem;
-					}
-
 					if (!indexedItem.randomNum) {
 						indexedItem.randomNum = Math.floor(Math.random() * 40);
 					}
@@ -1387,8 +1369,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				this.emit('entityDetail', x);
 				if (x.entity) {
 					x.entity.viewed = true;
-
-					x.isVote = false;
+					x.entity.isVote = false;
 					this.emit('entityUpdate', x.entity);
 				}
 			});
@@ -1413,7 +1394,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				this.emit('entityDetail', x);
 				if (x.entity) {
 					x.entity.viewed = true;
-					x.isVote = false;
+					x.entity.isVote = false;
 					this.emit('entityUpdate', x.entity);
 				}
 			});
