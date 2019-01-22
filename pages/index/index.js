@@ -511,16 +511,12 @@ Page({
 			});
 			this.data.appTitle = x;
 		});
-		gdt.fetchDistributionIndex().then((res) => {
-			this.setData({
-				setting: res.settings || {}
-			})
-		})
 		gdt.ready.then((app) => {
 			this.appState = app;
 			if (app.title) {
 				wx.setNavigationBarTitle({
 					title: app.title,
+					setting: app.settings
 				});
 			}
 
