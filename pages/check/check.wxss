@@ -68,7 +68,10 @@ button::after {
   height: 68rpx;
   background: rgba(247, 188, 0, 1);
   border-radius: 0px 200rpx 200rpx 0px;
-  line-height: 68rpx;
+  line-height: 34rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mainlyContainer {
@@ -85,7 +88,6 @@ button::after {
   font-weight: 600;
   color: rgba(51, 51, 51, 1);
   line-height: 34rpx;
-  margin-left: 12rpx;
 }
 
 .activeRules {
@@ -377,7 +379,6 @@ button::after {
   height: 26rpx;
   display: inline-block;
   margin-left: 10rpx;
-  margin-bottom: -4rpx;
 }
 
 /*兑换弹窗*/

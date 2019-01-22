@@ -37,9 +37,9 @@ Page({
 				});
 				console.log(result.detail)
 				this.setData({
-					totalBounses: result.totalBounses.toFixed(2),
+					totalBounses: parseFloat(result.totalBounses).toFixed(2),
 					totalReferencers: result.totalReferencers,
-					detail: result.detail
+					detail: result.detail,
 				});
 			})
 			const missions = res.missions || [];
@@ -58,9 +58,9 @@ Page({
 		let preve1 = util.moment().subtract(1, 'days').format("MM-DD");
 		let preve2 = util.moment().subtract(2, 'days').format("MM-DD");
 		let preve3 = util.moment().subtract(3, 'days').format("MM-DD");
-		let next4 = util.moment().subtract(4, 'days').format("MM-DD");
-		let next5 = util.moment().subtract(5, 'days').format("MM-DD");
-		let next6 = util.moment().subtract(6, 'days').format("MM-DD");
+		let next4 = util.moment().add(4, 'days').format("MM-DD");
+		let next5 = util.moment().add(5, 'days').format("MM-DD");
+		let next6 = util.moment().add(6, 'days').format("MM-DD");
 		missions.forEach(item => {
 			if (item.type == 'showup') {
 				// item.payload.level = 5;
@@ -104,25 +104,32 @@ Page({
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
 					showUp = [true, true, true, item.completed, false, false,];
 					console.log(allArr);
-					this.setData({ arrDate: allArr })
-				}
-				else if (level == 0) {
+					this.setData({
+						arrDate: allArr
+					})
+				} else if (level == 0) {
 					arrDateDuration = ['今天', next1, next2, next3, next4, next5, next6];
 					showUp = [item.completed, false, false, false, false, false, false];
 					allArr = item.payload.rewards.slice(0, 7);
 					console.log('=====');
 					console.log(allArr);
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				} else if (level == 1) {
 					arrDateDuration = [preve1, '今天', next1, next2, next3, next4, next5]
 					allArr = item.payload.rewards.slice(0, 7);
 					showUp = [true, item.completed, false, false, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				} else if (level == 2) {
 					arrDateDuration = [preve1, preve2, '今天', next1, next2, next3, next4]
 					allArr = item.payload.rewards.slice(0, 7);
 					showUp = [true, true, item.completed, false, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				}
 				let arrCheck = [];
 				allArr.forEach((item, index) => {
@@ -132,7 +139,9 @@ Page({
 					arrCheck[index]['showUp'] = showUp[index]
 
 				})
-				this.setData({ arrCheck: arrCheck });
+				this.setData({
+					arrCheck: arrCheck
+				});
 
 			} else if (item.type == "articleShared") {
 				this.setData({
@@ -262,7 +271,6 @@ Page({
 					detail: result.detail,
 					page: page,
 					pageSize: pageSize,
-					amount: parseFloat(result.detail.amount).toFixed(2)
 				})
 			})
 		} else { }
