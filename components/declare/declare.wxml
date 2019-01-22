@@ -7,13 +7,21 @@
 		<view class="taiBox marginLeft26">
 			<view class="taiLeftBox">
 				<view class="fontTai">{{itemDeclare.surveyOptions[0].description}}</view>
+
 				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id?false:true}}"
-				 class="holdOne" data-item="{{itemDeclare}}" data-num="0" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'已支持':'未支持':'支持'}}</button>
+				 class="holdOne" data-item="{{itemDeclare}}" data-num="0" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'已支持':'未支持':'支持'}}
+					<text wx:if="{{itemDeclare.voteFor[0] !=undefined && itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id }}" class="iconDate iconfont icon-guifanjieguoyeduigou"
+					 style="color:#fff;font-size:50rpx;float: left;"></text>
+				</button>
 			</view>
 			<view class="taiRightBox">
 				<view class="fontTai">{{itemDeclare.surveyOptions[1].description}}</view>
+
 				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id?false:true}}"
-				 class="holdTwo" data-item="{{itemDeclare}}" data-num="1" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'已支持':'未支持':'支持'}}</button>
+				 class="holdTwo" data-item="{{itemDeclare}}" data-num="1" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'已支持':'未支持':'支持'}}
+					<text wx:if="{{itemDeclare.voteFor[0] !=undefined && itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id }}" class="iconDate iconfont icon-guifanjieguoyeduigou"
+					 style="color:#fff;font-size:50rpx;float: left;"></text>
+				</button>
 			</view>
 		</view>
 		<view class="progressBox marginLeft26">
