@@ -43,7 +43,7 @@
 			</block>
 		</view>
 	</view>
-	<view class="entranceOfGift" bindtap='jumpToCheck'>
+	<view class="entranceOfGift" bindtap='jumpToCheck' wx:if="{{IsChecked}}">
 		<image class="checkPic" src="../../images/check.png" mdoe="scaleToFill">
 		</image>
 		<text class="checkTxt">签到领礼物</text>

@@ -327,3 +327,37 @@
     color: rgba(0, 0, 0, 1);
     line-height: 40rpx;
 }
+
+
+.btnSavePicture {
+    background: #FAC84A;
+    font-size: 28rpx;
+    color: #000;
+    width: 640rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+}
+
+.canvas {
+    width: 640rpx;
+    height: 760rpx;
+    background: #fff;
+    margin-top: 160rpx;
+    margin-left: 54rpx;
+    z-index: 99;
+    border-radius: 18rpx;
+}
+
+.actRule {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(50, 50, 50, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+}

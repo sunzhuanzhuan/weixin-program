@@ -1,35 +1,42 @@
-
 @import "/components/share/share.wxss";
 @import "/components/like/like.wxss";
 @import "/components/loadding/loadding.wxss";
-button::after{ border: none; }
-::-webkit-scrollbar{
+
+button::after {
+  border: none;
+}
+
+::-webkit-scrollbar {
   width: 0;
   height: 0;
   color: transparent;
 }
-.readBox{
+
+.readBox {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-.goHomeStyle{
+
+.goHomeStyle {
   position: fixed;
-  left:0;
+  left: 0;
   bottom: 200rpx;
   width: 119rpx;
-  height:94rpx;
+  height: 94rpx;
 }
-.smallBox{
+
+.smallBox {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
 }
-.avatar{
+
+.avatar {
   border-radius: 50%;
-  color:#333333;
-  height:140rpx; 
+  color: #333333;
+  height: 140rpx;
   /*background:#f6f6f6 ;*/
   text-align: center;
   overflow: hidden;
@@ -37,182 +44,272 @@ button::after{ border: none; }
   white-space: nowrap;  
 
 }
-.chineseLetter{
-  font-size:32rpx ;
+
+.chineseLetter {
+  font-size: 32rpx;
   height: 44rpx;
   padding-right: 35rpx;
-  margin-left:40rpx ;
+  margin-left: 40rpx;
   display: inline-block;
   position: relative;
 }
-.titleBox{
+
+.titleBox {
   width: 96%;
   margin: 0 2%;
   height: 90rpx;
   display: flex;
   white-space: nowrap;
   position: fixed;
-  top:130rpx;
+  top: 130rpx;
   overflow-x: auto;
 }
-.plTop36{
+
+.plTop36 {
   margin-top: 72rpx;
 }
-.plBottm32{
+
+.plBottm32 {
   margin-bottom: 64rpx;
 }
-.bigImg{
-  width:686rpx ;
-  height:360rpx ;
+
+.bigImg {
+  width: 686rpx;
+  height: 360rpx;
   margin-top: 32rpx;
   border-radius: 4rpx;
   display: inline-block;
 }
-.time{
-}
-.plBottm28{
+
+.plBottm28 {
   margin-bottom: 56rpx;
 }
-.line{
+
+.line {
   height: 20rpx;
-  background-color: #f6f6f6 ;
+  background-color: #f6f6f6;
   margin-bottom: 40rpx;
 }
-.shareBox{
+
+.shareBox {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-bottom: 70rpx;
 }
-.icon{
+
+.icon {
   height: 30rpx;
-  width:30rpx;
+  width: 30rpx;
   margin-right: 10rpx;
 }
-.selected{
-  color:#333333;
+
+.selected {
+  color: #333333;
   font-size: 28rpx;
-  padding-bottom:26rpx ;
+  padding-bottom: 26rpx;
   border-bottom: 4rpx solid #333333;
 }
-.none{
+
+.none {
   color: #ADADAD;
   font-size: 28rpx;
 }
-.ellipsisLike{
+
+.ellipsisLike {
   width: 180rpx;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: inline-block;
   vertical-align: top;
 }
-.letter{
+
+.letter {
   position: absolute;
   bottom: 0;
   right: 0;
-  left:0;
+  left: 0;
   font-size: 24rpx;
   color: #898989;
 }
-.titleFontSize{
+
+.titleFontSize {
   color: #333333;
   font-weight: bolder;
 }
-.noTitleFontSize{
-  color:#ADADAD;
+
+.noTitleFontSize {
+  color: #ADADAD;
 
 }
-.dot{
+
+.dot {
   padding-bottom: 10rpx;
   border-bottom: 4rpx solid #000;
 }
-.nickName{
+
+.nickName {
   color: #898989;
   font-size: 28rpx;
   font-weight: lighter;
   margin-top: 20rpx;
-  background:#ffffff;
+  background: #ffffff;
   max-width: 324rpx;
 }
-.readBoxName{
+
+.readBoxName {
   color: #898989;
   font-size: 28rpx;
-  margin-top:14rpx ;
+  margin-top: 14rpx;
 }
-.contentList{
+
+.contentList {
   overflow-x: hidden;
   width: 100%;
   -webkit-overflow-scrolling: auto
 }
-.contentListBox{
+
+.contentListBox {
   position: absolute;
   z-index: 20;
   width: 100%;
 }
-.lineTop{
+
+.lineTop {
   position: fixed;
   z-index: 26;
   width: 100%;
   height: 30rpx;
-  opacity:0.04;
-  background: -webkit-linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0));/* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0)); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0)); /* Firefox 3.6 - 15 */
-  background: linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0));
+  opacity: 0.04;
+  background: -webkit-linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
-.lineTop1{
+
+.lineTop1 {
   position: fixed;
   width: 100%;
   height: 30rpx;
 }
+
 /*  --------------------------------        我的     ---------------------------------------------------- */
-.imgHistory{
-  width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx
+.imgHistory {
+  width: 44rpx;
+  height: 44rpx;
+  margin-top: 32rpx;
+  margin-bottom: 16rpx
 }
-.letterHistory{
-  font-size:24rpx;color:#333
+
+.letterHistory {
+  font-size: 24rpx;
+  color: #333
 }
-.boxHistory{
-  display:inline-block;width:230rpx;height:160rpx;background:#fff;text-align:center;
+
+.boxHistory {
+  display: inline-block;
+  width: 230rpx;
+  height: 160rpx;
+  background: #fff;
+  text-align: center;
 }
-.letterLeft{
-  background:#fff;height:50rpx;border-right:1rpx solid #E6E6E6;display:inline-block;vertical-align:top;margin-top:60rpx;
-  
+
+.letterLeft {
+  background: #fff;
+  height: 50rpx;
+  border-right: 1rpx solid #E6E6E6;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 60rpx;
+
 }
-.letterRight{
-  background:#fff;display:inline-block;height:50rpx;border-right:1rpx solid #E6E6E6;vertical-align:top;margin-top:60rpx;
+
+.letterRight {
+  background: #fff;
+  display: inline-block;
+  height: 50rpx;
+  border-right: 1rpx solid #E6E6E6;
+  vertical-align: top;
+  margin-top: 60rpx;
 }
-.bigBoxThree{
-  margin:0 28rpx;width:698rpx;height:160rpx;overflow:hidden;clear:both;box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;position:absolute;bottom:-100rpx;border-radius:10rpx;background:#fff;
+
+.bigBoxThree {
+  margin: 0 28rpx;
+  width: 698rpx;
+  height: 160rpx;
+  overflow: hidden;
+  clear: both;
+  box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;
+  position: absolute;
+  bottom: -100rpx;
+  border-radius: 10rpx;
+  background: #fff;
 }
-.myShare{
-  margin-top:140rpx;margin-left:30rpx;color:#333;font-size:36rpx;font-weight:600;
+
+.myShare {
+  margin-top: 140rpx;
+  margin-left: 30rpx;
+  color: #333;
+  font-size: 36rpx;
+  font-weight: 600;
 }
-.bigBox{
-  width:100%;height:420rpx;background:#fff;position:relative
+
+.bigBox {
+  width: 100%;
+  height: 420rpx;
+  background: #fff;
+  position: relative
 }
-.nick{
-  display:inline-block;width:50%;height:420rpx;float:left
+
+.nick {
+  display: inline-block;
+  width: 50%;
+  height: 420rpx;
+  float: left
 }
-.boxNum{
-  display:inline-block;width:45%;height:420rpx;float:right;margin-left:5%;
+
+.boxNum {
+  display: inline-block;
+  width: 45%;
+  height: 420rpx;
+  float: right;
+  margin-left: 5%;
 }
-.letter1{
-  font-size:24rpx;color:#999999
+
+.letter1 {
+  font-size: 24rpx;
+  color: #999999
 }
-.letter44{
-  font-size:44rpx;color:#333;height:44rpx
+
+.letter44 {
+  font-size: 44rpx;
+  color: #333;
+  height: 44rpx
 }
-.btnSuggest{
-  width:200rpx;height:60rpx;font-size:28rpx;line-height:60rpx;border:1rpx solid #333333;border-radius:50rpx;background:#fff;margin-top:20rpx;float:left;color:#333333
+
+.btnSuggest {
+  width: 200rpx;
+  height: 60rpx;
+  font-size: 28rpx;
+  line-height: 60rpx;
+  border: 1rpx solid #333333;
+  border-radius: 50rpx;
+  background: #fff;
+  margin-top: 20rpx;
+  float: left;
+  color: #333333
 }
+
 .entranceOfGift {
-  width: 67px;
-  height: 46px;
-  position: fixed;
-  top: 19x;
-  right: 4px;
+  width: 140rpx;
+  height: 92rpx;
+  position: absolute;
+  top: 38rpx;
+  right: 8rpx;
   z-index: 100;
 }
 

@@ -2,7 +2,7 @@
 	<view class='detailBox'>
 		<view class="pictureBox">
 			<view class="picBox">
-				<image class="giftPic" src="{{baseImageUrl+detail.coverUrl}}"></image>
+				<image class="giftPic" src="{{url}}"></image>
 			</view>
 			<view class="giftDetail">
 				<view class="detail">
@@ -29,7 +29,7 @@
 	<view class="statementBox">
 		<text class="statement">本商品无质量问题不支持退换货</text>
 	</view>
-	<view class="bottomBtn" bindtap="change" wx:if="{{accountBalance >= detail.price}}">
+	<view class="bottomBtn" bindtap="change" wx:if="{{accountBalance >= detail.price && detail.stock !== '0'}}">
 		<text class="change">兑换</text>
 	</view>
 	<view wx:else class="bottomBtn2" bindtap="canNotChange">
@@ -89,4 +89,11 @@
 			<text class="earnConfirmText">看看别的商品</text>
 		</view>
 	</view>
+</view>
+<!-- 兑换商品弹窗-->
+<view wx:if="{{changeBox}}" class="actRule" catch:touchmove="touchmove">
+	<canvas class="canvas" canvas-id="saveCanvas"></canvas>
+	<cover-view style="margin-top:-98rpx;margin-left:-6rpx;">
+		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+	</cover-view>
 </view>

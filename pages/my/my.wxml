@@ -5,12 +5,12 @@
 <template is='loadding' wx:if="{{!loadding}}" />
 
 <view>
-	<view class="entranceOfGift" bindtap='jumpToCheck'>
-		<image class="checkPic" src="../../images/check.png" mdoe="scaleToFill">
-		</image>
-		<text class="checkTxt">签到领礼物</text>
-	</view>
 	<view class="bigBox">
+		<view class="entranceOfGift" bindtap='jumpToCheck'>
+			<image class="checkPic" src="../../images/check.png" mdoe="scaleToFill">
+			</image>
+			<text class="checkTxt">签到领礼物</text>
+		</view>
 		<view>
 			<view class="nick">
 				<button class="nickName" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
