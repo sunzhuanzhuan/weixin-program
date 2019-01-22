@@ -567,9 +567,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					indexedItem.annotations = entity.params;
 					console.log(indexedItem.annotations[0])
 					let annotations = indexedItem.annotations[0];
-					debugger
+					// debugger
 					let total = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters);
-					debugger
+					// debugger
 					console.log(total)
 					if (total.length > 5) {
 						total.slice(0, 6)
