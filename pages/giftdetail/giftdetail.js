@@ -3,12 +3,13 @@ const gdt = app.applicationDataContext;
 Page({
 
 	data: {
+		uid: '',
 		visible: false, //兑换弹窗
 		canIchange: true, //兑换和积分不足 按钮
 		notEnough: false, //赚取积分弹窗
 		tooLate: false,
 		url: '../../images/load.png',
-		eq:'../../images/xiaoyu.jpeg'
+		eq: '../../images/xiaoyu.jpeg'
 	},
 	change: function () {
 		this.setData({
@@ -176,6 +177,9 @@ Page({
 	onLoad: function (option) {
 		const id = option.id;
 		let that = this;
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
+		});
 		that.setData({
 			accountBalance: option.accountBalance,
 			id: option.id,
@@ -204,7 +208,7 @@ Page({
 		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
 		// 	},()=>{console.log(this.data.baseImageUrlEq)})
 		// });
-		
+
 	},
 	touchmove: function () {
 		return
@@ -252,6 +256,9 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: '签到领好礼',
+			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+		}
 	}
 })

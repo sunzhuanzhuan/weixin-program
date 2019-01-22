@@ -3,6 +3,7 @@ const gdt = app.applicationDataContext;
 const util = require('../../utils/util')
 Page({
 	data: {
+		uid: '',
 		url: '',
 		reportSubmit: true,
 		accountBalance: "",
@@ -22,6 +23,9 @@ Page({
 
 	},
 	onLoad: function (option) {
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
+		});
 		this.setData({
 			changeBox: false,
 			code: option.code
@@ -101,7 +105,7 @@ Page({
 					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
-					showUp = [true, true, true, item.completed, false, false, ];
+					showUp = [true, true, true, item.completed, false, false,];
 					console.log(allArr);
 					this.setData({
 						arrDate: allArr
@@ -217,7 +221,7 @@ Page({
 					});
 				})
 			}
-		} else {}
+		} else { }
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -271,8 +275,14 @@ Page({
 					pageSize: pageSize,
 				})
 			})
-		} else {}
+		} else { }
 	},
 
+	onShareAppMessage: function () {
+		return {
+			title: '签到领好礼',
+			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+		}
+	}
 
 })

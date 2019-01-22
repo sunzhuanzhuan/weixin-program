@@ -15,6 +15,8 @@ Page({
 		src: '',
 		isLike: false,
 
+		uid: '',
+
 		bgImg: '',
 		articleId: '',
 		shareId: '',
@@ -129,7 +131,7 @@ Page({
 		}
 		return {
 			title: this.data.entity.title || '默认转发标题',
-			path: 'pages/detail/detail?ref=' + this.data.shareId + '&id=' + this.data.entityId + '&nickName=' + this.data.nickName + '&appName=' + this.data.appName
+			path: `pages/detail/detail?ref=${this.data.shareId}&refee=${this.data.uid}&id=${this.data.entityId}&nickName=${this.data.nickName}&appName=${this.data.appName}`
 		}
 	},
 
@@ -235,6 +237,10 @@ Page({
 					isIphoneX: true,
 				});
 			}
+		});
+
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
 		});
 
 		gdt.userInfo.then((x) => {

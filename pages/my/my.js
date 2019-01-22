@@ -4,6 +4,7 @@ let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 Page({
 	data: {
+		uid: '',
 		myLikes: undefined,
 		myShares: undefined,
 
@@ -37,6 +38,10 @@ Page({
 			gdt.once('userInfo', () => {
 				gdt.setLocalStorage('dashboardTipShouldDisplay', false);
 			});
+		});
+
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
 		});
 
 		this.appState = gdt.localState;
@@ -225,8 +230,8 @@ Page({
 		});
 
 		return {
-			title: entity.title || '默认转发标题',
-			path: `pages/detail/detail?ref=${clip._id}&id=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
+			title: entity.title || '个人主页',
+			path: `pages/detail/detail?refee=${this.data.uid}&ref=${clip._id}&id=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
 			imageUrl: entity.coverUrl
 		}
 	},
