@@ -185,7 +185,7 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.onLoad();
+							this.handleCurrentUserAndDailyMission();
 						}
 					});
 				})
@@ -199,7 +199,7 @@ Page({
 						mask: true,
 						success: () => {
 							console.log("1")
-							this.onLoad();
+							this.handleCurrentUserAndDailyMission();
 						}
 					});
 				})
@@ -212,7 +212,7 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.onLoad();
+							this.handleCurrentUserAndDailyMission();
 						}
 					});
 				})
