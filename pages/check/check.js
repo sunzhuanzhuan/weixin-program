@@ -57,9 +57,9 @@ Page({
 		let preve1 = util.moment().subtract(1, 'days').format("MM-DD");
 		let preve2 = util.moment().subtract(2, 'days').format("MM-DD");
 		let preve3 = util.moment().subtract(3, 'days').format("MM-DD");
-		let next4 = util.moment().subtract(4, 'days').format("MM-DD");
-		let next5 = util.moment().subtract(5, 'days').format("MM-DD");
-		let next6 = util.moment().subtract(6, 'days').format("MM-DD");
+		let next4 = util.moment().add(4, 'days').format("MM-DD");
+		let next5 = util.moment().add(5, 'days').format("MM-DD");
+		let next6 = util.moment().add(6, 'days').format("MM-DD");
 		missions.forEach(item => {
 			if (item.type == 'showup') {
 				// item.payload.level = 5;
