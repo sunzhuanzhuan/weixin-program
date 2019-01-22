@@ -36,9 +36,10 @@ Page({
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				if (result.detail.length > 0) {
-					result.detail[0].amount = result.detail[0].amount.toFixed(2);
-				}
+				result.detail.map((item) => {
+					item.amount = item.amount.toFixed(2);
+				});
+				console.log(result.detail)
 				this.setData({
 					totalBounses: parseFloat(result.totalBounses).toFixed(2),
 					totalReferencers: result.totalReferencers,
@@ -61,9 +62,9 @@ Page({
 		let preve1 = util.moment().subtract(1, 'days').format("MM-DD");
 		let preve2 = util.moment().subtract(2, 'days').format("MM-DD");
 		let preve3 = util.moment().subtract(3, 'days').format("MM-DD");
-		let next4 = util.moment().subtract(4, 'days').format("MM-DD");
-		let next5 = util.moment().subtract(5, 'days').format("MM-DD");
-		let next6 = util.moment().subtract(6, 'days').format("MM-DD");
+		let next4 = util.moment().add(4, 'days').format("MM-DD");
+		let next5 = util.moment().add(5, 'days').format("MM-DD");
+		let next6 = util.moment().add(6, 'days').format("MM-DD");
 		missions.forEach(item => {
 			if (item.type == 'showup') {
 				// item.payload.level = 5;
@@ -175,6 +176,7 @@ Page({
 	},
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {
+		let that = this;
 		if (e.target.dataset.criteriasatisfied == false) {
 			wx.reLaunch({
 				url: '/pages/index/index'
@@ -189,7 +191,7 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.onLoad();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
@@ -203,7 +205,7 @@ Page({
 						mask: true,
 						success: () => {
 							console.log("1")
-							this.onLoad();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
@@ -216,7 +218,7 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.onLoad();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
