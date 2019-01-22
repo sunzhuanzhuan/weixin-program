@@ -176,53 +176,55 @@ Page({
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {
 		let that = this;
-		if (e.target.dataset.criteriasatisfied == false) {
-			wx.reLaunch({
-				url: '/pages/index/index'
-			})
-		} else if (e.target.dataset.completed == false) {
-			if (e.target.dataset.type == 'articleRead') {
-				gdt.missionComplete('articleRead').then((res) => {
-					const scoreAdd = res.transaction.amount;
-					wx.showToast({
-						title: '领取成功，获得' + scoreAdd + '积分',
-						icon: 'none',
-						duration: 1000,
-						mask: true,
-						success: () => {
-							that.handleCurrentUserAndDailyMission()
-						}
-					});
-				})
-			} else if (e.target.dataset.type == "articleShared") {
-				gdt.missionComplete('articleShared').then((res) => {
-					const scoreAdd = res.transaction.amount;
-					wx.showToast({
-						title: '领取成功，获得' + scoreAdd + '积分',
-						icon: 'none',
-						duration: 1000,
-						mask: true,
-						success: () => {
-							console.log("1")
-							that.handleCurrentUserAndDailyMission()
-						}
-					});
-				})
-			} else {
-				gdt.missionComplete('shareBeenRead').then((res) => {
-					const scoreAdd = res.transaction.amount;
-					wx.showToast({
-						title: '领取成功，获得' + scoreAdd + '积分',
-						icon: 'none',
-						duration: 1000,
-						mask: true,
-						success: () => {
-							that.handleCurrentUserAndDailyMission()
-						}
-					});
+		if(e.target.dataset.completed == false) {
+			if(e.target.dataset.criteriasatisfied == true) {
+				if (e.target.dataset.type == 'articleRead') {
+					gdt.missionComplete('articleRead').then((res) => {
+						const scoreAdd = res.transaction.amount;
+						wx.showToast({
+							title: '领取成功，获得' + scoreAdd + '积分',
+							icon: 'none',
+							duration: 1000,
+							mask: true,
+							success: () => {
+								that.handleCurrentUserAndDailyMission()
+							}
+						});
+					})
+				} else if (e.target.dataset.type == "articleShared") {
+					gdt.missionComplete('articleShared').then((res) => {
+						const scoreAdd = res.transaction.amount;
+						wx.showToast({
+							title: '领取成功，获得' + scoreAdd + '积分',
+							icon: 'none',
+							duration: 1000,
+							mask: true,
+							success: () => {
+								console.log("1")
+								that.handleCurrentUserAndDailyMission()
+							}
+						});
+					})
+				} else {
+					gdt.missionComplete('shareBeenRead').then((res) => {
+						const scoreAdd = res.transaction.amount;
+						wx.showToast({
+							title: '领取成功，获得' + scoreAdd + '积分',
+							icon: 'none',
+							duration: 1000,
+							mask: true,
+							success: () => {
+								that.handleCurrentUserAndDailyMission()
+							}
+						});
+					})
+				}
+			}else{
+				wx.reLaunch({
+					url: '/pages/index/index'
 				})
 			}
-		} else { }
+		}else { }
 	},
 	/**点击签到 */
 	toCheck: function () {

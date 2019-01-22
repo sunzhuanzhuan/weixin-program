@@ -210,7 +210,7 @@ button::after {
   border-radius: 50%;
   text-align: center;
   align-items: center;
-  line-height: 39px;
+  line-height: 78rpx;
   vertical-align: top;
 }
 
