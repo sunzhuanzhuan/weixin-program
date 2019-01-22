@@ -1,7 +1,7 @@
 const GDT = require('./application-data.js');
 App({
 	onLaunch: function (launchParam) {
-		this.globalData.applicationDataContext = new GDT(launchParam, ['wxArticle', 'simpleSurvey']);
+		this.globalData.applicationDataContext = new GDT(launchParam);
 		const gdt = this.globalData.applicationDataContext;
 		gdt.userInfo.catch(() => {
 			gdt.once('userInfo', (info) => {
