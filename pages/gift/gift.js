@@ -8,7 +8,7 @@ Page({
 
 		baseUrl: ''
 	},
-	onLoad: function (option) {
+	onLoad: function () {
 		let currentMonth = new Date().getMonth() + 1;
 		let nextMonth
 		if (currentMonth == 12) {
@@ -51,12 +51,10 @@ Page({
 
 	},
 	jumpToDetail: function (e) {
-		let item = e.currentTarget.dataset.detail;
-		let score = this.data.accountBalance;
-		let status = e.currentTarget.dataset.status
-		console.log(item);
+		let id = e.currentTarget.dataset.id;
+		console.log(id);
 		wx.navigateTo({
-			url: '/pages/giftdetail/giftdetail?id=' + item + '&accountBalance=' + score + '&status=' + status
+			url: '/pages/giftdetail/giftdetail?id=' + id 
 		})
 	},
 	onShareAppMessage: function () {

@@ -162,10 +162,9 @@ Page({
 			}
 		});
 	},
-	jumptogift: function (e) {
-		let accountBalance = e.currentTarget.dataset.score
+	jumptogift: function () {
 		wx.navigateTo({
-			url: '/pages/gift/gift?accountBalance=' + accountBalance
+			url: '/pages/gift/gift'
 		});
 	},
 	/*活动规则点击弹出*/

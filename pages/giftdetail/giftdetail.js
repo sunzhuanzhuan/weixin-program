@@ -179,14 +179,17 @@ Page({
 		let that = this;
 		gdt.currentUser.then((u) => {
 			this.data.uid = u._id;
+			gdt.getCommodity().then((result)=>{
+				that.setData({
+					accountBalance : result.accountBalance,
+					id: option.id,
+				})
+			})
 		});
-		that.setData({
-			accountBalance: option.accountBalance,
-			id: option.id,
-		})
 		gdt.getCommodityDetail(id).then((res) => {
 			that.setData({
-				detail: res
+				detail: res,
+				status : res.status
 			});
 			gdt.baseServerUri.then((res) => {
 				that.setData({
@@ -195,7 +198,7 @@ Page({
 					that.setData({
 						url: that.data.baseImageUrl + that.data.detail.coverUrl
 					});
-					if (option.status == "1" || that.data.detail.stock == '0') {
+					if (that.data.status == "1" || that.data.detail.stock == '0') {
 						this.setData({
 							WillOnLine: true
 						})
