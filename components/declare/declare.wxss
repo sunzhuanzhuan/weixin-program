@@ -146,10 +146,8 @@
     border-radius: 50rpx;
 }
 .touxiang1{
-    width: 50rpx;
     height: 50rpx;
     border-radius: 50rpx;
-    /* margin-left: -24rpx; */
 }
 .many{
     width: 50rpx;
