@@ -21,87 +21,12 @@ Page({
 	onShow: function () {
 
 	},
-<<<<<<< HEAD
 	onLoad: function (option) {
 		this.setData({
 			changeBox: false,
 			code: option.code
 		})
 		this.handleCurrentUserAndDailyMission()
-=======
-	onLoad: function () {
-		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
-			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				this.setData({
-					totalBounses: parseFloat(result.totalBounses).toFixed(2),
-					totalReferencers: result.totalReferencers,
-					detail: result.detail,
-					amount: parseFloat(result.detail.amount).toFixed(2)
-				});
-			})
-			const missions = res.missions || [];
-			const accountBalance = res.accountBalance.toFixed(2);
-			let arrDateDuration = [];
-			missions.forEach(item => {
-				if (item.type == 'showup') {
-					const level = item.payload.level;
-					this.setData({
-						checked: item.completed
-					})
-					arrDateDuration = item.payload.brefHistory;
-					let rewards = item.payload.rewards
-					this.setData({
-						check: item,
-						level: item.payload.level
-					});
-					let arrCheck = [];
-					let today = util.moment().format("MM-DD");
-					arrDateDuration.forEach((item, index) => {
-						if (today == item.date) {
-							item.date = '今天'
-						}
-						arrCheck[index] = new Object()
-						arrCheck[index]['date'] = item.date;
-						arrCheck[index]['shownUp'] = item.shownUp;
-						arrCheck[index]['rewards'] = rewards[index];
-
-					})
-					console.log(arrCheck)
-					this.setData({
-						arrCheck: arrCheck
-					});
-				} else if (item.type == "articleShared") {
-					this.setData({
-						articleShared: item
-					})
-				} else if (item.type == 'articleRead') {
-					this.setData({
-						articleRead: item
-					})
-				} else {
-					this.setData({
-						shareBeenRead: item
-					})
-				}
-			});
-
-			// let arrCheck = [];
-			// this.data.arrDate.forEach((item, index) => {
-			// 	arrCheck[index] = new Object()
-			// 	arrCheck[index]['number'] = item;
-			// 	arrCheck[index]['name'] = arrDateDuration[index];
-
-			// })
-			// this.setData({
-			// 	arrCheck: arrCheck
-			// });
-			// console.log(this.data.arrCheck)
-			this.setData({
-				accountBalance: accountBalance,
-				missions: missions.slice(1)
-			});
-		});
->>>>>>> 511e2fa4550af37a011296d5830e537401973b44
 
 	},
 	handleCurrentUserAndDailyMission: function () {
@@ -281,7 +206,7 @@ Page({
 					});
 				})
 			}
-		} else {}
+		} else { }
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -336,7 +261,7 @@ Page({
 					amount: parseFloat(result.detail.amount).toFixed(2)
 				})
 			})
-		} else {}
+		} else { }
 	},
 
 
