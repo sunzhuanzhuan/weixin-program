@@ -32,9 +32,10 @@ Page({
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				if (result.detail.length > 0) {
-					result.detail[0].amount = result.detail[0].amount.toFixed(2);
-				}
+				result.detail.map((item) => {
+					item.amount = item.amount.toFixed(2);
+				});
+				console.log(result.detail)
 				this.setData({
 					totalBounses: parseFloat(result.totalBounses).toFixed(2),
 					totalReferencers: result.totalReferencers,
@@ -101,7 +102,7 @@ Page({
 					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
-					showUp = [true, true, true, item.completed, false, false, ];
+					showUp = [true, true, true, item.completed, false, false,];
 					console.log(allArr);
 					this.setData({
 						arrDate: allArr
@@ -171,6 +172,7 @@ Page({
 	},
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {
+		let that = this;
 		if (e.target.dataset.criteriasatisfied == false) {
 			wx.reLaunch({
 				url: '/pages/index/index'
@@ -185,7 +187,7 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.handleCurrentUserAndDailyMission();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
@@ -199,7 +201,7 @@ Page({
 						mask: true,
 						success: () => {
 							console.log("1")
-							this.handleCurrentUserAndDailyMission();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
@@ -212,12 +214,12 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.handleCurrentUserAndDailyMission();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
 			}
-		} else {}
+		} else { }
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -271,7 +273,7 @@ Page({
 					pageSize: pageSize,
 				})
 			})
-		} else {}
+		} else { }
 	},
 
 
