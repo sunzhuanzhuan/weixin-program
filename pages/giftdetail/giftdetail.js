@@ -79,9 +79,9 @@ Page({
 				ctx.fillText(knowEq, 82 * ratio, 80 * ratio);
 
 				const addChangegift = ('添加小鱼聚合客服小姐姐兑换礼物吧');
-				ctx.setFontSize(12);
+				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(addChangegift, 44 * ratio, 97 * ratio);
+				ctx.fillText(addChangegift, 64 * ratio, 97 * ratio);
 
 				const equrl = this.data.eq;
 				ctx.drawImage(equrl, 100 * ratio, 115 * ratio, 120 * ratio, 120 * ratio);
