@@ -31,7 +31,7 @@
 		<view class='yellowBorder'></view>
 		<text class='monthGift'>{{nextMonth}}月礼物预告</text>
 	</view>
-	<view wx:for="{{data1}}" class='giftBox' bindtap="jumpToDetail" data-detail="{{item._id}}" data-status="{{item.status}}">
+	<view wx:for="{{data1}}" class='giftBox' bindtap="jumpToDetail" data-id="{{item._id}}" data-status="{{item.status}}">
 		<image class="imgGif" src="{{baseImageUrl+item.coverUrl}}"></image>
 		<view class='giftTitle'>
 			<text class='giftTitleDetail'>{{item.name}}</text>
