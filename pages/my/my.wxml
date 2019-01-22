@@ -41,12 +41,12 @@
 			</view>
 		</view>
 		<view class="bigBoxThree">
-			<view bindtap="handleTapHistoryOrArticalOrVideo" data-name="history" class="boxHistory" style="width:230rpx">
+			<view bindtap="handleTapHistoryOrArticalOrVideo" data-name="history" class="boxHistory" style="width:50%">
 				<image src="{{baseImageUrlHistory}}" class="imgHistory" />
 				<view class="letterHistory">浏览历史</view>
 			</view>
 			<text class="letterLeft"></text>
-			<view bindtap="handleTapHistoryOrArticalOrVideo" data-name="artical" class="boxHistory" style="width:230rpx">
+			<view bindtap="handleTapHistoryOrArticalOrVideo" data-name="artical" class="boxHistory" style="width:49%">
 				<image src="{{baseImageUrlArtical}}" class="imgHistory" />
 				<view class="letterHistory">收藏的文章</view>
 			</view>
@@ -55,11 +55,6 @@
 				<image src="{{baseImageUrlVideo}}" class="imgHistory" />
 				<view class="letterHistory">收藏的视频</view>
 			</view> -->
-			<text style="background:#fff;display:inline-block;height:50rpx;border-right:1rpx solid #E6E6E6;vertical-align:top;margin-top:60rpx;"></text>
-            <view bindtap="handleTapHistoryOrArticalOrVideo"   data-name="video"  style="display:inline-block;width:234rpx;height:160rpx;background:#fff;text-align:center;">
-                <image src="{{baseImageUrlVideo}}"  style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
-                <view style="font-size:24rpx;color:#333">收藏的视频</view>
-            </view>
 
 		</view>
 	</view>
