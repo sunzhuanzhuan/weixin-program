@@ -189,7 +189,8 @@ Page({
 		gdt.getCommodityDetail(id).then((res) => {
 			that.setData({
 				detail: res,
-				status : res.status
+				status : res.status,
+				price : parseFloat(res.rmbPrice).toFixed(2)
 			});
 			gdt.baseServerUri.then((res) => {
 				that.setData({
