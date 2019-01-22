@@ -268,7 +268,10 @@ Page({
 		gdt.magicMySharedLoadLatest().then(() => {
 			wx.hideLoading()
 		});
-		gdt.track('item-list-share-load-first')
+		gdt.track('item-list-share-load-first');
+		setTimeout(() => {
+			wx.stopPullDownRefresh();
+		}, 500);
 	},
 
 
