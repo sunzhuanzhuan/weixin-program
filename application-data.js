@@ -453,6 +453,16 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					if (indexedItem.type == "txvVideo") {
 						indexedItem.wxMidVec = '1234#1'
 					}
+					if (indexedItem.annotations) {
+						let annotations = indexedItem.annotations[0];
+						let total = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters);
+						console.log(total)
+						if (total.length > 5) {
+							total.slice(0, 6)
+						}
+						indexedItem.annotations[0].totalUrl = total;
+					}
+
 					if (indexedItem.type == "simpleSurvey") {
 						let one = indexedItem.surveyOptions[0].totalSupporters || 0;
 						let two = indexedItem.surveyOptions[1].totalSupporters || 0;
@@ -555,8 +565,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				if (indexedItem.isVote) {
 
 					indexedItem.annotations = entity.params;
+					console.log(indexedItem.annotations[0])
 					let annotations = indexedItem.annotations[0];
+					debugger
 					let total = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters);
+					debugger
+					console.log(total)
 					if (total.length > 5) {
 						total.slice(0, 6)
 					}
@@ -1010,27 +1024,28 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				if (obj.surveyOptions[item.num].supporters.length < 5) {
 					obj.surveyOptions[item.num].supporters.push(res.userInfo)
 				}
+				let total = one + two;
+				if (total == 0) {
+					obj.m = 0;
+					obj.n = 0;
+				} else {
+					// obj.m = 5;
+					// obj.n = 56
+					obj.m = (one / total).toFixed(2) * 100;
+					obj.n = 100 - ((one / total).toFixed(2) * 100);
+				};
+				let obj1 = {};
+				obj1._id = item.params.referencedEntity;
+				obj1.num = Number(item.num);
+				obj1.params = [obj];
+				obj1.type = 'wxArticle';
+				obj1.annotations = [obj];
+
+				obj1.isVote = true;
+				this.emit('entityUpdate', obj1);
 
 			})
-			let total = one + two;
-			if (total == 0) {
-				obj.m = 0;
-				obj.n = 0;
-			} else {
-				// obj.m = 5;
-				// obj.n = 56
-				obj.m = (one / total).toFixed(2) * 100;
-				obj.n = 100 - ((one / total).toFixed(2) * 100);
-			};
-			let obj1 = {};
-			obj1._id = item.params.referencedEntity;
-			obj1.num = Number(item.num);
-			obj1.params = [obj];
-			obj1.type = 'wxArticle';
-			obj1.annotations = [obj];
 
-			obj1.isVote = true;
-			this.emit('entityUpdate', obj1);
 		})
 		return queryPromise
 	}
