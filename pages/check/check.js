@@ -32,11 +32,13 @@ Page({
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				result.detail[0].amount = result.detail[0].amount.toFixed(2);
+				if (result.detail.length > 0) {
+					result.detail[0].amount = result.detail[0].amount.toFixed(2);
+				}
 				this.setData({
-					totalBounses: result.totalBounses.toFixed(2),
+					totalBounses: parseFloat(result.totalBounses).toFixed(2),
 					totalReferencers: result.totalReferencers,
-					detail: result.detail
+					detail: result.detail,
 				});
 			})
 			const missions = res.missions || [];
@@ -99,27 +101,34 @@ Page({
 					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
-					showUp = [true, true, true, item.completed, false, false,];
+					showUp = [true, true, true, item.completed, false, false, ];
 					console.log(allArr);
-					this.setData({ arrDate: allArr })
-				}
-				else if (level == 0) {
+					this.setData({
+						arrDate: allArr
+					})
+				} else if (level == 0) {
 					arrDateDuration = ['今天', next1, next2, next3, next4, next5, next6];
 					showUp = [item.completed, false, false, false, false, false, false];
 					allArr = item.payload.rewards.slice(0, 7);
 					console.log('=====');
 					console.log(allArr);
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				} else if (level == 1) {
 					arrDateDuration = [preve1, '今天', next1, next2, next3, next4, next5]
 					allArr = item.payload.rewards.slice(0, 7);
 					showUp = [true, item.completed, false, false, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				} else if (level == 2) {
 					arrDateDuration = [preve1, preve2, '今天', next1, next2, next3, next4]
 					allArr = item.payload.rewards.slice(0, 7);
 					showUp = [true, true, item.completed, false, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				}
 				let arrCheck = [];
 				allArr.forEach((item, index) => {
@@ -129,7 +138,9 @@ Page({
 					arrCheck[index]['showUp'] = showUp[index]
 
 				})
-				this.setData({ arrCheck: arrCheck });
+				this.setData({
+					arrCheck: arrCheck
+				});
 
 			} else if (item.type == "articleShared") {
 				this.setData({
@@ -206,7 +217,7 @@ Page({
 					});
 				})
 			}
-		} else { }
+		} else {}
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -258,10 +269,9 @@ Page({
 					detail: result.detail,
 					page: page,
 					pageSize: pageSize,
-					amount: parseFloat(result.detail.amount).toFixed(2)
 				})
 			})
-		} else { }
+		} else {}
 	},
 
 
