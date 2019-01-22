@@ -546,10 +546,12 @@ button::after {
 .freshSingle {
   width: 640rpx;
   height: 60rpx;
-  margin-top: 8rpx;
   margin-bottom: 10rpx;
   display: flex;
   justify-content: space-between;
+}
+.freshSingle:first-child{
+  margin-top:8rpx;
 }
 
 .freshSingle text {
@@ -559,6 +561,10 @@ button::after {
   font-family: PingFangSC-Regular;
   font-weight: 400;
   color: rgba(102, 102, 102, 1);
+  width:200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .loadMore {
