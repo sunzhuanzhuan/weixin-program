@@ -232,11 +232,11 @@ Page({
 			success: res => {
 				if (!res.authSetting['scope.writePhotosAlbum']) {
 					this.setData({
-						btnSavePitcureLetter: '保存到相册'
+						btnSavePitcureLetter: '保存图片到手机'
 					})
 				} else {
 					this.setData({
-						btnSavePitcureLetter: '已保存到相册，记得分享哦'
+						btnSavePitcureLetter: '已保存到手机，记得分享哦'
 					})
 				}
 			}
