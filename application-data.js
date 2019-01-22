@@ -467,6 +467,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
 						}
 
 					}
+					if (indexedItem.annotations) {
+						let annotations = indexedItem.annotations[0];
+						annotations['totalUrl'] = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters)
+					}
 					// indexedItem.isShow=false
 					const r = _.find(targetList, { _id: x._id });
 					if (r) {
@@ -551,7 +555,12 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				if (indexedItem.isVote) {
 
 					indexedItem.annotations = entity.params;
-					console.log(indexedItem.annotations);
+					let annotations = indexedItem.annotations[0];
+					let total = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters);
+					if (total.length > 5) {
+						total.slice(0, 6)
+					}
+					indexedItem.annotations[0].totalUrl = total;
 				} else {
 					if (!indexedItem.randomNum) {
 						indexedItem.randomNum = Math.floor(Math.random() * 40);
