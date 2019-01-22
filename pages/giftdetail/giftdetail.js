@@ -7,7 +7,8 @@ Page({
 		canIchange: true, //兑换和积分不足 按钮
 		notEnough: false, //赚取积分弹窗
 		tooLate: false,
-		url: '../../images/load.png'
+		url: '../../images/load.png',
+		eq:'../../images/xiaoyu.jpeg'
 	},
 	change: function () {
 		this.setData({
@@ -81,7 +82,7 @@ Page({
 				ctx.setFillStyle('rgba(153,153,153,1)');
 				ctx.fillText(addChangegift, 44 * ratio, 97 * ratio);
 
-				const equrl = this.data.baseImageUrlEq;
+				const equrl = this.data.eq;
 				ctx.drawImage(equrl, 100 * ratio, 115 * ratio, 120 * ratio, 120 * ratio);
 
 				const wxtext = '微信：xiaoyujuhe123';
@@ -198,11 +199,12 @@ Page({
 				})
 			});
 		});
-		gdt.baseServerUri.then((res) => {
-			this.setData({
-				baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
-			})
-		});
+		// gdt.baseServerUri.then((res) => {
+		// 	this.setData({
+		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
+		// 	},()=>{console.log(this.data.baseImageUrlEq)})
+		// });
+		
 	},
 	touchmove: function () {
 		return
