@@ -32,7 +32,10 @@ Page({
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				result.detail[0].amount = result.detail[0].amount.toFixed(2);
+				result.detail.map((item) => {
+					item.amount = item.amount.toFixed(2);
+				});
+				console.log(result.detail)
 				this.setData({
 					totalBounses: result.totalBounses.toFixed(2),
 					totalReferencers: result.totalReferencers,
@@ -160,6 +163,7 @@ Page({
 	},
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {
+		let that = this;
 		if (e.target.dataset.criteriasatisfied == false) {
 			wx.reLaunch({
 				url: '/pages/index/index'
@@ -174,7 +178,7 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.onLoad();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
@@ -188,7 +192,7 @@ Page({
 						mask: true,
 						success: () => {
 							console.log("1")
-							this.onLoad();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
@@ -201,7 +205,7 @@ Page({
 						duration: 1000,
 						mask: true,
 						success: () => {
-							this.onLoad();
+							that.handleCurrentUserAndDailyMission()
 						}
 					});
 				})
