@@ -2,12 +2,13 @@ let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 Page({
 	data: {
+		uid: '',
 		accountBalance: 0,
 		data: [],
 
 		baseUrl: ''
 	},
-	onLoad: function (option) {
+	onLoad: function () {
 		let currentMonth = new Date().getMonth() + 1;
 		let nextMonth
 		if (currentMonth == 12) {
@@ -15,7 +16,9 @@ Page({
 		} else {
 			nextMonth = new Date().getMonth() + 2;
 		}
-
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
+		});
 		let that = this;
 		gdt.getCommodity().then((res) => {
 			console.log(res);
@@ -48,12 +51,16 @@ Page({
 
 	},
 	jumpToDetail: function (e) {
-		let item = e.currentTarget.dataset.detail;
-		let score = this.data.accountBalance;
-		let status = e.currentTarget.dataset.status
-		console.log(item);
+		let id = e.currentTarget.dataset.id;
+		console.log(id);
 		wx.navigateTo({
-			url: '/pages/giftdetail/giftdetail?id=' + item + '&accountBalance=' + score + '&status=' + status
+			url: '/pages/giftdetail/giftdetail?id=' + id 
 		})
+	},
+	onShareAppMessage: function () {
+		return {
+			title: '签到领好礼',
+			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+		}
 	}
 })

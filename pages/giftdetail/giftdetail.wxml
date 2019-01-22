@@ -7,7 +7,7 @@
 			<view class="giftDetail">
 				<view class="detail">
 					<text class="giftTitle">{{detail.name}}</text>
-					<text class="price">￥{{detail.rmbPrice}}</text>
+					<text class="price">￥{{price}}</text>
 					<view class="giftWorth">
 						<view class="giftWorthline"></view>
 						<text class="giftWorthTxt">{{detail.price}} 积分</text>
@@ -50,7 +50,7 @@
 				<image class="giftPicSmall" src="{{baseImageUrl+detail.coverUrl}}"></image>
 			</view>
 			<view class="changeScore">
-				<text class="scoreminus">积分减扣: -{{detail.price}}</text>
+				<text class="scoreminus">积分扣减: -{{detail.price}}分</text>
 			</view>
 			<view class="changeLeft">
 				<text class="scoreminus">数量</text>

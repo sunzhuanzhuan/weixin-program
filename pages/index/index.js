@@ -511,16 +511,12 @@ Page({
 			});
 			this.data.appTitle = x;
 		});
-		gdt.fetchDistributionIndex().then((res) => {
-			this.setData({
-				setting: res.settings || {}
-			})
-		})
 		gdt.ready.then((app) => {
 			this.appState = app;
 			if (app.title) {
 				wx.setNavigationBarTitle({
 					title: app.title,
+					setting: app.settings
 				});
 			}
 
@@ -681,7 +677,7 @@ Page({
 					type: entity.type
 				});
 				return {
-					title: entity.title || '默认转发标题',
+					title: entity.title || this.data.appTitle || '默认转发标题',
 					path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
 					imageUrl: entity.coverUrl
 				}

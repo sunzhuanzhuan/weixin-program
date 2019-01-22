@@ -3,12 +3,13 @@ const gdt = app.applicationDataContext;
 Page({
 
 	data: {
+		uid: '',
 		visible: false, //兑换弹窗
 		canIchange: true, //兑换和积分不足 按钮
 		notEnough: false, //赚取积分弹窗
 		tooLate: false,
 		url: '../../images/load.png',
-		eq:'../../images/xiaoyu.jpeg'
+		eq: '../../images/xiaoyu.jpeg'
 	},
 	change: function () {
 		this.setData({
@@ -78,9 +79,9 @@ Page({
 				ctx.fillText(knowEq, 82 * ratio, 80 * ratio);
 
 				const addChangegift = ('添加小鱼聚合客服小姐姐兑换礼物吧');
-				ctx.setFontSize(12);
+				ctx.setFontSize(12 * ratio);
 				ctx.setFillStyle('rgba(153,153,153,1)');
-				ctx.fillText(addChangegift, 44 * ratio, 97 * ratio);
+				ctx.fillText(addChangegift, 64 * ratio, 97 * ratio);
 
 				const equrl = this.data.eq;
 				ctx.drawImage(equrl, 100 * ratio, 115 * ratio, 120 * ratio, 120 * ratio);
@@ -176,13 +177,20 @@ Page({
 	onLoad: function (option) {
 		const id = option.id;
 		let that = this;
-		that.setData({
-			accountBalance: option.accountBalance,
-			id: option.id,
-		})
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
+			gdt.getCommodity().then((result)=>{
+				that.setData({
+					accountBalance : result.accountBalance,
+					id: option.id,
+				})
+			})
+		});
 		gdt.getCommodityDetail(id).then((res) => {
 			that.setData({
-				detail: res
+				detail: res,
+				status : res.status,
+				price : parseFloat(res.rmbPrice).toFixed(2)
 			});
 			gdt.baseServerUri.then((res) => {
 				that.setData({
@@ -191,7 +199,7 @@ Page({
 					that.setData({
 						url: that.data.baseImageUrl + that.data.detail.coverUrl
 					});
-					if (option.status == "1" || that.data.detail.stock == '0') {
+					if (that.data.status == "1" || that.data.detail.stock == '0') {
 						this.setData({
 							WillOnLine: true
 						})
@@ -204,7 +212,7 @@ Page({
 		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
 		// 	},()=>{console.log(this.data.baseImageUrlEq)})
 		// });
-		
+
 	},
 	touchmove: function () {
 		return
@@ -224,11 +232,11 @@ Page({
 			success: res => {
 				if (!res.authSetting['scope.writePhotosAlbum']) {
 					this.setData({
-						btnSavePitcureLetter: '保存到相册'
+						btnSavePitcureLetter: '保存图片到手机'
 					})
 				} else {
 					this.setData({
-						btnSavePitcureLetter: '已保存到相册，记得分享哦'
+						btnSavePitcureLetter: '已保存到手机，记得分享哦'
 					})
 				}
 			}
@@ -252,6 +260,9 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: '签到领好礼',
+			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+		}
 	}
 })

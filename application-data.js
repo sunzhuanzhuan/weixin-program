@@ -259,12 +259,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			});
 	}
 
-	loginWithAuthorizationCode(code) {
+	loginWithAuthorizationCode(code, refee) {
 		return this.appToken.then((appToken) => {
 			return this.simpleApiCall('POST', '/login', {
 				body: {
 					appToken: appToken,
-					code: code
+					code: code,
+					refee: refee || undefined
 				}
 			});
 		})
@@ -277,7 +278,13 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				reject: reject
 			});
 		});
-		return loginPromise.then((x) => this.loginWithAuthorizationCode(x.code));
+		return loginPromise.then((x) => {
+			let refee;
+			if (this.launchParam && this.launchParam.query) {
+				refee = this.launchParam.query.refee;
+			}
+			return this.loginWithAuthorizationCode(x.code, refee);
+		});
 	}
 
 	checkAndFixUserLogin() {
@@ -403,6 +410,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			this.localState.lists = appBaseInfo.lists;
 			this.localState.pendingAudition = appBaseInfo.pendingAudition;
 			this.localState.toplistEnabled = appBaseInfo.toplistEnabled;
+			this.localState.settings = appBaseInfo.settings;
 			if (this.localState.pendingAudition) {
 				this.entityTypes = ['wxArticle']
 			}

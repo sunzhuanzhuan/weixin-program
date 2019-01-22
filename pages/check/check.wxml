@@ -110,7 +110,7 @@
 	<view class="freshList">
 		<view class="freshSingle" wx:for="{{detail}}">
 			<text class="freshName">{{item.nickname}}</text>
-			<text class="freshWorth">+{{amount}}积分</text>
+			<text class="freshWorth">+{{item.amount}}积分</text>
 		</view>
 	</view>
 	<view class="loadMore" wx:if="{{totalReferencers>10}}">

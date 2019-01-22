@@ -3,6 +3,7 @@ const gdt = app.applicationDataContext;
 const util = require('../../utils/util')
 Page({
 	data: {
+		uid: '',
 		url: '',
 		reportSubmit: true,
 		accountBalance: "",
@@ -22,6 +23,9 @@ Page({
 
 	},
 	onLoad: function (option) {
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
+		});
 		this.setData({
 			changeBox: false,
 			code: option.code
@@ -32,11 +36,14 @@ Page({
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
 			gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
-				result.detail[0].amount = result.detail[0].amount.toFixed(2);
+				result.detail.map((item) => {
+					item.amount = item.amount.toFixed(2);
+				});
+				console.log(result.detail)
 				this.setData({
-					totalBounses: result.totalBounses.toFixed(2),
+					totalBounses: parseFloat(result.totalBounses).toFixed(2),
 					totalReferencers: result.totalReferencers,
-					detail: result.detail
+					detail: result.detail,
 				});
 			})
 			const missions = res.missions || [];
@@ -55,9 +62,9 @@ Page({
 		let preve1 = util.moment().subtract(1, 'days').format("MM-DD");
 		let preve2 = util.moment().subtract(2, 'days').format("MM-DD");
 		let preve3 = util.moment().subtract(3, 'days').format("MM-DD");
-		let next4 = util.moment().subtract(4, 'days').format("MM-DD");
-		let next5 = util.moment().subtract(5, 'days').format("MM-DD");
-		let next6 = util.moment().subtract(6, 'days').format("MM-DD");
+		let next4 = util.moment().add(4, 'days').format("MM-DD");
+		let next5 = util.moment().add(5, 'days').format("MM-DD");
+		let next6 = util.moment().add(6, 'days').format("MM-DD");
 		missions.forEach(item => {
 			if (item.type == 'showup') {
 				// item.payload.level = 5;
@@ -101,25 +108,32 @@ Page({
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
 					showUp = [true, true, true, item.completed, false, false,];
 					console.log(allArr);
-					this.setData({ arrDate: allArr })
-				}
-				else if (level == 0) {
+					this.setData({
+						arrDate: allArr
+					})
+				} else if (level == 0) {
 					arrDateDuration = ['今天', next1, next2, next3, next4, next5, next6];
 					showUp = [item.completed, false, false, false, false, false, false];
 					allArr = item.payload.rewards.slice(0, 7);
 					console.log('=====');
 					console.log(allArr);
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				} else if (level == 1) {
 					arrDateDuration = [preve1, '今天', next1, next2, next3, next4, next5]
 					allArr = item.payload.rewards.slice(0, 7);
 					showUp = [true, item.completed, false, false, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				} else if (level == 2) {
 					arrDateDuration = [preve1, preve2, '今天', next1, next2, next3, next4]
 					allArr = item.payload.rewards.slice(0, 7);
 					showUp = [true, true, item.completed, false, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 				}
 				let arrCheck = [];
 				allArr.forEach((item, index) => {
@@ -129,7 +143,9 @@ Page({
 					arrCheck[index]['showUp'] = showUp[index]
 
 				})
-				this.setData({ arrCheck: arrCheck });
+				this.setData({
+					arrCheck: arrCheck
+				});
 
 			} else if (item.type == "articleShared") {
 				this.setData({
@@ -146,10 +162,9 @@ Page({
 			}
 		});
 	},
-	jumptogift: function (e) {
-		let accountBalance = e.currentTarget.dataset.score
+	jumptogift: function () {
 		wx.navigateTo({
-			url: '/pages/gift/gift?accountBalance=' + accountBalance
+			url: '/pages/gift/gift'
 		});
 	},
 	/*活动规则点击弹出*/
@@ -160,53 +175,56 @@ Page({
 	},
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {
-		if (e.target.dataset.criteriasatisfied == false) {
-			wx.reLaunch({
-				url: '/pages/index/index'
-			})
-		} else if (e.target.dataset.completed == false) {
-			if (e.target.dataset.type == 'articleRead') {
-				gdt.missionComplete('articleRead').then((res) => {
-					const scoreAdd = res.transaction.amount;
-					wx.showToast({
-						title: '领取成功，获得' + scoreAdd + '积分',
-						icon: 'none',
-						duration: 1000,
-						mask: true,
-						success: () => {
-							this.onLoad();
-						}
-					});
-				})
-			} else if (e.target.dataset.type == "articleShared") {
-				gdt.missionComplete('articleShared').then((res) => {
-					const scoreAdd = res.transaction.amount;
-					wx.showToast({
-						title: '领取成功，获得' + scoreAdd + '积分',
-						icon: 'none',
-						duration: 1000,
-						mask: true,
-						success: () => {
-							console.log("1")
-							this.onLoad();
-						}
-					});
-				})
-			} else {
-				gdt.missionComplete('shareBeenRead').then((res) => {
-					const scoreAdd = res.transaction.amount;
-					wx.showToast({
-						title: '领取成功，获得' + scoreAdd + '积分',
-						icon: 'none',
-						duration: 1000,
-						mask: true,
-						success: () => {
-							this.onLoad();
-						}
-					});
+		let that = this;
+		if(e.target.dataset.completed == false) {
+			if(e.target.dataset.criteriasatisfied == true) {
+				if (e.target.dataset.type == 'articleRead') {
+					gdt.missionComplete('articleRead').then((res) => {
+						const scoreAdd = res.transaction.amount;
+						wx.showToast({
+							title: '领取成功，获得' + scoreAdd + '积分',
+							icon: 'none',
+							duration: 1000,
+							mask: true,
+							success: () => {
+								that.handleCurrentUserAndDailyMission()
+							}
+						});
+					})
+				} else if (e.target.dataset.type == "articleShared") {
+					gdt.missionComplete('articleShared').then((res) => {
+						const scoreAdd = res.transaction.amount;
+						wx.showToast({
+							title: '领取成功，获得' + scoreAdd + '积分',
+							icon: 'none',
+							duration: 1000,
+							mask: true,
+							success: () => {
+								console.log("1")
+								that.handleCurrentUserAndDailyMission()
+							}
+						});
+					})
+				} else {
+					gdt.missionComplete('shareBeenRead').then((res) => {
+						const scoreAdd = res.transaction.amount;
+						wx.showToast({
+							title: '领取成功，获得' + scoreAdd + '积分',
+							icon: 'none',
+							duration: 1000,
+							mask: true,
+							success: () => {
+								that.handleCurrentUserAndDailyMission()
+							}
+						});
+					})
+				}
+			}else{
+				wx.reLaunch({
+					url: '/pages/index/index'
 				})
 			}
-		} else { }
+		}else { }
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -258,11 +276,16 @@ Page({
 					detail: result.detail,
 					page: page,
 					pageSize: pageSize,
-					amount: parseFloat(result.detail.amount).toFixed(2)
 				})
 			})
 		} else { }
 	},
 
+	onShareAppMessage: function () {
+		return {
+			title: '签到领好礼',
+			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+		}
+	}
 
 })

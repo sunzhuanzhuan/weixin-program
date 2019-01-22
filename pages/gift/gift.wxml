@@ -11,7 +11,7 @@
 		<view class='yellowBorder'></view>
 		<text class='monthGift'>{{currentMonth}}月礼物(每月更新)</text>
 	</view>
-	<view wx:for="{{data}}" class='giftBox' bindtap="jumpToDetail" data-detail="{{item._id}}" data-status="{{item.status}}">
+	<view wx:for="{{data}}" class='giftBox' bindtap="jumpToDetail" data-id="{{item._id}}">
 		<image class="imgGif" src="{{baseImageUrl+item.coverUrl}}">
 			<view class='maskOut' wx:if="{{item.stock <= 0}}">
 				<text class="haveBeenRunOut">已抢光</text>

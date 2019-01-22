@@ -5,6 +5,7 @@ const gdt = app.applicationDataContext;
 const util = require('../../utils/util');
 Page({
 	data: {
+		uid: '',
 		name: '',
 		myCollectArtical: [],
 		myCollectVideo: [],
@@ -17,7 +18,7 @@ Page({
 		type1: 'getUserInfo',
 		screenHeight: '',
 		reportSubmit: true,
-		loadding:false,
+		loadding: false,
 
 	},
 	onShow: function () {
@@ -74,6 +75,9 @@ Page({
 				this.setData({ type1: 'share' });
 			});
 		});
+		gdt.currentUser.then((u) => {
+			this.data.uid = u._id;
+		});
 
 		const makeMyCollectArtical = () => {
 			this.appState.myCollectArtical.forEach((x) => {
@@ -89,7 +93,7 @@ Page({
 					entity.readTimes = parseInt(Math.random() * 20 + 30)
 				}
 			});
-			this.setData({myCollectArtical: this.appState.myCollectArtical, myCollectArticalHasMore: this.appState.myCollectArtical.__hasMore !== false });
+			this.setData({ myCollectArtical: this.appState.myCollectArtical, myCollectArticalHasMore: this.appState.myCollectArtical.__hasMore !== false });
 
 
 		};
@@ -168,24 +172,24 @@ Page({
 
 
 		if (options.type === 'history') {
-			gdt.magicMyViewsFirstLoad().then(()=>{
-				this.setData({loadding:true})
+			gdt.magicMyViewsFirstLoad().then(() => {
+				this.setData({ loadding: true })
 			});
 			wx.setNavigationBarTitle({
 				title: '浏览历史',
 			});
 
 		} else if (options.type === 'artical') {
-			gdt.magicMyCollectArticalFirstLoad().then(()=>{
-				this.setData({loadding:true})
+			gdt.magicMyCollectArticalFirstLoad().then(() => {
+				this.setData({ loadding: true })
 			});
 			wx.setNavigationBarTitle({
 				title: '收藏的文章',
 			});
 
 		} else {
-			gdt.magicMyCollectVideoFirstLoad().then(()=>{
-				this.setData({loadding:true})
+			gdt.magicMyCollectVideoFirstLoad().then(() => {
+				this.setData({ loadding: true })
 			});
 			wx.setNavigationBarTitle({
 				title: '收藏的视频',
@@ -248,17 +252,17 @@ Page({
 
 	},
 	onReachBottom: function () {
-		wx.showLoading({title:'加载中',icon:'loadding'})
+		wx.showLoading({ title: '加载中', icon: 'loadding' })
 		if (this.data.name == 'history') {
-			gdt.magicMyViewsLoadMore().then(()=>{
+			gdt.magicMyViewsLoadMore().then(() => {
 				wx.hideLoading()
 			})
 		} else if (this.data.name == 'artical') {
-			gdt.magicMyCollectArticalLoadMore().then(()=>{
+			gdt.magicMyCollectArticalLoadMore().then(() => {
 				wx.hideLoading()
 			})
 		} else {
-			gdt.magicMyCollectVideoLoadMore().then(()=>{
+			gdt.magicMyCollectVideoLoadMore().then(() => {
 				wx.hideLoading()
 			})
 		}
@@ -267,7 +271,7 @@ Page({
 	//下拉刷新
 	onPullDownRefresh: function () {
 		let that = this;
-		wx.showLoading({title:'加载中',icon:'loadding'})
+		wx.showLoading({ title: '加载中', icon: 'loadding' })
 		if (this.data.name === 'history') {
 			gdt.magicMyViewsLoadLatest().then(() => {
 				wx.hideLoading()
@@ -309,7 +313,7 @@ Page({
 				gdt.trackShareItem(entity._id);
 				gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });
 				return {
-					title: entity.title || '默认转发标题',
+					title: entity.title || '浏览历史',
 					path: `pages/detail/detail?id=${entity._id}&refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
 					imageUrl: entity.coverUrl
 				}
