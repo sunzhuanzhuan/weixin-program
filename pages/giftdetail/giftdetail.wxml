@@ -61,8 +61,11 @@
 			<view class="cancel" bindtap="cancel">
 				<text class="txt">再想想</text>
 			</view>
-			<view class="sure" bindtap="confirm">
+			<view class="sure" bindtap="confirm" wx:if="{{forSure}}">
 				<text class="txt">确认兑换</text>
+			</view>
+			<view class="sure" wx:else>
+				<text class="txt">确认兑换</text>	
 			</view>
 		</view>
 	</view>

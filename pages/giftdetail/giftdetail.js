@@ -9,7 +9,8 @@ Page({
 		notEnough: false, //赚取积分弹窗
 		tooLate: false,
 		url: '../../images/load.png',
-		eq: '../../images/xiaoyu.jpeg'
+		eq: '../../images/xiaoyu.jpeg',
+		forSure : true,
 	},
 	change: function () {
 		this.setData({
@@ -32,8 +33,9 @@ Page({
 		})
 	},
 	confirm: function () {
-
-
+		this.setData({
+			forSure : false,
+		})
 		gdt.purchase(this.data.id, 1).then((res) => {
 			wx.showLoading({
 				title: '加载中',
