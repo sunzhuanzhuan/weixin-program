@@ -125,8 +125,7 @@ Page({
 							wx.hideLoading();
 						}
 					})
-				}, 2000);
-
+				}, 1000);
 			})
 
 
@@ -163,28 +162,44 @@ Page({
 			success: function () {
 				console.log('保存成功');
 				that.setData({
-					saveToCamera: ''
-				})
+					saveToCamera: '',
+					forSure : true,
+				});
+				that.handleApiGroup(that.data.id)
 
 			},
 			fail: function () {
 				console.log('保存失败');
 				that.setData({
-					saveToCamera: 'openSetting'
-				})
+					saveToCamera: 'openSetting',
+					forSure : true,
+				});
+				that.handleApiGroup(that.data.id)
 			}
 		})
 
 	},
 	onLoad: function (option) {
 		const id = option.id;
-		let that = this;
+		this.setData({
+			id : id
+		})
+		this.handleApiGroup(id)
+		// gdt.baseServerUri.then((res) => {
+		// 	this.setData({
+		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
+		// 	},()=>{console.log(this.data.baseImageUrlEq)})
+		// });
+
+	},
+	handleApiGroup : function(id){
+		let that = this
 		gdt.currentUser.then((u) => {
-			this.data.uid = u._id;
+			that.data.uid = u._id;
 			gdt.getCommodity().then((result)=>{
 				that.setData({
 					accountBalance : result.accountBalance,
-					id: option.id,
+					id: id,
 				})
 			})
 		});
@@ -209,12 +224,6 @@ Page({
 				})
 			});
 		});
-		// gdt.baseServerUri.then((res) => {
-		// 	this.setData({
-		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
-		// 	},()=>{console.log(this.data.baseImageUrlEq)})
-		// });
-
 	},
 	touchmove: function () {
 		return

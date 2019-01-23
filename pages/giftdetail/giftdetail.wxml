@@ -13,10 +13,10 @@
 						<text class="giftWorthTxt">{{detail.price}} 积分</text>
 					</view>
 				</view>
-				<!-- <view class="specification">
+				<view class="specification">
 					<text class="specText">规格</text>
-					<text class="specNum">450ml</text>
-				</view> -->
+					<text class="specNum">{{detail.spec}}</text>
+				</view>
 			</view>
 		</view>
 		<view class="textBox">
