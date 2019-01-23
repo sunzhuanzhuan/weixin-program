@@ -480,8 +480,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
 							indexedItem.m = 0;
 							indexedItem.n = 0;
 						} else {
-							indexedItem.m = Number((one / total).toFixed(2)) * 100;
-							indexedItem.n = 100 - (Number((one / total).toFixed(2)) * 100);
+							let a = parseInt(((one / total).toFixed(2)) * 100)
+							indexedItem.m = a;
+							indexedItem.n = 100 - a;
 						}
 
 					}
@@ -558,11 +559,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					indexedItem.m = 0;
 					indexedItem.n = 0;
 				} else {
-					indexedItem.m = Number((one / total).toFixed(2)) * 100;
-					indexedItem.n = 100 - (Number((one / total).toFixed(2)) * 100);
-
-					// indexedItem.m = (one / total).toFixed(2) * 100;
-					// indexedItem.n = 100 - ((one / total).toFixed(2) * 100);
+					let a = parseInt(((one / total).toFixed(2)) * 100)
+					indexedItem.m = a;
+					indexedItem.n = 100 - a;
 				}
 				// console.log(indexedItem)
 
@@ -1040,10 +1039,9 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					obj.m = 0;
 					obj.n = 0;
 				} else {
-					obj.m = Number((one / total).toFixed(2)) * 100;
-					obj.n = 100 - (Number((one / total).toFixed(2)) * 100);
-					// obj.m = (one / total).toFixed(2) * 100;
-					// obj.n = 100 - ((one / total).toFixed(2) * 100);
+					let a = parseInt(((one / total).toFixed(2)) * 100)
+					obj.m = a;
+					obj.n = 100 - a;
 				};
 				let obj1 = {};
 				obj1._id = item.params.referencedEntity;
