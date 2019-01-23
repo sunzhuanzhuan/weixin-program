@@ -34,15 +34,12 @@ button::after {
 }
 
 .avatar {
-  border-radius: 50%;
   color: #333333;
   height: 140rpx;
-  /*background:#f6f6f6 ;*/
   text-align: center;
   overflow: hidden;
   text-overflow:ellipsis;
-  white-space: nowrap;  
-
+  white-space: nowrap;
 }
 
 .chineseLetter {
