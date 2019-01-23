@@ -315,8 +315,10 @@ Page({
 					enti.m = 0;
 					enti.n = 0;
 				} else {
-					enti.m = (one / total).toFixed(2) * 100;
-					enti.n = 100 - ((one / total).toFixed(2) * 100);
+					enti.m = Number((one / total).toFixed(2)) * 100;
+					enti.n = 100 - (Number((one / total).toFixed(2)) * 100);
+					// enti.m = (one / total).toFixed(2) * 100;
+					// enti.n = 100 - ((one / total).toFixed(2) * 100);
 				};
 				this.setData({ vote: r.entity.annotations[0] })
 			}
@@ -909,10 +911,10 @@ Page({
 						obj.m = 0;
 						obj.n = 0;
 					} else {
-						// obj.m = 5;
-						// obj.n = 56
-						obj.m = (one / total).toFixed(2) * 100;
-						obj.n = 100 - ((one / total).toFixed(2) * 100);
+						obj.m = Number((one / total).toFixed(2)) * 100;
+						obj.n = 100 - (Number((one / total).toFixed(2)) * 100);
+						// obj.m = (one / total).toFixed(2) * 100;
+						// obj.n = 100 - ((one / total).toFixed(2) * 100);
 					};
 
 					gdt.userInfo.then((res) => {
