@@ -254,30 +254,36 @@ Page({
 	},
 	onReachBottom: function () {
 		if (this.data.totalReferencers > this.data.pageSize) {
-			let page = this.data.page;
-			let pageSize = this.data.pageSize + 10;
-			gdt.getReferral(page, pageSize).then((result) => {
-				this.setData({
-					detail: result.detail,
+			let that = this;
+			let page = this.data.page + 1;
+			let pageSize = this.data.pageSize;
+				that.setData({
 					page: page,
-					pageSize: pageSize
+					pageSize: pageSize,
+				},()=>{
+					gdt.getReferral(this.data.page, this.data.pageSize).then((result)=>{
+						that.setData({
+							detail : that.data.detail.concat(result.detail)
+						})
+					})
 				})
-			})
-		} else {
-
-		}
+		} else { }
 	},
 	loadMore: function () {
 		if (this.data.totalReferencers > this.data.pageSize) {
-			let page = this.data.page;
-			let pageSize = this.data.pageSize + 10;
-			gdt.getReferral(page, pageSize).then((result) => {
-				this.setData({
-					detail: result.detail,
+			let that = this;
+			let page = this.data.page + 1;
+			let pageSize = this.data.pageSize;
+				that.setData({
 					page: page,
 					pageSize: pageSize,
+				},()=>{
+					gdt.getReferral(this.data.page, this.data.pageSize).then((result)=>{
+						that.setData({
+							detail : that.data.detail.concat(result.detail)
+						})
+					})
 				})
-			})
 		} else { }
 	},
 
