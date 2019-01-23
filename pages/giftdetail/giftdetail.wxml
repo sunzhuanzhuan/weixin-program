@@ -50,7 +50,7 @@
 				<image class="giftPicSmall" src="{{baseImageUrl+detail.coverUrl}}"></image>
 			</view>
 			<view class="changeScore">
-				<text class="scoreminus">积分扣减: -{{detail.price}}分</text>
+				<text class="scoreminus">积分: -{{detail.price}}分</text>
 			</view>
 			<view class="changeLeft">
 				<text class="scoreminus">数量</text>

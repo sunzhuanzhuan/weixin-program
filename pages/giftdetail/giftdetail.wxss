@@ -32,7 +32,7 @@
 
 .detail {
     height: 40rpx;
-    margin-top: 38rpx;
+    margin-top: 24rpx;
     position: relative;
 }
 
