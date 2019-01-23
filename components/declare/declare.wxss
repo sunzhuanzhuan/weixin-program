@@ -13,6 +13,7 @@
     width: 76rpx;
     height: 44rpx;
     color: rgba(255, 255, 255, 1);
+    border-radius: 4rpx 0rpx 0rpx 4rpx;
     background: #333333;
     text-align: center;
     line-height: 44rpx;
@@ -26,16 +27,17 @@
     vertical-align: top;
     display: inline-block;
     float: left;
+    padding-left: 12rpx;
+    padding-right: 16rpx;
     color: #333;
     font-size: 28rpx;
-    line-height: 44rpx;
-    padding-left: 12rpx;
+    height: 44rpx;
     background-color: #FFDB3D;
     font-weight: 600;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
-    
+    max-width: 560rpx;
 }
 
 .taiBox {
@@ -46,7 +48,7 @@
 .fontTai {
     font-size: 24rpx;
     color: #333;
-    padding: 4rpx 6rpx
+    padding: 12rpx 8rpx
 }
 
 .taiLeftBox {
@@ -80,7 +82,8 @@
     bottom: -28rpx;
     left: 50rpx;
     color: #fff;
-    background: #196AD8;
+    background: linear-gradient(102deg, rgba(54, 162, 237, 1) 0%, rgba(25, 105, 214, 1) 100%);
+    box-shadow: 0px 2px 4px 0px rgba(25, 106, 216, 0.3);
 }
 
 .holdTwo {
@@ -93,7 +96,8 @@
     bottom: -28rpx;
     left: 50rpx;
     color: #fff;
-    background: #F53B55;
+    background: linear-gradient(90deg, rgba(251, 109, 142, 1) 0%, rgba(245, 59, 85, 1) 100%);
+    box-shadow: 0px 2px 4px 0px rgba(245, 59, 85, 0.3);
 }
 
 .progressBox {

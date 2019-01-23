@@ -1,9 +1,9 @@
 <template name="declare">
 	<view class="declareBox">
 		<view class="leftBox marginLeft26">表态</view>
-		<text class="rightBox">
+		<view class="rightBox">
 			lalalalalalalalallalalalalalalalalalalalallalalalalalalalalalalalkljahiodchbalcb;efcewfewcewcewcew
-		</text>
+		</view>
 		<view class="taiBox marginLeft26">
 			<view class="taiLeftBox">
 				<view class="fontTai">{{itemDeclare.surveyOptions[0].description}}</view>

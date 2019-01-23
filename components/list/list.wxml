@@ -58,8 +58,7 @@
 								<image class="txvImageCover" mode="aspectFill" src="{{'http://puui.qpic.cn/vpic/0/'+item.txvVid + '.png/0'}}"></image>
 							</view>
 							<view style="background:#ffffff;height:100rpx;width:690rpx; ">
-								<view class="txvTitle {{item.viewed? 'readVideoTitle': 'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail">
-									{{item.title}}
+								<view class="txvTitle {{item.viewed? 'readVideoTitle': 'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail">{{item.title}}
 								</view>
 
 								<view data-id="{{item._id}} " style="float:right;width:250rpx ">
@@ -89,8 +88,7 @@
 									<view class="itemSmall ">
 										<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
 										<view class="smallImgLeftTitleBox">
-											<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">
-												{{item.title}}
+											<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">{{item.title}}
 											</view>
 											<view class="smallImgLeftFooter">
 												<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID'>
@@ -138,8 +136,7 @@
 												<button form-type="submit" hover-class='none' class="bigImgCoverBox">
 													<image class="bigImgCover" mode="aspectFill" src="{{item.coverUrl}}"></image>
 													<view class="fontShadow bigImgTitleShadow">
-														<view class="bigImgTitle {{item.viewed?'readNowrapOne':'nowrapOne'}}">
-															{{item.title}}
+														<view class="bigImgTitle {{item.viewed?'readNowrapOne':'nowrapOne'}}">{{item.title}}
 														</view>
 													</view>
 												</button>
@@ -201,8 +198,7 @@
 							<image class="txvImageCover" mode="aspectFill" src="{{'http://puui.qpic.cn/vpic/0/'+item.txvVid + '.png/0'}}"></image>
 						</view>
 						<view style="background:#ffffff;height:100rpx;width:690rpx; ">
-							<view class="txvTitle {{item.viewed? 'readVideoTitle': 'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail">
-								{{item.title}}
+							<view class="txvTitle {{item.viewed? 'readVideoTitle': 'videoTitle'}}" data-id="{{item._id}}" bindtap="handleDetail">{{item.title}}
 							</view>
 
 							<view data-id="{{item._id}} " style="float:right;width:250rpx ">
@@ -231,8 +227,7 @@
 								<view class="itemSmall">
 									<image class="smallImgCover" mode="aspectFill " src="{{item.coverUrl}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} "></image>
 									<view class="smallImgLeftTitleBox">
-										<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">
-											{{item.title}}
+										<view class="{{item.viewed? 'readNowrapTwo': 'nowrapTwo'}}" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}} ">{{item.title}}
 										</view>
 										<view class="smallImgLeftFooter">
 											<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID'>
@@ -307,8 +302,7 @@
 											<button form-type="submit" hover-class='none' class="bigImgCoverBox">
 												<image class="bigImgCover" mode="aspectFill" src="{{item.coverUrl}}"></image>
 												<view class="fontShadow bigImgTitleShadow">
-													<view class="bigImgTitle {{item.viewed?'readNowrapOne':'nowrapOne'}}">
-														{{item.title}}
+													<view class="bigImgTitle {{item.viewed?'readNowrapOne':'nowrapOne'}}">{{item.title}}
 													</view>
 												</view>
 											</button>
@@ -349,7 +343,7 @@
 											</form>
 										</view>
 									</view>
-									<view wx:if="{{item.annotations}}" style="height:120rpx;background: #fff" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
+									<view wx:if="{{item.annotations}}" style="background: #fff;padding-bottom:36rpx" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
 										<view style="overflow: hidden;">
 											<view class="leftBox marginLeft26" style="margin-top: 0">表态</view>
 											<view class="rightBox" style="margin-top: 0">
