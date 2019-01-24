@@ -112,7 +112,7 @@
 			<text class="freshWorth">+{{item.amount}}积分</text>
 		</view>
 	</view>
-	<view class="loadMore" wx:if="{{totalReferencers>10}}">
+	<view class="{{IPX ? 'loadMore moreIPX' : 'loadMore'}}" wx:if="{{totalReferencers>10}}">
 		<text bindtap="loadMore">加载更多</text>
 	</view>
 </view>

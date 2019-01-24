@@ -77,4 +77,6 @@
 			</view>
 		</view>
 	</view>
+	<view class="{{votePage == 'detail' ? 'ipx' : ''}}">
+	</view>
 </template>

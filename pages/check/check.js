@@ -1,6 +1,7 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
-const util = require('../../utils/util')
+const util = require('../../utils/util');
+const IPX = app.isIPX;
 Page({
 	data: {
 		uid: '',
@@ -18,6 +19,7 @@ Page({
 		dateArr: [],
 		page: 1,
 		pageSize: 10,
+		IPX: IPX,
 	},
 	onShow: function () {
 
@@ -80,7 +82,9 @@ Page({
 					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
 					allArr = item.payload.rewards.slice(0, 7);
 					showUp = [true, true, true, item.completed, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 					console.log(allArr)
 				} else if (item.payload.level == 4) {
 					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
@@ -90,7 +94,9 @@ Page({
 					allArr = preveArr.concat(nextArr);
 					showUp = [true, true, true, item.completed, false, false, false];
 					console.log(allArr)
-					this.setData({ arrDate: allArr, })
+					this.setData({
+						arrDate: allArr,
+					})
 				} else if (item.payload.level == 5) {
 					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
 					let legnth = item.payload.rewards.length;
@@ -98,7 +104,9 @@ Page({
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr).concat(nextArr);
 					showUp = [true, true, true, item.completed, false, false, false];
-					this.setData({ arrDate: allArr })
+					this.setData({
+						arrDate: allArr
+					})
 					console.log(allArr)
 				} else if (item.payload.level == 6) {
 					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
@@ -106,7 +114,7 @@ Page({
 					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
-					showUp = [true, true, true, item.completed, false, false,];
+					showUp = [true, true, true, item.completed, false, false, ];
 					console.log(allArr);
 					this.setData({
 						arrDate: allArr
@@ -176,8 +184,8 @@ Page({
 	/** 点击领取和去完成发生的动作 **/
 	goToFinish: function (e) {
 		let that = this;
-		if(e.target.dataset.completed == false) {
-			if(e.target.dataset.criteriasatisfied == true) {
+		if (e.target.dataset.completed == false) {
+			if (e.target.dataset.criteriasatisfied == true) {
 				if (e.target.dataset.type == 'articleRead') {
 					gdt.missionComplete('articleRead').then((res) => {
 						const scoreAdd = res.transaction.amount;
@@ -219,12 +227,12 @@ Page({
 						});
 					})
 				}
-			}else{
+			} else {
 				wx.reLaunch({
 					url: '/pages/index/index'
 				})
 			}
-		}else { }
+		} else {}
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -257,34 +265,34 @@ Page({
 			let that = this;
 			let page = this.data.page + 1;
 			let pageSize = this.data.pageSize;
-				that.setData({
-					page: page,
-					pageSize: pageSize,
-				},()=>{
-					gdt.getReferral(this.data.page, this.data.pageSize).then((result)=>{
-						that.setData({
-							detail : that.data.detail.concat(result.detail)
-						})
+			that.setData({
+				page: page,
+				pageSize: pageSize,
+			}, () => {
+				gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
+					that.setData({
+						detail: that.data.detail.concat(result.detail)
 					})
 				})
-		} else { }
+			})
+		} else {}
 	},
 	loadMore: function () {
 		if (this.data.totalReferencers > this.data.pageSize) {
 			let that = this;
 			let page = this.data.page + 1;
 			let pageSize = this.data.pageSize;
-				that.setData({
-					page: page,
-					pageSize: pageSize,
-				},()=>{
-					gdt.getReferral(this.data.page, this.data.pageSize).then((result)=>{
-						that.setData({
-							detail : that.data.detail.concat(result.detail)
-						})
+			that.setData({
+				page: page,
+				pageSize: pageSize,
+			}, () => {
+				gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
+					that.setData({
+						detail: that.data.detail.concat(result.detail)
 					})
 				})
-		} else { }
+			})
+		} else {}
 	},
 
 	onShareAppMessage: function () {

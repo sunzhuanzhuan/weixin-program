@@ -209,7 +209,7 @@ button::after {
 
 .boxHistory {
   display: inline-block;
-  width: 230rpx;
+  width: 226rpx;
   height: 160rpx;
   background: #fff;
   text-align: center;
@@ -235,8 +235,8 @@ button::after {
 }
 
 .bigBoxThree {
-  margin: 0 28rpx;
-  width: 698rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
   height: 160rpx;
   overflow: hidden;
   clear: both;
