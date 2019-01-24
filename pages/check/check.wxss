@@ -339,7 +339,7 @@ button::after {
 }
 
 .marginTB2411 {
-  margin: 48rpx 0 22rpx 56rpx;
+  margin: 48rpx 0 4rpx 44rpx;
   padding-left: 10rpx;
   font-size: 32rpx;
   font-weight: 600;
@@ -541,15 +541,14 @@ button::after {
   margin-bottom: 10rpx;
   display: flex;
   justify-content: space-between;
-  line-height:60rpx;
+  line-height: 60rpx;
 }
-.freshSingle:first-child{
-  margin-top:8rpx;
+
+.freshSingle:first-child {
+  margin-top: 8rpx;
 }
 
 .freshSingle text {
-  margin-left: 24rpx;
-  margin-right: 70rpx;
   font-size: 24rpx;
   font-family: PingFangSC-Regular;
   font-weight: 400;
@@ -557,6 +556,15 @@ button::after {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 280rpx;
+}
+
+.freshSingle text:nth-child(1) {
+  margin-left: 24rpx;
+}
+
+.freshSingle text:nth-child(2) {
+  margin-right: 70rpx;
 }
 
 .loadMore {

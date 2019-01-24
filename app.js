@@ -1,5 +1,6 @@
 const GDT = require('./application-data.js');
 App({
+
 	onLaunch: function (launchParam) {
 		this.globalData.applicationDataContext = new GDT(launchParam);
 		const gdt = this.globalData.applicationDataContext;
@@ -8,6 +9,17 @@ App({
 				gdt.track('newly-authorized-user-info');
 			});
 		});
+		this.checkIsIPX();
+	},
+	checkIsIPX: function () {
+		const that = this;
+		wx.getSystemInfo({
+			success: function (res) {
+				if (res.model.search('iPhone X') != -1) {
+					that.globalData.isIPX = true
+				}
+			}
+		})
 	},
 	onShow: function (showParam) {
 		this.globalData.applicationDataContext.onAppShow(showParam);
@@ -20,6 +32,7 @@ App({
 		this.globalData.applicationDataContext.onAppHide();
 	},
 	globalData: {
+		isIPX: " ",
 		baseUrl: "",
 		distroId: "",
 		appToken: "",

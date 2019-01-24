@@ -1,5 +1,7 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
+const isIPX = app.isIPX;
+console.log(app);
 Page({
 
 	data: {
@@ -10,7 +12,8 @@ Page({
 		tooLate: false,
 		url: '../../images/load.png',
 		eq: '../../images/xiaoyu.jpeg',
-		forSure : true,
+		forSure: true,
+		isIPX: isIPX
 	},
 	change: function () {
 		this.setData({
@@ -34,7 +37,7 @@ Page({
 	},
 	confirm: function () {
 		this.setData({
-			forSure : false,
+			forSure: false,
 		})
 		gdt.purchase(this.data.id, 1).then((res) => {
 			wx.showLoading({
@@ -163,7 +166,7 @@ Page({
 				console.log('保存成功');
 				that.setData({
 					saveToCamera: '',
-					forSure : true,
+					forSure: true,
 				});
 				that.handleApiGroup(that.data.id)
 
@@ -172,7 +175,7 @@ Page({
 				console.log('保存失败');
 				that.setData({
 					saveToCamera: 'openSetting',
-					forSure : true,
+					forSure: true,
 				});
 				that.handleApiGroup(that.data.id)
 			}
@@ -182,7 +185,7 @@ Page({
 	onLoad: function (option) {
 		const id = option.id;
 		this.setData({
-			id : id
+			id: id
 		})
 		this.handleApiGroup(id)
 		// gdt.baseServerUri.then((res) => {
@@ -190,15 +193,20 @@ Page({
 		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
 		// 	},()=>{console.log(this.data.baseImageUrlEq)})
 		// });
+		wx.getSystemInfo({
+			success: function (res) {
+
+			}
+		})
 
 	},
-	handleApiGroup : function(id){
+	handleApiGroup: function (id) {
 		let that = this
 		gdt.currentUser.then((u) => {
 			that.data.uid = u._id;
-			gdt.getCommodity().then((result)=>{
+			gdt.getCommodity().then((result) => {
 				that.setData({
-					accountBalance : result.accountBalance,
+					accountBalance: result.accountBalance,
 					id: id,
 				})
 			})
@@ -206,8 +214,8 @@ Page({
 		gdt.getCommodityDetail(id).then((res) => {
 			that.setData({
 				detail: res,
-				status : res.status,
-				price : parseFloat(res.rmbPrice).toFixed(2)
+				status: res.status,
+				price: parseFloat(res.rmbPrice).toFixed(2)
 			});
 			gdt.baseServerUri.then((res) => {
 				that.setData({

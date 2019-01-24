@@ -149,7 +149,6 @@
 
 .bottomBtn {
     width: 100%;
-    height: 94rpx;
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     position: fixed;
     bottom: 0;
@@ -174,6 +173,9 @@
     font-weight: 600;
 }
 
+.IPX {
+    padding-bottom: 64rpx;
+}
 
 /******兑换弹窗********/
 .changeJump {

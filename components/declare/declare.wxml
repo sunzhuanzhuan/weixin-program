@@ -2,7 +2,7 @@
 	<view class="declareBox">
 		<view class="leftBox marginLeft26">表态</view>
 		<view class="rightBox">
-			lalalalalalalalallalalalalalalalalalalalallalalalalalalalalalalalkljahiodchbalcb;efcewfewcewcewcew
+			{{itemDeclare.title}}
 		</view>
 		<view class="taiBox marginLeft26">
 			<view class="taiLeftBox">
