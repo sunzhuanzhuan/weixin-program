@@ -97,7 +97,7 @@
 
 .readyHoldOne {
     background: rgba(25, 105, 214, 1);
-    box-shadow: 0 0 0 0;
+    box-shadow: 0px 2px 4px 0px rgba(25, 106, 216, 0.3);
 }
 
 .disHoldOne {
@@ -123,7 +123,7 @@
 
 .readyHoldTwo {
     background: rgba(245, 59, 85, 1);
-    box-shadow: 0 0 0 0;
+    box-shadow:0px 2px 4px 0px rgba(245,59,85,0.3);
 }
 
 .disHoldTwo {
