@@ -265,7 +265,7 @@
 									</view>
 									<view wx:if="{{item.annotations}}" style="height:120rpx;" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
 										<view style="overflow: hidden;">
-											<view class="leftBox marginLeft26">表态</view>
+											<view class="leftBox marginLeft26"><image class="declareP" src="../../images/declare.png"></image></view>
 											<view class="rightBox">
 												{{item.annotations[0].title}}
 											</view>
@@ -345,7 +345,7 @@
 									</view>
 									<view wx:if="{{item.annotations}}" style="background: #fff;padding-bottom:36rpx" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
 										<view style="overflow: hidden;">
-											<view class="leftBox marginLeft26" style="margin-top: 0">表态</view>
+											<view class="leftBox marginLeft26" style="margin-top: 0"><image class="declareP" src="../../images/declare.png"></image></view>
 											<view class="rightBox" style="margin-top: 0">
 												{{item.annotations[0].title}}
 											</view>
