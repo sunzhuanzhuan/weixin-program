@@ -1,6 +1,7 @@
 <!-- 上方积分模块 -->
 <view class="bg">
 	<view class="container">
+		<view class='myScoreText'>我的积分</view>
 		<view class='mainlyContainer'>
 			<!-- 左边的积分商城-->
 			<view class='ScoreShopButton' bindtap='jumptogift' data-score='{{accountBalance}}'>
@@ -9,7 +10,6 @@
 			</view>
 			<view class='containerScore'>
 				<view style='display:flex;flex-direction:column;justify-content:center;align-items:center'>
-					<text class='myScoreText'>我的积分</text>
 					<text class='myScoreNumber'>{{accountBalance}}</text>
 				</view>
 			</view>

@@ -71,7 +71,7 @@
     color: rgba(51, 51, 51, 1);
     line-height: 4rpx;
     position: relative;
-    margin-top: 60rpx;
+    margin-top: 24rpx;
     margin-left: 44rpx;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .giftBox:not(:nth-child(1)):not(:nth-child(2)) {
-    margin-top: 48rpx;
+    margin-top: 40rpx;
 }
 
 .imgBox {
@@ -121,7 +121,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
-    margin-top: 32rpx;
+    margin-top: 16rpx;
 }
 
 .giftTitleDetail {

@@ -63,7 +63,7 @@
 
 .giftWorthline {
     position: absolute;
-    width: 126rpx;
+    width: 100%;
     height: 8rpx;
     background: rgba(254, 218, 60, 1);
     bottom: 8rpx;
@@ -335,10 +335,15 @@
     background: #FAC84A;
     font-size: 28rpx;
     color: #000;
-    width: 640rpx;
+    width: 642rpx;
     height: 100rpx;
     line-height: 100rpx;
     text-align: center;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-left: 59rpx;
 }
 
 .canvas {
