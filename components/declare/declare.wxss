@@ -62,7 +62,7 @@
     height: 184rpx;
     display: inline-block;
     margin-right: 20rpx;
-    background: #EBEBEB;
+    background: #f5f5f5;
     position: relative;
     border-radius: 4rpx;
     vertical-align: top;
@@ -72,10 +72,14 @@
     width: 308rpx;
     height: 184rpx;
     display: inline-block;
-    background: #EBEBEB;
+    background: #f5f5f5;
     position: relative;
     border-radius: 4rpx;
     vertical-align: top;
+}
+
+.inLeftBox {
+    background: #ebebeb;
 }
 
 .holdOne {
