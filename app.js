@@ -38,7 +38,8 @@ App({
 		appToken: "",
 		sessionToken: '',
 		articleId: '',
-		backgroundAudioManager: wx.getBackgroundAudioManager()
+		backgroundAudioManager: wx.getBackgroundAudioManager(),
+		saveToCamera: 'openSetting'
 
 	},
 	onShow: function (showParam) {

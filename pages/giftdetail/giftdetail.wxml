@@ -65,7 +65,7 @@
 				<text class="txt">确认兑换</text>
 			</view>
 			<view class="sure" wx:else>
-				<text class="txt">确认兑换</text>	
+				<text class="txt">确认兑换</text>
 			</view>
 		</view>
 	</view>
@@ -97,6 +97,6 @@
 <view wx:if="{{changeBox}}" class="actRule" catch:touchmove="touchmove">
 	<canvas class="canvas" canvas-id="saveCanvas"></canvas>
 	<cover-view style="margin-top:-98rpx;margin-left:-6rpx;">
-		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">保存图片到手机</button>
 	</cover-view>
 </view>

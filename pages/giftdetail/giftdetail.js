@@ -72,7 +72,8 @@ Page({
 
 				ctx.setFillStyle('rgba(250,212,85,1)');
 				ctx.fillRect(91 * ratio, 34 * ratio, 155 * ratio, 30 * ratio);
-				const code = this.data.code;
+				// const code = this.data.code;
+				const code = 200
 				ctx.setTextBaseline('top')
 				ctx.setFontSize(14 * ratio);
 				ctx.setFillStyle('#000000');
@@ -160,26 +161,16 @@ Page({
 			changeBox: false
 		});
 		let that = this;
-		wx.saveImageToPhotosAlbum({
-			filePath: that.data.shareImage,
-			success: function () {
-				console.log('保存成功');
-				that.setData({
-					saveToCamera: '',
-					forSure: true,
-				});
-				that.handleApiGroup(that.data.id)
+		// console.log(app.saveToCamera)
+		if (app.saveToCamera == 'openSetting') {
+			wx.openSetting({
+				success(res) {
+					that.confirm()
+				}
+			})
+		}
 
-			},
-			fail: function () {
-				console.log('保存失败');
-				that.setData({
-					saveToCamera: 'openSetting',
-					forSure: true,
-				});
-				that.handleApiGroup(that.data.id)
-			}
-		})
+
 
 	},
 	onLoad: function (option) {

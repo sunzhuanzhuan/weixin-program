@@ -6,7 +6,7 @@
 
 <view>
 	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;background:#ffffff;" bindscroll="recordUserscroll"
-	 enable-back-to-top="true">
+	 enable-back-to-top="true" bindscrolltolower="bindscrolltolower" lower-threshold="100">
 		<view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
 			<!-- <view wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
 				<view wx:if="{{isPlayVideo && index == videoCurrent}}">
@@ -75,7 +75,7 @@
 						<view class="letter ">分享好友</view>
 					</button>
 					<text class="borderRight"></text>
-					<button class="btnBox " style='flex:2' open-type="{{type}} " form-type="submit " data-item="poster" bindgetuserinfo="handleAuthor"
+					<button class="btnBox" style='flex:2' open-type="{{type}}" form-type="submit" data-item="poster" bindgetuserinfo="handleAuthor"
 					 catchtap="handlePoster" style="{{isIphoneX? 'height:100rpx': 'height:100rpx'}}; ">
 						<image class="imgBtn " src="/images/circle.png"></image>
 						<view class="letter ">分享海报</view>

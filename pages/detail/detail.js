@@ -73,7 +73,7 @@ Page({
 		isPlayVideo: false,
 		isFirst: 0,
 		videoCurrent: 0,
-		saveToCamera: 'openSetting',
+		// saveToCamera: 'openSetting',
 		currentVideo: 0,
 		btnSavePitcureLetter: '',
 		reportSubmit: true,
@@ -397,6 +397,14 @@ Page({
 
 
 	},
+
+	//滑到底部
+	bindscrolltolower: function () {
+		console.log(111111)
+		this.setData({ isShow: true });
+	},
+
+	//滑动中
 	recordUserscroll: function (event) {
 		if (event.detail.scrollTop < 0) {
 			return
@@ -739,16 +747,18 @@ Page({
 								filePath: that.data.shareImage,
 								success: function () {
 									console.log('保存成功');
-									that.setData({
-										saveToCamera: ''
-									})
+									// that.setData({
+									// 	saveToCamera: ''
+									// })
+									app.saveToCamera = ''
 
 								},
 								fail: function () {
 									console.log('保存失败');
-									that.setData({
-										saveToCamera: 'openSetting'
-									})
+									app.saveToCamera = 'openSetting'
+									// that.setData({
+									// 	saveToCamera: 'openSetting'
+									// })
 								}
 							})
 						})
@@ -789,6 +799,19 @@ Page({
 	},
 	handleSavePicture: function () {
 		this.setData({ isShowPoster: false });
+		if (app.saveToCamera == 'openSetting') {
+			wx.openSetting({
+				success(res) {
+					console.log(res.authSetting);
+
+					// res.authSetting = {
+					//   "scope.userInfo": true,
+					//   "scope.userLocation": true
+					// }
+				}
+			})
+		}
+
 	},
 
 	handleSavePictureToCamera: function () {
