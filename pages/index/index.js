@@ -704,6 +704,7 @@ Page({
 			console.log(e.currentTarget.dataset.item);
 			if (votePage == 'index') {
 				gdt.supportOption(obj).then((res) => {
+					console.log(res);
 					wx.showToast({
 						title: '投票成功',
 						duration: 2000

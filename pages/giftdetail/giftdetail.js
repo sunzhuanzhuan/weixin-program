@@ -72,8 +72,7 @@ Page({
 
 				ctx.setFillStyle('rgba(250,212,85,1)');
 				ctx.fillRect(91 * ratio, 34 * ratio, 155 * ratio, 30 * ratio);
-				// const code = this.data.code;
-				const code = 200
+				const code = this.data.code;
 				ctx.setTextBaseline('top')
 				ctx.setFontSize(14 * ratio);
 				ctx.setFillStyle('#000000');
