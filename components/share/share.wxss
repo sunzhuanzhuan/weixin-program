@@ -59,7 +59,7 @@
 }
 
 .shareAgainNum {
-    margin-left: 64rpx;
+    margin-left: 74rpx;
 }
 
 .btnForm {
