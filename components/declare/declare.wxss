@@ -86,6 +86,18 @@
     box-shadow: 0px 2px 4px 0px rgba(25, 106, 216, 0.3);
 }
 
+.readyHoldOne {
+    background: rgba(25, 105, 214, 1);
+    box-shadow: 0 0 0 0;
+}
+
+.disHoldOne {
+    background: linear-gradient(270deg, rgba(199, 199, 199, 1) 0%, rgba(220, 220, 220, 1) 100%);
+    box-shadow: 0 0 0 0;
+    font-weight: 400;
+    color: #ffffff !important;
+}
+
 .holdTwo {
     width: 200rpx;
     height: 56rpx;
@@ -98,6 +110,18 @@
     color: #fff;
     background: linear-gradient(90deg, rgba(251, 109, 142, 1) 0%, rgba(245, 59, 85, 1) 100%);
     box-shadow: 0px 2px 4px 0px rgba(245, 59, 85, 0.3);
+}
+
+.readyHoldTwo {
+    background: rgba(245, 59, 85, 1);
+    box-shadow: 0 0 0 0;
+}
+
+.disHoldTwo {
+    background: linear-gradient(270deg, rgba(199, 199, 199, 1) 0%, rgba(220, 220, 220, 1) 100%);
+    box-shadow: 0 0 0 0;
+    font-weight: 400;
+    color: #ffffff !important;
 }
 
 .progressBox {

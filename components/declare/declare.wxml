@@ -8,7 +8,7 @@
 			<view class="taiLeftBox">
 				<view class="fontTai">{{itemDeclare.surveyOptions[0].description}}</view>
 				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id?false:true}}"
-				 class="holdOne" data-item="{{itemDeclare}}" data-num="0" bindtap="handleSupport">
+				 class="{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'holdOne readyHoldOne':'holdOne disHoldOne':'holdOne'}}" data-item="{{itemDeclare}}" data-num="0" bindtap="handleSupport">
 					<text wx:if="{{itemDeclare.voteFor[0] !=undefined && itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id }}" class="iconDate iconfont icon-guifanjieguoyeduigou"
 					 style="color:#fff;font-size:50rpx;float: left;"></text>
 					{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'已支持':'未支持':'支持'}}</button>
@@ -16,7 +16,7 @@
 			<view class="taiRightBox">
 				<view class="fontTai">{{itemDeclare.surveyOptions[1].description}}</view>
 				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id?false:true}}"
-				 class="holdTwo" data-item="{{itemDeclare}}" data-num="1" bindtap="handleSupport">
+				 class="{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'holdTwo readyHoldTwo':'holdTwo disHoldTwo':'holdTwo'}} " data-item="{{itemDeclare}}" data-num="1" bindtap="handleSupport">
 					<text wx:if="{{itemDeclare.voteFor[0] !=undefined && itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id }}" class="iconDate iconfont icon-guifanjieguoyeduigou"
 					 style="color:#fff;font-size:50rpx;float: left;"></text>
 					{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'已支持':'未支持':'支持'}}</button>
@@ -51,9 +51,9 @@
 				</view>
 
 				<view wx:if="{{itemDeclare.surveyOptions[0].supporters.length>=5}}" style="float: right;margin-top: -30rpx;margin-right: 90rpx;">
-					<view class="dotDeclare"></view>
-					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
 					<view class="dotDeclare" style="opacity: 0.4;"></view>
+					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
+					<view class="dotDeclare"></view>
 				</view>
 
 			</view>
