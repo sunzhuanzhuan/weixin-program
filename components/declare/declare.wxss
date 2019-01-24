@@ -1,6 +1,6 @@
 .declareBox {
     width: 690rpx;
-    margin: 0 auto;
+    margin: 80rpx auto 0rpx auto;
     background: #fff;
     padding-bottom: 32rpx;
 }

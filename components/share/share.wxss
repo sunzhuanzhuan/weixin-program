@@ -1,104 +1,119 @@
-.box{
+.box {
     width: 686rpx;
     box-shadow: 0 2rpx 6rpx 6rpx #f4f4f4;
-    margin:36rpx;
+    margin: 36rpx;
 }
-.img{
+
+.img {
     width: 260rpx;
-    height:180rpx;
+    height: 180rpx;
     margin-top: 32rpx;
     border-radius: 4rpx;
     display: inline-block;
-    border:2rpx solid #0000;
+    border: 2rpx solid #0000;
 }
-.imgBox{
+
+.imgBox {
     display: flex;
     position: relative;
-    height:200rpx;
+    height: 200rpx;
 }
-.avatarReadS{
+
+.avatarReadS {
     width: 60rpx;
     height: 60rpx;
     border-radius: 50%;
     font-size: 20rpx;
     text-align: center;
     line-height: 60rpx;
-    display:inline-block;
+    display: inline-block;
     margin-top: 10rpx;
     margin-right: 20rpx;
 }
 
-.avatarRead{
+.avatarRead {
     width: 56rpx;
     height: 56rpx;
     border-radius: 50%;
     margin-right: 20rpx;
 
 }
-.letterBox{
+
+.letterBox {
     margin-top: 32rpx;
-    margin-left:14rpx;
+    margin-left: 14rpx;
     font-size: 32rpx;
-    width:390rpx;
+    width: 390rpx;
     height: 180rpx;
     position: relative;
 }
-.bottomLine{
+
+.bottomLine {
     border-bottom: 2rpx solid #E7E7E7;
-    padding-top:24rpx;
+    padding-top: 24rpx;
     padding-bottom: 24rpx;
 
 }
-.readNum{
+
+.readNum {
     font-size: 24rpx;
     text-align: left;
-    margin-left: 107rpx;
 }
 
-  
-.btnForm{
+.shareAgainNum {
+    margin-left: 64rpx;
+}
+
+.btnForm {
     text-align: left;
     background: #ffffff;
     /* line-height: 2.5; */
     border-radius: 0;
     padding: 0;
 }
-.avatarBox{
+
+.avatarBox {
     height: 80rpx;
     overflow-y: hidden;
 }
-.noHeightAvatarBox{}
-.arrow{
+
+.noHeightAvatarBox {}
+
+.arrow {
     width: 32rpx;
     height: 32rpx;
     vertical-align: middle;
     margin-right: 10rpx;
 }
-.shrinkContent{
+
+.shrinkContent {
     text-align: center;
     font-size: 24rpx;
     margin-top: 22rpx;
     padding-bottom: 22rpx;
 }
-.nowrap{
+
+.nowrap {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     width: 390rpx;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-height:1.5
+    line-height: 1.5
 }
-.nowrapBig{
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    width:600rpx;
-    line-height:1.0;
-    margin-top:-10rpx;
-   
+
+.nowrapBig {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 600rpx;
+    line-height: 1.0;
+    margin-top: -10rpx;
+
 }
-.letterArtical{
+
+.letterArtical {
     position: absolute;
     bottom: 0;
     right: -200rpx;
@@ -108,15 +123,43 @@
 }
 
 /* ---------------------------------           分享列表          -------------------------------------- */
-.txvOrArtical{
-    font-size:20rpx;float:left;padding:0 10rpx;margin-left:30rpx;border:1px solid #979797;border-radius:20rpx;margin-top:20rpx;color:#979797;height:17px;line-height:6px
+.txvOrArtical {
+    font-size: 20rpx;
+    float: left;
+    padding: 0 10rpx;
+    border: 1px solid #979797;
+    border-radius: 20rpx;
+    margin-top: 20rpx;
+    color: #979797;
+    height: 17px;
+    line-height: 6px
 }
-.boxEightImg{
-    height:120rpx;padding-left:80rpx;background:#fff;width:90%;overflow-x:scroll;white-space:nowrap
+
+.boxEightImg {
+    height: 120rpx;
+    padding-left: 80rpx;
+    background: #fff;
+    width: 90%;
+    overflow-x: scroll;
+    white-space: nowrap
 }
-.againShare{
-    float:left;color:#FFDB3D;border:2rpx solid #FFDB3D;font-size:24rpx;margin-left:30rpx;height:36rpx;line-height:40rpx;padding:2rpx 6rpx;display:inline-block;margin-top:10rpx;
+
+.againShare {
+    float: left;
+    color: #FFDB3D;
+    border: 2rpx solid #FFDB3D;
+    font-size: 24rpx;
+    margin-left: 30rpx;
+    height: 36rpx;
+    line-height: 40rpx;
+    padding: 2rpx 6rpx;
+    display: inline-block;
+    margin-top: 10rpx;
 }
-.againShareBtn{
-    height:64rpx;margin-bottom:20rpx;width:144rpx;background: #ffffff;padding-bottom:40rpx;
+
+.againShareBtn {
+    height: 64rpx;
+    margin-bottom: 20rpx;
+    background: #ffffff;
+    padding-bottom: 40rpx;
 }
