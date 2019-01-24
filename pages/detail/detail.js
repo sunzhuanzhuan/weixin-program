@@ -916,7 +916,7 @@ Page({
 			obj.params = e.currentTarget.dataset.item;
 			if (votePage == 'detail') {
 				gdt.supportOptionDetail(obj).then((res) => {
-					// console.log(res);
+					console.log(res);
 					wx.showToast({
 						title: '投票成功',
 						duration: 2000

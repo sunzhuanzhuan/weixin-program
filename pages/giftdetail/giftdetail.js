@@ -246,7 +246,7 @@ Page({
 					})
 				} else {
 					this.setData({
-						btnSavePitcureLetter: '已保存到手机，记得分享哦'
+						btnSavePitcureLetter: '保存图片到手机'
 					})
 				}
 			}

@@ -33,7 +33,7 @@
 	<block wx:if="{{shareList.length >0}}">
 		<view wx:for="{{shareList}}" class="container" wx:key="{{index}}" style="background:#fff;padding-top:20rpx">
 			<view data-id="{{item.id}}">
-				<view style="width:96%;margin-left:4%;border-bottom: 1rpx solid #E6E6E6;overflow:hidden">
+				<view style="margin-left:30rpx;border-bottom: 1rpx solid #E6E6E6;overflow:hidden">
 					<view style="overflow:hidden">
 						<text class="txvOrArtical">
 							{{item.type=="txvVideo"?'视频':'文章'}}
@@ -47,7 +47,7 @@
 						</view>
 					</view>
 					<block wx:if="{{item.referencers.length>0}}">
-						<view style="margin-left:64rpx;">
+						<view style="margin-left:74rpx;">
 							<view class="readNum" style="float:left;color:#999999;">
 								已有
 								<text style="color:#333;font-weight:bolder;display:inline-block;line-height:1">

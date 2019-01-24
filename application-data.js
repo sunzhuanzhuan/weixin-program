@@ -542,13 +542,14 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			const itemIndex = this.localState.itemIndex;
 			//旧的;
 			let indexedItem = itemIndex[entity._id];
+			console.log(entity);
 			if (entity.type == 'simpleSurvey') {
 				indexedItem.vote = true;
 				indexedItem.voteFor = entity.surveyVoteFor;
 				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
 
 				this.userInfo.then((res) => {
-					if (indexedItem.surveyOptions[entity.num].supporters.length < 5) {
+					if (indexedItem.surveyOptions[entity.num].supporters.length < 5 && JSON.stringify(indexedItem.surveyOptions[entity.num].supporters).indexOf(JSON.stringify(res.userInfo.avatarUrl)) == -1 ) {
 						indexedItem.surveyOptions[entity.num].supporters.push(res.userInfo)
 					}
 

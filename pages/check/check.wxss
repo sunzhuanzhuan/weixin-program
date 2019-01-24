@@ -581,6 +581,10 @@ button::after {
   margin-top: 10rpx;
 }
 
+.moreIPX {
+  margin-bottom: 160rpx;
+}
+
 .loadMore text {
   font-size: 24rpx;
   font-family: PingFangSC-Regular;

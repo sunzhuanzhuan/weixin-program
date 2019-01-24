@@ -1,6 +1,8 @@
 <template name="declare">
 	<view class="{{votePage == 'detail' ? 'declareBox inBox' : 'declareBox'}}">
-		<view class="leftBox marginLeft26">表态</view>
+		<view class="leftBox marginLeft26">
+			<image src="../../images/declare.png" class="declareP"></image>
+		</view>
 		<view class="rightBox">
 			{{itemDeclare.title}}
 		</view>
@@ -76,5 +78,7 @@
 
 			</view>
 		</view>
+	</view>
+	<view class="{{votePage == 'detail' ? 'ipx' : ''}}">
 	</view>
 </template>

@@ -296,4 +296,9 @@ button{
 }  
 .bigImgLikedNum{
     vertical-align:top;color:#999;font-size:24rpx;padding-left:10rpx;display:inline-block;line-height:34rpx;height: 100rpx;
-}  
+}
+.declareP {
+    width: 60rpx;
+    height: 30rpx;
+    margin: 6rpx 8rpx 2rpx 8rpx;
+}

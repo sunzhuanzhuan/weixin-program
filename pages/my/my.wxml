@@ -56,7 +56,7 @@
 				<view class="letterHistory">收藏的视频</view>
 			</view> -->
 			<text style="background:#fff;display:inline-block;height:50rpx;border-right:1rpx solid #E6E6E6;vertical-align:top;margin-top:60rpx;"></text>
-            <view bindtap="handleTapHistoryOrArticalOrVideo"   data-name="video"  style="display:inline-block;width:234rpx;height:160rpx;background:#fff;text-align:center;">
+            <view bindtap="handleTapHistoryOrArticalOrVideo"   data-name="video"  class="boxHistory">
                 <image src="{{baseImageUrlVideo}}"  style="width:44rpx;height:44rpx;margin-top:32rpx;margin-bottom:16rpx"/>
                 <view style="font-size:24rpx;color:#333">收藏的视频</view>
             </view>
