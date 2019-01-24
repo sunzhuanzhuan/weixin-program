@@ -1,5 +1,5 @@
 <template name="declare">
-	<view class="declareBox">
+	<view class="{{votePage == 'detail' ? 'declareBox inBox' : 'declareBox'}}">
 		<view class="leftBox marginLeft26">表态</view>
 		<view class="rightBox">
 			{{itemDeclare.title}}

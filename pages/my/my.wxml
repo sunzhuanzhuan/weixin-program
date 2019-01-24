@@ -27,13 +27,13 @@
 						{{userInfo ? num.read : ''}}
 					</view>
 				</view>
-				<view style="margin-top:20rpx">
+				<view style="margin-top:28rpx">
 					<view class="letter1">分享</view>
 					<view class="letter44">
 						{{userInfo ? num.shared : ''}}
 					</view>
 				</view>
-				<view style="margin-top:20rpx">
+				<view style="margin-top:14rpx">
 					<button class="btnSuggest" open-type="contact" show-message-card="true" bindcontact="handleContact" send-message-img="{{baseImageUrlClickMe}}">
 						意见反馈
 					</button>

@@ -5,7 +5,7 @@
 <template is='loadding' wx:if="{{!showLoadding}}" />
 
 <view>
-	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;" bindscroll="recordUserscroll"
+	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;background:#ffffff;" bindscroll="recordUserscroll"
 	 enable-back-to-top="true">
 		<view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
 			<!-- <view wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
