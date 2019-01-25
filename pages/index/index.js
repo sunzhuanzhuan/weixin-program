@@ -636,6 +636,16 @@ Page({
 				});
 			});
 		}
+		gdt.getDailyMissions().then((res) => {
+			const missions = res.missions || [];
+			missions.forEach(item => {
+				if (item.type == 'showup') {
+					this.setData({
+						IsChecked: !item.completed
+					})
+				}
+			})
+		})
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
@@ -657,6 +667,16 @@ Page({
 				}, 500);
 			});
 		}
+		gdt.getDailyMissions().then((res) => {
+			const missions = res.missions || [];
+			missions.forEach(item => {
+				if (item.type == 'showup') {
+					this.setData({
+						IsChecked: !item.completed
+					})
+				}
+			})
+		})
 	},
 	getFormID: function (e) {
 		if (e.detail.formId) {
