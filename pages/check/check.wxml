@@ -132,15 +132,34 @@
 				<text class='ruleTitle'>什么是积分</text>
 			</view>
 			<view class='ruleText'>
-				<text>积分是微博任务里的货币单位，可以兑换超值权益和现金。</text>
+				<text>积分是小鱼聚合平台推出的专属的一种虚拟货币，它能在客户端的积分商城商品，参与抽奖活动。</text>
 			</view>
 			<view style='padding-left:30rpx;margin-top:30rpx;'>
 				<view class='circleIcon'>
 				</view>
-				<text class='ruleTitle'>兑换价格</text>
+				<text class='ruleTitle'>如何获得积分？</text>
 			</view>
 			<view class='ruleText'>
-				<text>SEE = Seeking Experience & Engineering,意为探索用户体验与工程实践，由蚂蚁金服集团每年举办1-2次，包括专业分享、产品展台、Workshop等内容。</text>
+				<text>你可以通过阅读文章、分享文章、分享文章被好友阅读以及拉新奖励获得丰厚的积分。</text>
+			</view>
+			<view style='padding-left:30rpx;margin-top:30rpx;'>
+				<view class='circleIcon'>
+				</view>
+				<text class='ruleTitle'>积分有多长时间有效期？</text>
+			</view>
+			<view class='ruleText'>
+				<text>积分是小鱼聚合提供的一种福利道具，存在使用有效期。</text>
+			</view>
+			<view style='padding-left:30rpx;margin-top:30rpx;'>
+				<view class='circleIcon'>
+				</view>
+				<text class='ruleTitle'>我们会进行反作弊</text>
+			</view>
+			<view class='ruleText'>
+				<text>为保障所有用户的正当权益，我们会严厉打击违规行为。对恶意盗刷积分的行为，我们将对作弊者进行积分清零及封禁。对行为恶劣者，我们会保留启动法律程序追究等一切权利。</text>
+			</view>
+			<view class="lastTxt">
+				<text class="lastRight">以上信息的最终解释权归小鱼聚合所有</text>
 			</view>
 		</view>
 		<view>
