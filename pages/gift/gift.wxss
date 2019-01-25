@@ -69,9 +69,8 @@
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
-    line-height: 4rpx;
     position: relative;
-    margin-top: 60rpx;
+    margin-top: 24rpx;
     margin-left: 44rpx;
 }
 
@@ -81,7 +80,7 @@
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     border-radius: 2px;
     position: absolute;
-    top: -10rpx;
+    top: 8rpx;
     left: -16rpx;
 }
 
@@ -101,7 +100,7 @@
 }
 
 .giftBox:not(:nth-child(1)):not(:nth-child(2)) {
-    margin-top: 48rpx;
+    margin-top: 38rpx;
 }
 
 .imgBox {
@@ -121,7 +120,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
-    margin-top: 32rpx;
+    margin-top: 16rpx;
 }
 
 .giftTitleDetail {

@@ -466,9 +466,11 @@ module.exports = class GlobalDataContext extends EventEmitter {
 						let total = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters);
 						console.log(total)
 						if (total.length > 5) {
-							total.slice(0, 6)
+							let arr = total.slice(0, 5);
+							indexedItem.annotations[0].totalUrl = arr
+						}else{
+							indexedItem.annotations[0].totalUrl = total;
 						}
-						indexedItem.annotations[0].totalUrl = total;
 					}
 
 					if (indexedItem.type == "simpleSurvey") {
@@ -486,10 +488,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
 						}
 
 					}
-					if (indexedItem.annotations) {
-						let annotations = indexedItem.annotations[0];
-						annotations['totalUrl'] = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters)
-					}
+					// if (indexedItem.annotations) {
+					// 	let annotations = indexedItem.annotations[0];
+					// 	annotations['totalUrl'] = annotations.surveyOptions[0].supporters.concat(annotations.surveyOptions[1].supporters)
+					// }
 					// indexedItem.isShow=false
 					const r = _.find(targetList, { _id: x._id });
 					if (r) {
@@ -540,13 +542,14 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			const itemIndex = this.localState.itemIndex;
 			//旧的;
 			let indexedItem = itemIndex[entity._id];
+			console.log(entity);
 			if (entity.type == 'simpleSurvey') {
-				indexedItem.vote = true;
+				indexedItem.voted = true;
 				indexedItem.voteFor = entity.surveyVoteFor;
 				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
 
 				this.userInfo.then((res) => {
-					if (indexedItem.surveyOptions[entity.num].supporters.length < 5) {
+					if (indexedItem.surveyOptions[entity.num].supporters.length < 5 && JSON.stringify(indexedItem.surveyOptions[entity.num].supporters).indexOf(JSON.stringify(res.userInfo.avatarUrl)) == -1 ) {
 						indexedItem.surveyOptions[entity.num].supporters.push(res.userInfo)
 					}
 
@@ -582,7 +585,8 @@ module.exports = class GlobalDataContext extends EventEmitter {
 					// debugger
 					console.log(total)
 					if (total.length > 5) {
-						total.slice(0, 6)
+						let arr = total.slice(0, 5);
+						indexedItem.annotations[0].totalUrl = arr;
 					}
 					indexedItem.annotations[0].totalUrl = total;
 				} else {
@@ -1027,7 +1031,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			let obj = item.params;
 			obj.voteFor = x.surveyVoteFor;
 			obj.surveyOptions[item.num].totalSupporters = obj.surveyOptions[item.num].totalSupporters + 1
-			obj.vote = true;
+			obj.voted = true;
 			let one = obj.surveyOptions[0].totalSupporters;
 			let two = obj.surveyOptions[1].totalSupporters;
 			this.userInfo.then((res) => {

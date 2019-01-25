@@ -24,8 +24,8 @@
 		</scroll-view>
 		<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID'>
 			<button form-type="submit" class='btnForm' data-current="{{dataTab.length}}" data-name='{{item.title}}' hover-class='none'
-			 data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:55px;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
-				<image src="{{baseImageUrlMy}}" style="width:55px;height: 72rpx;" data-id="{{dataTab.length}}"></image>
+			 data-tabid="{{dataTab.length}}" bindtap="selectMy" style="height: 88rpx;width:110rpx;position:fixed;z-index:27;line-height:122rpx;display: inline-block; right:0;">
+				<image src="{{baseImageUrlMy}}" style="width:110rpx;height: 72rpx;" data-id="{{dataTab.length}}"></image>
 			</button>
 		</form>
 	</view>
@@ -43,7 +43,7 @@
 			</block>
 		</view>
 	</view>
-	<view class="entranceOfGift" bindtap='jumpToCheck' wx:if="{{IsChecked}}">
+	<view class="entranceOfGift" bindtap='jumpToCheck' wx:if="{{true}}"><!-- IsChecked && enable- -->
 		<image class="checkPic" src="../../images/check.png" mdoe="scaleToFill">
 		</image>
 		<text class="checkTxt">签到领礼物</text>

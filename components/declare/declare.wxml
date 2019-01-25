@@ -1,27 +1,29 @@
 <template name="declare">
-	<view class="declareBox">
-		<view class="leftBox marginLeft26">表态</view>
+	<view class="{{votePage == 'detail' ? 'declareBox inBox' : 'declareBox'}}">
+		<view class="leftBox marginLeft26">
+			<image src="../../images/declare.png" class="declareP"></image>
+		</view>
 		<view class="rightBox">
 			{{itemDeclare.title}}
 		</view>
 		<view class="taiBox marginLeft26">
-			<view class="taiLeftBox">
+			<view class="{{votePage == 'detail' ? 'taiLeftBox inLeftBox' : 'taiLeftBox'}}">
 				<view class="fontTai">{{itemDeclare.surveyOptions[0].description}}</view>
 
 				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id?false:true}}"
-				 class="holdOne" data-item="{{itemDeclare}}" data-num="0" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'已支持':'未支持':'支持'}}
+				 class="{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'holdOne readyHoldOne':'holdOne disHoldOne':'holdOne'}}" data-item="{{itemDeclare}}" data-num="0" bindtap="handleSupport">
 					<text wx:if="{{itemDeclare.voteFor[0] !=undefined && itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id }}" class="iconDate iconfont icon-guifanjieguoyeduigou"
 					 style="color:#fff;font-size:50rpx;float: left;"></text>
-				</button>
+					{{itemDeclare.voteFor[0] !=undefined ?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[0]._id ?'已支持':'未支持':'支持'}}</button>
 			</view>
-			<view class="taiRightBox">
+			<view class="{{votePage == 'detail' ? 'taiRightBox inLeftBox' : 'taiRightBox'}}">
 				<view class="fontTai">{{itemDeclare.surveyOptions[1].description}}</view>
 
 				<button open-type="{{type}}" bindgetuserinfo="handleAuthor" data-votePage="{{votePage}}" disabled="{{itemDeclare.voteFor[0] ==undefined?false:itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id?false:true}}"
-				 class="holdTwo" data-item="{{itemDeclare}}" data-num="1" bindtap="handleSupport">{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'已支持':'未支持':'支持'}}
+				 class="{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'holdTwo readyHoldTwo':'holdTwo disHoldTwo':'holdTwo'}} " data-item="{{itemDeclare}}" data-num="1" bindtap="handleSupport">
 					<text wx:if="{{itemDeclare.voteFor[0] !=undefined && itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id }}" class="iconDate iconfont icon-guifanjieguoyeduigou"
 					 style="color:#fff;font-size:50rpx;float: left;"></text>
-				</button>
+					{{itemDeclare.voteFor[0] !=undefined?itemDeclare.voteFor[0] ==itemDeclare.surveyOptions[1]._id ?'已支持':'未支持':'支持'}}</button>
 			</view>
 		</view>
 		<view class="progressBox marginLeft26">
@@ -53,9 +55,9 @@
 				</view>
 
 				<view wx:if="{{itemDeclare.surveyOptions[0].supporters.length>=5}}" style="float: right;margin-top: -30rpx;margin-right: 90rpx;">
-					<view class="dotDeclare"></view>
-					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
 					<view class="dotDeclare" style="opacity: 0.4;"></view>
+					<view class="dotDeclare" style="opacity: 0.6;margin:0 6rpx;"></view>
+					<view class="dotDeclare"></view>
 				</view>
 
 			</view>
@@ -78,5 +80,7 @@
 
 			</view>
 		</view>
+	</view>
+	<view class="{{votePage == 'detail' ? 'ipx' : ''}}">
 	</view>
 </template>

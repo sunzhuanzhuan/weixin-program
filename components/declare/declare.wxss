@@ -1,73 +1,87 @@
-
-
-.declareBox{
+.declareBox {
     width: 690rpx;
-    height: 412rpx;
-    margin:0 auto;
+    margin: 80rpx auto 0rpx auto;
     background: #fff;
     padding-bottom: 32rpx;
 }
-.leftBox{
-    margin-top: 32rpx;
+
+.inBox {
+    background: #f5f5f5;
+    margin-top: 30rpx;
+}
+
+.leftBox {
+    margin-top: 30rpx;
     vertical-align: top;
     display: inline-block;
     float: left;
-    width: 112rpx;
+    width: 76rpx;
     height: 44rpx;
-    font-size: 28rpx;
-    color:#fff;
+    color: rgba(255, 255, 255, 1);
+    border-radius: 4rpx 0rpx 0rpx 4rpx;
     background: #333333;
     text-align: center;
     line-height: 44rpx;
-    font-weight: bolder;
+    font-weight: normal;
+    font-size: 28rpx;
+    font-family: FZZZHONGJW--GB1-0;
 }
-.rightBox{
-    margin-top: 32rpx;
+
+.rightBox {
+    margin-top: 30rpx;
     vertical-align: top;
     display: inline-block;
     float: left;
-    width: 400rpx;
-    height: 44rpx;
-    background: #FFDB3D;
+    padding-left: 12rpx;
+    padding-right: 16rpx;
     color: #333;
     font-size: 28rpx;
-    line-height: 44rpx;
-    padding-left: 12rpx;
-    font-weight: bold;
+    height: 44rpx;
+    background-color: #FFDB3D;
+    font-weight: 600;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
-    
+    max-width: 532rpx;
 }
-.taiBox{
+
+.taiBox {
     clear: both;
-    padding-top:22rpx;
+    padding-top: 22rpx;
 }
-.fontTai{
+
+.fontTai {
     font-size: 24rpx;
     color: #333;
-    padding: 4rpx 6rpx
+    padding: 12rpx 8rpx
 }
-.taiLeftBox{
+
+.taiLeftBox {
     width: 308rpx;
     height: 184rpx;
     display: inline-block;
     margin-right: 20rpx;
-    background: #EBEBEB;
+    background: #f5f5f5;
     position: relative;
     border-radius: 4rpx;
     vertical-align: top;
 }
-.taiRightBox{
+
+.taiRightBox {
     width: 308rpx;
     height: 184rpx;
     display: inline-block;
-    background: #EBEBEB;
+    background: #f5f5f5;
     position: relative;
     border-radius: 4rpx;
     vertical-align: top;
 }
-.holdOne{
+
+.inLeftBox {
+    background: #ebebeb;
+}
+
+.holdOne {
     width: 200rpx;
     height: 56rpx;
     line-height: 56rpx;
@@ -77,9 +91,23 @@
     bottom: -28rpx;
     left: 50rpx;
     color: #fff;
-    background: #196AD8;
+    background: linear-gradient(102deg, rgba(54, 162, 237, 1) 0%, rgba(25, 105, 214, 1) 100%);
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(25, 106, 216, 0.3);
 }
-.holdTwo{
+
+.readyHoldOne {
+    background: rgba(25, 105, 214, 1);
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(25, 106, 216, 0.3);
+}
+
+.disHoldOne {
+    background: linear-gradient(270deg, rgba(199, 199, 199, 1) 0%, rgba(220, 220, 220, 1) 100%);
+    box-shadow: 0 0 0 0;
+    font-weight: 400;
+    color: #ffffff !important;
+}
+
+.holdTwo {
     width: 200rpx;
     height: 56rpx;
     line-height: 56rpx;
@@ -89,84 +117,123 @@
     bottom: -28rpx;
     left: 50rpx;
     color: #fff;
-    background: #F53B55;
+    background: linear-gradient(90deg, rgba(251, 109, 142, 1) 0%, rgba(245, 59, 85, 1) 100%);
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(245, 59, 85, 0.3);
 }
-.progressBox{
+
+.readyHoldTwo {
+    background: rgba(245, 59, 85, 1);
+    box-shadow:0px 2px 4px 0px rgba(245,59,85,0.3);
+}
+
+.disHoldTwo {
+    background: linear-gradient(270deg, rgba(199, 199, 199, 1) 0%, rgba(220, 220, 220, 1) 100%);
+    box-shadow: 0 0 0 0;
+    font-weight: 400;
+    color: #ffffff !important;
+}
+
+.progressBox {
     overflow: hidden;
     margin-top: 50rpx;
 
 }
-.leftPro{
+
+.leftPro {
     height: 12rpx;
     background: #196AD8;
     float: left;
-    
+
 }
-.rightPro{
+
+.rightPro {
     height: 12rpx;
     background: #F53B55;
     float: left;
-   
+
 }
-.marginLeft26{
+
+.marginLeft26 {
     margin-left: 26rpx;
 }
 
-.percentBox{
-    margin:6rpx 30rpx;
+.percentBox {
+    margin: 6rpx 30rpx;
 
 }
-.leftPercent{
+
+.leftPercent {
     float: left;
 }
-.rightPercent{
+
+.rightPercent {
     float: right;
 }
-.fontPercent{
+
+.fontPercent {
     font-size: 20rpx;
     color: #333;
 }
-.view{
-    margin:0 30rpx;
+
+.view {
+    margin: 0 30rpx;
     margin-top: 10rpx;
     clear: both;
     overflow: hidden;
 }
-.leftView{
+
+.leftView {
     float: left;
     width: 50%;
 }
-.rightView{
+
+.rightView {
     overflow: hidden;
-    width:50%;
+    width: 50%;
 }
-.touxiang{
+
+.touxiang {
     width: 50rpx;
     height: 50rpx;
     border-radius: 50rpx;
 }
-.touxiang1{
+
+.touxiang1 {
     height: 50rpx;
     border-radius: 50rpx;
 }
-.many{
+
+.many {
     width: 50rpx;
     height: 50rpx;
     border-radius: 50rpx;
     margin-right: -24rpx;
-    float:left
+    float: left
 }
-.many1{
+
+.many1 {
     width: 50rpx;
     height: 50rpx;
     border-radius: 50rpx;
-    float:left
+    float: left
 }
-.dotDeclare{
+
+.dotDeclare {
     border-radius: 6rpx;
     width: 6rpx;
     height: 6rpx;
-    background:#D8D8D8;
+    background: #D8D8D8;
     display: inline-block;
     float: right;
+}
+
+.ipx {
+    width: 100%;
+    height: 200rpx;
+}
+
+.declareP {
+    width: 60rpx;
+    height: 30rpx;
+    margin: 6rpx 8rpx 2rpx 8rpx;
 }

@@ -269,7 +269,7 @@ button::after {
 }
 
 .line {
-    border-right: 1px solid #E6E6E6;
+    border-right: 2rpx solid #E6E6E6;
     display: inline-block;
     height: 46rpx;
     margin-top: 50rpx;
@@ -386,7 +386,7 @@ button {
 }
 
 .btnSavePicture {
-    border-radius: 20px;
+    border-radius: 40rpx;
     font-size: 28rpx;
     color: #fff;
     margin-top: 50rpx;

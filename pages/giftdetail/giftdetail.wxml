@@ -13,10 +13,10 @@
 						<text class="giftWorthTxt">{{detail.price}} 积分</text>
 					</view>
 				</view>
-				<!-- <view class="specification">
+				<view class="specification">
 					<text class="specText">规格</text>
-					<text class="specNum">450ml</text>
-				</view> -->
+					<text class="specNum">{{detail.spec}}</text>
+				</view>
 			</view>
 		</view>
 		<view class="textBox">
@@ -29,13 +29,13 @@
 	<view class="statementBox">
 		<text class="statement">本商品无质量问题不支持退换货</text>
 	</view>
-	<view class="bottomBtn" bindtap="change" wx:if="{{accountBalance >= detail.price && detail.stock !== '0'}}">
+	<view class="{{isIPX == true ? 'bottomBtn IPX' : 'bottomBtn'}}" bindtap="change" wx:if="{{accountBalance >= detail.price && detail.stock !== '0'}}">
 		<text class="change">兑换</text>
 	</view>
-	<view wx:else class="bottomBtn2" bindtap="canNotChange">
+	<view wx:else class="{{isIPX == true ? 'bottomBtn2 IPX' : 'bottomBtn2'}}" bindtap="canNotChange">
 		<text class="change">积分不足</text>
 	</view>
-	<view class="bottomBtn2" wx:if="{{WillOnLine}}">
+	<view class="{{isIPX == true ? 'bottomBtn2 IPX' : 'bottomBtn2'}}" wx:if="{{WillOnLine}}">
 		<text class="change">无法兑换</text>
 	</view>
 </view>
@@ -50,7 +50,7 @@
 				<image class="giftPicSmall" src="{{baseImageUrl+detail.coverUrl}}"></image>
 			</view>
 			<view class="changeScore">
-				<text class="scoreminus">积分扣减: -{{detail.price}}分</text>
+				<text class="scoreminus">积分: {{detail.price}}分</text>
 			</view>
 			<view class="changeLeft">
 				<text class="scoreminus">数量</text>
@@ -61,7 +61,10 @@
 			<view class="cancel" bindtap="cancel">
 				<text class="txt">再想想</text>
 			</view>
-			<view class="sure" bindtap="confirm">
+			<view class="sure" bindtap="confirm" wx:if="{{forSure}}">
+				<text class="txt">确认兑换</text>
+			</view>
+			<view class="sure" wx:else>
 				<text class="txt">确认兑换</text>
 			</view>
 		</view>
@@ -94,6 +97,6 @@
 <view wx:if="{{changeBox}}" class="actRule" catch:touchmove="touchmove">
 	<canvas class="canvas" canvas-id="saveCanvas"></canvas>
 	<cover-view style="margin-top:-98rpx;margin-left:-6rpx;">
-		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">{{btnSavePitcureLetter}}</button>
+		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">保存图片到手机</button>
 	</cover-view>
 </view>

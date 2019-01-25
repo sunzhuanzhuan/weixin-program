@@ -14,18 +14,13 @@ button::after {
   position: relative;
   background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
   box-shadow: 0px 4rpx 16rpx 0px rgba(246, 187, 13, 0.3);
-  border-bottom-left-radius: 70% 13%;
-  border-bottom-right-radius: 70% 13%;
 }
 
 .myScoreText {
-  width: 96rpx;
-  height: 34rpx;
   font-size: 24rpx;
   font-family: PingFangSC-Regular;
   font-weight: 400;
   color: rgba(51, 51, 51, 1);
-  line-height: 34rpx;
 }
 
 .myScoreNumber {
@@ -81,18 +76,13 @@ button::after {
 }
 
 .ScoreShop {
-  width: 96rpx;
-  height: 34rpx;
   font-size: 24rpx;
   font-family: PingFangSC-Semibold;
   font-weight: 600;
   color: rgba(51, 51, 51, 1);
-  line-height: 34rpx;
 }
 
 .activeRules {
-  width: 96rpx;
-  height: 34rpx;
   font-size: 24rpx;
   font-family: PingFangSC-Regular;
   font-weight: 400;
@@ -122,7 +112,7 @@ button::after {
 
 .ruleBox {
   width: 600rpx;
-  height: 740rpx;
+  height: 1000rpx;
   background: rgba(255, 255, 255, 1);
   border-radius: 20rpx;
   position: relative;
@@ -183,6 +173,17 @@ button::after {
   font-weight: 600;
   color: rgba(0, 0, 0, 1);
 }
+.lastTxt{
+  width:600rpx;
+  margin-top:25rpx;
+  text-align: center;
+  height:20rpx;
+}
+.lastRight{
+  font-size:20rpx;
+  color:rgb(180,180,180);
+  line-height:20rpx;
+}
 
 /***小图标样式****/
 .iconCheck {
@@ -200,7 +201,7 @@ button::after {
 }
 
 .iconCont {
-  font-size: 26rpx;
+  font-size: 25rpx;
   color: rgb(211, 161, 30);
 }
 
@@ -343,11 +344,11 @@ button::after {
 }
 
 .marginTB {
-  margin: 50rpx 0
+  margin: 48rpx 0
 }
 
 .marginTB2411 {
-  margin: 48rpx 0 22rpx 56rpx;
+  margin: 48rpx 0 4rpx 44rpx;
   padding-left: 10rpx;
   font-size: 32rpx;
   font-weight: 600;
@@ -502,6 +503,9 @@ button::after {
   background: rgba(250, 207, 84, 1);
   border-radius: 2px;
   height: 50rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .myFresh text {
@@ -514,7 +518,7 @@ button::after {
 }
 
 .myFresh text:nth-child(2) {
-  margin-left: 354rpx;
+  margin-right: 70rpx;
 }
 
 .sub {
@@ -541,6 +545,7 @@ button::after {
 .freshList {
   width: 640rpx;
   margin-left: 56rpx;
+  background-color: #FFFFFF;
 }
 
 .freshSingle {
@@ -549,22 +554,30 @@ button::after {
   margin-bottom: 10rpx;
   display: flex;
   justify-content: space-between;
+  line-height: 60rpx;
 }
-.freshSingle:first-child{
-  margin-top:8rpx;
+
+.freshSingle:first-child {
+  margin-top: 8rpx;
 }
 
 .freshSingle text {
-  margin-left: 24rpx;
-  margin-right: 70rpx;
   font-size: 24rpx;
   font-family: PingFangSC-Regular;
   font-weight: 400;
   color: rgba(102, 102, 102, 1);
-  width:200rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 280rpx;
+}
+
+.freshSingle text:nth-child(1) {
+  margin-left: 24rpx;
+}
+
+.freshSingle text:nth-child(2) {
+  margin-right: 70rpx;
 }
 
 .loadMore {
@@ -573,6 +586,10 @@ button::after {
   justify-content: center;
   height: 34rpx;
   margin-top: 10rpx;
+}
+
+.moreIPX {
+  margin-bottom: 160rpx;
 }
 
 .loadMore text {

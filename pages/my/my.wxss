@@ -38,7 +38,7 @@ button::after {
   height: 140rpx;
   text-align: center;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -209,7 +209,7 @@ button::after {
 
 .boxHistory {
   display: inline-block;
-  width: 230rpx;
+  width: 226rpx;
   height: 160rpx;
   background: #fff;
   text-align: center;
@@ -235,8 +235,8 @@ button::after {
 }
 
 .bigBoxThree {
-  margin: 0 28rpx;
-  width: 698rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
   height: 160rpx;
   overflow: hidden;
   clear: both;
@@ -266,7 +266,8 @@ button::after {
   display: inline-block;
   width: 50%;
   height: 420rpx;
-  float: left
+  float: left;
+  margin-top: 15rpx;
 }
 
 .boxNum {
@@ -275,6 +276,7 @@ button::after {
   height: 420rpx;
   float: right;
   margin-left: 5%;
+  margin-top: 25rpx;
 }
 
 .letter1 {
@@ -296,7 +298,7 @@ button::after {
   border: 1rpx solid #333333;
   border-radius: 50rpx;
   background: #fff;
-  margin-top: 20rpx;
+  margin-top: 34rpx;
   float: left;
   color: #333333
 }

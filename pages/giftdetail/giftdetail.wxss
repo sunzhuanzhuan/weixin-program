@@ -32,7 +32,7 @@
 
 .detail {
     height: 40rpx;
-    margin-top: 38rpx;
+    margin-top: 24rpx;
     position: relative;
 }
 
@@ -63,7 +63,7 @@
 
 .giftWorthline {
     position: absolute;
-    width: 126rpx;
+    width: 100%;
     height: 8rpx;
     background: rgba(254, 218, 60, 1);
     bottom: 8rpx;
@@ -149,7 +149,6 @@
 
 .bottomBtn {
     width: 100%;
-    height: 94rpx;
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     position: fixed;
     bottom: 0;
@@ -174,6 +173,9 @@
     font-weight: 600;
 }
 
+.IPX {
+    padding-bottom: 64rpx;
+}
 
 /******兑换弹窗********/
 .changeJump {
@@ -203,8 +205,8 @@
     background: rgba(241, 241, 241, 1);
     position: absolute;
     bottom: 0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
 }
 
 .cancel {
@@ -213,7 +215,7 @@
     background: rgba(241, 241, 241, 1);
     text-align: center;
     display: inline-block;
-    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 20rpx;
 }
 
 .sure {
@@ -222,7 +224,7 @@
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
     text-align: center;
     display: inline-block;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 20rpx;
 }
 
 .txt {
@@ -237,14 +239,14 @@
     width: 600rpx;
     height: 288rpx;
     background: rgba(255, 255, 255, 1);
-    border-radius: 10px;
+    border-radius: 20rpx;
 }
 
 .earnTitle {
     height: 200rpx;
     background: rgba(255, 255, 255, 1);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 20rpx;
+    border-top-right-radius: 20rpx;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -265,8 +267,8 @@
     width: 600rpx;
     height: 88rpx;
     background: linear-gradient(90deg, rgba(250, 217, 97, 1) 0%, rgba(250, 200, 74, 1) 100%);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
     text-align: center;
 }
 
@@ -333,10 +335,16 @@
     background: #FAC84A;
     font-size: 28rpx;
     color: #000;
-    width: 640rpx;
+    width: 642rpx;
     height: 100rpx;
     line-height: 100rpx;
     text-align: center;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    border-radius: 18rpx;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-left: 59rpx;
 }
 
 .canvas {

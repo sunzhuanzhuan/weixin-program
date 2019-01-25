@@ -21,7 +21,8 @@ Page({
 		currentTab: 'myShares',
 		isHome: false,
 		reportSubmit: true,
-		loadding: false
+		loadding: false,
+		enable: false
 	},
 	onLoad: function () {
 		if (getCurrentPages()[0] === this) {
@@ -39,7 +40,13 @@ Page({
 				gdt.setLocalStorage('dashboardTipShouldDisplay', false);
 			});
 		});
-
+		gdt.ready.then((app) => {
+			if (app.settings.rewardPointSubsystemEnabled) {
+				this.setData({
+					enable: true
+				})
+			}
+		})
 		gdt.currentUser.then((u) => {
 			this.data.uid = u._id;
 		});
@@ -204,7 +211,10 @@ Page({
 		});
 	},
 	onReachBottom: function () {
-		wx.showLoading({ title: '加载中', icon: 'loadding' })
+		wx.showLoading({
+			title: '加载中',
+			icon: 'loadding'
+		})
 		gdt.magicMySharedLoadMore().then(() => {
 			wx.hideLoading()
 		});
@@ -264,14 +274,17 @@ Page({
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
-		wx.showLoading({ title: '加载中', icon: 'loadding' })
+		wx.showLoading({
+			title: '加载中',
+			icon: 'loadding'
+		})
 		gdt.magicMySharedLoadLatest().then(() => {
 			wx.hideLoading()
 		});
 		gdt.track('item-list-share-load-first');
-		setTimeout(()=>{
+		setTimeout(() => {
 			wx.stopPullDownRefresh()
-		},500);
+		}, 500);
 	},
 
 

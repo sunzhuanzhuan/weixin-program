@@ -1,5 +1,7 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
+const isIPX = app.isIPX;
+console.log(app);
 Page({
 
 	data: {
@@ -9,11 +11,14 @@ Page({
 		notEnough: false, //赚取积分弹窗
 		tooLate: false,
 		url: '../../images/load.png',
-		eq: '../../images/xiaoyu.jpeg'
+		eq: '../../images/xiaoyu.jpeg',
+		forSure: true,
+		isIPX: isIPX
 	},
 	change: function () {
 		this.setData({
 			visible: true,
+			forSure : true,
 		})
 	},
 	cancel: function () {
@@ -32,8 +37,9 @@ Page({
 		})
 	},
 	confirm: function () {
-
-
+		this.setData({
+			forSure: false,
+		})
 		gdt.purchase(this.data.id, 1).then((res) => {
 			wx.showLoading({
 				title: '加载中',
@@ -115,6 +121,18 @@ Page({
 							that.setData({
 								shareImage: res.tempFilePath,
 								showSharePic: true
+							},()=>{
+								wx.saveImageToPhotosAlbum({
+									filePath: that.data.shareImage,
+									success: function () {
+										console.log('保存成功');
+										app.saveToCamera = ''
+									},
+									fail: function () {
+										console.log('保存失败');
+										app.saveToCamera = 'openSetting'
+									}
+								})
 							})
 							wx.hideLoading();
 						},
@@ -123,8 +141,7 @@ Page({
 							wx.hideLoading();
 						}
 					})
-				}, 2000);
-
+				}, 1000);
 			})
 
 
@@ -156,41 +173,52 @@ Page({
 			changeBox: false
 		});
 		let that = this;
-		wx.saveImageToPhotosAlbum({
-			filePath: that.data.shareImage,
-			success: function () {
-				console.log('保存成功');
-				that.setData({
-					saveToCamera: ''
-				})
+		// console.log(app.saveToCamera)
+		if (app.saveToCamera == 'openSetting') {
+			wx.openSetting({
+				success(res) {
+					that.confirm()
+				}
+			})
+		}
 
-			},
-			fail: function () {
-				console.log('保存失败');
-				that.setData({
-					saveToCamera: 'openSetting'
-				})
-			}
-		})
+
 
 	},
 	onLoad: function (option) {
 		const id = option.id;
-		let that = this;
+		this.setData({
+			id: id
+		})
+		this.handleApiGroup(id)
+		// gdt.baseServerUri.then((res) => {
+		// 	this.setData({
+		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
+		// 	},()=>{console.log(this.data.baseImageUrlEq)})
+		// });
+		wx.getSystemInfo({
+			success: function (res) {
+
+			}
+		})
+
+	},
+	handleApiGroup: function (id) {
+		let that = this
 		gdt.currentUser.then((u) => {
-			this.data.uid = u._id;
-			gdt.getCommodity().then((result)=>{
+			that.data.uid = u._id;
+			gdt.getCommodity().then((result) => {
 				that.setData({
-					accountBalance : result.accountBalance,
-					id: option.id,
+					accountBalance: result.accountBalance,
+					id: id,
 				})
 			})
 		});
 		gdt.getCommodityDetail(id).then((res) => {
 			that.setData({
 				detail: res,
-				status : res.status,
-				price : parseFloat(res.rmbPrice).toFixed(2)
+				status: res.status,
+				price: parseFloat(res.rmbPrice).toFixed(2)
 			});
 			gdt.baseServerUri.then((res) => {
 				that.setData({
@@ -207,12 +235,6 @@ Page({
 				})
 			});
 		});
-		// gdt.baseServerUri.then((res) => {
-		// 	this.setData({
-		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
-		// 	},()=>{console.log(this.data.baseImageUrlEq)})
-		// });
-
 	},
 	touchmove: function () {
 		return
@@ -236,7 +258,7 @@ Page({
 					})
 				} else {
 					this.setData({
-						btnSavePitcureLetter: '已保存到手机，记得分享哦'
+						btnSavePitcureLetter: '保存图片到手机'
 					})
 				}
 			}

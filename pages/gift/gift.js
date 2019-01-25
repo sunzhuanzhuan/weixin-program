@@ -54,7 +54,7 @@ Page({
 		let id = e.currentTarget.dataset.id;
 		console.log(id);
 		wx.navigateTo({
-			url: '/pages/giftdetail/giftdetail?id=' + id 
+			url: '/pages/giftdetail/giftdetail?id=' + id
 		})
 	},
 	onShareAppMessage: function () {
@@ -62,5 +62,34 @@ Page({
 			title: '签到领好礼',
 			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
 		}
-	}
+	},
+	/* 下拉刷新*/
+	onPullDownRefresh: function () {
+		wx.showLoading({
+			title: '加载中',
+			icon: 'loadding'
+		});
+		let that = this;
+		gdt.getCommodity().then((res) => {
+			let arr = [];
+			let arr1 = [];
+			res.commodities.map((item) => {
+				if (item.status == 2) {
+					arr.push(item)
+				} else if (item.status == 1) {
+					arr1.push(item)
+				}
+			})
+			that.setData({
+				accountBalance: res.accountBalance.toFixed(2),
+				data: arr,
+				data1: arr1,
+			});
+			wx.hideLoading();
+		});
+		setTimeout(() => {
+			wx.stopPullDownRefresh();
+		}, 500);
+	},
+
 })

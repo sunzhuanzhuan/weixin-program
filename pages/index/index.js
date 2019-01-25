@@ -56,7 +56,8 @@ Page({
 		loadding: undefined,
 		up: false,
 		votePage: 'index',
-		setting: {}
+		setting: {},
+		enable : false
 	},
 
 	//切换轮播图的时候
@@ -512,6 +513,11 @@ Page({
 			this.data.appTitle = x;
 		});
 		gdt.ready.then((app) => {
+			if(app.settings.rewardPointSubsystemEnabled){
+				this.setData({
+					enable : true
+				})
+			}
 			this.appState = app;
 			if (app.title) {
 				wx.setNavigationBarTitle({
@@ -636,6 +642,16 @@ Page({
 				});
 			});
 		}
+		gdt.getDailyMissions().then((res) => {
+			const missions = res.missions || [];
+			missions.forEach(item => {
+				if (item.type == 'showup') {
+					this.setData({
+						IsChecked: !item.completed
+					})
+				}
+			})
+		})
 	},
 	//下拉刷新
 	onPullDownRefresh: function () {
@@ -657,6 +673,16 @@ Page({
 				}, 500);
 			});
 		}
+		gdt.getDailyMissions().then((res) => {
+			const missions = res.missions || [];
+			missions.forEach(item => {
+				if (item.type == 'showup') {
+					this.setData({
+						IsChecked: !item.completed
+					})
+				}
+			})
+		})
 	},
 	getFormID: function (e) {
 		if (e.detail.formId) {
@@ -702,7 +728,7 @@ Page({
 			obj.id = id;
 			obj.num = num;
 			console.log(e.currentTarget.dataset.item);
-			if (votePage == 'index') {
+			if (votePage == 'index' && !e.currentTarget.dataset.item.voted) {
 				gdt.supportOption(obj).then((res) => {
 					wx.showToast({
 						title: '投票成功',

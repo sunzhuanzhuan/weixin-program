@@ -73,7 +73,7 @@ Page({
 		isPlayVideo: false,
 		isFirst: 0,
 		videoCurrent: 0,
-		saveToCamera: 'openSetting',
+		// saveToCamera: 'openSetting',
 		currentVideo: 0,
 		btnSavePitcureLetter: '',
 		reportSubmit: true,
@@ -397,6 +397,14 @@ Page({
 
 
 	},
+
+	//滑到底部
+	bindscrolltolower: function () {
+		console.log(111111)
+		this.setData({ isShow: true });
+	},
+
+	//滑动中
 	recordUserscroll: function (event) {
 		if (event.detail.scrollTop < 0) {
 			return
@@ -497,7 +505,7 @@ Page({
 			ctx.setFillStyle(grd)
 			ctx.fill();
 			// 绘制数字
-			ctx.font = 'normal bold 18px sans-serif';
+			ctx.font = 'normal bold 36rpx sans-serif';
 
 
 			const numArtical = res[0].readingMeta.nthRead + '';
@@ -535,7 +543,7 @@ Page({
 				ctx.fillText(friend, 164 * ratio, 96 * ratio);
 				ctx.fillText(my, 238 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
@@ -551,7 +559,7 @@ Page({
 				ctx.fillText(friend, 174 * ratio, 96 * ratio);
 				ctx.fillText(my, 248 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
@@ -567,7 +575,7 @@ Page({
 				ctx.fillText(friend, 184 * ratio, 96 * ratio);
 				ctx.fillText(my, 255 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 236 * ratio, 96 * ratio);
@@ -583,7 +591,7 @@ Page({
 				ctx.fillText(friend, 194 * ratio, 96 * ratio);
 				ctx.fillText(my, 268 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
@@ -599,7 +607,7 @@ Page({
 				ctx.fillText(friend, 204 * ratio, 96 * ratio);
 				ctx.fillText(my, 278 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 260 * ratio, 96 * ratio);
@@ -655,7 +663,7 @@ Page({
 
 			//z绘制描述
 			ctx.save();
-			ctx.font = 'normal normal 14px sans-serif';
+			ctx.font = 'normal normal 28rpx sans-serif';
 			ctx.setFontSize(14 * ratio)
 			ctx.setFillStyle('#666666');
 			if (describe.length < parseInt(19 / ratio)) {
@@ -697,7 +705,7 @@ Page({
 			ctx.setFontSize(14 * ratio)
 			ctx.setFillStyle('#333333');
 			ctx.fillText(miniAppShare, 130 * ratio, 326 * ratio, 220 * ratio);
-			ctx.font = 'normal normal 14px sans-serif';
+			ctx.font = 'normal normal 28rpx sans-serif';
 			let appName = '「' + this.data.appName + '」';
 
 			ctx.setFillStyle('#000');
@@ -711,7 +719,7 @@ Page({
 			} else {
 				canvasTtile = title.slice(0, parseInt(14 / ratio)) + '...'
 			}
-			ctx.font = 'normal bold 14px sans-serif';
+			ctx.font = 'normal bold 28rpx sans-serif';
 			ctx.setFontSize(18 * ratio)
 			ctx.setFillStyle('#333333');
 
@@ -739,16 +747,18 @@ Page({
 								filePath: that.data.shareImage,
 								success: function () {
 									console.log('保存成功');
-									that.setData({
-										saveToCamera: ''
-									})
+									// that.setData({
+									// 	saveToCamera: ''
+									// })
+									app.saveToCamera = ''
 
 								},
 								fail: function () {
 									console.log('保存失败');
-									that.setData({
-										saveToCamera: 'openSetting'
-									})
+									app.saveToCamera = 'openSetting'
+									// that.setData({
+									// 	saveToCamera: 'openSetting'
+									// })
 								}
 							})
 						})
@@ -789,6 +799,19 @@ Page({
 	},
 	handleSavePicture: function () {
 		this.setData({ isShowPoster: false });
+		if (app.saveToCamera == 'openSetting') {
+			wx.openSetting({
+				success(res) {
+					console.log(res.authSetting);
+
+					// res.authSetting = {
+					//   "scope.userInfo": true,
+					//   "scope.userLocation": true
+					// }
+				}
+			})
+		}
+
 	},
 
 	handleSavePictureToCamera: function () {
@@ -891,9 +914,9 @@ Page({
 			obj.id = id;
 			obj.num = num;
 			obj.params = e.currentTarget.dataset.item;
-			if (votePage == 'detail') {
+			if (votePage == 'detail'&& !obj.params.voted) {
 				gdt.supportOptionDetail(obj).then((res) => {
-					// console.log(res);
+					console.log(res);
 					wx.showToast({
 						title: '投票成功',
 						duration: 2000
@@ -902,7 +925,7 @@ Page({
 					console.log(obj)
 					obj.voteFor = res.surveyVoteFor;
 					obj.surveyOptions[num].totalSupporters = obj.surveyOptions[num].totalSupporters + 1
-					obj.vote = true;
+					obj.voted = true;
 					let one = obj.surveyOptions[0].totalSupporters;
 					let two = obj.surveyOptions[1].totalSupporters;
 					let total = one + two;
