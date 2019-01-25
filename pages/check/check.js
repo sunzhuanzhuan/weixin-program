@@ -20,6 +20,7 @@ Page({
 		page: 1,
 		pageSize: 10,
 		IPX: IPX,
+		More: '加载更多'
 	},
 	onShow: function () {
 
@@ -261,13 +262,18 @@ Page({
 		}
 	},
 	onReachBottom: function () {
-		if (this.data.totalReferencers > this.data.pageSize) {
+		if (this.data.totalReferencers == 0) {
+			this.setData({
+				More: '暂无数据哦~'
+			})
+		} else if (this.data.totalReferencers > this.data.page * this.data.pageSize) {
 			let that = this;
 			let page = this.data.page + 1;
 			let pageSize = this.data.pageSize;
 			that.setData({
 				page: page,
 				pageSize: pageSize,
+				More: '加载更多'
 			}, () => {
 				gdt.getReferral(this.data.page, this.data.pageSize).then((result) => {
 					that.setData({
@@ -275,10 +281,14 @@ Page({
 					})
 				})
 			})
-		} else {}
+		} else {
+			this.setData({
+				More: '没有更多数据啦~'
+			})
+		}
 	},
 	loadMore: function () {
-		if (this.data.totalReferencers > this.data.pageSize) {
+		if (this.data.totalReferencers > this.data.page * this.data.pageSize) {
 			let that = this;
 			let page = this.data.page + 1;
 			let pageSize = this.data.pageSize;
