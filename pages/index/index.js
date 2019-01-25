@@ -702,9 +702,8 @@ Page({
 			obj.id = id;
 			obj.num = num;
 			console.log(e.currentTarget.dataset.item);
-			if (votePage == 'index') {
+			if (votePage == 'index' && !e.currentTarget.dataset.item.voted) {
 				gdt.supportOption(obj).then((res) => {
-					console.log(res);
 					wx.showToast({
 						title: '投票成功',
 						duration: 2000

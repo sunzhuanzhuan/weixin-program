@@ -914,7 +914,7 @@ Page({
 			obj.id = id;
 			obj.num = num;
 			obj.params = e.currentTarget.dataset.item;
-			if (votePage == 'detail') {
+			if (votePage == 'detail'&& !obj.params.voted) {
 				gdt.supportOptionDetail(obj).then((res) => {
 					console.log(res);
 					wx.showToast({
