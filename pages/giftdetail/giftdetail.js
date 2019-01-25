@@ -18,6 +18,7 @@ Page({
 	change: function () {
 		this.setData({
 			visible: true,
+			forSure : true,
 		})
 	},
 	cancel: function () {
@@ -120,6 +121,18 @@ Page({
 							that.setData({
 								shareImage: res.tempFilePath,
 								showSharePic: true
+							},()=>{
+								wx.saveImageToPhotosAlbum({
+									filePath: that.data.shareImage,
+									success: function () {
+										console.log('保存成功');
+										app.saveToCamera = ''
+									},
+									fail: function () {
+										console.log('保存失败');
+										app.saveToCamera = 'openSetting'
+									}
+								})
 							})
 							wx.hideLoading();
 						},

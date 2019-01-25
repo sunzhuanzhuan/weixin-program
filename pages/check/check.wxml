@@ -121,7 +121,7 @@
 
 <!--活动规则弹出框-->
 <view wx:if="{{ruleIsShow == true}}" class='actRule' catch:touchmove="touchmove">
-	<view class='ruleBox' style="margin-left:80rpx;margin-top:160rpx;">
+	<view class='ruleBox' style="margin-left:80rpx;margin-top:100rpx;">
 		<view class='ruleHead' style="line-height:100rpx;">
 			<text>活动规则</text>
 		</view>

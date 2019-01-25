@@ -92,12 +92,12 @@
     left: 50rpx;
     color: #fff;
     background: linear-gradient(102deg, rgba(54, 162, 237, 1) 0%, rgba(25, 105, 214, 1) 100%);
-    box-shadow: 0px 2px 4px 0px rgba(25, 106, 216, 0.3);
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(25, 106, 216, 0.3);
 }
 
 .readyHoldOne {
     background: rgba(25, 105, 214, 1);
-    box-shadow: 0px 2px 4px 0px rgba(25, 106, 216, 0.3);
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(25, 106, 216, 0.3);
 }
 
 .disHoldOne {
@@ -118,7 +118,7 @@
     left: 50rpx;
     color: #fff;
     background: linear-gradient(90deg, rgba(251, 109, 142, 1) 0%, rgba(245, 59, 85, 1) 100%);
-    box-shadow: 0px 2px 4px 0px rgba(245, 59, 85, 0.3);
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(245, 59, 85, 0.3);
 }
 
 .readyHoldTwo {

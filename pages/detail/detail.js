@@ -505,7 +505,7 @@ Page({
 			ctx.setFillStyle(grd)
 			ctx.fill();
 			// 绘制数字
-			ctx.font = 'normal bold 18px sans-serif';
+			ctx.font = 'normal bold 36rpx sans-serif';
 
 
 			const numArtical = res[0].readingMeta.nthRead + '';
@@ -543,7 +543,7 @@ Page({
 				ctx.fillText(friend, 164 * ratio, 96 * ratio);
 				ctx.fillText(my, 238 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
@@ -559,7 +559,7 @@ Page({
 				ctx.fillText(friend, 174 * ratio, 96 * ratio);
 				ctx.fillText(my, 248 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
@@ -575,7 +575,7 @@ Page({
 				ctx.fillText(friend, 184 * ratio, 96 * ratio);
 				ctx.fillText(my, 255 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 236 * ratio, 96 * ratio);
@@ -591,7 +591,7 @@ Page({
 				ctx.fillText(friend, 194 * ratio, 96 * ratio);
 				ctx.fillText(my, 268 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
@@ -607,7 +607,7 @@ Page({
 				ctx.fillText(friend, 204 * ratio, 96 * ratio);
 				ctx.fillText(my, 278 * ratio, 96 * ratio);
 				ctx.save();
-				ctx.font = 'normal bold 18px sans-serif';
+				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 
 					ctx.fillText(numFriend, 260 * ratio, 96 * ratio);
@@ -663,7 +663,7 @@ Page({
 
 			//z绘制描述
 			ctx.save();
-			ctx.font = 'normal normal 14px sans-serif';
+			ctx.font = 'normal normal 28rpx sans-serif';
 			ctx.setFontSize(14 * ratio)
 			ctx.setFillStyle('#666666');
 			if (describe.length < parseInt(19 / ratio)) {
@@ -705,7 +705,7 @@ Page({
 			ctx.setFontSize(14 * ratio)
 			ctx.setFillStyle('#333333');
 			ctx.fillText(miniAppShare, 130 * ratio, 326 * ratio, 220 * ratio);
-			ctx.font = 'normal normal 14px sans-serif';
+			ctx.font = 'normal normal 28rpx sans-serif';
 			let appName = '「' + this.data.appName + '」';
 
 			ctx.setFillStyle('#000');
@@ -719,7 +719,7 @@ Page({
 			} else {
 				canvasTtile = title.slice(0, parseInt(14 / ratio)) + '...'
 			}
-			ctx.font = 'normal bold 14px sans-serif';
+			ctx.font = 'normal bold 28rpx sans-serif';
 			ctx.setFontSize(18 * ratio)
 			ctx.setFillStyle('#333333');
 
