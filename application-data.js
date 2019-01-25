@@ -544,7 +544,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			let indexedItem = itemIndex[entity._id];
 			console.log(entity);
 			if (entity.type == 'simpleSurvey') {
-				indexedItem.vote = true;
+				indexedItem.voted = true;
 				indexedItem.voteFor = entity.surveyVoteFor;
 				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
 
@@ -1031,7 +1031,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			let obj = item.params;
 			obj.voteFor = x.surveyVoteFor;
 			obj.surveyOptions[item.num].totalSupporters = obj.surveyOptions[item.num].totalSupporters + 1
-			obj.vote = true;
+			obj.voted = true;
 			let one = obj.surveyOptions[0].totalSupporters;
 			let two = obj.surveyOptions[1].totalSupporters;
 			this.userInfo.then((res) => {

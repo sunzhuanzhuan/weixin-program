@@ -4,7 +4,7 @@
 			<image src="../../images/declare.png" class="declareP"></image>
 		</view>
 		<view class="rightBox">
-			{{itemDeclare.title}}{{itemDeclare.voted}}
+			{{itemDeclare.title}}
 		</view>
 		<view class="taiBox marginLeft26">
 			<view class="{{votePage == 'detail' ? 'taiLeftBox inLeftBox' : 'taiLeftBox'}}">

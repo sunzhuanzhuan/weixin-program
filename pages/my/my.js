@@ -21,7 +21,8 @@ Page({
 		currentTab: 'myShares',
 		isHome: false,
 		reportSubmit: true,
-		loadding: false
+		loadding: false,
+		enable : false
 	},
 	onLoad: function () {
 		if (getCurrentPages()[0] === this) {
@@ -39,7 +40,13 @@ Page({
 				gdt.setLocalStorage('dashboardTipShouldDisplay', false);
 			});
 		});
-
+		gdt.ready.then((app)=>{
+			if(app.settings.rewardPointSubsystemEnabled){
+				this.setData({
+					enable : true
+				})
+			}
+		})
 		gdt.currentUser.then((u) => {
 			this.data.uid = u._id;
 		});

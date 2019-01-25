@@ -56,7 +56,8 @@ Page({
 		loadding: undefined,
 		up: false,
 		votePage: 'index',
-		setting: {}
+		setting: {},
+		enable : false
 	},
 
 	//切换轮播图的时候
@@ -512,6 +513,11 @@ Page({
 			this.data.appTitle = x;
 		});
 		gdt.ready.then((app) => {
+			if(app.settings.rewardPointSubsystemEnabled){
+				this.setData({
+					enable : true
+				})
+			}
 			this.appState = app;
 			if (app.title) {
 				wx.setNavigationBarTitle({

@@ -925,7 +925,7 @@ Page({
 					console.log(obj)
 					obj.voteFor = res.surveyVoteFor;
 					obj.surveyOptions[num].totalSupporters = obj.surveyOptions[num].totalSupporters + 1
-					obj.vote = true;
+					obj.voted = true;
 					let one = obj.surveyOptions[0].totalSupporters;
 					let two = obj.surveyOptions[1].totalSupporters;
 					let total = one + two;
