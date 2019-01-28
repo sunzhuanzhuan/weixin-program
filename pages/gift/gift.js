@@ -5,8 +5,8 @@ Page({
 		uid: '',
 		accountBalance: 0,
 		data: [],
-
-		baseUrl: ''
+		baseUrl: '',
+		pre : false
 	},
 	onLoad: function () {
 		let currentMonth = new Date().getMonth() + 1;
@@ -34,7 +34,17 @@ Page({
 			that.setData({
 				accountBalance: res.accountBalance.toFixed(2),
 				data: arr,
-				data1: arr1,
+				data1:arr1 ,  
+			},()=>{
+				if(that.data.data1.length !=0){
+					that.setData({
+						pre : true
+					})
+				}else{
+					that.setData({
+						pre : false
+					})
+				}
 			})
 		})
 
