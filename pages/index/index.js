@@ -57,7 +57,7 @@ Page({
 		up: false,
 		votePage: 'index',
 		setting: {},
-		enable : false
+		enable: false
 	},
 
 	//切换轮播图的时候
@@ -513,9 +513,9 @@ Page({
 			this.data.appTitle = x;
 		});
 		gdt.ready.then((app) => {
-			if(app.settings.rewardPointSubsystemEnabled){
+			if (app.settings.rewardPointSubsystemEnabled) {
 				this.setData({
-					enable : true
+					enable: true
 				})
 			}
 			this.appState = app;
@@ -592,6 +592,7 @@ Page({
 				screenWidth: x.screenWidth,
 				screenHeight: x.screenHeight,
 			});
+			console.log(this.data.winWidth);
 		});
 		gdt.currentUser.then((u) => {
 			this.data.uid = u._id;
