@@ -1,4 +1,6 @@
 {
-  "disableScroll":true
- 
+  "disableScroll":true,
+  "usingComponents": {
+		"txv-video": "plugin://tencentvideo/video"
+	}
 }

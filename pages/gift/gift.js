@@ -35,6 +35,16 @@ Page({
 				accountBalance: res.accountBalance.toFixed(2),
 				data: arr,
 				data1: arr1,
+			},()=>{
+				if(that.data.data1.length !=0){
+					that.setData({
+						pre : true
+					})
+				}else{
+					that.setData({
+						pre : false
+					})
+				}
 			})
 		})
 
