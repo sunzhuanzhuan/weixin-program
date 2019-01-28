@@ -27,7 +27,7 @@
 		</view>
 	</view>
 
-	<view class='giftThismonth giftWillCome'>
+	<view class='giftThismonth giftWillCome' wx:if="{{pre}}">
 		<view class='yellowBorder'></view>
 		<text class='monthGift'>{{nextMonth}}月礼物预告</text>
 	</view>
