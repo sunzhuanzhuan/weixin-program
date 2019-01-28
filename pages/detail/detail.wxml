@@ -8,7 +8,7 @@
 	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;background:#ffffff;" bindscroll="recordUserscroll"
 	 enable-back-to-top="true" bindscrolltolower="bindscrolltolower" lower-threshold="100">
 		<view wx:for="{{nodes}}" wx:key="{{index}}" wx:for-item="node">
-			<!-- <view wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
+			<view wx:if="{{node.type == 'txvVideo'}}" style="heigh:200rpx;padding:4rpx 24rpx;background:#fff">
 				<view wx:if="{{isPlayVideo && index == videoCurrent}}">
 					<txv-video vid="{{node.vid}}" autoplay="{{true}}" playerid="video{{node.vid}}"></txv-video>
 				</view>
@@ -18,7 +18,7 @@
 					<image data-index="{{index}}" class="imgOne" bindtap="handleChangeTypeVideo" src="{{baseImagePlay}}" />
 
 				</view>
-			</view> -->
+			</view>
 			<rich-text class="_root {{rootClassMixin}}" wx:if="{{!nodes.type}}" nodes="{{[node]}}"></rich-text>
 			<view wx:if="{{node.type == 'wxmpVoice'}}" class="wxmpVoice">
 				<view class="audioTitleBox">
