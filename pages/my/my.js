@@ -22,7 +22,7 @@ Page({
 		isHome: false,
 		reportSubmit: true,
 		loadding: false,
-		enable : false
+		enable: false
 	},
 	onLoad: function () {
 		if (getCurrentPages()[0] === this) {
@@ -40,10 +40,10 @@ Page({
 				gdt.setLocalStorage('dashboardTipShouldDisplay', false);
 			});
 		});
-		gdt.ready.then((app)=>{
-			if(app.settings.rewardPointSubsystemEnabled){
+		gdt.ready.then((app) => {
+			if (app.settings.rewardPointSubsystemEnabled) {
 				this.setData({
-					enable : true
+					enable: true
 				})
 			}
 		})
@@ -217,11 +217,7 @@ Page({
 		});
 		gdt.track('item-list-share-load-more')
 	},
-	onShareAppMessage: function ({
-		from,
-		target,
-		webViewUrl
-	}) {
+	onShareAppMessage: function (target) {
 		const clip = target.dataset.item;
 
 		if (!(clip && clip.entity)) {

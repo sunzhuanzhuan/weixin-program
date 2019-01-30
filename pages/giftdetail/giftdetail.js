@@ -18,7 +18,7 @@ Page({
 	change: function () {
 		this.setData({
 			visible: true,
-			forSure : true,
+			forSure: true,
 		})
 	},
 	cancel: function () {
@@ -121,7 +121,7 @@ Page({
 							that.setData({
 								shareImage: res.tempFilePath,
 								showSharePic: true
-							},()=>{
+							}, () => {
 								wx.saveImageToPhotosAlbum({
 									filePath: that.data.shareImage,
 									success: function () {
@@ -284,7 +284,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: '签到领好礼',
-			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}&id=${this.data.id}`
 		}
 	}
 })

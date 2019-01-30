@@ -115,7 +115,7 @@ Page({
 					let preveArr = item.payload.rewards.slice(level - 3, legnth + 1);
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
-					showUp = [true, true, true, item.completed, false, false, ];
+					showUp = [true, true, true, item.completed, false, false,];
 					console.log(allArr);
 					this.setData({
 						arrDate: allArr
@@ -233,7 +233,7 @@ Page({
 					url: '/pages/index/index'
 				})
 			}
-		} else {}
+		} else { }
 	},
 	/**点击签到 */
 	toCheck: function () {
@@ -302,13 +302,13 @@ Page({
 					})
 				})
 			})
-		} else {}
+		} else { }
 	},
 
 	onShareAppMessage: function () {
 		return {
 			title: '签到领好礼',
-			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+			path: `pages/check/check?refee=${this.data.uid}`
 		}
 	}
 
