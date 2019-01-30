@@ -319,7 +319,10 @@ Page({
 				}
 			}
 		}
-		return {};
+		return {
+			title: '浏览历史',
+			path: `pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
+		}
 	},
 	handleAuthor: function (e) {
 

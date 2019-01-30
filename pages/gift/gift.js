@@ -5,8 +5,8 @@ Page({
 		uid: '',
 		accountBalance: 0,
 		data: [],
-
-		baseUrl: ''
+		baseUrl: '',
+		pre: false
 	},
 	onLoad: function () {
 		let currentMonth = new Date().getMonth() + 1;
@@ -35,14 +35,14 @@ Page({
 				accountBalance: res.accountBalance.toFixed(2),
 				data: arr,
 				data1: arr1,
-			},()=>{
-				if(that.data.data1.length !=0){
+			}, () => {
+				if (that.data.data1.length != 0) {
 					that.setData({
-						pre : true
+						pre: true
 					})
-				}else{
+				} else {
 					that.setData({
-						pre : false
+						pre: false
 					})
 				}
 			})
@@ -70,7 +70,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: '签到领好礼',
-			path: `pages/giftdetail/giftdetail?refee=${this.data.uid}`
+			path: `pages/gift/gift?refee=${this.data.uid}`
 		}
 	},
 	/* 下拉刷新*/

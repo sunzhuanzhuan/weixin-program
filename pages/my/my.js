@@ -220,11 +220,7 @@ Page({
 		});
 		gdt.track('item-list-share-load-more')
 	},
-	onShareAppMessage: function ({
-		from,
-		target,
-		webViewUrl
-	}) {
+	onShareAppMessage: function (target) {
 		const clip = target.dataset.item;
 
 		if (!(clip && clip.entity)) {
