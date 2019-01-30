@@ -1,5 +1,6 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
+const _ = require('../../utils/lodash.custom.min.js');
 const util = require('../../utils/util');
 
 const innerAudioContext = app.backgroundAudioManager
@@ -477,7 +478,7 @@ Page({
 
 	// 分割线
 
-	onLoad: function () {
+	onLoad: function (options) {
 		let that = this;
 		gdt.userInfo.then((x) => {
 			this.setData({
@@ -562,23 +563,43 @@ Page({
 			this.setData({
 				loadding: true
 			})
+			if (options && options.listId) {
+				const pickedList = _.find(app.lists, { _id: options.listId });
+				const offset = app.lists.indexOf(pickedList);
+				if (offset >= 0) {
+					this.setData({
+						currentTabIndex: offset
+					});
+				}
+			}
 
 			if (app.toplistEnabled !== false) {
-				gdt.magicListItemLoadMore('topScoreds').then((res) => {
+				if (app.lists[0] !== app.listIndex['topScoreds']) {
+					app.lists.unshift(app.listIndex['topScoreds']);
+				}
+				gdt.magicListItemFirstLoad('topScoreds').then((res) => {
 					const theList = app.listIndex['topScoreds'];
 					let arr = theList.items.slice(0, 3);
-
-					if (app.lists[0] !== app.listIndex['topScoreds']) {
-						app.lists.unshift(app.listIndex['topScoreds']);
-					}
 
 					this.setData({
 						lists: app.lists,
 						imgUrls: arr
-					})
+					});
 				});
-			} else {
-				gdt.magicListItemFirstLoad(app.lists[0]._id).then(() => {
+			}
+
+			if (options && options.listId) {
+				const pickedList = _.find(app.lists, { _id: options.listId });
+				const offset = app.lists.indexOf(pickedList);
+				if (offset >= 0) {
+					this.setData({
+						currentTabIndex: offset
+					});
+				}
+			}
+			const t0Tab = app.lists[this.data.currentTabIndex || 0];
+			if (t0Tab && t0Tab._id !== 'topScoreds') {
+				gdt.magicListItemFirstLoad(t0Tab._id).then(() => {
 					this.setData({
 						lists: app.lists
 					})
@@ -710,7 +731,11 @@ Page({
 				}
 			}
 		}
-		return {};
+		const currentListInstance = this.data.lists[this.data.currentTabIndex];
+		return {
+			title: `${this.data.appTitle} - ${currentListInstance.title || '主页'}`,
+			path: `pages/index/index?refee=${this.data.uid}&listId=${currentListInstance._id}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
+		};
 	},
 	//支持
 	handleSupport(e) {
