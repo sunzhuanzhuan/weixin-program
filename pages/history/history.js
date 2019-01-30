@@ -335,16 +335,16 @@ Page({
 		if(this.data.name == 'history'){
 		return {
 			title: '浏览历史',
-			path: `pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type='history'`,
+			path: `pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type=history`,
 		}} else if (this.data.name == 'artical'){
 			return {
 				title:'收藏的文章',
-				path:`pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type='artical'`
+				path:`pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type=artical`
 			}
 		} else {
 			return {
 				title:'收藏的视频',
-				path:`pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type='video'`
+				path:`pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type=video`
 			}
 		}
 	},
