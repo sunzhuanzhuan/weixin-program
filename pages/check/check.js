@@ -20,7 +20,8 @@ Page({
 		page: 1,
 		pageSize: 10,
 		IPX: IPX,
-		More: '加载更多'
+		More: '加载更多',
+		isCheck : false
 	},
 	onShow: function () {
 
@@ -32,9 +33,24 @@ Page({
 		this.setData({
 			changeBox: false,
 			code: option.code
-		})
+		});
+		if (getCurrentPages()[0] === this) {
+			this.setData({
+				isCheck: true
+			})
+		};
 		this.handleCurrentUserAndDailyMission()
 
+	},
+	handleBack: function (e) {
+		wx.reLaunch({
+			url: '/pages/index/index'
+		})
+	},
+	getFormID: function (e) {
+		if (e.detail.formId) {
+			gdt.collectTplMessageQuotaByForm(e.detail.formId);
+		}
 	},
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
@@ -56,6 +72,11 @@ Page({
 				accountBalance: accountBalance
 			});
 		});
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrlHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png '
+			})
+		})
 	},
 	handleData: function (missions) {
 		let arrDateDuration = [];

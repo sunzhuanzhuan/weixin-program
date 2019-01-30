@@ -13,7 +13,8 @@ Page({
 		url: '../../images/load.png',
 		eq: '../../images/xiaoyu.jpeg',
 		forSure: true,
-		isIPX: isIPX
+		isIPX: isIPX,
+		isGiftDetail :false
 	},
 	change: function () {
 		this.setData({
@@ -186,22 +187,29 @@ Page({
 
 	},
 	onLoad: function (option) {
-		const id = option.id;
-		this.setData({
-			id: id
-		})
-		this.handleApiGroup(id)
-		// gdt.baseServerUri.then((res) => {
-		// 	this.setData({
-		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
-		// 	},()=>{console.log(this.data.baseImageUrlEq)})
-		// });
-		wx.getSystemInfo({
-			success: function (res) {
-
-			}
-		})
-
+		let that = this;
+		if(option.id){
+			const id = option.id;
+			console.log(id)
+			that.setData({
+				id: id
+			})
+			if (getCurrentPages()[0] === this) {
+				that.setData({
+					isGiftDetail: true
+				})
+			};
+			that.handleApiGroup(id)
+			gdt.baseServerUri.then((res) => {
+				that.setData({
+					baseImageUrlHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png'
+				})
+			})
+		}else {
+			wx.reLaunch({
+				url: '/pages/gift/gift'
+			})
+		}
 	},
 	handleApiGroup: function (id) {
 		let that = this
@@ -238,6 +246,16 @@ Page({
 	},
 	touchmove: function () {
 		return
+	},
+	handleBack: function (e) {
+		wx.reLaunch({
+			url: '/pages/index/index'
+		})
+	},
+	getFormID: function (e) {
+		if (e.detail.formId) {
+			gdt.collectTplMessageQuotaByForm(e.detail.formId);
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面初次渲染完成

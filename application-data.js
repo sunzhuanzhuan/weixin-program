@@ -542,7 +542,6 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			const itemIndex = this.localState.itemIndex;
 			//旧的;
 			let indexedItem = itemIndex[entity._id];
-			console.log(entity);
 			if (entity.type == 'simpleSurvey') {
 				indexedItem.voted = true;
 				indexedItem.voteFor = entity.surveyVoteFor;

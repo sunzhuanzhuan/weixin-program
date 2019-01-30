@@ -38,3 +38,9 @@
 		</view>
 	</view>
 </view>
+<!-- 悬浮回到首页 -->
+<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID' wx:if="{{isGift}} ">
+	<button form-type="submit " class="btnForm ">
+		<image src="{{baseImageUrlHome}}" class="{{isGift? 'goHomeStyle': 'goHomeStyle1'}} state1 " bindtap="handleBack"></image>
+	</button>
+</form>

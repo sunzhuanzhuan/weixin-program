@@ -169,3 +169,9 @@
 </view>
 <view wx:else>
 </view>
+<!-- 悬浮回到首页 -->
+<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID' wx:if="{{isCheck}} ">
+	<button form-type="submit " class="btnForm ">
+		<image src="{{baseImageUrlHome}}" class="{{isCheck? 'goHomeStyle': 'goHomeStyle1'}} state1 " bindtap="handleBack"></image>
+	</button>
+</form>
