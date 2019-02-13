@@ -39,6 +39,7 @@ Page({
 				isCheck: true
 			})
 		};
+		gdt.track("check-isOnLoad")
 		this.handleCurrentUserAndDailyMission()
 
 	},
@@ -194,10 +195,7 @@ Page({
 	},
 	jumptogift: function () {
 		wx.navigateTo({
-			url: '/pages/gift/gift',
-			success : ()=>{
-				gdt.track("jump-to-gift-from-check");
-			}
+			url: '/pages/gift/gift'
 		});
 	},
 	/*活动规则点击弹出*/

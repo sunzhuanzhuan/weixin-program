@@ -229,7 +229,7 @@ Page({
 				detail: res,
 				status: res.status,
 				price: parseFloat(res.rmbPrice).toFixed(2)
-			},()=>{gdt.track("data-show-up")});
+			},()=>{gdt.track("giftDetail-data-showup")});
 			gdt.baseServerUri.then((res) => {
 				that.setData({
 					baseImageUrl: 'https://' + res.split('/')[2],

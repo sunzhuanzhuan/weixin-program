@@ -36,7 +36,6 @@ Page({
 					data: arr,
 					data1: arr1,
 				}, () => {
-					gdt.track("show-gifts");
 					if (that.data.data1.length != 0) {
 						that.setData({
 							pre: true
@@ -49,6 +48,7 @@ Page({
 				})
 			})
 		});
+		gdt.track("into-gift");
 		
 
 		gdt.baseServerUri.then((res) => {
