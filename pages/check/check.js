@@ -194,7 +194,10 @@ Page({
 	},
 	jumptogift: function () {
 		wx.navigateTo({
-			url: '/pages/gift/gift'
+			url: '/pages/gift/gift',
+			success : ()=>{
+				gdt.track("jump-to-gift");
+			}
 		});
 	},
 	/*活动规则点击弹出*/
@@ -217,7 +220,8 @@ Page({
 							duration: 1000,
 							mask: true,
 							success: () => {
-								that.handleCurrentUserAndDailyMission()
+								that.handleCurrentUserAndDailyMission();
+								gdt.track("got-readArticle-scores")
 							}
 						});
 					})
@@ -231,7 +235,8 @@ Page({
 							mask: true,
 							success: () => {
 								console.log("1")
-								that.handleCurrentUserAndDailyMission()
+								that.handleCurrentUserAndDailyMission();
+								gdt.track("got-shareArticle-scores")
 							}
 						});
 					})
@@ -244,14 +249,18 @@ Page({
 							duration: 1000,
 							mask: true,
 							success: () => {
-								that.handleCurrentUserAndDailyMission()
+								that.handleCurrentUserAndDailyMission();
+								gdt.track("got-shareBeenRead-scores");
 							}
 						});
 					})
 				}
 			} else {
 				wx.reLaunch({
-					url: '/pages/index/index'
+					url: '/pages/index/index',
+					success:()=>{
+						gdt.track("into-index-from-check")
+					}
 				})
 			}
 		} else { }
@@ -269,6 +278,7 @@ Page({
 					mask: true,
 					success: () => {
 						that.handleCurrentUserAndDailyMission();
+						gdt.track("tap-to-check");
 					}
 				});
 			})

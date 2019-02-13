@@ -36,6 +36,7 @@ Page({
 					data: arr,
 					data1: arr1,
 				}, () => {
+					gdt.track("show-gifts");
 					if (that.data.data1.length != 0) {
 						that.setData({
 							pre: true
@@ -70,9 +71,13 @@ Page({
 	},
 	jumpToDetail: function (e) {
 		let id = e.currentTarget.dataset.id;
-		console.log(id);
+		let giftId = {};
+		giftId.id = id;
 		wx.navigateTo({
-			url: '/pages/giftdetail/giftdetail?id=' + id
+			url: '/pages/giftdetail/giftdetail?id=' + id,
+			success : ()=>{
+				gdt.track("into-giftDetail",giftId)
+			}
 		})
 	},
 	onShareAppMessage: function () {
