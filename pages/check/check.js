@@ -32,7 +32,8 @@ Page({
 		this.setData({
 			changeBox: false,
 			code: option.code
-		})
+		});
+		gdt.track("check-isOnLoad")
 		this.handleCurrentUserAndDailyMission()
 
 	},
@@ -196,7 +197,8 @@ Page({
 							duration: 1000,
 							mask: true,
 							success: () => {
-								that.handleCurrentUserAndDailyMission()
+								that.handleCurrentUserAndDailyMission();
+								gdt.track("got-readArticle-scores")
 							}
 						});
 					})
@@ -210,7 +212,8 @@ Page({
 							mask: true,
 							success: () => {
 								console.log("1")
-								that.handleCurrentUserAndDailyMission()
+								that.handleCurrentUserAndDailyMission();
+								gdt.track("got-shareArticle-scores")
 							}
 						});
 					})
@@ -223,14 +226,19 @@ Page({
 							duration: 1000,
 							mask: true,
 							success: () => {
-								that.handleCurrentUserAndDailyMission()
+								that.handleCurrentUserAndDailyMission();
+								gdt.track("got-shareBeenRead-scores");
 							}
 						});
 					})
 				}
 			} else {
 				wx.reLaunch({
-					url: '/pages/index/index'
+					url: '/pages/index/index',
+					success:()=>{
+						gdt.track("into-index-from-check")
+					}
+
 				})
 			}
 		} else { }
@@ -248,6 +256,7 @@ Page({
 					mask: true,
 					success: () => {
 						that.handleCurrentUserAndDailyMission();
+						gdt.track("got-check-score");
 					}
 				});
 			})

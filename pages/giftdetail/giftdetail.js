@@ -19,7 +19,7 @@ Page({
 		this.setData({
 			visible: true,
 			forSure: true,
-		})
+		},()=>{gdt.track("tap-change-button-from-giftDetail")})
 	},
 	cancel: function () {
 		this.setData({
@@ -39,7 +39,8 @@ Page({
 	confirm: function () {
 		this.setData({
 			forSure: false,
-		})
+		});
+		gdt.track("confirm-change-gift");
 		gdt.purchase(this.data.id, 1).then((res) => {
 			wx.showLoading({
 				title: '加载中',
@@ -126,11 +127,13 @@ Page({
 									filePath: that.data.shareImage,
 									success: function () {
 										console.log('保存成功');
-										app.saveToCamera = ''
+										app.saveToCamera = '';
+										gdt.track("save-picture-to-phone-success")
 									},
 									fail: function () {
 										console.log('保存失败');
-										app.saveToCamera = 'openSetting'
+										app.saveToCamera = 'openSetting';
+										gdt.track("save-picture-to-phone-failed")
 									}
 								})
 							})
@@ -219,7 +222,7 @@ Page({
 				detail: res,
 				status: res.status,
 				price: parseFloat(res.rmbPrice).toFixed(2)
-			});
+			},()=>{gdt.track("giftDetail-data-showup")});
 			gdt.baseServerUri.then((res) => {
 				that.setData({
 					baseImageUrl: 'https://' + res.split('/')[2],

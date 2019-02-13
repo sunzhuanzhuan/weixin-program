@@ -458,6 +458,9 @@ Page({
 	jumpToCheck() {
 		wx.navigateTo({
 			url: '/pages/check/check',
+			success : ()=>{
+				gdt.track('into-check-from-index');
+			}
 		});
 	},
 	selectMy: function () {

@@ -47,7 +47,7 @@ Page({
 				}
 			})
 		})
-
+		gdt.track("into-gift");
 		gdt.baseServerUri.then((res) => {
 			this.setData({
 				baseImageUrl: 'https://' + res.split('/')[2],
@@ -62,9 +62,14 @@ Page({
 	},
 	jumpToDetail: function (e) {
 		let id = e.currentTarget.dataset.id;
+		let giftId = {};
+		giftId.id = id;
 		console.log(id);
 		wx.navigateTo({
-			url: '/pages/giftdetail/giftdetail?id=' + id
+			url: '/pages/giftdetail/giftdetail?id=' + id,
+			success : ()=>{
+				gdt.track("into-giftDetail-from-gift",giftId)
+			}
 		})
 	},
 	onShareAppMessage: function () {
