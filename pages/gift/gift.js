@@ -76,7 +76,7 @@ Page({
 		wx.navigateTo({
 			url: '/pages/giftdetail/giftdetail?id=' + id,
 			success : ()=>{
-				gdt.track("into-giftDetail",giftId)
+				gdt.track("into-giftDetail-from-gift",giftId)
 			}
 		})
 	},

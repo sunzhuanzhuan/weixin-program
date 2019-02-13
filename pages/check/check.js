@@ -196,7 +196,7 @@ Page({
 		wx.navigateTo({
 			url: '/pages/gift/gift',
 			success : ()=>{
-				gdt.track("jump-to-gift");
+				gdt.track("jump-to-gift-from-check");
 			}
 		});
 	},
@@ -278,7 +278,7 @@ Page({
 					mask: true,
 					success: () => {
 						that.handleCurrentUserAndDailyMission();
-						gdt.track("tap-to-check");
+						gdt.track("got-check-score");
 					}
 				});
 			})

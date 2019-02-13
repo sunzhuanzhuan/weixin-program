@@ -20,7 +20,7 @@ Page({
 		this.setData({
 			visible: true,
 			forSure: true,
-		},()=>{gdt.track("tap-change-button")})
+		},()=>{gdt.track("tap-change-button-from-giftDetail")})
 	},
 	cancel: function () {
 		this.setData({
@@ -41,7 +41,7 @@ Page({
 		this.setData({
 			forSure: false,
 		})
-		gdt.track("user-tap-confirm");
+		gdt.track("confirm-change-gift");
 		gdt.purchase(this.data.id, 1).then((res) => {
 			wx.showLoading({
 				title: '加载中',
