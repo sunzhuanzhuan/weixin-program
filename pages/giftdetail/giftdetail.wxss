@@ -133,7 +133,7 @@
 }
 
 .statementBox {
-    height: 30r0px;
+    height: 250rpx;
     margin-top: 14rpx;
     text-align: center;
 }
