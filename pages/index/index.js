@@ -554,8 +554,6 @@ Page({
 			gdt.on('entityUpdate', (x) => {
 				const itemIndex = this.appState.itemIndex;
 				let this_ = this;
-				console.log(itemIndex)
-				console.log(11111111)
 				setTimeout(() => {
 					this_.setData({
 						lists: app.lists
@@ -616,7 +614,6 @@ Page({
 				screenWidth: x.screenWidth,
 				screenHeight: x.screenHeight,
 			});
-			console.log(this.data.winWidth);
 		});
 		gdt.currentUser.then((u) => {
 			this.data.uid = u._id;
@@ -756,7 +753,6 @@ Page({
 			obj.supportId = supportId;
 			obj.id = id;
 			obj.num = num;
-			console.log(e.currentTarget.dataset.item);
 			if (votePage == 'index' && !e.currentTarget.dataset.item.voted) {
 				gdt.supportOption(obj).then((res) => {
 					wx.showToast({

@@ -221,33 +221,38 @@ Page({
 		gdt.track('item-list-share-load-more')
 	},
 	onShareAppMessage: function (target) {
-		const clip = target.dataset.item;
+		if(target.from = 'button'){
+			const clip = target.target.dataset.item;
 
-		if (!(clip && clip.entity)) {
-			return;
+			if (!(clip && clip.entity)) {
+				return;
+			}
+	
+			const entity = clip.entity;
+			gdt.trackShareItem(entity._id);
+			gdt.track('share-item', {
+				itemId: clip.entityId,
+				type: entity.type,
+				refId: clip._id
+			});
+	
+			return {
+				title: entity.title || '个人主页',
+				path: `pages/detail/detail?refee=${this.data.uid}&ref=${clip._id}&id=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
+				imageUrl: entity.coverUrl
+			}
+		}else{
+			return {
+				title: '个人主页',
+				path: `pages/detail/detail?refee=${this.data.uid}&nickName=${this.data.userInfo.nickName}`,
+			}
 		}
 
-		const entity = clip.entity;
-		gdt.trackShareItem(entity._id);
-		gdt.track('share-item', {
-			itemId: clip.entityId,
-			type: entity.type,
-			refId: clip._id
-		});
-
-		return {
-			title: entity.title || '个人主页',
-			path: `pages/detail/detail?refee=${this.data.uid}&ref=${clip._id}&id=${clip.entityId}&nickName=${this.data.userInfo.nickName}`,
-			imageUrl: entity.coverUrl
-		}
 	},
 	getFormID: function (e) {
 		if (e.detail.formId) {
 			gdt.collectTplMessageQuotaByForm(e.detail.formId);
 		}
-		// console.log( e.detail.formId)
-		// this.setData({
-		// formId: e.detail.formId }) 
 	},
 	handleBack: function (e) {
 		wx.reLaunch({

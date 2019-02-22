@@ -321,7 +321,6 @@ Page({
 		const target = event.target;
 		if (target) {
 			const entity = target.dataset.item;
-			console.log(entity)
 			if (entity) {
 				gdt.trackShareItem(entity._id);
 				gdt.track('share-item-on-index-page', { itemId: entity._id, title: entity.title, type: entity.type });

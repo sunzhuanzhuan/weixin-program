@@ -141,7 +141,6 @@ Page({
 		wx.getNetworkType({
 			success(res) {
 				const networkType = res.networkType;
-				// console.log(networkType)
 				if (networkType === '2g' || networkType === 'none') {
 					wx.showToast({
 						title: '阿哦～没有网络无法正常使用',
@@ -400,7 +399,6 @@ Page({
 
 	//滑到底部
 	bindscrolltolower: function () {
-		console.log(111111)
 		this.setData({ isShow: true });
 	},
 
@@ -747,18 +745,12 @@ Page({
 								filePath: that.data.shareImage,
 								success: function () {
 									console.log('保存成功');
-									// that.setData({
-									// 	saveToCamera: ''
-									// })
 									app.saveToCamera = ''
 
 								},
 								fail: function () {
 									console.log('保存失败');
 									app.saveToCamera = 'openSetting'
-									// that.setData({
-									// 	saveToCamera: 'openSetting'
-									// })
 								}
 							})
 						})
@@ -816,7 +808,6 @@ Page({
 
 	handleSavePictureToCamera: function () {
 		var that = this;
-		console.log('hhhhhh')
 		//获取相册授权
 		wx.openSetting({
 			success(res) {
@@ -916,13 +907,11 @@ Page({
 			obj.params = e.currentTarget.dataset.item;
 			if (votePage == 'detail'&& !obj.params.voted) {
 				gdt.supportOptionDetail(obj).then((res) => {
-					console.log(res);
 					wx.showToast({
 						title: '投票成功',
 						duration: 2000
 					})
 					let obj = this.data.vote;
-					console.log(obj)
 					obj.voteFor = res.surveyVoteFor;
 					obj.surveyOptions[num].totalSupporters = obj.surveyOptions[num].totalSupporters + 1
 					obj.voted = true;

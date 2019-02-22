@@ -1,7 +1,6 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 const isIPX = app.isIPX;
-console.log(app);
 Page({
 
 	data: {
@@ -141,7 +140,6 @@ Page({
 							wx.hideLoading();
 						},
 						fail: function (res) {
-							console.log(res)
 							wx.hideLoading();
 						}
 					})
@@ -150,7 +148,6 @@ Page({
 
 
 		}).catch((err) => {
-			console.log(err)
 			if (err.status == '41208') {
 				this.setData({
 					notEnough: true,
@@ -177,7 +174,6 @@ Page({
 			changeBox: false
 		});
 		let that = this;
-		// console.log(app.saveToCamera)
 		if (app.saveToCamera == 'openSetting') {
 			wx.openSetting({
 				success(res) {

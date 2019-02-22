@@ -21,7 +21,6 @@ Page({
 			let that = this;
 			this.data.uid = u._id;
 			gdt.getCommodity().then((res) => {
-				console.log(res);
 				let arr = [];
 				let arr1 = [];
 				res.commodities.map((item) => {
