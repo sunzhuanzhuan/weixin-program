@@ -510,7 +510,7 @@ Page({
 			// const numArtical = 215+ '';
 			ctx.setFontSize(20 * ratio);
 			ctx.setFillStyle('#fff');
-			ctx.fillText(numArtical, 148 * ratio, 96 * ratio);
+			ctx.fillText(numArtical, 148 * ratio, 98 * ratio);
 			let type = ''
 			if (this.data.entity.type == 'wxArticle') {
 				type = '阅读的'
@@ -539,51 +539,75 @@ Page({
 			const numFriend = res[0].readingMeta.referencers + '';
 			// const numFriend = 8+ '';
 			if (numArtical.length === 1) {
-				ctx.fillText(friend, 164 * ratio, 96 * ratio);
-				ctx.fillText(my, 238 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
+					ctx.fillText(friend, 164 * ratio, 96 * ratio);
+					ctx.fillText(my, 232 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20  * ratio)
-					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 216 * ratio, 98 * ratio);
 				} else if (numFriend.length === 2) {
+					ctx.fillText(friend, 164 * ratio, 96 * ratio);
+					ctx.fillText(my, 235 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 216 * ratio, 98 * ratio);
 				} else if (numFriend.length === 3) {
+					ctx.fillText(friend, 164 * ratio, 96 * ratio);
+					ctx.fillText(my, 238 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 216 * ratio, 98 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 2) {
-				ctx.fillText(friend, 174 * ratio, 96 * ratio);
-				ctx.fillText(my, 248 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
+					ctx.fillText(friend, 174 * ratio, 96 * ratio);
+					ctx.fillText(my, 245 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 228 * ratio, 98 * ratio);
 				} else if (numFriend.length === 2) {
+					ctx.fillText(friend, 174 * ratio, 96 * ratio);
+					ctx.fillText(my, 248 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 228 * ratio, 98 * ratio);
 				} else if (numFriend.length === 3) {
+					ctx.fillText(friend, 174 * ratio, 96 * ratio);
+					ctx.fillText(my, 250 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 228 * ratio, 98 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 3) {
-				ctx.fillText(friend, 188 * ratio, 96 * ratio);
-				ctx.fillText(my, 255 * ratio, 96 * ratio);
-				ctx.save();
-				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
+					ctx.fillText(friend, 188 * ratio, 96 * ratio);
+					ctx.fillText(my, 252 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 239 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 239 * ratio, 98 * ratio);
 				} else if (numFriend.length === 2) {
+					ctx.fillText(friend, 188 * ratio, 96 * ratio);
+					ctx.fillText(my, 255 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 234 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 234 * ratio, 98 * ratio);
 				} else if (numFriend.length === 3) {
+					ctx.fillText(friend, 188 * ratio, 96 * ratio);
+					ctx.fillText(my, 256 * ratio, 96 * ratio);
+					ctx.save();
+					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 232 * ratio, 98 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 4) {
@@ -593,13 +617,13 @@ Page({
 				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 245 * ratio, 98 * ratio);
 				} else if (numFriend.length === 2) {
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 258 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 258 * ratio, 98 * ratio);
 				} else if (numFriend.length === 3) {
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 265 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 265 * ratio, 98 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 5) {
@@ -609,13 +633,13 @@ Page({
 				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 260 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 260 * ratio, 98 * ratio);
 				} else if (numFriend.length === 2) {
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 270 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 270 * ratio, 98 * ratio);
 				} else if (numFriend.length === 3) {
 					ctx.setFontSize(20 * ratio)
-					ctx.fillText(numFriend, 276 * ratio, 96 * ratio);
+					ctx.fillText(numFriend, 276 * ratio, 98 * ratio);
 				}
 				ctx.restore()
 			}
