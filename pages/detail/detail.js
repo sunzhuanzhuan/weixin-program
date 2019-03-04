@@ -589,21 +589,21 @@ Page({
 			} else if (numArtical.length === 3) {
 				if (numFriend.length === 1) {
 					ctx.fillText(friend, 188 * ratio, 96 * ratio);
-					ctx.fillText(my, 252 * ratio, 96 * ratio);
+					ctx.fillText(my, 260 * ratio, 96 * ratio);
 					ctx.save();
 					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 239 * ratio, 98 * ratio);
 				} else if (numFriend.length === 2) {
 					ctx.fillText(friend, 188 * ratio, 96 * ratio);
-					ctx.fillText(my, 255 * ratio, 96 * ratio);
+					ctx.fillText(my, 258 * ratio, 96 * ratio);
 					ctx.save();
 					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 234 * ratio, 98 * ratio);
 				} else if (numFriend.length === 3) {
 					ctx.fillText(friend, 188 * ratio, 96 * ratio);
-					ctx.fillText(my, 256 * ratio, 96 * ratio);
+					ctx.fillText(my, 260 * ratio, 96 * ratio);
 					ctx.save();
 					ctx.font = 'normal bold 36rpx sans-serif';
 					ctx.setFontSize(20 * ratio)
