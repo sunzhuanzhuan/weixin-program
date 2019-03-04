@@ -503,13 +503,14 @@ Page({
 			ctx.setFillStyle(grd)
 			ctx.fill();
 			// 绘制数字
-			ctx.font = 'normal bold 36rpx sans-serif';
+			ctx.font = 'normal bold 20rpx sans-serif';
 
 
 			const numArtical = res[0].readingMeta.nthRead + '';
 			// const numArtical = 215+ '';
+			ctx.setFontSize(20 * ratio);
 			ctx.setFillStyle('#fff');
-			ctx.fillText(numArtical, 150 * ratio, 96 * ratio);
+			ctx.fillText(numArtical, 148 * ratio, 96 * ratio);
 			let type = ''
 			if (this.data.entity.type == 'wxArticle') {
 				type = '阅读的'
@@ -543,13 +544,13 @@ Page({
 				ctx.save();
 				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
-
+					ctx.setFontSize(20  * ratio)
 					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 216 * ratio, 96 * ratio);
 				}
 				ctx.restore()
@@ -559,61 +560,61 @@ Page({
 				ctx.save();
 				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 228 * ratio, 96 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 3) {
-				ctx.fillText(friend, 184 * ratio, 96 * ratio);
+				ctx.fillText(friend, 188 * ratio, 96 * ratio);
 				ctx.fillText(my, 255 * ratio, 96 * ratio);
 				ctx.save();
 				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
-
-					ctx.fillText(numFriend, 236 * ratio, 96 * ratio);
+					ctx.setFontSize(20 * ratio)
+					ctx.fillText(numFriend, 239 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
-
-					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
+					ctx.setFontSize(20 * ratio)
+					ctx.fillText(numFriend, 234 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 232 * ratio, 96 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 4) {
-				ctx.fillText(friend, 194 * ratio, 96 * ratio);
+				ctx.fillText(friend, 199 * ratio, 96 * ratio);
 				ctx.fillText(my, 268 * ratio, 96 * ratio);
 				ctx.save();
 				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 245 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 258 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 265 * ratio, 96 * ratio);
 				}
 				ctx.restore()
 			} else if (numArtical.length === 5) {
-				ctx.fillText(friend, 204 * ratio, 96 * ratio);
+				ctx.fillText(friend, 209 * ratio, 96 * ratio);
 				ctx.fillText(my, 278 * ratio, 96 * ratio);
 				ctx.save();
 				ctx.font = 'normal bold 36rpx sans-serif';
 				if (numFriend.length === 1) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 260 * ratio, 96 * ratio);
 				} else if (numFriend.length === 2) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 270 * ratio, 96 * ratio);
 				} else if (numFriend.length === 3) {
-
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 276 * ratio, 96 * ratio);
 				}
 				ctx.restore()
@@ -705,7 +706,7 @@ Page({
 			ctx.fillText(miniAppShare, 130 * ratio, 326 * ratio, 220 * ratio);
 			ctx.font = 'normal normal 28rpx sans-serif';
 			let appName = '「' + this.data.appName + '」';
-
+			ctx.setFontSize(18 * ratio)
 			ctx.setFillStyle('#000');
 			ctx.fillText(appName, 124 * ratio, 346 * ratio, 220 * ratio);
 
