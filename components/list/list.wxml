@@ -46,30 +46,6 @@
 		<view bind:touchstart="handleTouchStart" bind:touchend="handleTouchEnd">
 
 			<view wx:if="{{list._id==='topScoreds'}}">
-
-				<!-- 微博 -->
-				<view>
-					<view class="weiboBigBox">
-						233
-						<view class="topAvaAndTitle">
-							<view class="weiboAvat">
-								
-							</view>
-							<view class="titleAndTime">
-								<view class="weiBoTitle">
-									
-								</view>
-								<view class="weiBoTime">
-									
-								</view>
-							</view>
-						</view>
-						<view class="weibotext">
-							吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾吾
-						</view>
-					</view>
-				</view>
-				<!-- 微博结束  -->
 				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
 					<view wx:if="{{index>3}}">
 						<!-- 视频 -->
