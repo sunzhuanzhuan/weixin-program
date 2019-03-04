@@ -1,15 +1,16 @@
 {
 	"pages": [
 		"pages/index/index",
-		"pages/check/check",
+		"pages/my/my",
+		"pages/history/history",
 		"pages/gift/gift",
 		"pages/test/detail",
+		"pages/check/check",
 		"pages/log/detail",
 		"pages/detail/detail",
-		"pages/history/history",
-		"pages/my/my",
 		"pages/introduce/intro",
 		"pages/giftdetail/giftdetail"
+		
 	],
 	"requiredBackgroundModes": [
 		"audio"

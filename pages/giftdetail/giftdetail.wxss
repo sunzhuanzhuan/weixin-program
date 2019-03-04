@@ -369,3 +369,22 @@
     right: 0;
     text-align: center;
 }
+.goHomeStyle {
+    position: fixed;
+    left: 0;
+    bottom: 200rpx;
+    width: 119rpx;
+    height: 94rpx;
+  }
+  
+  .goHomeStyle1 {
+    position: fixed;
+    left: 0;
+    bottom: -200rpx;
+    width: 119rpx;
+    height: 94rpx;
+  }
+  .state1 {
+    transition: all 0.1s linear;
+  }
+  

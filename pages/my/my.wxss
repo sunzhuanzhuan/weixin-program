@@ -18,13 +18,7 @@ button::after {
   justify-content: space-around;
 }
 
-.goHomeStyle {
-  position: fixed;
-  left: 0;
-  bottom: 200rpx;
-  width: 119rpx;
-  height: 94rpx;
-}
+
 
 .smallBox {
   display: flex;
@@ -154,7 +148,13 @@ button::after {
   background: #ffffff;
   max-width: 324rpx;
 }
-
+.goHomeStyle {
+  position: fixed;
+  left: 0;
+  bottom: 200rpx;
+  width: 119rpx;
+  height: 94rpx;
+}
 .readBoxName {
   color: #898989;
   font-size: 28rpx;

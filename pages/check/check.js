@@ -20,7 +20,8 @@ Page({
 		page: 1,
 		pageSize: 10,
 		IPX: IPX,
-		More: '加载更多'
+		More: '加载更多',
+		isCheck : false
 	},
 	onShow: function () {
 
@@ -33,9 +34,24 @@ Page({
 			changeBox: false,
 			code: option.code
 		});
+		if (getCurrentPages()[0] === this) {
+			this.setData({
+				isCheck: true
+			})
+		};
 		gdt.track("check-isOnLoad")
 		this.handleCurrentUserAndDailyMission()
 
+	},
+	handleBack: function (e) {
+		wx.reLaunch({
+			url: '/pages/index/index'
+		})
+	},
+	getFormID: function (e) {
+		if (e.detail.formId) {
+			gdt.collectTplMessageQuotaByForm(e.detail.formId);
+		}
 	},
 	handleCurrentUserAndDailyMission: function () {
 		gdt.currentUser.then(() => gdt.getDailyMissions()).then((res) => {
@@ -43,7 +59,6 @@ Page({
 				result.detail.map((item) => {
 					item.amount = item.amount.toFixed(2);
 				});
-				console.log(result.detail)
 				this.setData({
 					totalBounses: parseFloat(result.totalBounses).toFixed(2),
 					totalReferencers: result.totalReferencers,
@@ -57,6 +72,11 @@ Page({
 				accountBalance: accountBalance
 			});
 		});
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrlHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png '
+			})
+		})
 	},
 	handleData: function (missions) {
 		let arrDateDuration = [];
@@ -87,7 +107,6 @@ Page({
 					this.setData({
 						arrDate: allArr
 					})
-					console.log(allArr)
 				} else if (item.payload.level == 4) {
 					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
 					let legnth = item.payload.rewards.length;
@@ -95,7 +114,6 @@ Page({
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr);
 					showUp = [true, true, true, item.completed, false, false, false];
-					console.log(allArr)
 					this.setData({
 						arrDate: allArr,
 					})
@@ -109,7 +127,6 @@ Page({
 					this.setData({
 						arrDate: allArr
 					})
-					console.log(allArr)
 				} else if (item.payload.level == 6) {
 					arrDateDuration = [preve3, preve2, preve1, '今天', next1, next2, next3];
 					let legnth = item.payload.rewards.length;
@@ -117,7 +134,6 @@ Page({
 					let nextArr = item.payload.rewards[item.payload.rewards.length - 1];
 					allArr = preveArr.concat(nextArr).concat(nextArr).concat(nextArr);
 					showUp = [true, true, true, item.completed, false, false,];
-					console.log(allArr);
 					this.setData({
 						arrDate: allArr
 					})
@@ -125,8 +141,6 @@ Page({
 					arrDateDuration = ['今天', next1, next2, next3, next4, next5, next6];
 					showUp = [item.completed, false, false, false, false, false, false];
 					allArr = item.payload.rewards.slice(0, 7);
-					console.log('=====');
-					console.log(allArr);
 					this.setData({
 						arrDate: allArr
 					})
@@ -211,7 +225,6 @@ Page({
 							duration: 1000,
 							mask: true,
 							success: () => {
-								console.log("1")
 								that.handleCurrentUserAndDailyMission();
 								gdt.track("got-shareArticle-scores")
 							}
@@ -238,7 +251,6 @@ Page({
 					success:()=>{
 						gdt.track("into-index-from-check")
 					}
-
 				})
 			}
 		} else { }

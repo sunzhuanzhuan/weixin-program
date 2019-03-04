@@ -1,7 +1,6 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
 const isIPX = app.isIPX;
-console.log(app);
 Page({
 
 	data: {
@@ -13,7 +12,8 @@ Page({
 		url: '../../images/load.png',
 		eq: '../../images/xiaoyu.jpeg',
 		forSure: true,
-		isIPX: isIPX
+		isIPX: isIPX,
+		isGiftDetail :false
 	},
 	change: function () {
 		this.setData({
@@ -140,7 +140,6 @@ Page({
 							wx.hideLoading();
 						},
 						fail: function (res) {
-							console.log(res)
 							wx.hideLoading();
 						}
 					})
@@ -149,7 +148,6 @@ Page({
 
 
 		}).catch((err) => {
-			console.log(err)
 			if (err.status == '41208') {
 				this.setData({
 					notEnough: true,
@@ -176,7 +174,6 @@ Page({
 			changeBox: false
 		});
 		let that = this;
-		// console.log(app.saveToCamera)
 		if (app.saveToCamera == 'openSetting') {
 			wx.openSetting({
 				success(res) {
@@ -189,22 +186,28 @@ Page({
 
 	},
 	onLoad: function (option) {
-		const id = option.id;
-		this.setData({
-			id: id
-		})
-		this.handleApiGroup(id)
-		// gdt.baseServerUri.then((res) => {
-		// 	this.setData({
-		// 		baseImageUrlEq: 'https://' + res.split('/')[2] + '/static/images/xiaoyu.jpeg',
-		// 	},()=>{console.log(this.data.baseImageUrlEq)})
-		// });
-		wx.getSystemInfo({
-			success: function (res) {
-
-			}
-		})
-
+		let that = this;
+		if(option.id){
+			const id = option.id;
+			that.setData({
+				id: id
+			})
+			if (getCurrentPages()[0] === this) {
+				that.setData({
+					isGiftDetail: true
+				})
+			};
+			that.handleApiGroup(id)
+			gdt.baseServerUri.then((res) => {
+				that.setData({
+					baseImageUrlHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png'
+				})
+			})
+		}else {
+			wx.reLaunch({
+				url: '/pages/gift/gift'
+			})
+		}
 	},
 	handleApiGroup: function (id) {
 		let that = this
@@ -241,6 +244,16 @@ Page({
 	},
 	touchmove: function () {
 		return
+	},
+	handleBack: function (e) {
+		wx.reLaunch({
+			url: '/pages/index/index'
+		})
+	},
+	getFormID: function (e) {
+		if (e.detail.formId) {
+			gdt.collectTplMessageQuotaByForm(e.detail.formId);
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面初次渲染完成

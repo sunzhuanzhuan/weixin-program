@@ -591,6 +591,26 @@ button::after {
 .moreIPX {
   margin-bottom: 160rpx;
 }
+.goHomeStyle {
+  position: fixed;
+  left: 0;
+  bottom: 200rpx;
+  width: 119rpx;
+  height: 94rpx;
+  z-index : 6;
+}
+
+.goHomeStyle1 {
+  position: fixed;
+  left: 0;
+  bottom: -200rpx;
+  width: 119rpx;
+  height: 94rpx;
+  z-index : 6;
+}
+.state1 {
+  transition: all 0.1s linear;
+}
 
 .loadMore text {
   font-size: 24rpx;

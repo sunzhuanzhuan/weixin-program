@@ -19,6 +19,7 @@ Page({
 		screenHeight: '',
 		reportSubmit: true,
 		loadding: false,
+		isHistory : false
 
 	},
 	onShow: function () {
@@ -58,6 +59,16 @@ Page({
 	onLoad: function (options) {
 		this.setData({ name: options.type })
 		this.appState = gdt.localState;
+		gdt.baseServerUri.then((res) => {
+			this.setData({
+				baseImageUrlHome: 'https://' + res.split('/')[2] + '/static/images/goHome.png'
+			})
+		})
+		if (getCurrentPages()[0] === this) {
+			this.setData({
+				isHistory: true
+			})
+		};
 		gdt.systemInfo.then((x) => {
 			this.setData({
 				screenHeight: x.screenHeight,
@@ -306,6 +317,7 @@ Page({
 		}
 	},
 	onShareAppMessage: function (event) {
+		let that = this;
 		const target = event.target;
 		if (target) {
 			const entity = target.dataset.item;
@@ -319,9 +331,20 @@ Page({
 				}
 			}
 		}
+		if(this.data.name == 'history'){
 		return {
 			title: '浏览历史',
-			path: `pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}`,
+			path: `pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type=history`,
+		}} else if (this.data.name == 'artical'){
+			return {
+				title:'收藏的文章',
+				path:`pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type=artical`
+			}
+		} else {
+			return {
+				title:'收藏的视频',
+				path:`pages/history/history?refee=${this.data.uid}&nickName=${this.data.nickName}&appName=${this.data.appTitle}&type=video`
+			}
 		}
 	},
 	handleAuthor: function (e) {
@@ -330,6 +353,16 @@ Page({
 			gdt.emit('userInfo', e.detail);
 		}
 
+	},
+	handleBack: function (e) {
+		wx.reLaunch({
+			url: '/pages/index/index'
+		})
+	},
+	getFormID: function (e) {
+		if (e.detail.formId) {
+			gdt.collectTplMessageQuotaByForm(e.detail.formId);
+		}
 	},
 
 })

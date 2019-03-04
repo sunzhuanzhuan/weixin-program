@@ -100,3 +100,9 @@
 		<button bindtap="handleSavePicture" open-type="{{saveToCamera}}" class="btnSavePicture" style="z-index:99 ">保存图片到手机</button>
 	</cover-view>
 </view>
+<!-- 悬浮回到首页 -->
+<form name='pushMsgFm' report-submit="{{reportSubmit}} " bindsubmit='getFormID' wx:if="{{isGiftDetail}} ">
+	<button form-type="submit " class="btnForm ">
+		<image src="{{baseImageUrlHome}}" class="{{isGiftDetail? 'goHomeStyle': 'goHomeStyle1'}} state1 " bindtap="handleBack"></image>
+	</button>
+</form>
