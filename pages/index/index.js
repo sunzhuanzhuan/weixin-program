@@ -22,7 +22,7 @@ Page({
 		//新的标量
 		lists: [],
 		//哪一个tab
-		currentTabIndex: 0,
+		currentTabIndex: 1,
 		type: 'getUserInfo',
 		type1: 'getUserInfo',
 		isVideo: false,
@@ -60,7 +60,14 @@ Page({
 		setting: {},
 		enable: false
 	},
-
+	//进入专题详情
+	handleTopic(e) {
+		let itemTopic = e.currentTarget.dataset.itemtopic;
+		let strTopic = JSON.stringify(itemTopic);
+		wx.navigateTo({
+			url: '/pages/topic/topic?topicId=' + strTopic
+		})
+	},
 	//切换轮播图的时候
 	handleChangeSwiper: function (e) {
 		this.setData({
@@ -458,7 +465,7 @@ Page({
 	jumpToCheck() {
 		wx.navigateTo({
 			url: '/pages/check/check',
-			success : ()=>{
+			success: () => {
 				gdt.track('into-check-from-index');
 			}
 		});
@@ -544,11 +551,83 @@ Page({
 				}
 			})
 			gdt.on('listItems', (listId, updateRange, itemList) => {
+				const itemIndex = this.appState.itemIndex;
+				for (const _item of itemList) {
+					const item = itemIndex[_item._id] || {};
+					if (item.type === 'wbArticle' && !item._wbPatched) {
+
+						item._wbDateText = util.moment(item.publishedAt).format('MM-DD HH:mm');
+						const rootNode = Object.assign({}, item.nodes[0]);
+
+						const removeVideoUrl = item.wbVideo && item.wbVideo.playUrl;
+
+						if (removeVideoUrl) {
+
+							const lastTextNode = _.find(Array.from(rootNode.children).reverse(), { type: 'text' });
+							const lastText = lastTextNode.text;
+							lastTextNode.text = lastText.replace(/\s*https?\:\/\/.*?$/, '').trimRight();
+						}
+
+						let i = 0;
+						if (item.nodes && item.nodes.length) {
+							const contentArray = [];
+
+							let done = false;
+
+							for (const node of rootNode.children) {
+
+								if (node.type === 'text') {
+									const text = node.text || '';
+									const textVec = [];
+									for (const char of text) {
+										const charCode = char.charCodeAt(0);
+										if (charCode === 94 || charCode > 127) {
+											i += 2;
+										} else {
+											i += 1;
+										}
+										textVec.push(char);
+
+										if (i >= 110) {
+											done = true;
+											const textCut = textVec.join('');
+											if (textCut) {
+												contentArray.push({ type: 'text', text: textCut });
+											}
+											contentArray.push({
+												type: 'node', name: 'span', attrs: { class: 'wb-more' }, children: [
+													{ type: 'node', name: 'span', attrs: { class: 'wb-more-dots' }, children: [{ type: 'text', text: '...' }] },
+													{ type: 'node', name: 'span', attrs: { class: 'wb-more-text' }, children: [{ type: 'text', text: '全文' }] }
+												]
+											})
+											break;
+										}
+
+									}
+									if (done) {
+										break;
+									}
+									contentArray.push(node);
+
+								} else {
+									contentArray.push(node);
+									i += 2;
+								}
+
+							}
+
+							rootNode.children = contentArray;
+							item._wbNodes = [rootNode];
+						}
+						if (item._wbNodes && item._wbDateText) {
+							item._wbPatched = true;
+						}
+					}
+				}
+
 				this.setData({
 					lists: app.lists
-				})
-
-
+				});
 			});
 
 			gdt.on('entityUpdate', (x) => {

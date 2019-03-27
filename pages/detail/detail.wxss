@@ -92,7 +92,7 @@ button::after {
 
 .canvas {
     width: 640rpx;
-    height: 760rpx;
+    height: 790rpx;
     background: #fff;
     margin-top: 160rpx;
     margin-left: 54rpx;
@@ -8078,3 +8078,85 @@ screen and (device-aspect-ratio:40/71) {
 
 
 /* ------------ Wx Combo CSS Ends Here ----------*/
+/* ------------------------------Microblog CSS Starts Here------------------------------------*/
+.weiboDetail{
+    background:#ffffff;
+    padding: 20rpx 44rpx 120rpx;
+}
+.MicroblogTop{
+    padding-left:10rpx;
+    height:74rpx;
+}
+.MicrologAva{
+    width:72rpx;height:72rpx;border-radius: 72rpx;float: left;margin-right:16rpx;
+}
+.MicroblogPic{
+    width:72rpx;height:72rpx;border-radius: 72rpx;
+}
+.TitleAndTime{
+    overflow: hidden;text-overflow: ellipsis;white-space: nowrap;height:74rpx;
+}
+.MicroblogTitle{
+    max-width: 480rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height:40rpx;
+    font-size:32rpx;
+    font-family:PingFangSC-Semibold;
+    font-weight:600;
+    color:rgba(51,51,51,1);
+    line-height:40rpx;
+}
+.MicroblogTime{
+    height:34rpx;
+    font-size:24rpx;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(179,179,179,1);
+    line-height:34rpx;
+}
+.MicroblogCenter{
+    width:660rpx;margin-top:18rpx;
+}
+.MicroblogText{
+    width:660rpx;
+    font-size:32rpx;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:44rpx;
+    letter-spacing:2rpx;
+}
+.MicroblogBottom{
+    width:660rpx;
+}
+.MicroblogImages{
+    width:660rpx;
+    margin-top:16rpx;
+}
+.weiboVideo{
+    background:#fff;
+}
+.txvImageUrlPlay{
+    width:132rpx;height:132rpx;position:absolute;top:50%;left:50%;margin-top:-66rpx;margin-left:-66rpx
+}
+.wbImageCover{
+    width:660rpx;display:block;border-radius:8rpx 8rpx 0 0
+}
+.wb-rich-text {
+  width:660rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:44rpx;
+  letter-spacing:2rpx;
+}
+.wb-emotion {
+  width: 32rpx;
+  height: 32rpx;
+  vertical-align: -3rpx;
+  margin: 0 4rpx;
+  display: inline;
+}

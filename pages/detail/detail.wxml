@@ -51,7 +51,49 @@
 	</scroll-view>
 
 
+	<!-- 微博的详情 -->
+	<scroll-view scroll-y wx:if="{{entity.type == 'wbArticle'}}" style="height:100%;position: absolute;background:#ffffff;">
+		<view class='weiboDetail'>
+			<view class="Microblog">
+				<view class='MicroblogTop'>
+					<view class="MicrologAva">
+						<image class="MicroblogPic" src="{{entity.author.avatarUrl}}"></image>
+					</view>
+					<view class='TitleAndTime'>
+						<view class="MicroblogTitle">
+							{{entity.author.name}}
+						</view>
+						<view class="MicroblogTime">
+							{{entity._wbDateText}}
+						</view>
+					</view>
+				</view>
+				<view class='MicroblogCenter' catchlongpress='handleCopyPermanentUrlToClipBoard' data-item="{{entity}}">
+					<rich-text nodes="{{nodes}}"></rich-text>
+					<!-- <view class="MicroblogText">{{entity.wbText}}</view> -->
+				</view>
+				<view class='MicroblogBottom'>
 
+					<!-- 微博详情图片部分 -->
+					<view wx:for='{{entity.wbPicUrls}}' wx:if="{{entity.wbPicUrls}} && {{entity.wbPicUrls.length > 0}}">
+						<image mode='widthFix' src="{{item}}" class='MicroblogImages' data-index='{{index}}' data-imgurls='{{entity.wbPicUrls}}'
+						 bindtap='previewImg' />
+					</view>
+
+					<!-- 微博详情视频部分-->
+					<view class='weiboVideo'>
+						<view wx:if="{{entity.wbType === 'video' && entity.wbVideo && entity.wbVideo.coverUrl}}" class="item  item-{{index}} itemBigBox">
+							<view style="position:relative;">
+								<image class="wbImageCover" mode="aspectFill" src="{{entity.wbVideo.coverUrl}}" style="height:calc(660rpx * {{entity.wbVideo.height}} / {{entity.wbVideo.width}})"></image>
+							</view>
+						</view>
+					</view>
+
+				</view>
+			</view>
+		</view>
+	</scroll-view>
+	<!-- 微博详情结束-->
 
 
 

@@ -10,7 +10,7 @@ const __FAILSAFE_DEMO_EXTCONFIG = {
 	"distroId": "5b63fb56b106d81d9b74972a",
 	"appToken": "JIoR14MrZZlReOfpJP7ocGF3bhpPq6BY_OiROkRRmdo",
 	"appName": "",
-	"baseUri": "https://dev.xiaoyujuhe.com/v1/distribution"
+	"baseUri": "https://yjjh.clip.cn/v1/distribution"
 };
 
 module.exports = class GlobalDataContext extends EventEmitter {
@@ -411,9 +411,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			this.localState.pendingAudition = appBaseInfo.pendingAudition;
 			this.localState.toplistEnabled = appBaseInfo.toplistEnabled;
 			this.localState.settings = appBaseInfo.settings;
-			if (this.localState.pendingAudition) {
-				this.entityTypes = ['wxArticle']
-			}
+
 			if (this.localState.lists.length) {
 				this.localState.lists.forEach((x) => {
 					x.items = [];
@@ -468,7 +466,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 						if (total.length > 5) {
 							let arr = total.slice(0, 5);
 							indexedItem.annotations[0].totalUrl = arr
-						}else{
+						} else {
 							indexedItem.annotations[0].totalUrl = total;
 						}
 					}
@@ -548,7 +546,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 				indexedItem.surveyOptions[entity.num].totalSupporters = indexedItem.surveyOptions[entity.num].totalSupporters + 1;
 
 				this.userInfo.then((res) => {
-					if (indexedItem.surveyOptions[entity.num].supporters.length < 5 && JSON.stringify(indexedItem.surveyOptions[entity.num].supporters).indexOf(JSON.stringify(res.userInfo.avatarUrl)) == -1 ) {
+					if (indexedItem.surveyOptions[entity.num].supporters.length < 5 && JSON.stringify(indexedItem.surveyOptions[entity.num].supporters).indexOf(JSON.stringify(res.userInfo.avatarUrl)) == -1) {
 						indexedItem.surveyOptions[entity.num].supporters.push(res.userInfo)
 					}
 
@@ -1329,18 +1327,18 @@ module.exports = class GlobalDataContext extends EventEmitter {
 		}
 		const currentLength = myCollectArtical.length;
 		const nextPage = Math.floor(currentLength / PAGESIZE) + 1;
-		return this.fetchMyCollectArticalItems('wxArticle', nextPage, PAGESIZE);
+		return this.fetchMyCollectArticalItems('wxArticle,wbArticle', nextPage, PAGESIZE);
 	}
 
 	magicMyCollectArticalFirstLoad() {
 		const myCollectArtical = this.localState.myCollectArtical;
 		if (!myCollectArtical.length) {
-			return this.fetchMyCollectArticalItems('wxArticle', 1, PAGESIZE);
+			return this.fetchMyCollectArticalItems('wxArticle,wbArticle', 1, PAGESIZE);
 		}
 		return Promise.resolve();
 	}
 	magicMyCollectArticalLoadLatest() {
-		return this.fetchMyCollectArticalItems('wxArticle', 1, PAGESIZE);
+		return this.fetchMyCollectArticalItems('wxArticle,wbArticle', 1, PAGESIZE);
 
 	}
 	//我收藏的视频
@@ -1475,6 +1473,10 @@ module.exports = class GlobalDataContext extends EventEmitter {
 
 			return queryPromise;
 		});
+	}
+	//获取专题列表
+	getTopic(id) {
+		return this.simpleApiCall('get', `/simpleTopic/${id}/topicEntities`)
 	}
 
 	likeItem(itemId) {

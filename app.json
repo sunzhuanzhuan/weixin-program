@@ -9,8 +9,8 @@
 		"pages/log/detail",
 		"pages/detail/detail",
 		"pages/introduce/intro",
-		"pages/giftdetail/giftdetail"
-		
+		"pages/giftdetail/giftdetail",
+		"pages/topic/topic"
 	],
 	"requiredBackgroundModes": [
 		"audio"

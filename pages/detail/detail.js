@@ -1,6 +1,7 @@
+const _ = require('../../utils/lodash.custom.min.js');
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
-import { formatSeconds } from '../../utils/util'
+import { formatSeconds, moment } from '../../utils/util'
 const innerAudioContext = app.backgroundAudioManager
 Page({
 	data: {
@@ -78,10 +79,10 @@ Page({
 		btnSavePitcureLetter: '',
 		reportSubmit: true,
 		baseImageUrlYinHao: undefined,
-		showLoadding: false,
 		listenTablistCurrent: undefined,
 		votePage: 'detail',
 		vote: [],
+		PlayingWeiboVideo: false
 	},
 
 	handleChangeTypeVideo: function (e) {
@@ -95,7 +96,9 @@ Page({
 
 	// 点击切换视频
 	handleVideo: function (e) {
-		this.setData({ currentVideo: e.currentTarget.dataset.index });
+		this.setData({
+			currentVideo: e.currentTarget.dataset.index
+		});
 		let qPromise;
 		const scene = gdt.showParam.scene;
 		qPromise = gdt.fetchEntityDetail(e.currentTarget.dataset.id, {
@@ -108,14 +111,35 @@ Page({
 		qPromise.then((r) => {
 			if (r.entity) {
 				const currentTitle = r.entity.title;
-				wx.setNavigationBarTitle({
-					title: currentTitle,
-				});
+				if (r.entity.type == 'wbArticle') {
+					wx.setNavigationBarTitle({
+						title: ''
+					})
+				} else {
+					wx.setNavigationBarTitle({
+						title: currentTitle,
+					});
+				}
 			};
 
-			this.setData({ recommendations: r.recommendations, fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+			this.setData({
+				recommendations: r.recommendations,
+				fullPicture: r,
+				entityId: r.entity.id,
+				entity: r.entity,
+				shareId: r.refId,
+				isLike: r.liked,
+				viewId: r.viewId,
+				enteredAt: Date.now()
+			});
 
-			gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
+			gdt.track('detail-load', {
+				itemId: r.entity._id,
+				title: r.entity.title,
+				refId: r.refId,
+				viewId: r.viewId,
+				type: r.entity.type
+			});
 		})
 
 	},
@@ -126,7 +150,13 @@ Page({
 				view: this.data.viewId,
 				tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
 			});
-			gdt.track('share-item', { itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
+			gdt.track('share-item', {
+				itemId: this.data.entityId,
+				title: this.data.entity.title,
+				refId: this.data.shareId,
+				viewId: this.data.viewId,
+				type: this.data.entity.type
+			});
 
 		}
 		return {
@@ -158,9 +188,13 @@ Page({
 		wx.getSetting({
 			success: res => {
 				if (!res.authSetting['scope.writePhotosAlbum']) {
-					this.setData({ btnSavePitcureLetter: '保存到相册' })
+					this.setData({
+						btnSavePitcureLetter: '保存到相册'
+					})
 				} else {
-					this.setData({ btnSavePitcureLetter: '已保存到相册，记得分享哦' })
+					this.setData({
+						btnSavePitcureLetter: '已保存到相册，记得分享哦'
+					})
 				}
 			}
 		})
@@ -176,7 +210,12 @@ Page({
 			this.data.lastSuspendAt = null;
 
 		}
-		gdt.track('show-detail', { itemId: this.data.entityId, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
+		gdt.track('show-detail', {
+			itemId: this.data.entityId,
+			refId: this.data.shareId,
+			viewId: this.data.viewId,
+			type: this.data.entity.type
+		});
 	},
 	//授权的时候发生的
 	handleAuthor: function (e) {
@@ -189,24 +228,44 @@ Page({
 
 	handleLikeButtonTapped: function (e) {
 		gdt.userInfo.then(() => {
-			this.setData({ isLike: !this.data.isLike }, () => {
+			this.setData({
+				isLike: !this.data.isLike
+			}, () => {
 				if (this.data.isLike) {
 					gdt.likeItem(this.data.entityId);
-					gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+					gdt.track('like-item', {
+						itemId: this.data.entityId,
+						viewId: this.data.viewId,
+						type: this.data.entity.type
+					});
 				} else {
 					gdt.unlikeItem(this.data.entityId);
-					gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+					gdt.track('unlike-item', {
+						itemId: this.data.entityId,
+						viewId: this.data.viewId,
+						type: this.data.entity.type
+					});
 				}
 			});
 		}).catch(() => {
 			gdt.once('userInfo', () => {
-				this.setData({ isLike: !this.data.isLike }, () => {
+				this.setData({
+					isLike: !this.data.isLike
+				}, () => {
 					if (this.data.isLike) {
-						gdt.track('like-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+						gdt.track('like-item', {
+							itemId: this.data.entityId,
+							viewId: this.data.viewId,
+							type: this.data.entity.type
+						});
 						gdt.likeItem(this.data.entityId);
 					} else {
 						gdt.unlikeItem(this.data.entityId);
-						gdt.track('unlike-item', { itemId: this.data.entityId, viewId: this.data.viewId, type: this.data.entity.type });
+						gdt.track('unlike-item', {
+							itemId: this.data.entityId,
+							viewId: this.data.viewId,
+							type: this.data.entity.type
+						});
 					}
 				});
 			});
@@ -214,17 +273,32 @@ Page({
 
 	},
 	onLoad(options) {
-		this.setData({ listenTablistCurrent: options.listenTablistCurrent })
+		wx.showLoading({
+			title: '加载中'
+		})
+		this.setData({
+			listenTablistCurrent: options.listenTablistCurrent
+		})
 		if (options.listening == 'false') {
-			this.setData({ isPlay: false, isFirst: 0 })
+			this.setData({
+				isPlay: false,
+				isFirst: 0
+			})
 
 		} else if (options.listening == 'undefined') {
-			this.setData({ isPlay: false, isFirst: 0 })
+			this.setData({
+				isPlay: false,
+				isFirst: 0
+			})
+		} else {
+			this.setData({
+				isPlay: true,
+				isFirst: 1
+			})
 		}
-		else {
-			this.setData({ isPlay: true, isFirst: 1 })
-		}
-		this.setData({ clickIndex: options.index })
+		this.setData({
+			clickIndex: options.index
+		})
 
 		gdt.systemInfo.then((x) => {
 			this.setData({
@@ -254,21 +328,37 @@ Page({
 				type1: 'getUserInfo'
 			});
 			gdt.once('userInfo', () => {
-				this.setData({ type1: 'share' });
+				this.setData({
+					type1: 'share'
+				});
 			});
 		});
 		const scene = gdt.showParam.scene;
 		if (getCurrentPages()[0] === this) {
-			this.setData({ isRoot: true });
+			this.setData({
+				isRoot: true
+			});
 		}
 		let qPromise;
-		let { id, nickName, ref, appName, refee } = options;
+		let {
+			id,
+			nickName,
+			ref,
+			appName,
+			refee
+		} = options;
 		const entityId = id;
-		this.setData({ art: entityId, shareName: nickName, entityId: entityId, appName: appName });
+		this.setData({
+			art: entityId,
+			shareName: nickName,
+			entityId: entityId,
+			appName: appName
+		});
 		if (getCurrentPages()[0] === this) {
-			this.setData({ isRoot: true });
+			this.setData({
+				isRoot: true
+			});
 		}
-
 		if (id) {
 			qPromise = gdt.fetchEntityDetail(entityId, {
 				scene: scene,
@@ -295,14 +385,24 @@ Page({
 		}
 
 		qPromise.then((r) => {
+
 			if (r.entity) {
-				const currentTitle = r.entity.title;
+				let titleToSet = r.entity.title;
+
+				if (r.entity.type === 'wbArticle') {
+					titleToSet = '';
+				}
+
 				wx.setNavigationBarTitle({
-					title: currentTitle,
+					title: titleToSet,
 				});
 			};
+
 			if (r.entity.type == 'wxArticle') {
-				this.setData({ videoId: r.entity.txvVids[0], videoSource: r.entity.txvVids })
+				this.setData({
+					videoId: r.entity.txvVids[0],
+					videoSource: r.entity.txvVids
+				})
 			}
 			if (r.entity.annotations) {
 				let enti = r.entity.annotations[0]
@@ -318,13 +418,55 @@ Page({
 					enti.m = a;
 					enti.n = 100 - a;
 				};
-				this.setData({ vote: r.entity.annotations[0] })
+				this.setData({
+					vote: r.entity.annotations[0]
+				})
 			}
-			this.setData({ showLoadding: true })
 
-			this.setData({ recommendations: r.recommendations || [], nodes: r.nodes, rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+			if (r.entity.type === 'wbArticle') {
 
-			gdt.track('detail-load', { itemId: r.entity._id, title: r.entity.title, refId: r.refId, viewId: r.viewId, type: r.entity.type });
+				r.entity._wbDateText = moment(r.entity.publishedAt).format('MM-DD HH:mm');
+
+			}
+
+			wx.hideLoading();
+
+			const rootNode = Object.assign({}, r.nodes[0]);
+			const item = r.entity;
+
+			const removeVideoUrl = (item.wbVideo && item.wbVideo.playUrl);
+
+			if (removeVideoUrl) {
+
+				const lastTextNode = _.find(Array.from(rootNode.children).reverse(), { type: 'text' });
+				const lastText = lastTextNode.text;
+				lastTextNode.text = lastText.replace(/\s*https?\:\/\/.*?$/, '').trimRight();
+			}
+
+			this.setData({ recommendations: r.recommendations || [], nodes: [rootNode], rootClassMixin: (r.parentClasses || []).join(' '), fullPicture: r, entityId: r.entity.id, entity: r.entity, shareId: r.refId, isLike: r.liked, viewId: r.viewId, enteredAt: Date.now() });
+
+			wx.hideLoading();
+
+			this.setData({
+				recommendations: r.recommendations || [],
+				nodes: r.nodes,
+				rootClassMixin: (r.parentClasses || []).join(' '),
+				fullPicture: r,
+				entityId: r.entity.id,
+				entity: r.entity,
+				shareId: r.refId,
+				isLike: r.liked,
+				viewId: r.viewId,
+				enteredAt: Date.now()
+			});
+
+			gdt.track('detail-load', {
+				itemId: r.entity._id,
+				title: r.entity.title,
+				refId: r.refId,
+				viewId: r.viewId,
+				type: r.entity.type
+			});
 			// this.setData({ clickIndex: options.index })
 			if (options.listening && options.index == this.data.clickIndex) {
 				innerAudioContext.title = this.data.entity.title;
@@ -337,8 +479,7 @@ Page({
 						totalProgress: formatSeconds(parseInt(innerAudioContext.duration))
 					})
 				})
-			} else {
-			}
+			} else { }
 
 
 		})
@@ -349,6 +490,7 @@ Page({
 				baseImagePlay: 'https://' + res.split('/')[2] + '/static/images/play.png',
 				baseImageUrlAllStar: 'https://' + res.split('/')[2] + '/static/images/allStar.png',
 				baseImageUrlYinHao: 'https://' + res.split('/')[2] + '/static/images/yinHao.png',
+				baseImageUrlPlay: 'https://' + res.split('/')[2] + '/static/images/play.png',
 			})
 		})
 
@@ -368,7 +510,9 @@ Page({
 	},
 
 	onHide: function () {
-		this.setData({ lastSuspendAt: Date.now() });
+		this.setData({
+			lastSuspendAt: Date.now()
+		});
 	},
 	onUnload: function () {
 		if (this.data.viewId && this.data.entityId) {
@@ -381,7 +525,7 @@ Page({
 			});
 		}
 		var pages = getCurrentPages();
-		var currPage = pages[pages.length - 1];  //当前选择好友页面
+		var currPage = pages[pages.length - 1]; //当前选择好友页面
 		var prevPage = pages[pages.length - 2]; //上一个编辑款项页面
 		//直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
 		if (this.data.isFirst != 0) {
@@ -399,7 +543,9 @@ Page({
 
 	//滑到底部
 	bindscrolltolower: function () {
-		this.setData({ isShow: true });
+		this.setData({
+			isShow: true
+		});
 	},
 
 	//滑动中
@@ -410,15 +556,27 @@ Page({
 		let num1 = event.detail.scrollTop;
 		const scene = gdt.showParam.scene;
 		if (num1 > this.data.num) {
-			this.setData({ isShow: false, isChangeBig: false, isShowListen: false });
+			this.setData({
+				isShow: false,
+				isChangeBig: false,
+				isShowListen: false
+			});
 			if (getCurrentPages()[0].route === 'pages/detail/detail') {
-				this.setData({ isShare: false });
+				this.setData({
+					isShare: false
+				});
 			}
 
 		} else {
-			this.setData({ isShow: true, isChangeBig: false, isShowListen: true });
+			this.setData({
+				isShow: true,
+				isChangeBig: false,
+				isShowListen: true
+			});
 			if (getCurrentPages()[0].route === 'pages/detail/detail') {
-				this.setData({ isShare: true });
+				this.setData({
+					isShare: true
+				});
 			}
 
 
@@ -465,7 +623,9 @@ Page({
 	},
 
 	handleDrowPicture: function () {
-		this.setData({ isShowPoster: true })
+		this.setData({
+			isShowPoster: true
+		})
 		let ratio = this.data.ratio;
 		let that = this;
 		wx.showLoading({
@@ -478,6 +638,7 @@ Page({
 		Promise.all([artical, downAvatar, downCode]).then((res) => {
 			let yOffset = 30 * ratio;
 			//绘制标题背景
+			const targetEntity = this.data.entity;
 			const ctx = wx.createCanvasContext('shareCanvas');
 			ctx.setFillStyle('#ffffff')
 			ctx.fillRect(0, 0, 320 * ratio, 450 * ratio);
@@ -512,7 +673,7 @@ Page({
 			ctx.setFillStyle('#fff');
 			ctx.fillText(numArtical, 148 * ratio, 98 * ratio);
 			let type = ''
-			if (this.data.entity.type == 'wxArticle') {
+			if (targetEntity.type === 'wxArticle' || targetEntity.type === 'wbArticle') {
 				type = '阅读的'
 			} else {
 				type = '观看的'
@@ -544,7 +705,7 @@ Page({
 					ctx.fillText(my, 232 * ratio, 96 * ratio);
 					ctx.save();
 					ctx.font = 'normal bold 36rpx sans-serif';
-					ctx.setFontSize(20  * ratio)
+					ctx.setFontSize(20 * ratio)
 					ctx.fillText(numFriend, 216 * ratio, 98 * ratio);
 				} else if (numFriend.length === 2) {
 					ctx.fillText(friend, 164 * ratio, 96 * ratio);
@@ -681,7 +842,7 @@ Page({
 				yOffset += 25 * ratio;
 			});
 			// 绘制文章的标题和描述
-			const describe = this.data.entity.bref || '哎呀！这篇文章没摘要，扫码查看文章详情吧～';
+			const describe = targetEntity.bref || targetEntity.wbText || '哎呀！这篇文章没摘要，扫码查看文章详情吧～';
 			let canvasDescribe
 
 			//z绘制描述
@@ -729,13 +890,24 @@ Page({
 			ctx.setFillStyle('#333333');
 			ctx.fillText(miniAppShare, 130 * ratio, 326 * ratio, 220 * ratio);
 			ctx.font = 'normal normal 28rpx sans-serif';
-			let appName = '「' + this.data.appName + '」';
-			ctx.setFontSize(18 * ratio)
-			ctx.setFillStyle('#000');
-			ctx.fillText(appName, 124 * ratio, 346 * ratio, 220 * ratio);
 
+			if (this.data.appName.length <= 10) {
+				let appName = '「' + this.data.appName + '」';
+				ctx.setFontSize(16 * ratio)
+				ctx.setFillStyle('#000');
+				ctx.fillText(appName, 124 * ratio, 356 * ratio, 220 * ratio);
+			} else {
+				let appName1 = '「' + this.data.appName.slice(0, 10);
+				ctx.setFontSize(16 * ratio)
+				ctx.setFillStyle('#000');
+				ctx.fillText(appName1, 124 * ratio, 356 * ratio, 220 * ratio);
+				let appName2 = this.data.appName.slice(10) + '」';
+				ctx.setFontSize(16 * ratio)
+				ctx.setFillStyle('#000');
+				ctx.fillText(appName2, 140 * ratio, 380 * ratio, 220 * ratio);
+			}
 
-			const title = this.data.entity.title;
+			const title = targetEntity.title || (targetEntity.author ? targetEntity.author.name : '') || '';
 			let canvasTtile
 			if (title.length < parseInt(14 / ratio)) {
 				canvasTtile = title;
@@ -801,7 +973,13 @@ Page({
 				view: this.data.viewId,
 				tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
 			});
-			gdt.track('share-item', { itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
+			gdt.track('share-item', {
+				itemId: this.data.entityId,
+				title: this.data.entity.title,
+				refId: this.data.shareId,
+				viewId: this.data.viewId,
+				type: this.data.entity.type
+			});
 		}).catch(() => {
 			gdt.once('userInfo', () => {
 				gdt.trackShareItem(this.data.entityId, {
@@ -810,12 +988,20 @@ Page({
 					tPlus: Date.now() - (this.data.enteredAt || 0) - this.data.suspendedFor
 				});
 				this.handleDrowPicture();
-				gdt.track('share-item', { itemId: this.data.entityId, title: this.data.entity.title, refId: this.data.shareId, viewId: this.data.viewId, type: this.data.entity.type });
+				gdt.track('share-item', {
+					itemId: this.data.entityId,
+					title: this.data.entity.title,
+					refId: this.data.shareId,
+					viewId: this.data.viewId,
+					type: this.data.entity.type
+				});
 			});
 		})
 	},
 	handleSavePicture: function () {
-		this.setData({ isShowPoster: false });
+		this.setData({
+			isShowPoster: false
+		});
 		if (app.saveToCamera == 'openSetting') {
 			wx.openSetting({
 				success(res) {
@@ -869,11 +1055,15 @@ Page({
 			const voiceId = (this.data.entity.wxmpVoiceIds || [])[0];
 			innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
 		}
-		this.setData({ isPlay: true })
+		this.setData({
+			isPlay: true
+		})
 
 		innerAudioContext.play();
 		innerAudioContext.onEnded(() => {
-			this.setData({ isPlay: false })
+			this.setData({
+				isPlay: false
+			})
 		})
 		// 时间的当前的进度;
 
@@ -891,14 +1081,20 @@ Page({
 	},
 	handlePauseVideo: function () {
 		innerAudioContext.pause();
-		this.setData({ isPlay: false, isPause: true, isFirst: 1, })
+		this.setData({
+			isPlay: false,
+			isPause: true,
+			isFirst: 1,
+		})
 	},
 
 	//拖动过程中的一些处理
 	handleChanging: function (e) {
 		let that = this;
 		this.setData({
-			isPlay: true, isPause: false, isFirst: 1,
+			isPlay: true,
+			isPause: false,
+			isFirst: 1,
 			currentTime: e.detail.value,
 			currentProgress: formatSeconds(parseInt(e.detail.value)),
 		})
@@ -930,7 +1126,7 @@ Page({
 			obj.id = id;
 			obj.num = num;
 			obj.params = e.currentTarget.dataset.item;
-			if (votePage == 'detail'&& !obj.params.voted) {
+			if (votePage == 'detail' && !obj.params.voted) {
 				gdt.supportOptionDetail(obj).then((res) => {
 					wx.showToast({
 						title: '投票成功',
@@ -957,7 +1153,9 @@ Page({
 					})
 					let that = this;
 					setTimeout(function () {
-						that.setData({ vote: obj })
+						that.setData({
+							vote: obj
+						})
 					}, 500)
 					// setTimeout(() => {
 					// 	console.log(12)
@@ -978,10 +1176,74 @@ Page({
 				type1: 'getUserInfo'
 			});
 			gdt.once('userInfo', () => {
-				this.setData({ type1: 'share' });
+				this.setData({
+					type1: 'share'
+				});
 			});
 		});
 
+	},
+	/* 点击图片可以预览，可以滑动切换图片 */
+	previewImg(e) {
+		let index = e.currentTarget.dataset.index;      //图片在微博源的index
+		let imgArr = e.currentTarget.dataset.imgurls;      //微博源的图片地址组
+		wx.previewImage({
+			current: imgArr[index],     //当前图片地址
+			urls: imgArr,               //所有要预览的图片的地址集合 数组形式
+			success: function (res) { },
+			fail: function (res) { },
+			complete: function (res) { },
+		})
+	},
+	/**播放微博内容源的视频 */
+	handleWeiboVideo() {
+		this.setData({
+			PlayingWeiboVideo: !this.data.PlayingWeiboVideo
+		})
+	},
+
+	handleCopyPermanentUrlToClipBoard(e) {
+		const entity = e.currentTarget.dataset.item;
+		if (!entity) {
+			return;
+		}
+
+		let dataToCommit = '';
+		let titleToToast = '';
+		switch (entity.type) {
+			// case 'wxArticle': {
+			//   dataToCommit = entity.wxPermanentUrl;
+			//   titleToToast = '已复制文章链接';
+			//   break;
+			// }
+
+			case 'wbArticle': {
+				dataToCommit = entity.wbPermanentUrl;
+				titleToToast = '已复制微博链接';
+				break;
+			}
+
+			default: {
+				break;
+			}
+
+		}
+
+		if (!dataToCommit) {
+			return;
+		}
+
+		wx.setClipboardData({
+			data: dataToCommit,
+			success: () => {
+
+				wx.showToast({
+					title: titleToToast,
+					duration: 2000
+
+				});
+			}
+		});
 	}
 
 })

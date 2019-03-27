@@ -1,14 +1,13 @@
 <import src="/components/declare/declare.wxml" />
-
-
+<import src="/components/simpleTopic/simpleTopic.wxml" />
 
 <template name="list">
 	<block wx:if="{{list.items.length>0}}">
 		<!-- 推荐页的文章 -->
 		<block wx:if="{{list._id==='topScoreds'}}">
 			<!-- autoplay="true"  -->
-			<swiper autoplay="false" current="{{currentSwiper}}" duration="800" circular="true" previous-margin="60rpx"
-			 next-margin="60rpx" style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
+			<swiper autoplay="false" current="{{currentSwiper}}" duration="800" circular="true" previous-margin="60rpx" next-margin="60rpx"
+			 style="height:340rpx;margin:30rpx 0;" bindchange="handleChangeSwiper">
 				<swiper-item class="swiperItem" bindtap="handleDetail" data-id="{{imgUrls[1]._id}}">
 					<image class="{{swiperActiveZero[0]}} swiperImg" mode="aspectFill" style="{{swiperActiveZero[0]}};" src="{{imgUrls[1].coverUrl}}"
 					 width="600rpx" height="" />
@@ -157,7 +156,85 @@
 			</view>
 			<view wx:else>
 				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
+					<!-- 微博源 -->
+					<view wx:if="{{item.type == 'wbArticle'}}">
+						<view class="weiboBigBox">
+							<view class="topAvaAndTitle clearfix">
+								<view class="weiboAvat">
+									<image src="{{item.author.avatarUrl}}" class='weiboava' />
+								</view>
+								<view class="titleAndTime">
+									<view class="weiBoTitle">
+										{{item.author.name}}
+									</view>
+									<view class="weiBoTime">
+										{{item._wbDateText}}
+									</view>
+								</view>
+							</view>
 
+							<view class="weibotext" catchlongpress='handleCopyPermanentUrlToClipBoard' bindtap='handleDetail' data-item="{{item}}" data-id="{{item._id}}"
+							 data-everyIndex="{{index}}">
+								<rich-text nodes="{{item._wbNodes}}"></rich-text>
+								<!-- <p class='showAllTextDot' wx:if="{{item.over}}">...</p><p class="showAllText" wx:if="{{item.over}}">全文</p> -->
+							</view>
+							<view class="weiboImg">
+								<!-- 循环图片群组 -->
+								<view wx:for="{{item.wbPicUrls}}" wx:for-item='imgurls' wx:for-index='imgsindex' class="{{item.wbPicUrls.length == 1 ? 'imgGroupList1':item.wbPicUrls.length == 2 ? 'imgGroupList2' : item.wbPicUrls.length == 3 ? 'imgGroupList3' : item.wbPicUrls.length == 4 ? 'imgGroupList4' : 'imgGroupList5'}}">
+									<image mode='aspectFill' src="{{imgurls}}" data-index='{{imgsindex}}' data-imgurls='{{item.wbPicUrls}}' bindtap='previewImg'
+									 class="{{item.wbPicUrls.length == 1 ? 'imgNoOne':item.wbPicUrls.length == 2 ? 'imgNoTwo' : item.wbPicUrls.length == 3 ? 'imgNoThree' : item.wbPicUrls.length == 4 ? 'imgNoFour' : 'imgNoFive'}}"
+									/>
+								</view>
+							</view>
+							<!-- 带视频的 -->
+							<view class='weiboVideo'>
+								<view wx:if="{{item.wbType === 'video' && item.wbVideo && item.wbVideo.coverUrl}}" class="item  item-{{index}} weiboBigVideoBox">
+									<view style="position:relative;">
+										<image class="wbImageCover" mode="aspectFill" src="{{item.wbVideo.coverUrl}}"></image>
+									</view>
+								</view>
+							</view>
+							<!-- 视频结束 -->
+							<!-- 下方的听一听收藏分享按钮-->
+							<view style="background: #ffffff;height:100rpx;width:690rpx;">
+								<view class="videoTitle" data-id="{{item._id}}"></view>
+								<view data-id="{{item._id}}">
+									<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID'>
+										<button wx:if="{{item.wxmpVoiceIds.length>0}}" form-type="submit" class='btnListen' form-type="submit" bindtap="handleListing"
+										 data-id="{{item._id}}" data-index="{{index}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"
+										 data-tabList="{{currentTabIndex}}">
+											<image class="imgBtnItem " style="margin-top:30rpx;float:left" src="{{listenIndexCurrent==index && letter?'/images/mini.gif':'/images/playing.png'}}"></image>
+											<text wx:if="{{listenIndexCurrent==index && letter}}" class="bigImgPause" style="{{listenIndexCurrent==index && letter?'color:#fff;background:#333;':'color:#999;background:#ffe000;'}}">
+												暂停
+											</text>
+											<text wx:else class="bigImgPause" style="{{listenIndexCurrent==index && letter?'color:#fff;background:#333;':'color:#333;background:#ffe000;'}};">
+												听一听
+											</text>
+										</button>
+										<button wx:else form-type="submit" class='btnListen' form-type="submit" data-liked="{{item.liked}}" data-id="{{item._id}}"
+										 data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}"></button>
+										<button class='btnListen'></button>
+									</form>
+									<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID'>
+										<button form-type="submit" class='btnStar' catchtap="handleLikeButtonTapped" form-type="submit" data-liked="{{item.liked}}"
+										 data-id="{{item._id}}" data-item="{{item}}" bindgetuserinfo="handleAuthor" open-type="{{type}}">
+											<image class="imgBtnItem" style="margin-top:32rpx" src="{{item.liked?baseImageUrlAllStar:'/images/star.png'}}"></image>
+											<text class="bigImgLikedNum">
+												{{item.likedTimes}}
+											</text>
+										</button>
+									</form>
+									<form name='pushMsgFm' report-submit="{{reportSubmit}}" bindsubmit='getFormID'>
+										<button form-type="submit" class='btnShare' open-type="{{type1}}" data-item="{{item}}" form-type="submit" bindgetuserinfo="handleAuthor">
+											<image class="imgBtnItem" src="/images/share.png" style="margin-top:32rpx"></image>
+										</button>
+									</form>
+								</view>
+							</view>
+							<!-- 按钮结束-->
+						</view>
+					</view>
+					<!-- 微博结束  -->
 					<view wx:if="{{item.type === 'wxArticle'}}">
 						<!-- 小图 -->
 						<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}">
@@ -203,7 +280,9 @@
 									</view>
 									<view wx:if="{{item.annotations}}" style="height:120rpx;" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
 										<view style="overflow: hidden;">
-											<view class="leftBox marginLeft26"><image class="declareP" src="../../images/declare.png"></image></view>
+											<view class="leftBox marginLeft26">
+												<image class="declareP" src="../../images/declare.png"></image>
+											</view>
 											<view class="rightBox">
 												{{item.annotations[0].title}}
 											</view>
@@ -281,9 +360,12 @@
 											</form>
 										</view>
 									</view>
-									<view wx:if="{{item.annotations}}" style="background: #fff;padding-bottom:36rpx" bindtap="handleDetail" data-id="{{item._id}}" data-everyIndex="{{index}}">
+									<view wx:if="{{item.annotations}}" style="background: #fff;padding-bottom:36rpx" bindtap="handleDetail" data-id="{{item._id}}"
+									 data-everyIndex="{{index}}">
 										<view style="overflow: hidden;">
-											<view class="leftBox marginLeft26" style="margin-top: 0"><image class="declareP" src="../../images/declare.png"></image></view>
+											<view class="leftBox marginLeft26" style="margin-top: 0">
+												<image class="declareP" src="../../images/declare.png"></image>
+											</view>
 											<view class="rightBox" style="margin-top: 0">
 												{{item.annotations[0].title}}
 											</view>
@@ -313,8 +395,13 @@
 							</view>
 						</view>
 					</view>
+					<!-- 表态 -->
 					<view wx:elif="{{item.type === 'simpleSurvey'}}">
 						<template is="declare" data="{{type:type,itemDeclare:item,votePage:votePage}}" />
+					</view>
+					<!-- 专题 -->
+					<view wx:elif="{{item.type === 'simpleTopic'}}">
+						<template is="simpleTopic" data="{{type:type,itemTopic:item}}" />
 					</view>
 					<!-- 广告 -->
 					<view wx:if="{{ index !=0 && (index+1)%setting.txAdListInterval == 0}}">

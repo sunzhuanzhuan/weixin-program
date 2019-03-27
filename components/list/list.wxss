@@ -302,3 +302,159 @@ button{
     height: 30rpx;
     margin: 6rpx 8rpx 2rpx 8rpx;
 }
+
+
+/*微博css*/
+.weiboBigBox {
+    width: 690rpx;
+    margin: 20rpx 30rpx;
+    padding-top: 32rpx;
+    background-color: #ffffff;
+}
+
+.topAvaAndTitle {
+    height: 72rpx;
+}
+
+.weiboAvat {
+    width: 72rpx;
+    height: 72rpx;
+    float: left;
+    border-radius: 72rpx;
+    margin-right: 16rpx;
+    margin-left:14rpx;
+}
+.weiboava{
+    width:72rpx;height:72rpx;border-radius: 72rpx;
+}
+.titleAndTime {
+    height: 72rpx;
+    overflow: hidden;
+}
+
+.weiBoTitle {
+    height: 40rpx;
+    max-width: 500rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 28rpx;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 40rpx;
+}
+
+.weiBoTime {
+    height: 34rpx;
+    font-size: 24rpx;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(179, 179, 179, 1);
+    line-height: 34rpx;
+}
+
+.weibotext{
+    margin-top: 18rpx;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    font-size: 32rpx;
+    position:relative;
+    line-height:44rpx;
+    padding-left:14rpx;
+    word-wrap:break-word;
+    overflow: hidden;
+}
+.weiboImg{
+    width:690rpx;
+}
+.weiboImg view{
+    display:inline-block;
+}
+.weiboImg .imgNoOne{
+    width:660rpx;height:370rpx;
+}
+
+.wb-rich-text {
+  width: 660rpx;
+  margin-top: 18rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  font-size: 32rpx;
+  position:relative;
+  line-height:44rpx;
+  margin-left:14rpx;
+  word-wrap:break-word;
+  overflow: hidden;
+}
+
+.wb-emotion {
+  width: 32rpx;
+  height: 32rpx;
+  vertical-align: -3rpx;
+  margin: 0 4rpx;
+  display: inline;
+}
+
+.wb-more {
+  margin-left: 4rpx;
+}
+
+.wb-more-dots {
+  line-height: 44rpx;
+  background-color: white;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:black;
+  display:inline-block;
+}
+
+.wb-more-text {
+  line-height: 44rpx;
+  background-color: white;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(74,144,226,1);
+  display:inline-block;
+}
+
+
+.imgGroupList1{margin-left:16rpx;margin-top:24rpx; width:660rpx;height:370rpx;}
+.imgNoTwo{
+    width:320rpx;height:320rpx;
+}
+.imgGroupList2{margin-left:16rpx;margin-top:24rpx;width:320rpx;height:320rpx;}
+.imgNoThree{
+    width:210rpx;height:210rpx;
+}
+.imgGroupList3{margin-left:16rpx;margin-top:16rpx;width:210rpx;height:210rpx;}
+.imgNoFour{
+    width:320rpx;height:320rpx;
+}
+.imgGroupList4{margin-left:16rpx;margin-top:24rpx;width:320rpx;height:320rpx;}
+.weiboImg .imgGroupList4:nth-child(3),.imgGroupList4:nth-child(4){
+    margin-top:8rpx;
+}
+.imgGroupList5{
+    display:inline-block;
+    margin-left:16rpx;width:210rpx;height:210rpx;
+    margin-top:16rpx;
+}
+.imgNoFive{
+    width:210rpx;height:210rpx;
+}
+.imgGroupList5:nth-child(4),.imgGroupList5:nth-child(5),.imgGroupList5:nth-child(6),.imgGroupList5:nth-child(7),.imgGroupList5:nth-child(8),.imgGroupList5:nth-child(9){
+    margin-top:8rpx;
+}
+/*NoFive == NoSix ==NoSeven == NoEight == NoNine*/  
+
+.weiboVideo{
+    background:#fff;
+}
+.wbImageCover{
+    width:660rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0
+}
