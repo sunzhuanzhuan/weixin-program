@@ -184,6 +184,23 @@ Page({
 			});
 		}
 	},
+	//跳转到详情
+	handleDetail(e) {
+		let everyIndex = e.currentTarget.dataset.everyindex;
+		if (everyIndex == this.data.listenIndexCurrent) {
+			let that = this;
+			wx.navigateTo({
+				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&listenTablistCurrent=' + that.data.currentTabIndex + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=' + this.data.listening + '&index=' + everyIndex
+			})
+		} else {
+			let that = this;
+			wx.navigateTo({
+				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&listenTablistCurrent=' + that.data.currentTabIndex + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
+			})
+		}
+
+
+	},
 	//授权
 	//授权的时候发生的
 	handleAuthor: function (e) {

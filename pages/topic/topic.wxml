@@ -11,7 +11,7 @@
 		<!-- 微博源 -->
 		<view wx:if="{{item.type == 'wbArticle'}}">
 			<view class="weiboBigBox">
-				<view class="topAvaAndTitle clearfix">
+				<view class="topAvaAndTitle clearfix" bindtap='handleDetail' data-item="{{item}}" data-id="{{item._id}}" data-everyIndex="{{index}}">
 					<view class="weiboAvat">
 						<image src="{{item.author.avatarUrl}}" class='weiboava' />
 					</view>

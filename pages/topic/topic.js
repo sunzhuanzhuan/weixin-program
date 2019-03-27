@@ -1,17 +1,28 @@
 let app = getApp().globalData;
 const gdt = app.applicationDataContext;
+const _ = require('../../utils/lodash.custom.min.js');
+const util = require('../../utils/util');
+
+const innerAudioContext = app.backgroundAudioManager
 
 Page({
 	data: {
 		topic: {},
 		type: "",
 		type1: '',
+		//是否正在播放
+		listening: false,
+		listenIndexCurrent: undefined,
+		listenTablistCurrent: 0,
+		voiceId: undefined,
+		currentSwiper: 1,
+		letter: false,
 	},
 	onLoad: function (params) {
 		let topic = JSON.parse(params.topicId);
 
 		gdt.getTopic(topic._id).then((res) => {
-			this.setData({ topic, topicList: res })
+			this.handleWeiBoTitle(res)
 		});
 		gdt.baseServerUri.then((res1) => {
 			gdt.distroId.then((res3) => {
@@ -42,24 +53,85 @@ Page({
 				baseImageUrlAllStar: 'https://' + res.split('/')[2] + '/static/images/allStar.png',
 			})
 		})
-		gdt.ready.then((app) => {
-			this.appState = app;
-			gdt.on('entityUpdate', (x) => {
-				const itemIndex = this.appState.itemIndex;
-				let this_ = this;
 
-				// setTimeout(() => {
-				// 	this_.setData({
-				// 		lists: app.lists
-				// 	});
-				// }, 500)
-
-			});
-		})
 
 
 	},
+	//循环嵌套解决微博的标题问题
+	handleWeiBoTitle(res) {
+		res.map((item) => {
+			if (item.type === 'wbArticle' && !item._wbPatched) {
 
+				item._wbDateText = util.moment(item.publishedAt).format('MM-DD HH:mm');
+				const rootNode = Object.assign({}, item.nodes[0]);
+
+				const removeVideoUrl = item.wbVideo && item.wbVideo.playUrl;
+
+				if (removeVideoUrl) {
+
+					const lastTextNode = _.find(Array.from(rootNode.children).reverse(), { type: 'text' });
+					const lastText = lastTextNode.text;
+					lastTextNode.text = lastText.replace(/\s*https?\:\/\/.*?$/, '').trimRight();
+				}
+
+				let i = 0;
+				if (item.nodes && item.nodes.length) {
+					const contentArray = [];
+
+					let done = false;
+
+					for (const node of rootNode.children) {
+
+						if (node.type === 'text') {
+							const text = node.text || '';
+							const textVec = [];
+							for (const char of text) {
+								const charCode = char.charCodeAt(0);
+								if (charCode === 94 || charCode > 127) {
+									i += 2;
+								} else {
+									i += 1;
+								}
+								textVec.push(char);
+
+								if (i >= 110) {
+									done = true;
+									const textCut = textVec.join('');
+									if (textCut) {
+										contentArray.push({ type: 'text', text: textCut });
+									}
+									contentArray.push({
+										type: 'node', name: 'span', attrs: { class: 'wb-more' }, children: [
+											{ type: 'node', name: 'span', attrs: { class: 'wb-more-dots' }, children: [{ type: 'text', text: '...' }] },
+											{ type: 'node', name: 'span', attrs: { class: 'wb-more-text' }, children: [{ type: 'text', text: '全文' }] }
+										]
+									})
+									break;
+								}
+
+							}
+							if (done) {
+								break;
+							}
+							contentArray.push(node);
+
+						} else {
+							contentArray.push(node);
+							i += 2;
+						}
+
+					}
+
+					rootNode.children = contentArray;
+					item._wbNodes = [rootNode];
+				}
+				if (item._wbNodes && item._wbDateText) {
+					item._wbPatched = true;
+				}
+			}
+		})
+		this.setData({ topicList: res })
+	},
 	onShareAppMessage: function (event) {
 		const target = event.target;
 		if (target) {
@@ -96,6 +168,79 @@ Page({
 			gdt.emit('userInfo', e.detail);
 		}
 
+	},
+	//跳转到详情
+	handleDetail(e) {
+		console.log(e)
+		let everyIndex = e.currentTarget.dataset.everyindex;
+		if (everyIndex == this.data.listenIndexCurrent) {
+			let that = this;
+			wx.navigateTo({
+				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&listenTablistCurrent=' + that.data.currentTabIndex + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=' + this.data.listening + '&index=' + everyIndex
+			})
+		} else {
+			let that = this;
+			wx.navigateTo({
+				url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + '&listenTablistCurrent=' + that.data.currentTabIndex + '&num=' + that.data.detailTap + '&appName=' + this.data.appTitle + '&listening=false&index=' + everyIndex
+			})
+		}
+
+
+	},
+	handleCopyPermanentUrlToClipBoard(e) {
+		const entity = e.currentTarget.dataset.item;
+		if (!entity) {
+			return;
+		}
+
+		let dataToCommit = '';
+		let titleToToast = '';
+		switch (entity.type) {
+			// case 'wxArticle': {
+			//   dataToCommit = entity.wxPermanentUrl;
+			//   titleToToast = '已复制文章链接';
+			//   break;
+			// }
+
+			// case 'wbArticle': {
+			//   dataToCommit = entity.wbPermanentUrl;
+			//   titleToToast = '已复制微博链接';
+			//   break;
+			// }
+
+			default: {
+				break;
+			}
+
+		}
+
+		if (!dataToCommit) {
+			return;
+		}
+
+		wx.setClipboardData({
+			data: dataToCommit,
+			success: () => {
+
+				wx.showToast({
+					title: titleToToast,
+					duration: 2000
+
+				});
+			}
+		});
+	},
+	/* 微博源中点击图片可以预览，可以滑动切换图片 */
+	previewImg(e) {
+		let index = e.currentTarget.dataset.index;            //图片在微博源的index
+		let imgArr = e.currentTarget.dataset.imgurls;                         		 //此微博源的图片地址组
+		wx.previewImage({
+			current: imgArr[index],     //当前图片地址
+			urls: imgArr,               //所有要预览的图片的地址集合 数组形式
+			success: function (res) { },
+			fail: function (res) { },
+			complete: function (res) { },
+		})
 	},
 	handleLikeButtonTapped: function (e) {
 		console.log(e)
@@ -134,9 +279,81 @@ Page({
 				}
 			})
 		});
-		gdt.getTopic(this.data.topic._id).then((res) => {
-			this.setData({ topicList: res })
+
+		gdt.getTopic(topic._id).then((res) => {
+			this.handleWeiBoTitle(res)
 		});
+
+	},
+	//听力
+	handleListing: function (e) {
+		const entity = e.currentTarget.dataset.item;
+		let voiceId = entity.wxmpVoiceIds[0];
+		this.setData({
+			listenTablistCurrent: e.currentTarget.dataset.tablist
+		});
+		if (e.currentTarget.dataset.index == this.data.listenIndexCurrent) {
+			if (this.data.listening) {
+				innerAudioContext.pause();
+				this.setData({
+					letter: false,
+					listening: false,
+					listenIndexCurrent: e.currentTarget.dataset.index,
+					voiceId: voiceId
+				})
+				gdt.track('pause-article-voice-on-index-page', {
+					voiceId: voiceId,
+					itemId: entity._id,
+					title: entity.title,
+					playedPercentage: (innerAudioContext.currentTime / innerAudioContext.duration) || 0
+				});
+			} else {
+				if (voiceId != this.data.voiceId) {
+					innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
+					innerAudioContext.title = e.currentTarget.dataset.item.title
+				}
+				innerAudioContext.onEnded(() => {
+					this.setData({
+						letter: false,
+						listening: false,
+						listenIndexCurrent: e.currentTarget.dataset.index,
+						voiceId: voiceId
+					})
+				})
+
+				this.setData({
+					letter: true,
+					listening: true,
+					listenIndexCurrent: e.currentTarget.dataset.index,
+					voiceId: voiceId
+				})
+				innerAudioContext.play();
+				gdt.track('play-article-voice-on-index-page', {
+					voiceId: voiceId,
+					itemId: entity._id,
+					title: entity.title
+				});
+			}
+
+		} else {
+			innerAudioContext.src = 'https://res.wx.qq.com/voice/getvoice?mediaid=' + voiceId;
+			innerAudioContext.title = e.currentTarget.dataset.item.title
+			innerAudioContext.play();
+			this.setData({
+				letter: true,
+				listening: true,
+				listenIndexCurrent: e.currentTarget.dataset.index,
+				voiceId: voiceId
+			})
+			gdt.track('play-article-voice-on-index-page', {
+				voiceId: voiceId,
+				itemId: entity._id,
+				title: entity.title
+			});
+		}
+
+
+
 
 	},
 })
