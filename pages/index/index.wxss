@@ -1,6 +1,7 @@
 @import "/components/share/share.wxss";
 @import "/components/like/like.wxss";
 @import "/components/list/list.wxss";
+@import "/components/simpleTopic/simpleTopic.wxss";
 @import "/pages/detail/detail.wxss";
 @import "/components/loadding/loadding.wxss";
 @import "/components/declare/declare.wxss";

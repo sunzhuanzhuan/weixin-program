@@ -45,7 +45,7 @@
 		<view bind:touchstart="handleTouchStart" bind:touchend="handleTouchEnd">
 
 			<view wx:if="{{list._id==='topScoreds'}}">
-				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
+				<view wx:for="{{list.items}}" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
 					<view wx:if="{{index>3}}">
 
 						<view wx:if="{{item.type === 'wxArticle'}}">
@@ -155,9 +155,9 @@
 				</view>
 			</view>
 			<view wx:else>
-				<view wx:for="{{list.items}}" class="container" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
+				<view wx:for="{{list.items}}" wx:key="{{index}}" style="{{index==0?'margin-top:20rpx':''}}">
 					<!-- 微博源 -->
-					<view wx:if="{{item.type == 'wbArticle'}}">
+					<view class="container" wx:if="{{item.type == 'wbArticle'}}">
 						<view class="weiboBigBox">
 							<view class="topAvaAndTitle clearfix">
 								<view class="weiboAvat">
@@ -235,7 +235,7 @@
 						</view>
 					</view>
 					<!-- 微博结束  -->
-					<view wx:if="{{item.type === 'wxArticle'}}">
+					<view class="container" wx:if="{{item.type === 'wxArticle'}}">
 						<!-- 小图 -->
 						<view class="item item-{{index}}" wx:if="{{!(item.wxMidVec && item.wxMidVec[item.wxMidVec.length-1] == '1')}}">
 							<view class="itemBigBox">
@@ -396,12 +396,15 @@
 						</view>
 					</view>
 					<!-- 表态 -->
-					<view wx:elif="{{item.type === 'simpleSurvey'}}">
+					<view class="container" wx:elif="{{item.type === 'simpleSurvey'}}">
 						<template is="declare" data="{{type:type,itemDeclare:item,votePage:votePage}}" />
 					</view>
 					<!-- 专题 -->
-					<view wx:elif="{{item.type === 'simpleTopic'}}">
-						<template is="simpleTopic" data="{{type:type,itemTopic:item}}" />
+					<view wx:elif="{{item.type === 'simpleTopic'}}" class="simpleTopic">
+						<view class="topicBox">
+							<template is="simpleTopic" data="{{type:type,itemTopic:item}}" />
+						</view>
+
 					</view>
 					<!-- 广告 -->
 					<view wx:if="{{ index !=0 && (index+1)%setting.txAdListInterval == 0}}">

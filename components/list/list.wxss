@@ -458,3 +458,15 @@ button{
 .wbImageCover{
     width:660rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0
 }
+
+
+/* 专题样式 */
+.simpleTopic{
+    height: 160rpx; 
+    width: 240rpx;
+    overflow-x: scroll;
+    background: yellow;
+    margin:70rpx 8rpx 30rpx 8rpx;
+    float: left;
+}
+

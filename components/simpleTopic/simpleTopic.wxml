@@ -1,6 +1,9 @@
 <template name="simpleTopic">
-	<view bindtap="handleTopic" data-itemTopic="{{itemTopic}}">
-		<view>1234</view>
+	<view>
+		<view bindtap="handleTopic" data-itemTopic="{{itemTopic}}">
+			<view>{{itemTopic.title}}</view>
+		</view>
 	</view>
+
 
 </template>
