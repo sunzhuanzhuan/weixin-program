@@ -456,7 +456,7 @@ button{
     background:#fff;
 }
 .wbImageCover{
-    width:660rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0
+    width:660rpx;height:400rpx;display:block;border-radius:8rpx 8rpx 0 0;margin-left: 16rpx;
 }
 
 

@@ -20,7 +20,7 @@ Page({
 	},
 	onLoad: function (params) {
 		let topic = JSON.parse(params.topicId);
-
+		this.setData({ topic })
 		gdt.getTopic(topic._id).then((res) => {
 			this.handleWeiBoTitle(res)
 		});

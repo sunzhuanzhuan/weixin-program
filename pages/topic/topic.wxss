@@ -26,9 +26,9 @@
     font-size: 28rpx;
     color: #B3B3B3;
     position: absolute;
-    bottom: 90rpx;
+    bottom: 80rpx;
     width: 315rpx;
-    left:30rpx;
+    left:36rpx;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
