@@ -2,7 +2,7 @@
 <!-- detail.wxml -->
 <import src="/components/loadding/loadding.wxml" />
 <import src="/components/declare/declare.wxml" />
-<template is='loadding' wx:if="{{!showLoadding}}" />
+<!-- <template is='loadding' wx:if="{{!showLoadding}}" /> -->
 
 <view>
 	<scroll-view wx:if="{{entity.type == 'wxArticle'}}" scroll-y style="height:100%;position: absolute;background:#ffffff;" bindscroll="recordUserscroll"
