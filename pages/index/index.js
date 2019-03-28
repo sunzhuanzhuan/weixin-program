@@ -318,16 +318,9 @@ Page({
 		const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
 		if (currentListInstance) {
 			gdt.magicListItemFirstLoad(currentListInstance._id).then((res) => {
-				// console.log(res)
-				let arr = []
-				res.map((item) => {
-					if (item.type == 'simpleTopic') {
-						arr.push(item)
-					}
-				})
+				this.handleShowTopic(this.data.lists, this.data.currentTabIndex)
 				this.setData({
 					loadding: true,
-					topic: arr
 				})
 			});
 			gdt.track('index-show-tab', {
@@ -394,16 +387,9 @@ Page({
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (that.data.currentTabIndex !== that.data.lists.length) {
 							gdt.magicListItemFirstLoad(currentListInstance._id).then((res) => {
-								// console.log(res)
-								let arr = []
-								res.map((item) => {
-									if (item.type == 'simpleTopic') {
-										arr.push(item)
-									}
-								})
+								that.handleShowTopic(that.data.lists, that.data.currentTabIndex)
 								that.setData({
-									loadding: true,
-									topic: arr
+									loadding: true
 								})
 							});
 						}
@@ -461,18 +447,12 @@ Page({
 
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (!currentListInstance.length) {
+							that.handleShowTopic(that.data.lists, that.data.currentTabIndex)
 							gdt.magicListItemFirstLoad(currentListInstance._id).then((res) => {
-								// console.log(res)
-								let arr = []
-								res.map((item) => {
-									if (item.type == 'simpleTopic') {
-										arr.push(item)
-									}
-								})
 								that.setData({
-									loadding: true,
-									topic: arr
+									loadding: true
 								})
+
 							});
 						}
 					})
@@ -497,6 +477,7 @@ Page({
 					}
 				}
 			}
+
 		})
 	},
 
@@ -723,19 +704,15 @@ Page({
 			const t0Tab = app.lists[this.data.currentTabIndex || 0];
 			if (t0Tab && t0Tab._id !== 'topScoreds') {
 				gdt.magicListItemFirstLoad(t0Tab._id).then((res) => {
-					console.log(res)
-					let arr = []
-					res.map((item) => {
-						if (item.type == 'simpleTopic') {
-							arr.push(item)
-						}
-					})
+					this.handleShowTopic(app.lists, this.data.currentTabIndex)
 					this.setData({
 						lists: app.lists,
-						topic: arr
+						loadding: true
 					})
 				});
 			}
+
+
 		});
 		gdt.systemInfo.then((x) => {
 			this.setData({
@@ -760,6 +737,7 @@ Page({
 			})
 		});
 
+
 		gdt.baseServerUri.then((res) => {
 			this.setData({
 				baseImageUrlMy: 'https://' + res.split('/')[2] + '/static/images/my.png',
@@ -775,8 +753,22 @@ Page({
 			})
 		})
 
-
 	},
+	//显示topic
+	handleShowTopic(list, currentTabIndex) {
+		console.log(list);
+		console.log(currentTabIndex)
+		let arr = [];
+		list[currentTabIndex].items.map((item) => {
+			if (item.type == 'simpleTopic') {
+				arr.push(item)
+			}
+		})
+		this.setData({
+			topic: arr
+		})
+	},
+
 	//上拉加载
 	onReachBottom: function () {
 		wx.showLoading({

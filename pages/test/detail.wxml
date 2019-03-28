@@ -2,9 +2,9 @@
 
 
 
-<view id="outer" bind:touchstart="handleTap1" capture-catch:touchstart="handleTap2">
+<view id="outer" capture-bind:touchstart="handleTap2">
 	outer view
-	<view id="inner" bind:touchstart="handleTap3" capture-bind:touchstart="handleTap4">
+	<view id="inner" capture-catch:touchstart="handleTap4">
 		inner view
 	</view>
 </view>
