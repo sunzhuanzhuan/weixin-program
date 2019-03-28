@@ -12,6 +12,7 @@
     width:100%;
     background: pink;
     position: absolute;
+    top:0;
 }
 .topicTitle{
     font-size: 34rpx;
@@ -38,5 +39,5 @@
 }
 .specicalTopicBox{
     margin-top: 0;
-    position: absolute;
+    top:22rpx;
 }
