@@ -158,8 +158,12 @@
 			<view wx:else>
 				<!-- 专题 -->
 				<view wx:if="{{topic.length>0}}" class='topicBox'>
+					<view class="titleTopicBox">
+						<image class="titleTopicBg" src="/images/topicBg.png"></image>
+						<view class="titleTopic">专题</view>
+					</view>
 					<scroll-view scroll-x="true" class="topic">
-						<view wx:for="{{topic}}" class="simpleTopic" wx:key="{{index}}">
+						<view wx:for="{{topic}}" class="simpleTopic" wx:key="{{index}}" style="{{index ==0 ?'margin-left:16rpx':''}};{{index ==(topic.length-1)?'margin-right:16rpx':''}}">
 							<template is="simpleTopic" data="{{type:type,itemTopic:item}}" />
 						</view>
 					</scroll-view>

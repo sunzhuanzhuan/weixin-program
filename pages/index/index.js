@@ -740,6 +740,7 @@ Page({
 
 		gdt.baseServerUri.then((res) => {
 			this.setData({
+				staticUrl: res.split('/')[2],
 				baseImageUrlMy: 'https://' + res.split('/')[2] + '/static/images/my.png',
 				baseImageUrlP1: 'https://' + res.split('/')[2] + '/static/images/1.png',
 				baseImageUrlP2: 'https://' + res.split('/')[2] + '/static/images/2.png',

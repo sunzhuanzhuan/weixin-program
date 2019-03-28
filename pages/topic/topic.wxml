@@ -1,5 +1,9 @@
 <view>
 	<view class="parent">
+		<view class="titleTopicBox specicalTopicBox">
+			<image class="titleTopicBg" src="/images/topicBg.png"></image>
+			<view class="titleTopic">专题</view>
+		</view>
 		<image src='{{cover}}' class="cover"></image>
 		<view class='topicTitle'>{{topic.title}}</view>
 		<view class='topicDesc'>{{topic.description}}</view>

@@ -1,7 +1,7 @@
 <template name="simpleTopic">
 	<view>
 		<view bindtap="handleTopic" data-itemTopic="{{itemTopic}}">
-			<view>{{itemTopic.title}}</view>
+			<view class="topicTitle">{{itemTopic.title}}</view>
 		</view>
 	</view>
 

@@ -465,20 +465,45 @@ button{
     width: 100%;
     height: 260rpx; 
     overflow:hidden;
-    white-space:nowrap
+    white-space:nowrap;
+    background: #fff;
+    margin-top:-4rpx;
+
 }
 .topic{
     width: auto;
     overflow:hidden;
     height: 260rpx; 
-    background: skyblue;
 }
 .simpleTopic{
     height: 160rpx; 
     width: 240rpx;
-    background: yellow;
-    margin:70rpx 8rpx 30rpx 8rpx;
+    background: #999;
+    margin:20rpx 8rpx 30rpx 8rpx;
     display: inline-block;
+    border-radius: 4rpx;
+}
+.titleTopicBg{
+    width: 86rpx;
+    height: 40rpx;
+    float: left;
+    position: absolute;
+    z-index: 1;
+    left:0;
+}
+.titleTopic{
+    position: absolute;
+    z-index: 2;
+    left:12rpx;
+    color: #fff;
+    font-size: 24rpx;
+    top: 4rpx;
+}
+.titleTopicBox{
+    position: relative;
+    height: 40rpx;
+    margin-top:10rpx;
+
 }
 
 
