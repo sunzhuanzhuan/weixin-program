@@ -1,2 +1,10 @@
 <!--pages/test/detail.wxml-->
-<text>pages/test/detail.wxml</text>
+
+
+
+<view id="outer" bind:touchstart="handleTap1" capture-catch:touchstart="handleTap2">
+	outer view
+	<view id="inner" bind:touchstart="handleTap3" capture-bind:touchstart="handleTap4">
+		inner view
+	</view>
+</view>
