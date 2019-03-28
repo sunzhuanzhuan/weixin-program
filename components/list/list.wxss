@@ -461,10 +461,15 @@ button{
 
 
 /* 专题样式 */
+.topic{
+    width:1000px;
+    overflow-x: scroll;
+    height: 260rpx; 
+    background: skyblue;
+}
 .simpleTopic{
     height: 160rpx; 
     width: 240rpx;
-    overflow-x: scroll;
     background: yellow;
     margin:70rpx 8rpx 30rpx 8rpx;
     float: left;

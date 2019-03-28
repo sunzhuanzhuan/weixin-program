@@ -58,7 +58,9 @@ Page({
 		up: false,
 		votePage: 'index',
 		setting: {},
-		enable: false
+		enable: false,
+		//专题
+		topic: []
 	},
 	//进入专题详情
 	handleTopic(e) {
@@ -315,9 +317,17 @@ Page({
 		// console.log(this.data.currentTabIndex);
 		const currentListInstance = this.data.lists[e.currentTarget.dataset.tab]
 		if (currentListInstance) {
-			gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
+			gdt.magicListItemFirstLoad(currentListInstance._id).then((res) => {
+				// console.log(res)
+				let arr = []
+				res.map((item) => {
+					if (item.type == 'simpleTopic') {
+						arr.push(item)
+					}
+				})
 				this.setData({
-					loadding: true
+					loadding: true,
+					topic: arr
 				})
 			});
 			gdt.track('index-show-tab', {
@@ -383,9 +393,17 @@ Page({
 					}, () => {
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (that.data.currentTabIndex !== that.data.lists.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
+							gdt.magicListItemFirstLoad(currentListInstance._id).then((res) => {
+								// console.log(res)
+								let arr = []
+								res.map((item) => {
+									if (item.type == 'simpleTopic') {
+										arr.push(item)
+									}
+								})
 								that.setData({
 									loadding: true,
+									topic: arr
 								})
 							});
 						}
@@ -443,9 +461,17 @@ Page({
 
 						const currentListInstance = that.data.lists[that.data.currentTabIndex];
 						if (!currentListInstance.length) {
-							gdt.magicListItemFirstLoad(currentListInstance._id).then(() => {
+							gdt.magicListItemFirstLoad(currentListInstance._id).then((res) => {
+								// console.log(res)
+								let arr = []
+								res.map((item) => {
+									if (item.type == 'simpleTopic') {
+										arr.push(item)
+									}
+								})
 								that.setData({
 									loadding: true,
+									topic: arr
 								})
 							});
 						}
@@ -696,9 +722,17 @@ Page({
 			}
 			const t0Tab = app.lists[this.data.currentTabIndex || 0];
 			if (t0Tab && t0Tab._id !== 'topScoreds') {
-				gdt.magicListItemFirstLoad(t0Tab._id).then(() => {
+				gdt.magicListItemFirstLoad(t0Tab._id).then((res) => {
+					console.log(res)
+					let arr = []
+					res.map((item) => {
+						if (item.type == 'simpleTopic') {
+							arr.push(item)
+						}
+					})
 					this.setData({
-						lists: app.lists
+						lists: app.lists,
+						topic: arr
 					})
 				});
 			}
