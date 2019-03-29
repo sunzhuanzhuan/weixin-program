@@ -5,6 +5,7 @@
 			<view class="titleTopic">专题</view>
 		</view>
 		<image src='{{cover}}' class="cover"></image>
+		<view class="mask"></view>
 		<view class='topicTitle'>{{topic.title}}</view>
 		<view class='topicDesc'>{{topic.description}}</view>
 
