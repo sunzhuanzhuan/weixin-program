@@ -1,6 +1,7 @@
 <template name="simpleTopic">
 	<view>
 		<view bindtap="handleTopic" data-itemTopic="{{itemTopic}}">
+			<image class="image" src="{{base+itemTopic._id}}/cover"></image>
 			<view class="topicTitle">{{itemTopic.title}}</view>
 		</view>
 	</view>

@@ -9,5 +9,13 @@
     width: 220rpx;
     white-space: nowrap;
     text-overflow: ellipsis;
+    position: absolute;
+    z-index: 2;
+}
+.image{
+    width: 240rpx;
+    height: 160rpx;
+    position: absolute;
+    z-index: 1;
 }
 

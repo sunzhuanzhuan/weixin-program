@@ -753,6 +753,13 @@ Page({
 				baseImageUrlAllStar: 'https://' + res.split('/')[2] + '/static/images/allStar.png'
 			})
 		})
+		gdt.baseServerUri.then((res1) => {
+			gdt.distroId.then((res3) => {
+				this.setData({
+					base: res1 + '/' + res3 + '/simpleTopic/'
+				})
+			})
+		})
 
 	},
 	//显示topic
