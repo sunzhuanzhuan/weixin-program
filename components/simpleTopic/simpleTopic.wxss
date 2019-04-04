@@ -18,12 +18,3 @@
     position: absolute;
     z-index: 1;
 }
-.mask{
-    width: 240rpx;
-    height: 100rpx;
-    position: absolute;
-    z-index:2;
-    top:80rpx;
-    background: -webkit-linear-gradient( top,rgba(0, 0, 0,0),rgba(0, 0,0,1));
-}
-

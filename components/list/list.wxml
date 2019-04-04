@@ -2,6 +2,7 @@
 <import src="/components/simpleTopic/simpleTopic.wxml" />
 
 <template name="list">
+
 	<block wx:if="{{list.items.length>0}}">
 		<!-- 推荐页的文章 -->
 		<block wx:if="{{list._id==='topScoreds'}}">
@@ -157,16 +158,43 @@
 
 			<view wx:else>
 				<!-- 专题 -->
-				<view wx:if="{{topic.length>0}}" class='topicBox'>
+				<view wx:if="{{topic.length>2}}" class='topicBox'>
 					<view class="titleTopicBox">
 						<image class="titleTopicBg" src="/images/topicBg.png"></image>
 						<view class="titleTopic">专题</view>
 					</view>
 					<scroll-view scroll-x="true" class="topic">
 						<view wx:for="{{topic}}" class="simpleTopic" wx:key="{{index}}" style="{{index ==0 ?'margin-left:16rpx':''}};{{index ==(topic.length-1)?'margin-right:16rpx':''}}">
-							<template is="simpleTopic" data="{{base:base,type:type,itemTopic:item}}" />
+							<template is="simpleTopic" data="{{length:3,base:base,type:type,itemTopic:item}}" />
 						</view>
 					</scroll-view>
+				</view>
+				<view wx:if="{{topic.length==2}}" class='topicBox'>
+					<view class="titleTopicBox">
+						<image class="titleTopicBg" src="/images/topicBg.png"></image>
+						<view class="titleTopic">专题</view>
+					</view>
+					<scroll-view scroll-x="true" class="topic">
+						<view wx:for="{{topic}}" class="simpleTopic2" wx:key="{{index}}" style="margin-left: 30rpx;">
+							<template is="simpleTopic" data="{{length:2,base:base,type:type,itemTopic:item}}" />
+						</view>
+					</scroll-view>
+				</view>
+				<view wx:if="{{topic.length==1}}" class='topicBox1'>
+					<view class="titleTopicBox">
+						<image class="titleTopicBg" src="/images/topicBg.png"></image>
+						<view class="titleTopic">专题</view>
+					</view>
+					<view>
+						<view wx:for="{{topic}}" class="simpleTopic" wx:key="{{index}}" style="{{index ==0 ?'margin-left:16rpx':''}};{{index ==(topic.length-1)?'margin-right:16rpx':''}}">
+							<template is="simpleTopic" data="{{length:1,base:base,type:type,itemTopic:item}}" />
+						</view>
+						<view style="display:inline-block;height:160rpx;width:440rpx;vertical-align:top;margin-top:18rpx;">
+							<view class="fontTitle">简介</view>
+							<view class="des">哈哈哈哈哈哈哈哦哦PDF搜图普及赛膨润土股价高水平给他送她搜狗提示是个都是更好哈撒公司估时曙光说个事送 送好少说给你女女女女女绿绿绿绿绿绿绿绿绿绿
+							</view>
+						</view>
+					</view>
 				</view>
 
 				<view wx:else></view>
