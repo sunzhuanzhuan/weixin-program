@@ -487,6 +487,7 @@ button{
     margin:20rpx 8rpx 30rpx 8rpx;
     display: inline-block;
     border-radius: 4rpx;
+    position:relative;
 }
 .titleTopicBg{
     width: 86rpx;
@@ -518,6 +519,7 @@ button{
     margin:20rpx 8rpx 30rpx 8rpx;
     display: inline-block;
     border-radius: 4rpx;
+    position:relative;
 }
 .fontTitle{
     font-size: 28rpx;

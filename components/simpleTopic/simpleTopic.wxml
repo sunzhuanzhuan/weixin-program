@@ -1,9 +1,9 @@
 <template name="simpleTopic">
 	<view>
 		<view bindtap="handleTopic" data-itemTopic="{{itemTopic}}" style="border-radius: 4rpx">
-			<image class="image" style="border-radius: 4rpx;{{length ==2?'width:330rpx':'width:240rpx'}}" src="{{base+itemTopic._id}}/cover"></image>
+			<image class="image" style="border-radius: 4rpx;{{length ==2?'width:330rpx;height:140rpx':'width:240rpx;height:160rpx'}}" src="{{base+itemTopic._id}}/cover"></image>
 			<view class="topicTitle" style="{{length ==2?'width:330rpx':'width:240rpx'}}">{{itemTopic.title}}</view>
-			<view class="mask" style="{{length ==2?'width:330rpx':'width:240rpx'}}"></view>
+			<view class="mask" style="{{length ==2?'width:330rpx;height:92rpx':length == 1 ? 'width:240rpx;height:92rpx' : 'width:240rpx;height:96rpx'}}"></view>
 		</view>
 	</view>
 

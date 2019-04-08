@@ -190,9 +190,8 @@
 							<template is="simpleTopic" data="{{length:1,base:base,type:type,itemTopic:item}}" />
 						</view>
 						<view style="display:inline-block;height:160rpx;width:440rpx;vertical-align:top;margin-top:18rpx;">
-							<view class="fontTitle">简介</view>
-							<view class="des">哈哈哈哈哈哈哈哦哦PDF搜图普及赛膨润土股价高水平给他送她搜狗提示是个都是更好哈撒公司估时曙光说个事送 送好少说给你女女女女女绿绿绿绿绿绿绿绿绿绿
-							</view>
+							<view class="fontTitle">简介:</view>
+							<view class="des">{{topic[0].description}}</view>
 						</view>
 					</view>
 				</view>
