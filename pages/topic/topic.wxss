@@ -19,17 +19,19 @@
     font-weight: bold;
     color: #fff;
     position: absolute;
-    bottom: 130rpx;
+    top: 184rpx;
     z-index:3;
-    left:30rpx
+    left:30rpx;
+    margin:0;
+    padding:0;
 }
 .topicDesc{
     font-size: 28rpx;
     color: #B3B3B3;
     position: absolute;
-    bottom: 80rpx;
-    width: 315rpx;
-    left:36rpx;
+    top: 240rpx;
+    width: 660rpx;
+    left:30rpx;
     z-index:3;
     overflow: hidden;
     text-overflow: ellipsis;
