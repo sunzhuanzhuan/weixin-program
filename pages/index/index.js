@@ -22,7 +22,7 @@ Page({
 		//新的标量
 		lists: [],
 		//哪一个tab
-		currentTabIndex: 1,
+		currentTabIndex: 0,
 		type: 'getUserInfo',
 		type1: 'getUserInfo',
 		isVideo: false,
