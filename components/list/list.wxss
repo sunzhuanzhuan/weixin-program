@@ -466,7 +466,8 @@ button{
     height: 260rpx; 
     background: #fff;
     margin-top:-4rpx;
-
+    overflow: hidden;
+    white-space: nowrap;
 }
 .topicBox1{
     width: 100%;
