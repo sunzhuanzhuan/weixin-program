@@ -515,7 +515,7 @@ button{
 .simpleTopic2{
     height: 160rpx; 
     overflow: hidden;
-    width: 320rpx;
+    width: 328rpx;
     background: #999;
     margin:20rpx 8rpx 30rpx 8rpx;
     display: inline-block;
