@@ -75,7 +75,7 @@ page {
 
 .tag-box {
   position: relative;
-  padding: 0 25rpx;
+  padding: 0 30rpx;
 
   /* margin: 0 30rpx; */
 

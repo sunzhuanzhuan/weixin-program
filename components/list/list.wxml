@@ -186,7 +186,7 @@
 						<view class="titleTopic">专题</view>
 					</view>
 					<view>
-						<view wx:for="{{topic}}" class="simpleTopic" wx:key="{{index}}" style="{{index ==0 ?'margin-left:16rpx':''}};{{index ==(topic.length-1)?'margin-right:16rpx':''}}">
+						<view wx:for="{{topic}}" class="simpleTopic" wx:key="{{index}}" style="{{index ==0 ?'margin-left:30rpx':''}};{{index ==(topic.length-1)?'margin-right:16rpx':''}}">
 							<template is="simpleTopic" data="{{length:1,base:base,type:type,itemTopic:item}}" />
 						</view>
 						<view style="display:inline-block;height:160rpx;width:440rpx;vertical-align:top;margin-top:18rpx;">
