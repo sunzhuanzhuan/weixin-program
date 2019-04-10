@@ -513,7 +513,6 @@ button{
 
 }
 .simpleTopic2{
-    height: 160rpx; 
     overflow: hidden;
     width: 328rpx;
     background: #999;

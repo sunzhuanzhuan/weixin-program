@@ -10,7 +10,6 @@
 .cover{
     height: 380rpx;
     width:100%;
-    background: pink;
     position: absolute;
     top:0;
 }

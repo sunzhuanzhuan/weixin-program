@@ -2,7 +2,7 @@
 	<view>
 		<view bindtap="handleTopic" data-itemTopic="{{itemTopic}}" style="border-radius: 4rpx;background:black;{{length ==2?'width:328rpx;height:140rpx':'width:240rpx;height:160rpx'}}">
 			<image mode='aspectFit' class="image" style="border-radius: 4rpx;{{length ==2?'width:328rpx;height:140rpx':'width:240rpx;height:160rpx'}}" src="{{base+itemTopic._id}}/cover"></image>
-			<view class="topicTitle" style="{{length ==2?'width:328rpx':'width:240rpx'}}">{{itemTopic.title}}</view>
+			<view class="topicTitle" style="{{length ==2?'width:328rpx;padding-top:82rpx':'width:240rpx'}}">{{itemTopic.title}}</view>
 			<view class="mask" style="{{length ==2?'width:328rpx;height:92rpx;top:48rpx':length == 1 ? 'width:240rpx;height:92rpx' : 'width:240rpx;height:96rpx;top:64rpx'}}"></view>
 		</view>
 	</view>
