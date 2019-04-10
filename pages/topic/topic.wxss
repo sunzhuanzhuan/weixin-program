@@ -18,7 +18,7 @@
     font-weight: bold;
     color: #fff;
     position: absolute;
-    top: 204rpx;
+    top: 209rpx;
     z-index:3;
     left:30rpx;
     margin:0;
@@ -28,7 +28,7 @@
     font-size: 28rpx;
     color: #B3B3B3;
     position: absolute;
-    top: 260rpx;
+    top: 265rpx;
     width: 660rpx;
     left:30rpx;
     z-index:3;
