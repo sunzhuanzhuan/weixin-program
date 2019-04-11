@@ -1081,7 +1081,18 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			return lastPendingOp;
 		}
 		const qParams = {};
-		this.entityTypes.pop();
+		if (SPECIAL_LISTS[listId] == '/topScoreds') {
+			if (this.entityTypes.indexOf('wbArticle') > 0) {
+				this.entityTypes.pop();
+
+			}
+		} else {
+			if (this.entityTypes.indexOf('wbArticle') < 0) {
+				this.entityTypes.push('wbArticle');
+
+			}
+		}
+
 		if (Array.isArray(this.entityTypes) && this.entityTypes.length) {
 			qParams.types = this.entityTypes.join(',');
 		}
