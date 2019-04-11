@@ -1081,6 +1081,7 @@ module.exports = class GlobalDataContext extends EventEmitter {
 			return lastPendingOp;
 		}
 		const qParams = {};
+		this.entityTypes.pop();
 		if (Array.isArray(this.entityTypes) && this.entityTypes.length) {
 			qParams.types = this.entityTypes.join(',');
 		}
