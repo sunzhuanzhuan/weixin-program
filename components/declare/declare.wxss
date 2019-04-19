@@ -1,6 +1,6 @@
 .declareBox {
     width: 690rpx;
-    margin: 80rpx auto 0rpx auto;
+    margin: 20rpx auto 0rpx auto;
     background: #fff;
     padding-bottom: 32rpx;
 }
@@ -47,7 +47,8 @@
 
 .taiBox {
     clear: both;
-    padding-top: 22rpx;
+    margin-top:-20rpx;
+
 }
 
 .fontTai {
@@ -236,4 +237,16 @@
     width: 60rpx;
     height: 30rpx;
     margin: 6rpx 8rpx 2rpx 8rpx;
+}
+.postiPng{
+    width: 60rpx;
+    height: 30rpx;
+    /* margin: 6rpx 8rpx 2rpx 8rpx; */
+    display: inline-block;
+    color: rgba(255, 255, 255, 1);
+    background: #333333;
+    padding:10rpx 20rpx;
+    position: absolute;
+    z-index: 10;
+    top:60rpx;
 }
