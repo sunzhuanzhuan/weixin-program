@@ -273,11 +273,13 @@ Page({
 
 	},
 	onLoad(options) {
+		// console.log()
 		wx.showLoading({
 			title: '加载中'
 		})
 		this.setData({
-			listenTablistCurrent: options.listenTablistCurrent
+			listenTablistCurrent: options.listenTablistCurrent,
+			index: options.index
 		})
 		if (options.listening == 'false') {
 			this.setData({
@@ -537,6 +539,19 @@ Page({
 			});
 
 		}
+		if (prevPage.route == 'pages/topic/topic') {
+			prevPage.data.topicList.map((item, index) => {
+				if (this.data.index == index) {
+					item.viewed = true
+				}
+
+			})
+			prevPage.handleTopicList(prevPage.data.topicList)
+			// prevPage.data.setData({
+			// 	topicList
+			// })
+		}
+		console.log(prevPage)
 
 
 	},

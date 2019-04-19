@@ -280,10 +280,15 @@ Page({
 			})
 		});
 
-		gdt.getTopic(topic._id).then((res) => {
+		gdt.getTopic(this.data.topic._id).then((res) => {
 			this.handleWeiBoTitle(res)
 		});
 
+	},
+	handleTopicList: function (topicList) {
+		this.setData({
+			topicList: topicList
+		})
 	},
 	//听力
 	handleListing: function (e) {
